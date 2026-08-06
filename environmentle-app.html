@@ -1191,8 +1191,8 @@
       </div>
     </div>
 
-    <!-- Water Challenge (coming soon) -->
-    <div class="game-card carbon coming-soon anim-3">
+    <!-- Water Challenge -->
+    <div class="game-card carbon anim-3" onclick="openGame('water')">
       <div class="game-card-banner"></div>
       <div class="game-card-body">
         <div class="game-card-icon">💧</div>
@@ -1204,9 +1204,10 @@
       </div>
       <div class="game-card-footer">
         <div class="game-card-meta">
-          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> Coming soon</div>
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> Endless streak</div>
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> Reality checks</div>
         </div>
-        <div class="coming-badge">Coming soon</div>
+        <div class="game-card-arrow">→</div>
       </div>
     </div>
 
@@ -1315,7 +1316,8 @@ function openHub() {
 // Game file paths — update these to match wherever your files live
 const GAME_URLS = {
   quiz: 'environmentle-quiz-game.html',
-  sort: 'environmentle-sort-it-out.html'
+  sort: 'environmentle-sort-it-out.html',
+  water: 'environmentle-water-challenge.html'
 };
 
 function openGame(type) {
