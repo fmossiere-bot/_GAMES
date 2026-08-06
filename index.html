@@ -3521,7 +3521,7 @@
       <div class="gl-info">
         <p class="gl-desc">Water is hidden in almost everything we buy and eat. Higher or lower: guess which everyday thing takes more water to make, from a cup of coffee to a pair of jeans.</p>
         <div class="gl-meta-row">
-          <span class="gl-chip primary">Endless streak</span>
+          <span class="gl-chip primary">5 rounds</span>
           <span class="gl-chip primary">One life</span>
           <span class="gl-chip">~3 min</span>
         </div>
@@ -4199,8 +4199,9 @@ async function openHub() {
 
   // Reset states
   const banner   = document.getElementById('today-banner');
-  const quizCard = document.querySelector('.game-card.quiz');
-  const sortCard = document.querySelector('.game-card.sort');
+  const quizCard  = document.querySelector('.game-card.quiz');
+  const sortCard  = document.querySelector('.game-card.sort');
+  const waterCard = document.querySelector('.game-card.water');
 
   if (banner) {
     banner.classList.remove('played-today');
@@ -4256,6 +4257,28 @@ async function openHub() {
       if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
     } else {
       sortCard.onclick = () => openGame('sort');
+    }
+  }
+
+  // Water game — same once-a-day gate as the sort game, same key shape
+  // ('wc_last_played_<nk>' alongside 'sio_last_played_<nk>'). The water game
+  // grants one extra go if you go out on its first question, so the card only
+  // locks when that spare attempt is gone too.
+  if (waterCard) {
+    const waterPlayed   = localStorage.getItem('wc_last_played_' + nk) === today;
+    const waterFirstOut = localStorage.getItem('wc_first_loss_' + nk) === today;
+    const waterRetried  = localStorage.getItem('wc_retry_used_' + nk) === today;
+    const waterLocked   = waterPlayed && !(waterFirstOut && !waterRetried);
+    waterCard.classList.remove('played-today');
+    const waterBadge = waterCard.querySelector('.played-badge');
+    if (waterBadge) waterBadge.outerHTML = '<div class="game-card-arrow">→</div>';
+    if (waterLocked) {
+      waterCard.classList.add('played-today');
+      waterCard.onclick = null;
+      const arrow = waterCard.querySelector('.game-card-arrow');
+      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
+    } else {
+      waterCard.onclick = () => openGame('water');
     }
   }
 
@@ -4412,8 +4435,8 @@ const GAME_DEFS = {
     type: 'water', mode: null,
     cls: 'water', icon: 'water_drop', tag: 'Water Game',
     name: 'Water Challenge',
-    desc: 'Higher or lower, water edition. Guess which everyday thing takes more water to make. One wrong answer ends the run.',
-    meta: ['Endless streak', 'Reality checks'],
+    desc: 'Higher or lower, water edition. Guess which everyday thing takes more water to make. Five rounds, one wrong answer ends the run.',
+    meta: ['5 rounds', '2,100 pts max'],
     onclick: "openGame('water')"
   }
 };

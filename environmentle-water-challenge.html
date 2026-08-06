@@ -310,6 +310,71 @@
   }
   .streak-value.best { color: rgba(255,255,255,0.55); font-size: 15px; }
 
+  /* A run is capped at ten, so the header carries two new things: where you
+     are in the run, and a way out of it. Same chrome as the Carbon
+     Challenge's tries row — low-opacity white on the dark header. */
+  .game-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .progress-label {
+    color: rgba(255,255,255,0.55);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .progress-track {
+    flex: 1;
+    min-width: 40px;
+    height: 4px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.14);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    display: block;
+    height: 100%;
+    width: 0%;
+    border-radius: 100px;
+    background: var(--water-light);
+    transition: width 0.35s ease;
+  }
+
+  .btn-exit {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.8);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    padding: 4px 11px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .btn-exit:hover { background: rgba(255,255,255,0.18); color: var(--white); }
+  .btn-exit:active { transform: scale(0.97); }
+  .btn-exit:focus-visible {
+    outline: 2px solid var(--water-light);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress-fill { transition: none; }
+  }
+
   .card-track-wrapper {
     flex: 1;
     min-height: 0;
@@ -949,6 +1014,33 @@
 </a>
 
 <!-- ══════════════════════════════════════════════════════
+     SCREEN 0 — ALREADY PLAYED TODAY
+     Same shape and wording as the Carbon Challenge's played screen, in this
+     game's palette. Shown instead of the intro when the day's play is used up.
+══════════════════════════════════════════════════════ -->
+<div id="screen-played" class="screen">
+  <div class="intro-top" style="justify-content:center;align-items:center;text-align:center;gap:16px;">
+    <div style="font-size:56px;margin-bottom:4px;">💧</div>
+    <p class="intro-label">You have already played today</p>
+    <h1 class="intro-title" style="font-size:clamp(28px,7vw,42px);">Come back<br><em>tomorrow</em></h1>
+    <p style="font-size:14px;color:rgba(255,255,255,0.6);max-width:280px;line-height:1.6;">
+      One run a day, that is part of the fun. Your score from today:
+    </p>
+    <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:white;" id="played-score">—</div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">pts</p>
+    <p style="font-size:13px;color:rgba(255,255,255,0.5);max-width:280px;line-height:1.6;" id="played-when">
+      A fresh run unlocks at midnight.
+    </p>
+  </div>
+  <div class="intro-bottom">
+    <a class="btn-play stagger-4" href="index.html?hub=1" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;">
+      ← Back to games
+    </a>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
      SCREEN 1 — INTRO
 ══════════════════════════════════════════════════════ -->
 <div id="screen-intro" class="screen active">
@@ -963,20 +1055,21 @@
       <p class="dyk-label">How it works</p>
       <p class="dyk-text">
         Every card shows the fresh water it takes to make <strong>one thing</strong>. Say whether the
-        new item needs <strong>more or less</strong> than the one next to it. Keep going as long as you
-        keep getting it right.
+        new item needs <strong>more or less</strong> than the one next to it. A run is
+        <strong>five rounds</strong>. Get all five and you have a perfect run.
       </p>
     </div>
+    <p class="best-line stagger-3" id="retry-note" hidden></p>
     <p class="best-line stagger-3" id="start-best"></p>
   </div>
   <div class="intro-bottom">
     <div class="meta-row stagger-4">
-      <div class="meta-item"><div class="meta-dot"></div> Endless streak</div>
-      <div class="meta-item"><div class="meta-dot"></div> Reality check every 5</div>
-      <div class="meta-item"><div class="meta-dot"></div> One wrong answer ends it</div>
+      <div class="meta-item"><div class="meta-dot"></div> 5 rounds</div>
+      <div class="meta-item"><div class="meta-dot"></div> Once a day</div>
+      <div class="meta-item"><div class="meta-dot"></div> 2,100 pts max</div>
     </div>
     <button class="btn-play stagger-4" id="btn-start">
-      Start guessing
+      <span id="btn-start-label">Start guessing</span>
       <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
@@ -1006,6 +1099,18 @@
           <span class="streak-value best" id="best">0</span>
         </div>
       </div>
+    </div>
+
+    <div class="game-progress-row">
+      <p class="progress-label" id="progress-label">Round 1 of 5</p>
+      <div class="progress-track" aria-hidden="true">
+        <span class="progress-fill" id="progress-fill"></span>
+      </div>
+      <!-- hidden until a run is actually in play; showScreen() manages it -->
+      <button type="button" class="btn-exit" id="btn-exit" hidden
+              aria-label="End this run and see your score">
+        End run
+      </button>
     </div>
   </div>
 
@@ -1069,14 +1174,15 @@
 ══════════════════════════════════════════════════════ -->
 <div id="screen-score" class="screen">
   <div class="score-top">
-    <p class="score-label">Final streak</p>
-    <div class="score-number pop-in" id="end-streak">0</div>
-    <p class="score-max">in a row</p>
+    <p class="score-label" id="score-label">Your score</p>
+    <div class="score-number pop-in" id="end-points">0</div>
+    <p class="score-max" id="score-max">pts this round</p>
     <p class="score-message" id="score-message">Nice one!</p>
     <p class="score-sub" id="end-lead"></p>
     <div class="score-pills">
       <span class="score-pill highlight" id="score-pill-streak"></span>
       <span class="score-pill" id="score-pill-best"></span>
+      <span class="score-pill" id="score-pill-bonus"></span>
     </div>
   </div>
 
@@ -1131,7 +1237,7 @@
 
 
 <!-- ══════════════════════════════════════════════════════
-     REALITY CHECK — every 5 correct answers
+     REALITY CHECK — once a run, after the third correct answer
 ══════════════════════════════════════════════════════ -->
 <div class="reality" id="reality" hidden role="dialog" aria-modal="true" aria-labelledby="reality-big">
   <div class="reality-card">
@@ -2672,11 +2778,34 @@
 (function () {
   'use strict';
 
+  // ── THE ONE KNOB ────────────────────────────────────
+  // How many comparisons make up a run. Everything that depends on the run
+  // length is derived from this, so it is safe to change on its own.
+  var ROUNDS_PER_RUN = 5;
+
   var NEAR_TIE = 0.10;        // pairings closer than this are redrawn
-  var REALITY_EVERY = 5;      // correct answers between reality checks
+  var REALITY_AT = 3;         // the single mid-run reality check, after this
+                              // many correct answers. One per run: in a run
+                              // this short, two would drown the game. It also
+                              // marks where the pool switches.
   var RECENT_MEMORY = 10;     // cards we avoid repeating too soon
+  var MIN_UNSEEN = 8;         // below this, a pool's seen list is recycled
   var POOL_ORDER = ['per-kg', 'per-unit'];
-  var POINTS_PER_CORRECT = 100;   // matches the Carbon Challenge's base rate
+
+  // ── SCORING, calibrated against the Carbon Challenge ─
+  // Carbon: correct * 100 * multiplier + timeBonus, best case
+  //   6 correct * 100 * 3 (first try) + 300 (under 30s) = 2100.
+  // Water:  correct * 300 + perfect bonus + timeBonus, best case
+  //   5 correct * 300 + 300 (all five) + 300 (under 45s) = 2100.
+  // Same ceiling, so a perfect run in either game is worth the same.
+  var POINTS_PER_CORRECT = 300;
+  var PERFECT_BONUS = 300;
+  var TIME_BONUS_MAX = 300;
+  var TIME_BONUS_FREE = 45;   // seconds before the speed bonus starts to decay
+  var TIME_BONUS_DECAY = 8;   // points lost per second after that
+  var MAX_POINTS = ROUNDS_PER_RUN * POINTS_PER_CORRECT + PERFECT_BONUS + TIME_BONUS_MAX;
+
+  var ACTIONS_PER_RUN = 4;    // of the six in the dataset, rotated between runs
 
   var DATA = null;
   var pools = {};             // pool name -> playable cards
@@ -2688,12 +2817,73 @@
     ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
     : false;
 
+  // ══════════════════════════════════════════════════════
+  // STORAGE — localStorage when it works, memory when it does not.
+  // Private browsing throws on both read and write in some browsers, and even
+  // touching window.localStorage can throw, so every access is wrapped. The
+  // game must never break over a disabled store; it just forgets.
+  // ══════════════════════════════════════════════════════
+  var memStore = {};
+
+  function storeGet(key) {
+    try {
+      var value = window.localStorage.getItem(key);
+      if (value !== null && value !== undefined) return value;
+    } catch (err) { /* fall through to memory */ }
+    return Object.prototype.hasOwnProperty.call(memStore, key) ? memStore[key] : null;
+  }
+
+  function storeSet(key, value) {
+    memStore[key] = value;
+    try { window.localStorage.setItem(key, value); }
+    catch (err) { /* memory only for this session */ }
+  }
+
   // ── PLAYER KEY ──────────────────────────────────────
   // Same convention as the Carbon Challenge: ?player= wins, then localStorage.
   var _playerName = new URLSearchParams(location.search).get('player') ||
-                    localStorage.getItem('env_player_name') || 'guest';
+                    storeGet('env_player_name') || 'guest';
   var _nk = _playerName.toLowerCase().replace(/\s+/g, '_');
-  var BEST_KEY = 'wc_best_streak_' + _nk;
+  var BEST_KEY     = 'wc_best_streak_' + _nk;
+  var SEEN_KEY     = 'wc_seen_' + _nk;
+  var PLAYED_KEY   = 'wc_last_played_' + _nk;   // mirrors sio_last_played_<nk>
+  var SCORE_KEY    = 'wc_last_score_' + _nk;    // mirrors sio_last_score_<nk>
+  var FIRSTQ_KEY   = 'wc_first_loss_' + _nk;    // last run today died on round 1
+  var MULLIGAN_KEY = 'wc_retry_used_' + _nk;    // the one extra go has been taken
+  var ROTATE_KEY   = 'wc_rotation_' + _nk;      // which slice of the summary to show
+
+  // ══════════════════════════════════════════════════════
+  // ONCE A DAY — with a first-question mulligan
+  // Same key shape and the same YYYY-MM-DD day boundary as the Carbon
+  // Challenge, so the hub can gate both games identically. Local midnight,
+  // via toISOString on a local Date, exactly as sort-it-out does it.
+  // A missing or unreadable value always means "you may play".
+  // ══════════════════════════════════════════════════════
+  function todayStr() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function hasPlayedToday() {
+    return storeGet(PLAYED_KEY) === todayStr();
+  }
+
+  // The exception the owner asked for: go out on the very first question with
+  // nothing on the board and you get one more attempt, but only one.
+  function retryAvailable() {
+    return hasPlayedToday() &&
+      storeGet(FIRSTQ_KEY) === todayStr() &&
+      storeGet(MULLIGAN_KEY) !== todayStr();
+  }
+
+  function canPlayNow() {
+    return !hasPlayedToday() || retryAvailable();
+  }
+
+  function markPlayedToday(points, lostOnFirst) {
+    storeSet(PLAYED_KEY, todayStr());
+    storeSet(SCORE_KEY, String(points));
+    storeSet(FIRSTQ_KEY, lostOnFirst ? todayStr() : '');
+  }
 
   // ══════════════════════════════════════════════════════
   // DATA — tries to load water-cards.json from the server; falls back to the
@@ -2722,6 +2912,61 @@
   }
 
   // ══════════════════════════════════════════════════════
+  // SEEN ITEMS — so a second run does not replay the first
+  // Stored per player as { "per-kg": [title, ...], "per-unit": [...] }.
+  // This layer only ever *prefers* unseen cards. It can never override the
+  // pool, basis and near-tie rule: every candidate still goes through
+  // comparable() first, and every picker falls back to a valid pairing.
+  // ══════════════════════════════════════════════════════
+  var seenStore = null;
+
+  function loadSeenStore() {
+    var parsed = null;
+    try { parsed = JSON.parse(storeGet(SEEN_KEY) || 'null'); }
+    catch (err) { parsed = null; }
+    var out = {};
+    POOL_ORDER.forEach(function (pool) {
+      var list = (parsed && Array.isArray(parsed[pool])) ? parsed[pool] : [];
+      out[pool] = list.filter(function (title) { return typeof title === 'string'; });
+    });
+    return out;
+  }
+
+  function saveSeenStore() {
+    storeSet(SEEN_KEY, JSON.stringify(seenStore));
+  }
+
+  function markSeen(card) {
+    var list = seenStore[card.pool];
+    if (!list) return;
+    if (list.indexOf(card.title) === -1) list.push(card.title);
+    var run = state && state.runSeen && state.runSeen[card.pool];
+    if (run && run.indexOf(card.title) === -1) run.push(card.title);
+    saveSeenStore();
+  }
+
+  function unseenCount(pool) {
+    var list = seenStore[pool];
+    var n = 0;
+    for (var i = 0; i < pools[pool].length; i++) {
+      if (list.indexOf(pools[pool][i].title) === -1) n++;
+    }
+    return n;
+  }
+
+  // When a pool runs low, forget everything except what this run has already
+  // used. The next chain then draws from the whole pool again, in a fresh
+  // random order, without immediately repeating what is still on screen.
+  // Never deadlocks: the picks below all fall back to the full pool.
+  function recycleSeen(pool) {
+    var keep = (state && state.runSeen && state.runSeen[pool])
+      ? state.runSeen[pool].slice()
+      : [];
+    seenStore[pool] = keep;
+    saveSeenStore();
+  }
+
+  // ══════════════════════════════════════════════════════
   // PAIRING — the one rule that must never bend
   // ══════════════════════════════════════════════════════
   function ratio(a, b) {
@@ -2740,38 +2985,84 @@
     return list[Math.floor(Math.random() * list.length)];
   }
 
-  function drawOpponent(card, recent) {
+  // Three tiers of preference, one hard rule. comparable() gates every tier,
+  // so preferring an unseen card can never produce a cross-pool, cross-basis
+  // or near-tie pairing: when the preferred tiers are empty we drop back to
+  // any valid opponent rather than bending the rule.
+  function drawOpponent(card, recent, seenTitles) {
     var all = pools[card.pool];
+    var unseen = [];
     var fresh = [];
     var any = [];
     for (var i = 0; i < all.length; i++) {
       var candidate = all[i];
       if (!comparable(card, candidate)) continue;
       any.push(candidate);
-      if (recent.indexOf(candidate.title) === -1) fresh.push(candidate);
+      if (recent.indexOf(candidate.title) === -1) {
+        fresh.push(candidate);
+        if (seenTitles && seenTitles.indexOf(candidate.title) === -1) {
+          unseen.push(candidate);
+        }
+      }
     }
+    if (unseen.length) return pick(unseen);
     return pick(fresh.length ? fresh : any);
   }
 
-  function poolForStreak(streak) {
-    return POOL_ORDER[Math.floor(streak / REALITY_EVERY) % POOL_ORDER.length];
+  // The run is split at the reality check: one pool before it, the other
+  // after. Which pool leads is drawn per run, so two runs in a row do not
+  // open on the same kind of question. The pool never changes mid-chain, so
+  // the same-pool, same-basis rule is untouched.
+  function poolForStreak(streak, order) {
+    var ord = order || (state && state.poolOrder) || POOL_ORDER;
+    var segment = Math.min(Math.floor(streak / REALITY_AT), ord.length - 1);
+    return ord[segment];
+  }
+
+  function shuffledPoolOrder() {
+    var ord = POOL_ORDER.slice();
+    for (var i = ord.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = ord[i]; ord[i] = ord[j]; ord[j] = tmp;
+    }
+    return ord;
+  }
+
+  // Never on the last round: the run ending and a modal appearing at the same
+  // moment reads as a bug.
+  function realityDue(streak) {
+    return streak === REALITY_AT && streak < ROUNDS_PER_RUN;
   }
 
   function remember(card) {
     state.recent.push(card.title);
     while (state.recent.length > RECENT_MEMORY) state.recent.shift();
     if (state.seen.indexOf(card) === -1) state.seen.push(card);
+    markSeen(card);
+  }
+
+  // Prefer a starting card this player has not met. Same fallback ladder as
+  // drawOpponent: unseen and not recent, then not recent, then anything.
+  function pickStarter(pool) {
+    var seenTitles = seenStore[pool];
+    var unseen = [];
+    var fresh = [];
+    for (var i = 0; i < pools[pool].length; i++) {
+      var card = pools[pool][i];
+      if (state.recent.indexOf(card.title) !== -1) continue;
+      fresh.push(card);
+      if (seenTitles.indexOf(card.title) === -1) unseen.push(card);
+    }
+    if (unseen.length) return pick(unseen);
+    return pick(fresh.length ? fresh : pools[pool]);
   }
 
   function startChain() {
     var pool = poolForStreak(state.streak);
-    var unseen = pools[pool].filter(function (card) {
-      return state.recent.indexOf(card.title) === -1;
-    });
-    var left = pick(unseen.length ? unseen : pools[pool]);
+    if (unseenCount(pool) < MIN_UNSEEN) recycleSeen(pool);
     state.pool = pool;
-    state.left = left;
-    state.right = drawOpponent(left, state.recent);
+    state.left = pickStarter(pool);
+    state.right = drawOpponent(state.left, state.recent, seenStore[pool]);
     remember(state.left);
     remember(state.right);
     logPair(state.left, state.right);
@@ -2783,7 +3074,7 @@
       return;
     }
     state.left = state.right;
-    state.right = drawOpponent(state.left, state.recent);
+    state.right = drawOpponent(state.left, state.recent, seenStore[state.pool]);
     remember(state.right);
     logPair(state.left, state.right);
   }
@@ -2898,10 +3189,20 @@
     }
   }
 
+  // "Round 3 of 5" plus a bar. The round in play is the streak so far plus
+  // one, capped so the label never overshoots the run.
+  function renderProgress() {
+    var round = Math.min(state.streak + 1, ROUNDS_PER_RUN);
+    var done = state.streak;
+    els.progressLabel.textContent = 'Round ' + round + ' of ' + ROUNDS_PER_RUN;
+    els.progressFill.style.width = Math.round((done / ROUNDS_PER_RUN) * 100) + '%';
+  }
+
   function renderRound() {
     stopCountUp();
     els.streak.textContent = String(state.streak);
     els.best.textContent = String(state.best);
+    renderProgress();
     els.basisNote.textContent = basisSentence(state.pool);
     els.question.textContent = 'Does ' + state.right.short_title +
       ' need more or less water than ' + state.left.short_title + '?';
@@ -2947,7 +3248,9 @@
     els.btnMore.hidden = !asking;
     els.btnNext.hidden = asking;
     if (!asking) {
-      els.btnNext.textContent = phase === 'lost' ? 'See how you did' : 'Next';
+      els.btnNext.textContent = (phase === 'lost' || phase === 'won')
+        ? 'See how you did'
+        : 'Next';
     }
   }
 
@@ -2976,16 +3279,26 @@
       state.streak += 1;
       state.best = Math.max(state.best, state.streak);
       saveBest(state.best);
-      setControls(state.streak % REALITY_EVERY === 0 ? 'reality-due' : 'revealed');
+      if (state.streak >= ROUNDS_PER_RUN) {
+        state.outcome = 'perfect';
+        setControls('won');
+      } else {
+        setControls(realityDue(state.streak) ? 'reality-due' : 'revealed');
+      }
     } else {
+      state.outcome = 'wrong';
       setControls('lost');
     }
 
     els.streak.textContent = String(state.streak);
     els.best.textContent = String(state.best);
+    renderProgress();
     announce((right ? 'Correct. ' : 'Not quite. ') + state.right.short_title + ', ' +
       litres(state.right.impact) + ' litres ' + state.right.unit_label + '. ' +
-      (right ? 'Streak ' + state.streak + '.' : 'Game over. Final streak ' + state.streak + '.'));
+      (state.outcome === 'perfect'
+        ? 'That is all five. Perfect run.'
+        : right ? 'Round ' + state.streak + ' of ' + ROUNDS_PER_RUN + ' complete.'
+                : 'Run over. Final score ' + state.streak + ' of ' + ROUNDS_PER_RUN + '.'));
     focusNoScroll(els.btnNext);
     // On short screens the verdict can land under the sticky answer bar.
     if (els.verdict.scrollIntoView) {
@@ -2998,9 +3311,19 @@
 
   function proceed() {
     if (!state) return;
-    if (state.phase === 'lost') { showResults(); return; }
+    if (state.phase === 'lost' || state.phase === 'won') { showResults(); return; }
     if (state.phase === 'reality-due') { showReality(); return; }
     if (state.phase === 'revealed') { advanceChain(); renderRound(); }
+  }
+
+  // The explicit way out. No confirmation: whatever is on the board is kept,
+  // so an accidental tap costs nothing but the rest of the run. If the run is
+  // already over this is just a shortcut to the score screen.
+  function exitRun() {
+    if (!state || !els.screenGame.classList.contains('active')) return;
+    if (!els.reality.hidden) els.reality.hidden = true;
+    if (state.phase !== 'lost' && state.phase !== 'won') state.outcome = 'exit';
+    showResults();
   }
 
   // ══════════════════════════════════════════════════════
@@ -3016,28 +3339,46 @@
     });
     var nav = document.getElementById('game-bottom-nav');
     if (nav) nav.style.display = (id === 'screen-score') ? 'flex' : 'none';
+    // Inactive screens are only faded out, not removed, so the exit control
+    // would still be focusable from the intro and score screens. Hide it
+    // outright: it belongs to an active run and nothing else.
+    if (els.btnExit) els.btnExit.hidden = (id !== 'screen-game');
     var next = document.getElementById(id);
     next.classList.add('active');
     next.scrollTop = 0;
   }
 
   function newGame() {
+    // The gate is re-checked here, not just on load, so a tab left open
+    // overnight or a stale score screen cannot buy a second run.
+    if (!canPlayNow()) { showPlayedScreen(); return; }
+    // Taking the extra go spends it immediately, whatever happens next.
+    if (hasPlayedToday() && retryAvailable()) storeSet(MULLIGAN_KEY, todayStr());
+
+    var runSeen = {};
+    POOL_ORDER.forEach(function (pool) { runSeen[pool] = []; });
+
     state = {
       streak: 0,
       best: loadBest(),
       recent: [],
       seen: [],
+      runSeen: runSeen,
+      poolOrder: shuffledPoolOrder(),
       pool: null,
       left: null,
       right: null,
       phase: 'asking',
+      outcome: null,
+      startedAt: Date.now(),
+      points: 0,
       saved: false
     };
     pairLog = [];
     startChain();
     showScreen('screen-game');
     renderRound();
-    announce('Round one. ' + els.question.textContent);
+    announce('Round one of ' + ROUNDS_PER_RUN + '. ' + els.question.textContent);
   }
 
   function showReality() {
@@ -3047,7 +3388,7 @@
     els.realityBig.textContent = 'About ' + roughly(check.count) + ' ' + check.plural + '.';
     els.realitySub.textContent = capitalise(check.yardstick.sub) + ' is ' +
       litres(check.yardstick.impact) + ' litres.';
-    els.realityStreak.textContent = 'Streak ' + state.streak;
+    els.realityStreak.textContent = 'Round ' + state.streak + ' of ' + ROUNDS_PER_RUN;
     els.reality.hidden = false;
     focusNoScroll(els.realityBtn);
     announce('Reality check. ' + els.realityLead.textContent + ' ' + els.realityBig.textContent);
@@ -3061,33 +3402,91 @@
     renderRound();
   }
 
-  function showResults() {
-    els.endStreak.textContent = String(state.streak);
-    els.scorePillStreak.textContent = state.streak + ' in a row';
-    els.scorePillBest.textContent = 'Best ' + state.best;
-
-    if (state.streak >= 15) {
-      els.scoreMessage.textContent = 'Outstanding! 💧';
-    } else if (state.streak >= 10) {
-      els.scoreMessage.textContent = 'Well done! 🙌';
-    } else if (state.streak >= 5) {
-      els.scoreMessage.textContent = 'Good going! 🌊';
-    } else {
-      els.scoreMessage.textContent = 'Good start! 🌱';
+  // ══════════════════════════════════════════════════════
+  // SCORING — see the constants block for the calibration
+  // The speed bonus is only paid on a completed run. Paying it on an early
+  // exit would make quitting on round one worth 300 points, which is silly.
+  // ══════════════════════════════════════════════════════
+  function calcScore(correct, timeSec) {
+    var perfect = correct >= ROUNDS_PER_RUN;
+    var speed = 0;
+    if (perfect) {
+      speed = timeSec <= TIME_BONUS_FREE
+        ? TIME_BONUS_MAX
+        : Math.max(0, TIME_BONUS_MAX - (timeSec - TIME_BONUS_FREE) * TIME_BONUS_DECAY);
     }
+    return {
+      base:    correct * POINTS_PER_CORRECT,
+      perfect: perfect ? PERFECT_BONUS : 0,
+      speed:   Math.round(speed),
+      total:   Math.round(correct * POINTS_PER_CORRECT + (perfect ? PERFECT_BONUS : 0) + speed)
+    };
+  }
 
-    els.endLead.textContent = state.streak >= state.best && state.streak > 0
-      ? 'That is your best run so far.'
-      : 'Your best run is ' + state.best + '.';
+  // ══════════════════════════════════════════════════════
+  // SUMMARY ROTATION
+  // The comparison lines already vary, because they are drawn from the cards
+  // this player actually met. The action list did not: it printed all six,
+  // in the same order, every time. Now each run shows a slice, always led by
+  // the biggest lever and always in dataset order, so the ranking survives.
+  // Nothing new is invented; this only rotates what the dataset holds.
+  // ══════════════════════════════════════════════════════
+  function rotationIndex() {
+    var n = parseInt(storeGet(ROTATE_KEY), 10);
+    if (isNaN(n) || n < 0) n = Math.floor(Math.random() * 1000);
+    return n;
+  }
 
-    // Comparison lines that use cards this player actually met.
+  function bumpRotation() {
+    storeSet(ROTATE_KEY, String((rotationIndex() + 1) % 1000000));
+  }
+
+  function actionsForRun(rot) {
+    var all = DATA.actions;
+    if (all.length <= ACTIONS_PER_RUN) return all.slice();
+    var rest = [];
+    for (var i = 1; i < all.length; i++) rest.push(i);
+    var picked = [0];                       // the biggest lever is never dropped
+    for (var k = 0; k < ACTIONS_PER_RUN - 1; k++) {
+      picked.push(rest[(rot + k) % rest.length]);
+    }
+    picked.sort(function (a, b) { return a - b; });
+    return picked.map(function (index) { return all[index]; });
+  }
+
+  function renderActions(rot) {
+    els.actionsList.innerHTML = '';
+    actionsForRun(rot).forEach(function (action) {
+      var li = document.createElement('li');
+      var head = document.createElement('p');
+      head.className = 'action-title';
+      head.textContent = action.action;
+      var num = document.createElement('p');
+      num.className = 'action-number';
+      num.textContent = action.number;
+      var why = document.createElement('p');
+      why.className = 'action-framing';
+      why.textContent = action.framing;
+      li.appendChild(head);
+      li.appendChild(num);
+      li.appendChild(why);
+      els.actionsList.appendChild(li);
+    });
+  }
+
+  function renderFacts(rot) {
+    // Comparison lines that use cards this player actually met. Ties are
+    // broken by the rotation, so two runs that saw similar cards still read
+    // differently.
     var seenTitles = state.seen.map(function (card) { return card.title; });
-    var ranked = DATA.comparisons.map(function (row) {
+    var total = DATA.comparisons.length;
+    var ranked = DATA.comparisons.map(function (row, index) {
       var hits = row.relates_to.filter(function (title) {
         return seenTitles.indexOf(title) !== -1;
       }).length;
-      return { row: row, hits: hits };
-    }).sort(function (a, b) { return b.hits - a.hits; });
+      return { row: row, hits: hits, tie: (index + rot) % total };
+    }).sort(function (a, b) { return (b.hits - a.hits) || (a.tie - b.tie); });
+
     var chosen = ranked.filter(function (r) { return r.hits > 0; }).slice(0, 3);
     if (!chosen.length) chosen = ranked.slice(0, 2);
 
@@ -3097,11 +3496,82 @@
       li.textContent = entry.row.line;
       els.endFacts.appendChild(li);
     });
+  }
 
+  function showResults() {
+    var seconds = Math.round((Date.now() - state.startedAt) / 1000);
+    var score = calcScore(state.streak, seconds);
+    state.points = score.total;
+
+    var perfect = state.outcome === 'perfect';
+    var rot = rotationIndex();
+
+    els.endPoints.textContent = String(score.total);
+    els.scoreLabel.textContent = perfect ? 'Perfect run' : 'Your score';
+    els.scoreMax.textContent = 'pts this round';
+    els.scorePillStreak.textContent = state.streak + ' of ' + ROUNDS_PER_RUN + ' correct';
+    els.scorePillBest.textContent = 'Best ' + state.best + ' of ' + ROUNDS_PER_RUN;
+    els.scorePillBonus.textContent = perfect
+      ? 'Speed bonus ' + score.speed
+      : 'Max ' + MAX_POINTS + ' pts';
+
+    if (perfect) {
+      els.scoreMessage.textContent = 'All five! 💧';
+    } else if (state.streak >= 4) {
+      els.scoreMessage.textContent = 'So close! 🌊';
+    } else if (state.streak >= 2) {
+      els.scoreMessage.textContent = 'Good going! 🙌';
+    } else {
+      els.scoreMessage.textContent = 'Good start! 🌱';
+    }
+
+    var lead;
+    if (perfect) {
+      lead = 'Five out of five. You have a real feel for this.';
+    } else if (state.outcome === 'exit') {
+      lead = 'You stopped after ' + state.streak + ' of ' + ROUNDS_PER_RUN +
+             '. Your score is safe.';
+    } else {
+      lead = 'That one caught you out on round ' + (state.streak + 1) +
+             ' of ' + ROUNDS_PER_RUN + '.';
+    }
+    if (state.streak > 0 && state.streak >= state.best) {
+      lead += ' Your best yet.';
+    }
+    els.endLead.textContent = lead;
+
+    renderFacts(rot);
+    renderActions(rot);
+    bumpRotation();
     saveProgress();
+
+    // The gate is spent, unless the mulligan is now on the table.
+    var again = retryAvailable();
+    els.endReplay.hidden = !again;
+    if (again) els.endReplay.textContent = 'One more go';
+
     showScreen('screen-score');
-    focusNoScroll(els.endReplay);
-    announce('Game over. Final streak ' + state.streak + '. Best ' + state.best + '.');
+    focusNoScroll(again ? els.endReplay
+                        : document.querySelector('#screen-score .btn-finish'));
+    announce('Run over. ' + state.streak + ' of ' + ROUNDS_PER_RUN + ' correct, ' +
+      score.total + ' points.');
+  }
+
+  function hoursToMidnight() {
+    var now = new Date();
+    var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    var hours = (midnight - now) / 3600000;
+    if (hours < 1) return 'in under an hour';
+    return 'in about ' + Math.round(hours) + (Math.round(hours) === 1 ? ' hour' : ' hours');
+  }
+
+  function showPlayedScreen() {
+    var score = storeGet(SCORE_KEY);
+    els.playedScore.textContent = (score === null || score === '') ? '—' : score;
+    els.playedWhen.textContent = 'Your next run unlocks at midnight, ' + hoursToMidnight() + '.';
+    showScreen('screen-played');
+    announce('You have already played today. Your score was ' +
+      (score || 'not recorded') + ' points.');
   }
 
   // ══════════════════════════════════════════════════════
@@ -3120,55 +3590,73 @@
         els.explainerList.appendChild(dt);
         els.explainerList.appendChild(dd);
       });
-
-    DATA.actions.forEach(function (action) {
-      var li = document.createElement('li');
-      var head = document.createElement('p');
-      head.className = 'action-title';
-      head.textContent = action.action;
-      var num = document.createElement('p');
-      num.className = 'action-number';
-      num.textContent = action.number;
-      var why = document.createElement('p');
-      why.className = 'action-framing';
-      why.textContent = action.framing;
-      li.appendChild(head);
-      li.appendChild(num);
-      li.appendChild(why);
-      els.actionsList.appendChild(li);
-    });
+    // The action list is no longer built here: it is rotated per run by
+    // renderActions(), so that a once-a-day player does not read the same six
+    // lines every day. The green/blue/grey explainer above stays put — the
+    // dataset holds one version of it and padding it out would be invention.
   }
 
   // ══════════════════════════════════════════════════════
   // PERSISTENCE — the Carbon Challenge's keys, so the hub sees this game too
   // ══════════════════════════════════════════════════════
+  // "Best" now means the best score out of ROUNDS_PER_RUN, not an endless
+  // streak. Anything stored by the earlier endless build can be larger than a
+  // run can ever be, so it is clamped and written back once. Showing "Best 23
+  // of 5" would be nonsense.
   function loadBest() {
-    try {
-      var value = parseInt(window.localStorage.getItem(BEST_KEY), 10);
-      return isNaN(value) || value < 0 ? 0 : value;
-    } catch (err) {
-      return 0; // private mode, or storage disabled
+    var value = parseInt(storeGet(BEST_KEY), 10);
+    if (isNaN(value) || value < 0) return 0;
+    if (value > ROUNDS_PER_RUN) {
+      value = ROUNDS_PER_RUN;
+      saveBest(value);
     }
+    return value;
   }
 
   function saveBest(value) {
+    storeSet(BEST_KEY, String(value));
+  }
+
+  // The shared daily streak the Carbon Challenge maintains. Same key, same
+  // thresholds, and idempotent within a day, so both games can bump it.
+  function dailyStreakBonus() {
     try {
-      window.localStorage.setItem(BEST_KEY, String(value));
+      var today = todayStr();
+      var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+      var key = 'streak_' + _nk;
+      var data = JSON.parse(storeGet(key) || '{}');
+      if (data.lastDate === today) {
+        /* already counted today, leave the streak alone */
+      } else if (data.lastDate === yesterday) {
+        data.count = (data.count || 1) + 1;
+        data.lastDate = today;
+        storeSet(key, JSON.stringify(data));
+      } else {
+        data.count = 1;
+        data.lastDate = today;
+        storeSet(key, JSON.stringify(data));
+      }
+      var count = data.count || 1;
+      if (count >= 5) return 250;
+      if (count >= 3) return 100;
+      return 0;
     } catch (err) {
-      /* nothing to do, the streak just will not persist */
+      return 0;
     }
   }
 
   // Feed the shared hub progress once per run, exactly as the Carbon Challenge
-  // does. This game is endlessly replayable, so there is no once-a-day gate.
+  // does, and stamp the day so the hub and this game agree the play is used.
   function saveProgress() {
     if (state.saved) return;
     state.saved = true;
+    markPlayedToday(state.points, state.streak === 0);
+    var bonus = dailyStreakBonus();
     try {
       var progKey = 'env_progress_' + _nk;
-      var prev = JSON.parse(window.localStorage.getItem(progKey) || '{}');
-      window.localStorage.setItem(progKey, JSON.stringify({
-        totalScore:     (prev.totalScore || 0) + state.streak * POINTS_PER_CORRECT,
+      var prev = JSON.parse(storeGet(progKey) || '{}');
+      storeSet(progKey, JSON.stringify({
+        totalScore:     (prev.totalScore || 0) + state.points + bonus,
         sessionsPlayed: (prev.sessionsPlayed || 0) + 1,
         actionsPledged: (prev.actionsPledged || 0)
       }));
@@ -3191,6 +3679,14 @@
       document.activeElement.tagName === 'BUTTON' &&
       !document.activeElement.hidden;
 
+    // Escape is the keyboard twin of the End run button, and it works with
+    // the reality check open too.
+    if (key === 'escape' && els.screenGame.classList.contains('active')) {
+      event.preventDefault();
+      exitRun();
+      return;
+    }
+
     if (!els.reality.hidden) {
       if (key === 'enter' || key === ' ') {
         if (!onButton) { event.preventDefault(); dismissReality(); }
@@ -3211,12 +3707,15 @@
   // INIT
   // ══════════════════════════════════════════════════════
   function cacheElements() {
-    ['screenIntro', 'screenGame', 'screenScore', 'cardTrackWrapper', 'streak', 'best',
+    ['screenIntro', 'screenGame', 'screenScore', 'screenPlayed', 'cardTrackWrapper',
+      'streak', 'best', 'progressLabel', 'progressFill', 'btnExit', 'retryNote',
       'basisNote', 'question', 'cardLeft', 'cardRight', 'verdict', 'verdictTitle', 'verdictLine',
-      'verdictFact', 'btnLess', 'btnMore', 'btnNext', 'btnStart', 'startBest', 'reality',
-      'realityLead', 'realityBig', 'realitySub', 'realityStreak', 'realityBtn', 'endStreak',
+      'verdictFact', 'btnLess', 'btnMore', 'btnNext', 'btnStart', 'btnStartLabel',
+      'startBest', 'reality',
+      'realityLead', 'realityBig', 'realitySub', 'realityStreak', 'realityBtn', 'endPoints',
+      'scoreLabel', 'scoreMax', 'playedScore', 'playedWhen',
       'endLead', 'endFacts', 'endReplay', 'scoreMessage', 'scorePillStreak', 'scorePillBest',
-      'explainerTitle', 'explainerIntro', 'explainerList', 'actionsList', 'live'
+      'scorePillBonus', 'explainerTitle', 'explainerIntro', 'explainerList', 'actionsList', 'live'
     ].forEach(function (key) {
       var id = key.replace(/[A-Z]/g, function (c) { return '-' + c.toLowerCase(); });
       els[key] = document.getElementById(id);
@@ -3232,17 +3731,32 @@
       if (pools[pool].length < 4) throw new Error('Pool ' + pool + ' is too small to play');
     });
 
+    seenStore = loadSeenStore();
+
     cacheElements();
     buildStaticContent();
-    els.startBest.textContent = loadBest() > 0
-      ? 'Your best streak so far: ' + loadBest() + '.'
+
+    var best = loadBest();
+    els.startBest.textContent = best > 0
+      ? 'Your best run so far: ' + best + ' out of ' + ROUNDS_PER_RUN + '.'
       : '';
+
+    // Three ways in: never played today, or the mulligan is on the table, or
+    // the day is spent and we say so warmly rather than showing a dead button.
+    if (retryAvailable()) {
+      els.retryNote.hidden = false;
+      els.retryNote.textContent = 'That first one caught you out, so here is one more go today.';
+      els.btnStartLabel.textContent = 'One more go';
+    } else if (hasPlayedToday()) {
+      showPlayedScreen();
+    }
 
     els.btnStart.addEventListener('click', newGame);
     els.endReplay.addEventListener('click', newGame);
     els.btnLess.addEventListener('click', function () { answer('less'); });
     els.btnMore.addEventListener('click', function () { answer('more'); });
     els.btnNext.addEventListener('click', proceed);
+    els.btnExit.addEventListener('click', exitRun);
     els.realityBtn.addEventListener('click', dismissReality);
     els.reality.addEventListener('click', function (event) {
       if (event.target === els.reality) dismissReality();
@@ -3253,29 +3767,45 @@
     window.waterChallenge = {
       data: DATA,
       pools: pools,
+      rounds: ROUNDS_PER_RUN,
+      maxPoints: MAX_POINTS,
+      realityAt: REALITY_AT,
       pairLog: function () { return pairLog.slice(); },
       state: function () { return state; },
+      seenStore: function () { return seenStore; },
       correctChoice: correctChoice,
       answer: answer,
       proceed: proceed,
+      exitRun: exitRun,
+      newGame: newGame,
+      canPlayNow: canPlayNow,
+      retryAvailable: retryAvailable,
+      calcScore: calcScore,
       simulatePairings: simulatePairings
     };
   }
 
   // Headless replay of the pairing logic only, for checking the units rule.
+  // Runs with the live seen store attached, so the rule is checked with the
+  // unseen-first filter switched on.
   function simulatePairings(rounds) {
     var log = [];
     var recent = [];
     var streak = 0;
-    var pool = poolForStreak(streak);
+    var order = shuffledPoolOrder();
+    var pool = poolForStreak(streak, order);
     var left = pick(pools[pool]);
     for (var i = 0; i < rounds; i++) {
-      if (poolForStreak(streak) !== pool) {
-        pool = poolForStreak(streak);
+      if (streak > 0 && streak % ROUNDS_PER_RUN === 0) {
+        order = shuffledPoolOrder();          // a fresh run
+      }
+      var wanted = poolForStreak(streak % ROUNDS_PER_RUN, order);
+      if (wanted !== pool) {
+        pool = wanted;
         left = pick(pools[pool]);
         recent = [];
       }
-      var right = drawOpponent(left, recent);
+      var right = drawOpponent(left, recent, seenStore[pool]);
       log.push({
         left:  { title: left.title,  pool: left.pool,  basis: left.basis,  impact: left.impact },
         right: { title: right.title, pool: right.pool, basis: right.basis, impact: right.impact },

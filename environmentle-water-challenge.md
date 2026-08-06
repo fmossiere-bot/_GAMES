@@ -20,14 +20,140 @@ It is reachable from the hub: `index.html` lists it on the Games tab and
 Two cards sit one above the other. The top card shows an item with its water
 footprint revealed, the bottom card shows a new item with the number hidden, and
 you say whether the new one needs more or less water than the one beside it. Get
-it right and the bottom card slides up to become the new top card, your streak
-goes up and it carries on forever; get it wrong and the run ends.
+it right and the bottom card slides up to become the new top card and the run
+moves on; get it wrong and the run ends there.
 
-Two things are layered on top. Every five correct answers the game interrupts with
-a full-screen **reality check** that converts something you just met into household
-terms, for example one kilogram of roasted coffee against days of home water use.
-The end screen shows your streak, the comparison lines for the items you actually
-saw, the green/blue/grey explainer, and the actions ranked biggest lever first.
+Two things are layered on top. Once per run, after the third correct answer, the
+game interrupts with a full-screen **reality check** that converts something you
+just met into household terms, for example one kilogram of roasted coffee against
+days of home water use. The end screen shows your points, the comparison lines
+for the items you actually saw, the green/blue/grey explainer, and a rotating
+slice of the actions, always ranked biggest lever first.
+
+## A run is five rounds, once a day
+
+`ROUNDS_PER_RUN` at the top of the game script is the only knob. It is 5.
+
+A run ends in exactly one of three ways:
+
+| Ending | What happens |
+|---|---|
+| Five correct | Perfect run. The score screen says so and pays the full bonus. |
+| One wrong | The run stops there, with whatever you had scored. |
+| **End run** pressed | The run stops there, with whatever you had scored. |
+
+The reality check fires after `REALITY_AT` correct answers, which is 3, and
+`realityDue()` refuses to fire it on the final round: a run ending and a modal
+opening in the same beat reads as a bug. That same boundary is where the card
+pool switches, so a run is three rounds of one basis and two of the other. Which
+basis leads is drawn per run by `shuffledPoolOrder()`, so two runs in a row do
+not open on the same kind of question. The pool never changes mid-chain, so the
+units rule below is untouched.
+
+### One play a day, with a first-question mulligan
+
+Same gate as the Carbon Challenge, same key shape, same `YYYY-MM-DD` local-day
+boundary:
+
+| Key | Meaning |
+|---|---|
+| `wc_last_played_<nk>` | Day of the last completed run. Mirrors `sio_last_played_<nk>`. |
+| `wc_last_score_<nk>` | Points from that run, shown on the played screen. |
+| `wc_first_loss_<nk>` | Set when the last run today ended on round one with nothing scored. |
+| `wc_retry_used_<nk>` | Set the moment the extra go is taken. |
+
+The exception the owner asked for: go out on the very first question with a score
+of zero and you get **one** more attempt that day. Taking it spends
+`wc_retry_used_<nk>` immediately, so closing the tab does not buy a third go, and
+going out on question one of the retry does not either. Losing on round two or
+later never grants a retry.
+
+Coming back after the day is spent shows `#screen-played`, the water twin of the
+Carbon Challenge's played screen: today's score and when the next run unlocks,
+rather than a dead button. `index.html` reads the same keys to put the
+`✓ Done today` badge on the Water Challenge card, exactly as it does for the
+Carbon Challenge, and it accounts for the mulligan so the card stays playable
+while the spare attempt is still on the table.
+
+A missing, unreadable or corrupt stored value always means "you may play". A
+storage failure must never lock anyone out.
+
+### Points, calibrated against the Carbon Challenge
+
+The Carbon Challenge scores `correct × 100 × multiplier + timeBonus`, where the
+multiplier is 3, 2 or 1 for a first, second or third try, and the time bonus is
+300 under thirty seconds, decaying by 8 a second after that. Its best case is
+`6 × 100 × 3 + 300 = 2100`.
+
+The Water Challenge is built to land on the same ceiling:
+
+```
+5 correct × 300            = 1500
++ perfect bonus              300
++ speed bonus, under 45s     300
+                           -----
+maximum                     2100
+```
+
+The speed bonus is paid on completed runs only. Paying it on an early exit would
+make quitting on round one worth 300 points, which is silly. Points go into the
+shared `env_progress_<nk>.totalScore` alongside the same `streak_<nk>` daily
+bonus the Carbon Challenge maintains, so any hub or profile total picks the water
+game up without special-casing it.
+
+`wc_best_streak_<nk>` survives, but "best" now means best score out of five. A
+value left behind by the earlier endless build can be larger than a run can ever
+be, so `loadBest()` clamps it to `ROUNDS_PER_RUN` and writes the clamped value
+back once. "Best 23 of 5" would be nonsense.
+
+### The exit control
+
+`#btn-exit` sits in the game header next to the progress bar, in the same
+low-opacity white chrome as the Carbon Challenge's tries row. It is a real
+button, so it is keyboard reachable, it carries an `aria-label`, and Escape does
+the same thing. There is no confirmation dialogue, because the game is
+hyper-casual and the score is preserved either way, so an accidental tap costs
+nothing but the rest of the run. `showScreen()` sets `hidden` on it whenever the
+active screen is not the game screen: inactive screens here are only faded out,
+not removed, so without that the control would still be focusable from the intro
+and score screens.
+
+### What the player has already seen
+
+`wc_seen_<nk>` holds `{ "per-kg": [title, ...], "per-unit": [...] }` per player
+and persists across sessions. On a new run the starter card and every opponent
+prefer titles the player has not met.
+
+This is a preference, never a rule. `drawOpponent()` and `pickStarter()` each
+walk a three-tier ladder — unseen and not recent, then not recent, then anything
+valid — and **every** tier is gated by `comparable()` first. Preferring an unseen
+card can therefore never produce a cross-pool, cross-basis or near-tie pairing.
+When the preferred tiers are empty the code drops back to a valid pairing rather
+than bending the rule.
+
+When a pool's unseen count falls below `MIN_UNSEEN`, `recycleSeen()` forgets
+everything except what the current run has already used. The next chain draws
+from the whole pool again, in a fresh random order, without repeating what is
+still on screen. It cannot deadlock, because the final tier of every picker is
+the full pool.
+
+### Does the summary change between runs?
+
+Partly, and more than it used to.
+
+| Part of the score screen | Varies? |
+|---|---|
+| Points, message, lead line, pills | Yes, with the run |
+| "From what you just saw" comparison lines | Yes. Ranked by how many of the cards you actually met they mention, with ties broken by a stored rotation counter |
+| "What actually moves the needle" actions | Yes, now. Four of the six each run, always led by the biggest lever and always in dataset order |
+| Green, blue and grey explainer | No. The dataset holds one version of it |
+| The closing caveat panel | No. It is fixed copy |
+
+The action rotation walks a window over actions 1 to 5 while always keeping
+action 0, so consecutive runs never show the same four and the ranking survives.
+The explainer is deliberately left alone: there is one version of it in
+`water-cards.json` and rotating it would mean inventing copy that no source
+backs. If more explainer framings are wanted, they belong in the dataset first.
 
 ## How it fits the rest of the repository
 
@@ -45,11 +171,17 @@ Everything here follows the Carbon Challenge (`environmentle-sort-it-out.html`):
 - **Same player conventions.** `?player=` wins, then `localStorage`
   `env_player_name`; the name is lowercased and underscored into `_nk` the same
   way. Progress is written once per run into the shared `env_progress_<nk>`
-  (`totalScore` at 100 points a correct answer, `sessionsPlayed`), so the hub
-  counts this game like any other. The best streak lives in
-  `wc_best_streak_<nk>`, alongside the Carbon Challenge's `sio_last_*` keys.
-- **No once-a-day gate.** The Carbon Challenge is one round a day. This game is
-  endlessly replayable by design, so it has no `screen-played` equivalent.
+  (`totalScore`, `sessionsPlayed`), so the hub counts this game like any other.
+  The water keys sit alongside the Carbon Challenge's `sio_*` keys and mirror
+  their shape: `wc_best_streak_<nk>`, `wc_last_played_<nk>`,
+  `wc_last_score_<nk>`, `wc_seen_<nk>`.
+- **Same once-a-day gate.** One run a day per player, with `#screen-played` as
+  the water twin of the Carbon Challenge's played screen. See below for the
+  first-question mulligan, which is the one place the two games differ.
+- **Every read and write is wrapped.** `storeGet` / `storeSet` fall back to an
+  in-memory object when `localStorage` throws or is unavailable, which it is in
+  some private-browsing modes. The game then forgets between sessions; it never
+  breaks.
 
 ## How to run it
 
@@ -172,8 +304,12 @@ only ever pairs two cards from the same pool with the same basis**.
 
 - Each card states its unit on screen (`per kg`, `per 125 ml cup`, `per 8-minute
   shower`), and a line under the question repeats the basis for the round.
-- The pool switches only after a reality check, and the chain restarts with a fresh
+- The pool switches only at the reality check, and the chain restarts with a fresh
   top card, so the basis never changes underneath you mid-comparison.
+- The unseen-item preference described above sits strictly *inside* this rule. It
+  reorders candidates that have already passed `comparable()`; it never widens the
+  candidate set. If preferring unseen cards would leave no valid opponent, the code
+  falls back to a valid pairing rather than breaking the rule.
 - If two cards are within 10 per cent of each other the pairing is dropped and
   another is drawn. A near-tie is not a fair question.
 - Household rows sit in the `per-unit` pool and are also the yardsticks for the
@@ -274,8 +410,12 @@ This is flagged here only. **Nothing in the wiki repository was edited.**
 ## Accessibility
 
 - Fully keyboard playable: left arrow or `L` for Less, right arrow or `M` for
-  More, `Enter` or `Space` to continue and to dismiss a reality check.
-- Every control is a real `<button>` with a visible label.
+  More, `Enter` or `Space` to continue and to dismiss a reality check, `Escape`
+  to end the run and go to the score screen.
+- Every control is a real `<button>` with a visible label. The exit control adds
+  an `aria-label` because "End run" alone does not say where it takes you.
+- The progress indicator is plain text, "Round 3 of 5", not colour or shape
+  alone. The bar beside it is `aria-hidden`, since it repeats that text.
 - An `aria-live` region announces the result of each round, the reality checks and
   the final score.
 - The count-up animation is skipped entirely under
