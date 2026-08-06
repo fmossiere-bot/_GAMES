@@ -68,3 +68,27 @@ node_modules/
 # dataconnect generated files
 .dataconnect
 _images/htaccess
+
+# Apache config anywhere — these hold API keys and must never be committed.
+# _images/htaccess above only covers that one path.
+htaccess
+.htaccess
+**/htaccess
+**/.htaccess
+
+# Other secrets, never commit these
+.env.*
+*.env
+*.pem
+*.key
+id_rsa
+.netrc
+
+# Editors and tooling
+.obsidian/
+.vscode/
+.idea/
+
+# OS cruft
+.DS_Store
+Thumbs.db
