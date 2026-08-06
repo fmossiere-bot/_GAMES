@@ -1,0 +1,1245 @@
+{
+  "challenges": [
+    {
+      "id": "spring-reset",
+      "date": "2026-03-31",
+      "title_line1": "Spring",
+      "title_line2": "Reset",
+      "category_badge": "Climate & Action",
+      "category_full": "Climate & Action",
+      "intro_fact": "Spring is here — and so is a good moment to ask: what small changes can stick? <strong>Ireland produces 4x more food than it eats</strong>, but also generates over 1 million tonnes of food waste a year. The biggest changes often start in the kitchen.",
+      "questions": [
+        {
+          "text": "What percentage of Ireland's greenhouse gas emissions come from agriculture?",
+          "options": [
+            "Around 10%",
+            "Around 20%",
+            "Around 35%",
+            "Around 50%"
+          ],
+          "correct": 2,
+          "fact": "<strong>Agriculture accounts for about 35% of Ireland's total emissions</strong> — one of the highest shares in Europe. Most of that comes from livestock, particularly cattle."
+        },
+        {
+          "text": "Which everyday action has the single biggest impact on an individual's carbon footprint?",
+          "options": [
+            "Recycling more",
+            "Taking fewer flights",
+            "Switching off lights",
+            "Using a reusable cup"
+          ],
+          "correct": 1,
+          "fact": "<strong>Cutting out one long-haul flight saves more CO₂ than a year of recycling</strong>. Transport — especially aviation — is one of the highest-impact areas for individual action."
+        },
+        {
+          "text": "Research shows that habits form fastest when they are tied to what?",
+          "options": [
+            "A financial reward",
+            "An existing daily routine",
+            "A public commitment",
+            "A personal crisis"
+          ],
+          "correct": 1,
+          "fact": "<strong>Habit stacking</strong> — linking a new behaviour to an existing routine — is one of the most effective techniques in behaviour change research."
+        }
+      ],
+      "action_intro": "Spring is a natural reset point. <strong>Small changes compounded over weeks add up</strong> — and April is a great month to start. Pick one or two things you can genuinely stick to.",
+      "actions": [
+        {
+          "title": "Pick one sustainable habit to add this week",
+          "desc": "Choose something small and specific — like bringing a bag to the shops or switching off standby devices before bed. Attach it to something you already do every day.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Depends on habit chosen"
+        },
+        {
+          "title": "Do a 10-minute home energy audit",
+          "desc": "Walk around your home and note anything that uses energy unnecessarily — old bulbs, devices on standby, gaps in doors or windows. Most fixes take minutes.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Up to 100 kg CO₂/year if acted on"
+        },
+        {
+          "title": "Plan one meat-free day per week for April",
+          "desc": "Commit to one full day each week without meat for the month. That alone could save around 50–100 kg CO₂ over the month.",
+          "level": "intermediate",
+          "points": 100,
+          "carbon": "~50–100 kg CO₂ saved over April"
+        }
+      ]
+    },
+    {
+      "id": "carbon-myths",
+      "date": "2026-04-01",
+      "title_line1": "Carbon",
+      "title_line2": "Myths",
+      "category_badge": "Climate & Action",
+      "category_full": "Climate & Action",
+      "intro_fact": "April Fools' Day — so let's sort the facts from the fiction. <strong>Only 16% of Irish people think they personally need to do more</strong> on climate, yet 72% of global emissions trace back to household behaviour. Some of the biggest climate myths are the most widely believed.",
+      "questions": [
+        {
+          "text": "True or false: recycling is the most impactful thing an individual can do for the climate.",
+          "options": [
+            "True — recycling is the top action",
+            "False — diet change has far more impact",
+            "False — switching energy provider is bigger",
+            "True — plastic is the main issue"
+          ],
+          "correct": 1,
+          "fact": "<strong>Recycling is important but relatively low impact</strong> compared to diet, transport and home heating. Shifting to a plant-rich diet can save 10x more CO₂ per year than optimising your recycling."
+        },
+        {
+          "text": "Which of these has the LOWEST carbon footprint?",
+          "options": [
+            "A glass of cow's milk",
+            "A glass of oat milk",
+            "A glass of almond milk",
+            "A glass of soy milk"
+          ],
+          "correct": 1,
+          "fact": "<strong>Oat milk has the lowest overall footprint</strong> when you combine carbon, land and water use. It produces about 80% less CO₂ than cow's milk and uses far less water than almond milk."
+        },
+        {
+          "text": "Electric cars produce zero emissions. True or false?",
+          "options": [
+            "True — they have zero emissions",
+            "False — manufacturing creates significant emissions",
+            "False — they run on coal in Ireland",
+            "True — once the battery is made"
+          ],
+          "correct": 1,
+          "fact": "<strong>Manufacturing an EV creates roughly 8 tonnes of CO₂</strong> — mostly from the battery. But over its lifetime an EV still produces far less than a petrol car."
+        }
+      ],
+      "action_intro": "Climate myths are everywhere — and even well-meaning people believe them. <strong>Understanding what actually matters</strong> is the first step to making changes that count.",
+      "actions": [
+        {
+          "title": "Check one climate 'fact' you believe and verify it",
+          "desc": "Pick something you think you know about climate and look it up on Our World in Data or the EPA Ireland site. You might be surprised.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Knowledge is the first step"
+        },
+        {
+          "title": "Share one surprising fact with someone today",
+          "desc": "Pick the most surprising thing you learned in this quiz and mention it to one person. Research shows peer conversations are more effective than media campaigns at shifting views.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Social multiplier effect"
+        }
+      ]
+    },
+    {
+      "id": "nature-wellbeing",
+      "date": "2026-04-02",
+      "title_line1": "Nature &",
+      "title_line2": "Wellbeing",
+      "category_badge": "Wellbeing",
+      "category_full": "Wellbeing",
+      "intro_fact": "Today is World Autism Awareness Day. Research consistently shows that <strong>time in nature improves wellbeing for everyone</strong> — reducing stress, improving focus and lifting mood. Yet access to green space in Ireland is very unequal depending on where you live.",
+      "questions": [
+        {
+          "text": "How much time in nature per week is linked to significantly better wellbeing, according to research?",
+          "options": [
+            "At least 30 minutes",
+            "At least 2 hours",
+            "At least 5 hours",
+            "At least 10 hours"
+          ],
+          "correct": 1,
+          "fact": "A large UK study found that spending <strong>at least 2 hours per week in nature</strong> is linked to significantly better health and wellbeing — even spread across multiple short visits."
+        },
+        {
+          "text": "What percentage of Irish people live within 15 minutes walk of a public green space?",
+          "options": [
+            "About 40%",
+            "About 55%",
+            "About 70%",
+            "About 85%"
+          ],
+          "correct": 2,
+          "fact": "<strong>Around 70% of Irish people</strong> live within a 15-minute walk of a public park or green space — but that drops in some suburban and rural areas without proper footpaths."
+        },
+        {
+          "text": "Which Irish initiative aims to increase biodiversity by letting parts of public parks grow wild?",
+          "options": [
+            "Tidy Towns",
+            "All-Ireland Pollinator Plan",
+            "Clean Coasts",
+            "Coillte Rewild"
+          ],
+          "correct": 1,
+          "fact": "The <strong>All-Ireland Pollinator Plan</strong> encourages councils, farmers and households to let grass grow longer, plant wildflowers and reduce pesticide use. Over 1,000 organisations have signed up."
+        }
+      ],
+      "action_intro": "Access to green space isn't just nice to have — <strong>it is a public health issue</strong>. Small actions across thousands of gardens genuinely add up for biodiversity.",
+      "actions": [
+        {
+          "title": "Spend 30 minutes outside in a green space this week",
+          "desc": "It doesn't have to be wild — a local park counts. Leave the headphones behind if you can and just notice what's around you.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Good for your mental health"
+        },
+        {
+          "title": "Let a patch of your garden or windowsill go wild",
+          "desc": "Stop cutting one corner of the lawn, or plant a small pot of wildflowers on your windowsill. Even tiny wild patches support pollinators in urban areas.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Supports local biodiversity"
+        }
+      ]
+    },
+    {
+      "id": "good-friday-fish",
+      "date": "2026-04-03",
+      "title_line1": "Good Friday",
+      "title_line2": "& the Sea",
+      "category_badge": "Food & Water",
+      "category_full": "Food & Water",
+      "intro_fact": "Good Friday in Ireland has traditionally meant fish instead of meat. <strong>Ireland has one of Europe's largest exclusive economic zones</strong>, yet imports most of its seafood while exporting much of what it catches.",
+      "questions": [
+        {
+          "text": "What percentage of the world's fish stocks are currently overfished or fished at maximum capacity?",
+          "options": [
+            "About 30%",
+            "About 50%",
+            "About 70%",
+            "About 90%"
+          ],
+          "correct": 3,
+          "fact": "<strong>Over 90% of global fish stocks are now fully or over-exploited</strong>, according to the FAO. That's up from 10% in the 1970s — a dramatic shift in just 50 years."
+        },
+        {
+          "text": "Which of these fish is considered a more sustainable choice in Irish waters?",
+          "options": [
+            "Atlantic bluefin tuna",
+            "Wild Atlantic salmon",
+            "Mackerel",
+            "Cod"
+          ],
+          "correct": 2,
+          "fact": "<strong>Mackerel</strong> is one of the more sustainable choices in Irish waters — it's abundant, low in the food chain and caught without destructive methods."
+        },
+        {
+          "text": "How much CO₂ does a portion of farmed salmon produce compared to a portion of chicken?",
+          "options": [
+            "About the same",
+            "About half as much",
+            "About twice as much",
+            "About 5x as much"
+          ],
+          "correct": 2,
+          "fact": "<strong>Farmed salmon produces roughly twice the CO₂ of chicken</strong> per kg — mainly because of the energy-intensive feed. Wild-caught small fish like mackerel or sardines are far lower."
+        }
+      ],
+      "action_intro": "The sea gives Ireland a lot — coastline, food, tourism and identity. <strong>Looking after it starts with what we put on our plates</strong>.",
+      "actions": [
+        {
+          "title": "Check the sustainability rating of your fish today",
+          "desc": "The Good Fish Guide by the Marine Conservation Society rates fish by sustainability. Check goodfishguide.org before you buy fish this week.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Awareness step"
+        },
+        {
+          "title": "Try mackerel, mussels or sardines this week",
+          "desc": "These are among the most sustainable and nutritious seafood options in Ireland — and usually cheaper than salmon or tuna. Tinned works just as well.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Lower footprint than most fish"
+        }
+      ]
+    },
+    {
+      "id": "spring-biodiversity",
+      "date": "2026-04-07",
+      "title_line1": "Irish Spring",
+      "title_line2": "Biodiversity",
+      "category_badge": "Biodiversity",
+      "category_full": "Biodiversity",
+      "intro_fact": "April is when Ireland comes alive. <strong>Over 11,000 species of plants and animals</strong> are found in Ireland — and spring is the busiest season for most of them. But biodiversity has declined significantly over the past 50 years, largely due to changes in farming.",
+      "questions": [
+        {
+          "text": "What proportion of Ireland's land is covered by peatland (bog)?",
+          "options": [
+            "About 5%",
+            "About 10%",
+            "About 20%",
+            "About 35%"
+          ],
+          "correct": 2,
+          "fact": "<strong>About 20% of Ireland's land area is peatland</strong> — one of the highest proportions in Europe. Intact bogs store enormous amounts of carbon but have been heavily damaged by drainage and peat cutting."
+        },
+        {
+          "text": "Which Irish habitat has seen the steepest decline in recent decades?",
+          "options": [
+            "Coastal dunes",
+            "Oak woodland",
+            "Raised bog",
+            "River estuaries"
+          ],
+          "correct": 2,
+          "fact": "<strong>Raised bogs have lost over 90% of their natural condition</strong> in Ireland. They are slow to form — some are 10,000 years old — and almost impossible to fully restore once drained."
+        },
+        {
+          "text": "How many species of wild bee are found in Ireland?",
+          "options": [
+            "About 20",
+            "About 50",
+            "About 100",
+            "About 200"
+          ],
+          "correct": 2,
+          "fact": "Ireland has <strong>around 100 species of wild bee</strong>, including 20 bumblebee species. One third of these are threatened with extinction — mainly due to loss of flower-rich habitats and pesticide use."
+        }
+      ],
+      "action_intro": "Ireland's biodiversity is genuinely special — but <strong>it is under pressure</strong>. The good news is that gardens, balconies and even window boxes can play a real role.",
+      "actions": [
+        {
+          "title": "Download the iNaturalist app and log one species this week",
+          "desc": "iNaturalist is free and lets you photograph plants, birds or insects and have them identified automatically. Every observation contributes to national biodiversity data.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Supports citizen science"
+        },
+        {
+          "title": "Plant one native Irish wildflower this spring",
+          "desc": "Primrose, cowslip, wild garlic or ox-eye daisy are all easy to grow in pots or gardens and support native insects. Most garden centres stock them from April.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Supports local pollinators"
+        }
+      ]
+    },
+    {
+      "id": "hidden-water",
+      "date": "2026-04-08",
+      "title_line1": "Hidden",
+      "title_line2": "Water",
+      "category_badge": "Food & Water",
+      "category_full": "Food & Water",
+      "intro_fact": "Ireland gets plenty of rain — but that doesn't mean we're off the hook on water. <strong>The average Irish person uses about 150 litres of water per day at home</strong>, but their total water footprint including food and products is closer to <strong>4,000 litres a day</strong>.",
+      "questions": [
+        {
+          "text": "How many litres of water does it take to produce 1 kg of beef?",
+          "options": [
+            "About 500L",
+            "About 1,500L",
+            "About 15,000L",
+            "About 50,000L"
+          ],
+          "correct": 2,
+          "fact": "<strong>1 kg of beef requires roughly 15,000 litres of water</strong> — most of it for growing the feed crops. That's about 100 showers worth for a single kilo of meat."
+        },
+        {
+          "text": "Which product uses more water to produce — a cotton T-shirt or a litre of wine?",
+          "options": [
+            "A litre of wine uses more",
+            "About the same",
+            "A cotton T-shirt uses more",
+            "Depends on the country"
+          ],
+          "correct": 2,
+          "fact": "<strong>A cotton T-shirt takes about 2,700 litres of water</strong> to produce — equivalent to roughly 3 years of drinking water for one person."
+        },
+        {
+          "text": "What is the main water-related environmental problem facing Irish rivers right now?",
+          "options": [
+            "Rivers are drying up",
+            "Agricultural runoff and nutrient pollution",
+            "Industrial chemical spills",
+            "Over-abstraction for drinking water"
+          ],
+          "correct": 1,
+          "fact": "<strong>Agricultural runoff</strong> — carrying excess nitrogen and phosphorus from fertilisers and slurry — is the leading cause of poor water quality in Irish rivers. Only 53% of Irish water bodies are in good ecological status."
+        }
+      ],
+      "action_intro": "Water is easy to take for granted in Ireland — <strong>but the water embedded in our food and clothes is a global issue</strong>. Farmers in water-stressed regions grow the crops that end up on our plates.",
+      "actions": [
+        {
+          "title": "Fix a dripping tap at home this week",
+          "desc": "A dripping tap wastes up to 15 litres a day — that's over 5,000 litres a year. Most fixes take 10 minutes and cost very little.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "5,000L water saved/year"
+        },
+        {
+          "title": "Eat one less portion of beef this week",
+          "desc": "Replacing one beef meal with chicken, fish or legumes saves not just carbon but a significant amount of embedded water.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "~15,000L water saved per kg avoided"
+        }
+      ]
+    },
+    {
+      "id": "wild-ireland",
+      "date": "2026-04-09",
+      "title_line1": "Wild",
+      "title_line2": "Ireland",
+      "category_badge": "Biodiversity",
+      "category_full": "Biodiversity",
+      "intro_fact": "April is one of the best months to spot Ireland's wildflowers. <strong>Hedgerows are one of Ireland's most important habitats</strong>, home to over 80% of our mammal species, most of our breeding birds, and thousands of insects.",
+      "questions": [
+        {
+          "text": "How many kilometres of hedgerow does Ireland have?",
+          "options": [
+            "About 50,000 km",
+            "About 300,000 km",
+            "About 700,000 km",
+            "About 1 million km"
+          ],
+          "correct": 2,
+          "fact": "Ireland has approximately <strong>700,000 km of hedgerows</strong> — more per square kilometre than almost any other country in Europe. They are a uniquely Irish habitat and a vital carbon store."
+        },
+        {
+          "text": "What is the main threat to Irish hedgerows right now?",
+          "options": [
+            "Urban development",
+            "Agricultural removal and roadside cutting",
+            "Invasive species",
+            "Climate change drought"
+          ],
+          "correct": 1,
+          "fact": "<strong>Agricultural removal and mechanical cutting</strong> — often outside the legal cutting season — are the main threats. It's illegal to cut hedges between 1 March and 31 August to protect nesting birds."
+        },
+        {
+          "text": "Which common Irish wildflower is one of the best early-season food sources for bees?",
+          "options": [
+            "Bluebell",
+            "Gorse (furze)",
+            "Foxglove",
+            "Cow parsley"
+          ],
+          "correct": 1,
+          "fact": "<strong>Gorse (furze)</strong> flowers almost year-round and is one of the most important early nectar sources for bumblebees in Ireland. There's an old Irish saying: 'When gorse is out of bloom, kissing is out of season.'"
+        }
+      ],
+      "action_intro": "Ireland's wild landscape is shaped by its hedgerows, bogs and coastal habitats. <strong>Getting to know them is the first step to caring about them</strong>.",
+      "actions": [
+        {
+          "title": "Go for a hedgerow walk and identify 3 species",
+          "desc": "Use the free iNaturalist or PlantNet app to identify what's growing in a local hedgerow. Hawthorn, blackthorn and elder are the most common in Ireland.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Connects you to local nature"
+        },
+        {
+          "title": "Plant a native Irish hedgerow plant in your garden",
+          "desc": "Hawthorn, blackthorn or hazel are all cheap, fast-growing and excellent for wildlife. Even a single plant in a garden makes a difference for birds and insects.",
+          "level": "intermediate",
+          "points": 100,
+          "carbon": "Long-term carbon store + habitat"
+        }
+      ]
+    },
+    {
+      "id": "nature-mental-health",
+      "date": "2026-04-10",
+      "title_line1": "Nature &",
+      "title_line2": "Mental Health",
+      "category_badge": "Wellbeing",
+      "category_full": "Wellbeing",
+      "intro_fact": "In Ireland, <strong>1 in 4 people will experience a mental health difficulty</strong> at some point. Yet one of the most effective interventions is also the most underused: spending time in nature. The science behind 'green prescribing' is growing fast.",
+      "questions": [
+        {
+          "text": "By how much can a 90-minute walk in nature reduce activity in the brain area linked to negative thinking?",
+          "options": [
+            "No measurable effect",
+            "About 10%",
+            "Significantly — shown by brain scans",
+            "Only if walking barefoot"
+          ],
+          "correct": 2,
+          "fact": "Stanford researchers found that <strong>a 90-minute walk in nature significantly reduced neural activity in the prefrontal cortex</strong> — the area linked to rumination and anxiety."
+        },
+        {
+          "text": "What is 'green prescribing' as used in Irish healthcare?",
+          "options": [
+            "Prescribing herbal medicines",
+            "GPs recommending nature-based activities instead of or alongside medication",
+            "A government scheme to plant trees near hospitals",
+            "Mindfulness apps with nature sounds"
+          ],
+          "correct": 1,
+          "fact": "<strong>Green prescribing</strong> involves GPs recommending nature-based activities — walking, gardening, birdwatching — as part of treatment for anxiety, depression and loneliness. It is growing across Irish primary care."
+        },
+        {
+          "text": "Which Irish programme connects people with mental health difficulties to outdoor nature activities?",
+          "options": [
+            "Tidy Towns",
+            "Green Care Ireland",
+            "Coillte Walks",
+            "Birdwatch Ireland"
+          ],
+          "correct": 1,
+          "fact": "<strong>Green Care Ireland</strong> connects people experiencing mental health and social difficulties with therapeutic nature-based activities — farming, gardening, animal care and conservation work."
+        }
+      ],
+      "action_intro": "Mental health and the environment are deeply connected. <strong>When we look after nature, it looks after us</strong> — and the evidence for this is stronger than ever.",
+      "actions": [
+        {
+          "title": "Take a 20-minute walk outside without your phone this week",
+          "desc": "Leave the podcast and headphones behind just once. Walk somewhere green if you can — a park, a canal path, a beach. Notice what you see, hear and smell.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Good for your mind"
+        },
+        {
+          "title": "Suggest a walking meeting at work this week",
+          "desc": "Replace one sit-down meeting with a walk-and-talk outside. It's better for creativity, better for wellbeing, and uses no energy.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Zero carbon + health benefit"
+        }
+      ]
+    },
+    {
+      "id": "music-festivals",
+      "date": "2026-04-13",
+      "title_line1": "Live Music",
+      "title_line2": "& Footprints",
+      "category_badge": "Culture & Carbon",
+      "category_full": "Culture & Carbon",
+      "intro_fact": "Ireland has one of the most vibrant live music scenes in the world. <strong>A single large music festival can produce over 500 tonnes of CO₂</strong> — mainly from travel, generators and single-use waste. More festivals are now trying to change that.",
+      "questions": [
+        {
+          "text": "What proportion of a typical music festival's carbon footprint comes from audience travel?",
+          "options": [
+            "About 10%",
+            "About 30%",
+            "About 50%",
+            "About 80%"
+          ],
+          "correct": 3,
+          "fact": "<strong>Up to 80% of a festival's total carbon footprint</strong> comes from how the audience gets there. Encouraging public transport, carpooling and cycling can make a huge difference."
+        },
+        {
+          "text": "Which Irish festival was among the first in Europe to introduce a reusable cup system?",
+          "options": [
+            "Longitude",
+            "Body & Soul",
+            "Electric Picnic",
+            "Forbidden Fruit"
+          ],
+          "correct": 2,
+          "fact": "<strong>Electric Picnic</strong> introduced a reusable cup system early on. Body & Soul has also been a pioneer — running on 100% renewable energy."
+        },
+        {
+          "text": "How much waste does the average festival-goer generate per day?",
+          "options": [
+            "About 0.5 kg",
+            "About 1.5 kg",
+            "About 3 kg",
+            "About 5 kg"
+          ],
+          "correct": 2,
+          "fact": "Festival-goers generate around <strong>3 kg of waste per day</strong> — roughly 3x the daily average at home. Much of that is avoidable: food packaging, single-use cups, and abandoned tents."
+        }
+      ],
+      "action_intro": "Festivals are one of the great joys of Irish summer — and <strong>the industry is changing fast</strong>. Our choices around travel and waste are the two biggest levers we have.",
+      "actions": [
+        {
+          "title": "If you're going to a festival this summer, plan to travel by public transport",
+          "desc": "Most major Irish festivals are served by shuttle buses or trains. Check the transport options now and book early — it's usually cheaper and takes the parking stress away.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Could save 20–50 kg CO₂ vs driving alone"
+        },
+        {
+          "title": "Pack a festival kit that cuts waste",
+          "desc": "Reusable cup, water bottle, solid shampoo bar, and a bag for sorting recycling. Most of this costs nothing if you already have it.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Reduces single-use waste significantly"
+        }
+      ]
+    },
+    {
+      "id": "dolphins-ocean",
+      "date": "2026-04-14",
+      "title_line1": "Ireland's",
+      "title_line2": "Ocean",
+      "category_badge": "Ocean & Water",
+      "category_full": "Ocean & Water",
+      "intro_fact": "Ireland has one of the richest marine environments in Europe. <strong>The Shannon Estuary has one of the only resident bottlenose dolphin populations in Europe</strong>, and Irish waters are home to over 25 species of whales and dolphins.",
+      "questions": [
+        {
+          "text": "What percentage of the world's oxygen is produced by ocean phytoplankton?",
+          "options": [
+            "About 10%",
+            "About 25%",
+            "About 50%",
+            "About 75%"
+          ],
+          "correct": 2,
+          "fact": "<strong>About 50% of the world's oxygen is produced by marine phytoplankton</strong>. The ocean also absorbs around 25% of our CO₂ emissions each year, making it our biggest climate ally."
+        },
+        {
+          "text": "What is the main threat to the Shannon Estuary dolphins today?",
+          "options": [
+            "Shark predation",
+            "Boat disturbance, pollution and fishing bycatch",
+            "Overfishing of their prey",
+            "Ocean warming"
+          ],
+          "correct": 1,
+          "fact": "The Shannon dolphins face multiple threats: <strong>boat disturbance, marine pollution, and accidental capture in fishing nets (bycatch)</strong>. The population of around 115 animals is considered vulnerable."
+        },
+        {
+          "text": "How much plastic enters the world's oceans every year?",
+          "options": [
+            "About 1 million tonnes",
+            "About 8 million tonnes",
+            "About 20 million tonnes",
+            "About 50 million tonnes"
+          ],
+          "correct": 1,
+          "fact": "<strong>Around 8 million tonnes of plastic</strong> enters the ocean every year — equivalent to a rubbish truck emptying into the sea every minute."
+        }
+      ],
+      "action_intro": "Ireland's ocean is one of our greatest natural assets — <strong>and it is under real pressure from plastic, pollution and climate change</strong>. What we do on land ends up in the sea.",
+      "actions": [
+        {
+          "title": "Take part in a Clean Coasts beach clean this month",
+          "desc": "Clean Coasts Ireland runs regular community beach cleans around the whole coast. Find one at cleancoasts.org — they provide bags and gloves.",
+          "level": "beginner",
+          "points": 100,
+          "carbon": "Direct environmental impact"
+        },
+        {
+          "title": "Switch to a plastic-free shampoo or soap bar",
+          "desc": "Shampoo bars last 2–3x longer than bottled versions and avoid the plastic entirely. Several Irish brands now make them.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Reduces plastic waste entering waterways"
+        }
+      ]
+    },
+    {
+      "id": "art-climate",
+      "date": "2026-04-15",
+      "title_line1": "Art &",
+      "title_line2": "Climate",
+      "category_badge": "Culture & Carbon",
+      "category_full": "Culture & Carbon",
+      "intro_fact": "Today is World Art Day. <strong>Climate grief, hope and action are increasingly central themes in Irish art</strong> — from theatre to visual art to music. Can culture change minds where facts can't?",
+      "questions": [
+        {
+          "text": "Research on climate communication suggests which approach is most effective at motivating behaviour change?",
+          "options": [
+            "Showing the worst-case scientific scenarios",
+            "Stories of real people making positive change",
+            "Statistics and data about emissions",
+            "Warnings about future disasters"
+          ],
+          "correct": 1,
+          "fact": "<strong>Narrative and personal stories are consistently more effective</strong> than data or fear-based messaging at motivating action. People connect with people — not with statistics."
+        },
+        {
+          "text": "What is 'solastalgia' — a term increasingly used in climate discussions?",
+          "options": [
+            "A form of climate denial",
+            "Grief for environmental changes in one's home place",
+            "The mental health benefit of nature",
+            "Nostalgia for a pre-industrial world"
+          ],
+          "correct": 1,
+          "fact": "<strong>Solastalgia</strong> describes the emotional distress caused by environmental change in one's home environment. It's increasingly recognised in Irish farming and coastal communities facing climate change."
+        },
+        {
+          "text": "Which of these describes the relationship between Irish culture and the natural world?",
+          "options": [
+            "Largely separate — Irish culture is urban",
+            "Historically close — land, bog and coast run through Irish writing and art",
+            "Only recently connected through climate activism",
+            "Mainly commercial — farming and tourism"
+          ],
+          "correct": 1,
+          "fact": "<strong>Land, bog, coast and seasons run through Irish writing and art</strong> — from Seamus Heaney's bogs to contemporary climate artists. Nature and Irish cultural identity have always been closely intertwined."
+        }
+      ],
+      "action_intro": "<strong>Facts inform. Stories move people to act.</strong> That's why art, games, music and storytelling are not extras in the climate conversation — they are central to it.",
+      "actions": [
+        {
+          "title": "Find one piece of art, music or writing about nature or climate this week",
+          "desc": "A poem, a documentary, an album, a painting — it doesn't matter. Notice how it makes you feel. Art reaches the parts that facts sometimes can't.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Builds emotional connection to the issue"
+        },
+        {
+          "title": "Support an Irish environmental arts project",
+          "desc": "Look up Commonage, Phizzfest or similar Irish environmental arts programmes. Even sharing their work on social media helps build the audience for climate culture.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Supports cultural change"
+        }
+      ]
+    },
+    {
+      "id": "climate-voice",
+      "date": "2026-04-16",
+      "title_line1": "Finding Your",
+      "title_line2": "Climate Voice",
+      "category_badge": "Climate & Action",
+      "category_full": "Climate & Action",
+      "intro_fact": "<strong>42% of Irish people say they feel lectured when climate topics come up</strong> — and that stops the conversation before it starts. Learning to talk about climate in a way that connects rather than alienates is one of the most useful skills you can develop.",
+      "questions": [
+        {
+          "text": "According to research, what is the most effective opening for a climate conversation?",
+          "options": [
+            "Start with the worst-case scenario",
+            "Ask what they care about and connect it to climate",
+            "Share a peer-reviewed study",
+            "Tell them what changes they need to make"
+          ],
+          "correct": 1,
+          "fact": "<strong>Starting with shared values — not climate facts — is the most effective approach</strong>. If someone cares about their children's health, or their local landscape, those are the doors into the conversation."
+        },
+        {
+          "text": "What percentage of people globally are worried about climate change but rarely discuss it?",
+          "options": [
+            "About 10%",
+            "About 25%",
+            "About 40%",
+            "About 60%"
+          ],
+          "correct": 3,
+          "fact": "Research by Yale found that <strong>around 60–65% of people are worried about climate change but rarely talk about it</strong> — creating a 'spiral of silence' where everyone thinks they are in the minority."
+        },
+        {
+          "text": "The '25% tipping point' theory suggests social norms shift when what proportion of a community commits to a new behaviour?",
+          "options": [
+            "5%",
+            "10–25%",
+            "50%",
+            "75%"
+          ],
+          "correct": 1,
+          "fact": "Research backed by the IPCC shows <strong>just 10–25% of committed individuals can shift a social norm for the whole group</strong>. You don't need everyone — just enough people willing to act visibly."
+        }
+      ],
+      "action_intro": "<strong>Most people want to do more — they just don't know how to start.</strong> Talking openly and without judgement is one of the most powerful things any of us can do.",
+      "actions": [
+        {
+          "title": "Have one climate conversation this week — without lecturing",
+          "desc": "Start by asking someone what they think about something local — the weather, food prices, a nature story in the news. Listen first. Share one surprising fact if it feels natural.",
+          "level": "beginner",
+          "points": 100,
+          "carbon": "Social multiplier effect"
+        },
+        {
+          "title": "Share one thing you learned today on social media or WhatsApp",
+          "desc": "Even a short message or forwarding this quiz to one person breaks the spiral of silence. You don't need to be an expert — just curious.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Builds climate conversation culture"
+        }
+      ]
+    },
+    {
+      "id": "green-innovation",
+      "date": "2026-04-21",
+      "title_line1": "Green",
+      "title_line2": "Innovation",
+      "category_badge": "Energy & Tech",
+      "category_full": "Energy & Tech",
+      "intro_fact": "Today is World Creativity and Innovation Day. Ireland has quietly become a hub for clean tech — from <strong>offshore wind potential to green hydrogen research</strong>. Ireland has enough offshore wind resource to power the country several times over.",
+      "questions": [
+        {
+          "text": "What percentage of Ireland's electricity came from renewable sources in 2024?",
+          "options": [
+            "About 30%",
+            "About 45%",
+            "About 60%",
+            "About 75%"
+          ],
+          "correct": 2,
+          "fact": "In 2024, <strong>around 60% of Ireland's electricity came from renewables</strong> — mainly wind power. Ireland's target is 80% by 2030, one of the more ambitious in Europe."
+        },
+        {
+          "text": "Ireland's offshore wind resource is estimated to be how many times larger than its current electricity demand?",
+          "options": [
+            "About 2x",
+            "About 5x",
+            "About 10x",
+            "More than 10x"
+          ],
+          "correct": 3,
+          "fact": "Ireland's offshore wind resource has been estimated at <strong>more than 10 times its current electricity demand</strong> — potentially making Ireland a major exporter of clean energy to Europe."
+        },
+        {
+          "text": "What is 'green hydrogen' and why is it relevant to Ireland?",
+          "options": [
+            "A type of natural gas",
+            "Hydrogen made using excess wind energy — Ireland has several projects underway",
+            "A government grant for home heating",
+            "A new type of solar panel technology"
+          ],
+          "correct": 1,
+          "fact": "<strong>Green hydrogen is made by using surplus wind electricity to split water</strong> into hydrogen and oxygen. Ireland's windy west coast makes it well placed to produce green hydrogen for export to Europe."
+        }
+      ],
+      "action_intro": "Ireland's clean energy story is one of the most exciting in Europe — <strong>and the transition creates jobs, cuts bills and reduces our dependence on imported fossil fuels</strong>.",
+      "actions": [
+        {
+          "title": "Check if your home energy provider offers a green tariff",
+          "desc": "Many Irish energy suppliers now offer tariffs where your electricity is matched to renewable generation. Switching can take less than 10 minutes online.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Supports renewable energy demand"
+        },
+        {
+          "title": "Look into the SEAI home retrofit grant scheme",
+          "desc": "The SEAI offers grants of up to €25,000 for home insulation, heat pumps and solar panels. Even reading through the options at seai.ie is a useful first step.",
+          "level": "intermediate",
+          "points": 100,
+          "carbon": "Potential to cut home emissions by 50–70%"
+        }
+      ]
+    },
+    {
+      "id": "earth-day",
+      "date": "2026-04-22",
+      "title_line1": "World",
+      "title_line2": "Earth Day",
+      "category_badge": "Climate & Action",
+      "category_full": "Climate & Action",
+      "intro_fact": "Earth Day is celebrated every year on <strong>22 April</strong> by over 1 billion people in 193 countries. It was first held in 1970 and led directly to the creation of the US Environmental Protection Agency.",
+      "questions": [
+        {
+          "text": "What percentage of Irish people say they are willing to make some changes to address climate change?",
+          "options": [
+            "About 40%",
+            "About 60%",
+            "About 80%",
+            "About 95%"
+          ],
+          "correct": 2,
+          "fact": "<strong>80% of Irish people say they are willing to make some changes</strong> — but only 16% believe they personally should be doing more. That gap is the challenge Environmentle is designed to help close."
+        },
+        {
+          "text": "What share of total greenhouse gas emissions worldwide is linked to household behaviour?",
+          "options": [
+            "Around 20%",
+            "Around 35%",
+            "Around 50%",
+            "Around 72%"
+          ],
+          "correct": 3,
+          "fact": "<strong>72% of all global greenhouse gas emissions</strong> can be traced back to household consumption — energy, food, transport and goods. Individual choices, multiplied across millions, are not small."
+        },
+        {
+          "text": "Research suggests that once what proportion of a population commits to a new norm, it can spread to the rest?",
+          "options": [
+            "5%",
+            "10–25%",
+            "50%",
+            "75%"
+          ],
+          "correct": 1,
+          "fact": "The <strong>25% Revolution</strong>, backed by IPCC research, shows that shifting a social norm only requires 10–25% of individuals to be deeply committed. Your actions influence the people around you."
+        }
+      ],
+      "action_intro": "Earth Day is a moment to reflect and act. <strong>Small individual actions, multiplied across millions of people, genuinely add up.</strong> You don't need to fix everything — just do your bit.",
+      "actions": [
+        {
+          "title": "Calculate your carbon footprint today",
+          "desc": "Use a free online calculator — try myclimate.org or the WWF footprint calculator. It takes 5 minutes and shows where your biggest impact areas are.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Awareness step"
+        },
+        {
+          "title": "Commit to one meat-free day per week",
+          "desc": "Switching one day per week from meat to plant-based food is one of the highest-impact individual diet changes. Try it for April first.",
+          "level": "intermediate",
+          "points": 100,
+          "carbon": "~0.5 kg CO₂ saved per day"
+        },
+        {
+          "title": "Talk to 3 people about climate action this week",
+          "desc": "Share what you learned today. Research shows social norms shift when people talk openly about behaviour change — and most people are more open than you'd expect.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Social multiplier effect"
+        }
+      ]
+    },
+    {
+      "id": "climate-books",
+      "date": "2026-04-23",
+      "title_line1": "Reading",
+      "title_line2": "the Planet",
+      "category_badge": "Climate & Action",
+      "category_full": "Climate & Action",
+      "intro_fact": "Today is UNESCO World Book Day. <strong>Reading is one of the most effective ways to shift perspective</strong> — and the quality of climate writing has never been better. From hopeful rewilding books to page-turning climate science, there is something for everyone.",
+      "questions": [
+        {
+          "text": "Which book ranked reducing food waste and a plant-rich diet higher than solar panels as climate solutions?",
+          "options": [
+            "The Uninhabitable Earth",
+            "Drawdown, edited by Paul Hawken",
+            "This Changes Everything by Naomi Klein",
+            "The Sixth Extinction by Elizabeth Kolbert"
+          ],
+          "correct": 1,
+          "fact": "<strong>'Drawdown' edited by Paul Hawken</strong> ranked the top 100 solutions to climate change by impact. Reducing food waste and a plant-rich diet ranked higher than solar panels — genuinely surprising."
+        },
+        {
+          "text": "What does research say about people who read fiction about climate change?",
+          "options": [
+            "They become more anxious and less likely to act",
+            "They show increased empathy and willingness to act",
+            "It has no measurable effect on attitudes",
+            "They focus on fictional solutions, not real ones"
+          ],
+          "correct": 1,
+          "fact": "Studies show that <strong>reading climate fiction increases empathy for those affected</strong> and raises the likelihood of pro-environmental behaviour. Stories build the emotional connection that facts alone cannot."
+        },
+        {
+          "text": "Which Irish or Ireland-connected writer is known for engaging with themes of nature, land and bog?",
+          "options": [
+            "Roddy Doyle",
+            "Seamus Heaney",
+            "Marian Keyes",
+            "Colm Tóibín"
+          ],
+          "correct": 1,
+          "fact": "<strong>Seamus Heaney's poetry is deeply rooted in the Irish bogland and rural landscape</strong> — his work helped generations connect with the natural world and understand land as something precious and fragile."
+        }
+      ],
+      "action_intro": "<strong>Understanding is the foundation of action</strong> — and there has never been more good reading, listening and watching available on climate and nature.",
+      "actions": [
+        {
+          "title": "Add one climate or nature book to your reading list",
+          "desc": "Try 'Braiding Sweetgrass' by Robin Wall Kimmerer, 'Feral' by George Monbiot, or 'How to Avoid a Climate Disaster' by Bill Gates. Your local library will likely have at least one.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Builds long-term understanding"
+        },
+        {
+          "title": "Listen to one episode of a climate or nature podcast this week",
+          "desc": "Try 'How to Save a Planet', 'Outrage + Optimism', or 'The Irish Times Climate Podcast'. Even one episode can shift how you think about the issue.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Deepens climate knowledge"
+        }
+      ]
+    },
+    {
+      "id": "trees-ireland",
+      "date": "2026-04-24",
+      "title_line1": "Ireland's",
+      "title_line2": "Forests",
+      "category_badge": "Biodiversity",
+      "category_full": "Biodiversity",
+      "intro_fact": "Ireland is one of the <strong>least forested countries in Europe</strong> — only about 11% of land is covered by trees, compared to an EU average of 38%. Most of that is commercial Sitka spruce. But native woodland is slowly recovering.",
+      "questions": [
+        {
+          "text": "What percentage of Ireland's land area is covered by native woodland?",
+          "options": [
+            "Less than 1%",
+            "About 2%",
+            "About 5%",
+            "About 8%"
+          ],
+          "correct": 0,
+          "fact": "<strong>Less than 1% of Ireland is covered by native woodland</strong> — one of the lowest in Europe. Once Ireland was covered in oak, ash and hazel. Most was cleared for farming and fuel over thousands of years."
+        },
+        {
+          "text": "How much CO₂ can a single mature oak tree absorb per year?",
+          "options": [
+            "About 2 kg",
+            "About 22 kg",
+            "About 100 kg",
+            "About 500 kg"
+          ],
+          "correct": 1,
+          "fact": "A mature oak tree absorbs roughly <strong>22 kg of CO₂ per year</strong>. The real carbon value of forests comes from the soil beneath them, which can store 3–5x more carbon than the trees themselves."
+        },
+        {
+          "text": "What is Ireland's current target for forest cover by 2050?",
+          "options": [
+            "15%",
+            "18%",
+            "22%",
+            "30%"
+          ],
+          "correct": 1,
+          "fact": "Ireland's target is <strong>18% forest cover by 2050</strong> — still below the EU average, but a significant increase from today. Meeting it requires planting around 8,000 hectares per year, which Ireland is currently short of."
+        }
+      ],
+      "action_intro": "<strong>Planting trees is not a silver bullet for climate change</strong> — but native woodland restoration is genuinely important for carbon, biodiversity and water quality in Ireland. Every tree helps.",
+      "actions": [
+        {
+          "title": "Plant a tree — or fund one being planted",
+          "desc": "Native Irish trees like oak, birch, hazel or rowan. If you don't have a garden, organisations like Easy Treesie or Native Woodland Trust plant on your behalf.",
+          "level": "intermediate",
+          "points": 100,
+          "carbon": "22+ kg CO₂ absorbed per year"
+        },
+        {
+          "title": "Choose wood products with FSC certification",
+          "desc": "The Forest Stewardship Council (FSC) label means timber came from responsibly managed forests. Look for it on paper, furniture and wood products — widely available in Irish shops.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Supports sustainable forestry"
+        }
+      ]
+    },
+    {
+      "id": "circular-design",
+      "date": "2026-04-27",
+      "title_line1": "Design Out",
+      "title_line2": "Waste",
+      "category_badge": "Recycling & Waste",
+      "category_full": "Recycling & Waste",
+      "intro_fact": "<strong>Ireland generates about 14 million tonnes of waste every year</strong> — one of the highest per-capita rates in Europe. Most of that is avoidable. The circular economy is about designing waste out from the start.",
+      "questions": [
+        {
+          "text": "What percentage of materials that enter the global economy are still in use 6 months after purchase?",
+          "options": [
+            "About 50%",
+            "About 30%",
+            "About 10%",
+            "Less than 10%"
+          ],
+          "correct": 3,
+          "fact": "The Ellen MacArthur Foundation found that <strong>only about 9% of materials</strong> that enter the global economy are still in productive use 6 months later. The rest ends up in landfill, incineration or stockpiles."
+        },
+        {
+          "text": "Which of these is the most effective waste reduction strategy according to the waste hierarchy?",
+          "options": [
+            "Recycling",
+            "Composting",
+            "Refusing and reducing at source",
+            "Incineration with energy recovery"
+          ],
+          "correct": 2,
+          "fact": "The waste hierarchy puts <strong>refusal and reduction at the top</strong> — the best waste is waste that was never created. Recycling is near the bottom; it still uses energy and creates emissions."
+        },
+        {
+          "text": "What does the EU Right to Repair directive require from manufacturers?",
+          "options": [
+            "All products must come with a 10-year warranty",
+            "Manufacturers must provide spare parts and repair services for common products",
+            "All electronics must be repairable by the consumer",
+            "Products must be made from 50% recycled materials"
+          ],
+          "correct": 1,
+          "fact": "The EU <strong>Right to Repair directive</strong> requires manufacturers of certain products — white goods, electronics, smartphones — to provide spare parts, repair manuals and repair services for a set number of years after sale."
+        }
+      ],
+      "action_intro": "<strong>The most sustainable product is the one you already own.</strong> Before buying anything new this week, ask: can I borrow it, repair it, or buy it second-hand?",
+      "actions": [
+        {
+          "title": "Repair something instead of replacing it this week",
+          "desc": "A torn bag, a broken button, a cracked phone case — look up a repair tutorial before buying a replacement. Repair Cafés operate in most Irish cities and are free to attend.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Extends product life, avoids manufacturing emissions"
+        },
+        {
+          "title": "Declutter one drawer or shelf and donate or sell what you don't use",
+          "desc": "Donating to charity shops, selling on Done Deal or giving away on Buy Nothing groups keeps items in circulation and out of landfill.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Reduces demand for new production"
+        }
+      ]
+    },
+    {
+      "id": "work-wellbeing",
+      "date": "2026-04-28",
+      "title_line1": "Work &",
+      "title_line2": "Wellbeing",
+      "category_badge": "Wellbeing",
+      "category_full": "Wellbeing",
+      "intro_fact": "Today is World Day for Safety and Health at Work. <strong>Burnout costs Irish businesses an estimated €1.5 billion per year</strong> in lost productivity. Workplaces with stronger sustainability cultures tend to have higher employee wellbeing and lower turnover.",
+      "questions": [
+        {
+          "text": "What percentage of Irish workers say they would prefer to work for a company with strong environmental values?",
+          "options": [
+            "About 25%",
+            "About 45%",
+            "About 65%",
+            "About 85%"
+          ],
+          "correct": 2,
+          "fact": "Surveys consistently show <strong>around 65–70% of workers</strong> — rising to over 80% among under-35s — prefer to work for companies with genuine sustainability commitments."
+        },
+        {
+          "text": "Which workplace intervention has the strongest evidence for improving employee wellbeing?",
+          "options": [
+            "Free gym membership",
+            "Working from home full time",
+            "Access to natural light and greenery",
+            "Free healthy snacks"
+          ],
+          "correct": 2,
+          "fact": "<strong>Access to natural light and indoor plants</strong> consistently ranks among the strongest predictors of workplace wellbeing — yet most Irish office environments still underinvest in it."
+        },
+        {
+          "text": "What does 'scope 3 emissions' mean in a workplace context?",
+          "options": [
+            "Emissions from the building's heating",
+            "Emissions from employee commuting and the supply chain",
+            "Emissions from office equipment",
+            "Emissions outside a company's legal obligation"
+          ],
+          "correct": 1,
+          "fact": "<strong>Scope 3 emissions</strong> cover indirect emissions — including employee commuting, business travel, and the supply chain. For most Irish businesses, these represent 70–90% of their total carbon footprint."
+        }
+      ],
+      "action_intro": "<strong>Workplace sustainability and employee wellbeing go hand in hand</strong> — and Irish businesses are starting to take both seriously. You don't need to be the CEO to start a conversation about it.",
+      "actions": [
+        {
+          "title": "Suggest one green initiative at your workplace this week",
+          "desc": "It could be as simple as asking about switching to a green energy tariff, starting a composting scheme, or setting up a lunchtime walking group.",
+          "level": "intermediate",
+          "points": 100,
+          "carbon": "Systemic workplace impact"
+        },
+        {
+          "title": "Swap one car commute for walking, cycling or public transport",
+          "desc": "Even one day per week makes a difference. Most Irish cities now have Bike to Work schemes and Leap card subsidies through employers.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "~2–5 kg CO₂ saved per commute"
+        }
+      ]
+    },
+    {
+      "id": "food-waste",
+      "date": "2026-04-29",
+      "title_line1": "Stop Food",
+      "title_line2": "Waste",
+      "category_badge": "Food & Water",
+      "category_full": "Food & Water",
+      "intro_fact": "Today is Stop Food Waste Day. <strong>Irish households throw away an estimated €700 worth of food every year</strong> — that's about €60 a month per family. Food waste in Ireland produces around 1.6 million tonnes of CO₂ equivalent annually. Most of it is completely avoidable.",
+      "questions": [
+        {
+          "text": "What percentage of all food produced globally is wasted?",
+          "options": [
+            "About 10%",
+            "About 20%",
+            "About 33%",
+            "About 50%"
+          ],
+          "correct": 2,
+          "fact": "<strong>Roughly one third of all food produced globally is lost or wasted</strong>. If food waste were a country, it would be the third largest emitter of greenhouse gases in the world."
+        },
+        {
+          "text": "Which food category is most wasted in Irish homes?",
+          "options": [
+            "Meat and fish",
+            "Bread and bakery",
+            "Fresh fruit and vegetables",
+            "Dairy products"
+          ],
+          "correct": 2,
+          "fact": "<strong>Fresh fruit and vegetables are the most wasted food category in Irish homes</strong>, followed by bread. Most happens because people buy more than they need or don't use produce before it goes off."
+        },
+        {
+          "text": "According to Project Drawdown, reducing food waste is ranked how among all climate solutions?",
+          "options": [
+            "Top 5 globally",
+            "Top 15",
+            "Top 30",
+            "Top 50"
+          ],
+          "correct": 0,
+          "fact": "<strong>Reducing food waste ranks in the top 5 climate solutions globally</strong> according to Project Drawdown — higher than solar panels, electric vehicles or wind power."
+        }
+      ],
+      "action_intro": "<strong>Wasting less food is one of the single highest-impact climate actions you can take</strong> — and it saves you money at the same time. A weekly meal plan and a fridge check before shopping are all it takes to start.",
+      "actions": [
+        {
+          "title": "Do a fridge audit before your next food shop",
+          "desc": "Before you go shopping this week, check what's already in your fridge and cupboards. Write a list based on what you actually need. Stick to it.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Could save €700/year and significant CO₂"
+        },
+        {
+          "title": "Try one 'use it up' meal this week",
+          "desc": "Cook one meal entirely from what's already in the fridge and cupboards — no new shopping. It's often surprisingly good and saves money and waste.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Direct food waste reduction"
+        },
+        {
+          "title": "Download the Too Good To Go app",
+          "desc": "Too Good To Go lets you buy surplus food from local restaurants, cafés and supermarkets at a fraction of the price. Available in Dublin, Cork, Galway and many other Irish towns.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Rescues food from landfill"
+        }
+      ]
+    },
+    {
+      "id": "hidden-pollution",
+      "date": "2026-04-30",
+      "title_line1": "Hidden",
+      "title_line2": "Pollution",
+      "category_badge": "Wellbeing",
+      "category_full": "Wellbeing",
+      "intro_fact": "We talk a lot about carbon and plastic — but pollution comes in many forms. <strong>Noise pollution, light pollution and air quality</strong> are all significant environmental health issues in Irish cities, and all are linked to climate-related choices like transport and energy.",
+      "questions": [
+        {
+          "text": "According to the WHO, noise pollution is the second largest environmental health risk in Europe after what?",
+          "options": [
+            "Plastic pollution",
+            "Air pollution",
+            "Water contamination",
+            "Chemical exposure"
+          ],
+          "correct": 1,
+          "fact": "The WHO identifies <strong>noise pollution as the second largest environmental health risk in Europe after air pollution</strong>, linked to cardiovascular disease, sleep disruption and cognitive impairment."
+        },
+        {
+          "text": "What percentage of Irish people are exposed to road traffic noise above EU recommended levels?",
+          "options": [
+            "About 5%",
+            "About 15%",
+            "About 30%",
+            "About 50%"
+          ],
+          "correct": 2,
+          "fact": "<strong>Around 30% of Irish people</strong> are exposed to road traffic noise above EU recommended levels — with the highest exposure in Dublin, Cork and Limerick city centres."
+        },
+        {
+          "text": "How did reduced car traffic during COVID-19 lockdowns affect bird biodiversity in cities?",
+          "options": [
+            "No measurable effect",
+            "Slightly negative — birds use road noise as navigation",
+            "Significantly positive — more species and more complex birdsong",
+            "Mixed results depending on the city"
+          ],
+          "correct": 2,
+          "fact": "Studies found that <strong>reducing traffic noise led to significantly richer birdsong</strong> — more species, more complex songs, and birds able to communicate over longer distances."
+        }
+      ],
+      "action_intro": "<strong>Pollution isn't always visible.</strong> Noise, light and air quality all affect our health and the health of wildlife around us — and many of the fixes are the same: fewer cars, more green space, cleaner energy.",
+      "actions": [
+        {
+          "title": "Create a quiet hour at home this evening — no screens, no background noise",
+          "desc": "Turn off the TV and music for one hour. Read, cook, chat or sit outside. Notice how your body responds to the quiet.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Good for your mental health"
+        },
+        {
+          "title": "Walk or cycle instead of driving for one short trip this week",
+          "desc": "Every car journey replaced by walking or cycling removes noise, reduces air pollution, cuts carbon and is good for your health.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "~1–3 kg CO₂ saved per trip"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "id": "climate-and-finance",
+  "title": "Climate & Finance",
+  "category": "Finance",
+  "accent": "finance",
+  "readTime": 5,
+  "slides": [
+    {
+      "type": "photo",
+      "image": "Finance-District.jpg",
+      "align": "center",
+      "tag": "Finance & Climate",
+      "text": "Your money has a carbon footprint. It's time to talk to your bank",
+      "bold": "bank"
+    },
+    {
+      "type": "text",
+      "theme": "blue",
+      "text": "When we talk about climate, we talk about technology, policy, and behaviour. But there is another dimension far less discussed:",
+      "callout": "money",
+      "footer": "In particular, YOUR money"
+    },
+    {
+      "type": "text",
+      "theme": "green",
+      "text": "We need both public and private money to finance the climate transition. No government can do it alone.",
+      "bold": "finance the climate transition",
+      "bullets": [
+        "It's estimated $9.2 trillion are needed every year until 2050 to reach net zero (McKinsey)",
+        "But every $1 invested in climate resilience can return up to $4 in benefits (World Bank)"
+      ],
+      "footer": "So why are some banks still financing the wrong projects?"
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "Your money matters. Your bank does not just hold your money. It uses it. Every euro you deposit is lent out, many times over. A significant share goes to oil, gas, and deforestation.",
+      "callout": "30%",
+      "footer": "Up to 30% of lending in some banks. You don't see it. You don't sign off on it. But it happens every day."
+    },
+    {
+      "type": "stat",
+      "theme": "orange",
+      "stat": "€1,000",
+      "caption": "€1,000 held in a carbon-intensive bank generates the same yearly emissions as a return flight from New York to Seattle. For most people, banking choices produce more indirect emissions than their flights.",
+      "bold": "flight from New York to Seattle",
+      "source": "Project Drawdown"
+    },
+    {
+      "type": "stat",
+      "theme": "dark",
+      "stat": "$3.8T",
+      "caption": "All put together, $3.8 trillion were provided to fossil fuel companies by the 60 largest banks since the Paris Agreement in 2015.",
+      "note": "While 29 of the 30 largest financiers had publicly committed to net zero.",
+      "source": "Banking on Climate Chaos, 2025"
+    },
+    {
+      "type": "compare",
+      "theme": "blue",
+      "title": "It's time to check what kind of bank you give your money to.",
+      "badLabel": "Those still funding the climate crisis",
+      "bad": [
+        "Lends to fossil fuel expansion",
+        "Finances deforestation supply chains",
+        "Net zero pledges not matched by action"
+      ],
+      "goodLabel": "Or those aligned with the transition",
+      "good": [
+        "No financing to fossil fuel expansion",
+        "Short-term targets, not just 2050",
+        "Publishes and discloses financed emissions"
+      ]
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "stat": "76%",
+      "caption": "By switching to a climate-responsible bank, you could reduce the climate impact of your personal banking by 76%. One decision. No cost. No change to your daily life.",
+      "note": "Bigger impact than years of diet changes.",
+      "source": "Project Drawdown"
+    },
+    {
+      "type": "photo",
+      "image": "finance-3.png",
+      "text": "The system is still funding the wrong things. You can choose which part of it you feed. Check your bank at bank.green or BankTrack — switch once and benefit for years.",
+      "bold": "You can choose"
+    }
+  ]
+}

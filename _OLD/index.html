@@ -1,0 +1,2266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Uptake Games — Play your part</title>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWEEHDP6VD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DWEEHDP6VD');
+</script>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="/_images/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/_images/icon-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Uptake Games">
+<meta name="theme-color" content="#0a293b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:        #0a293b;
+    --navy-mid:    #1a4258;
+    --green:       #4e8a4d;
+    --green-light: #7dbf7c;
+    --green-pale:  #eaf5ea;
+    --orange:      #e27e22;
+    --orange-pale: #fdf0e3;
+    --orange-dark: #904f15;
+    --yellow:      #f7b801;
+    --bg:          #f0f0f0;
+    --bg-dark:     #e2e2e2;
+    --text:        #0a293b;
+    --text-soft:   #4a6070;
+    --white:       #FFFFFF;
+    --radius:      14px;
+    --radius-sm:   8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    overflow-x: hidden;
+  }
+
+  /* ── SCREEN MANAGER ── */
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(20px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 200;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+  .screen.exit {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  /* ════════════════════════════════════
+     LANDING PAGE
+  ════════════════════════════════════ */
+  #landing { min-height: 100vh; }
+
+  /* ── NAV ── */
+  .nav-back-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 101;
+    background: rgba(5, 22, 34, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    padding: 7px 16px;
+  }
+
+  .nav {
+    position: fixed;
+    top: 32px; left: 0; right: 0;
+    z-index: 100;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10,41,59,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo-mark {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .nav-logo-uptake {
+    font-family: 'Comfortaa', cursive;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nav-logo-games {
+    font-family: 'Comfortaa', cursive;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.38);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    transition: color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-back:hover { color: rgba(255,255,255,0.75); }
+  .nav-back svg { flex-shrink: 0; }
+
+  .nav-btn {
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.01em;
+  }
+  .nav-btn:active { transform: scale(0.96); background: var(--orange-dark); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(78,138,77,0.07);
+  }
+  .hero-circle-1 { width: 420px; height: 420px; top: -100px; right: -120px; }
+  .hero-circle-2 { width: 240px; height: 240px; top: 100px; right: 50px; background: rgba(226,126,34,0.06); }
+  .hero-circle-3 { width: 180px; height: 180px; bottom: 180px; left: -60px; background: rgba(78,138,77,0.05); }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 110px 28px 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+    width: fit-content;
+  }
+
+  .hero-eyebrow-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green-light);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-eyebrow-text {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .hero-brand {
+    margin-bottom: 10px;
+  }
+
+  .hero-brand-uptake {
+    font-family: 'Comfortaa', cursive;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .hero-brand-games {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(52px, 14vw, 72px);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 0.95;
+    display: block;
+    background: linear-gradient(120deg, #7dbf7c 0%, #e27e22 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(22px, 5.5vw, 30px);
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.35;
+    margin-bottom: 20px;
+    margin-top: 14px;
+    max-width: 320px;
+  }
+
+  .hero-title strong { color: white; font-weight: 600; }
+
+  .hero-bottom {
+    position: relative;
+    z-index: 2;
+    padding: 24px 28px 48px;
+    background: rgba(0,0,0,0.2);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+  }
+
+  .hero-stat {
+    flex: 1;
+    text-align: center;
+    padding: 0 8px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-num {
+    font-family: 'Comfortaa', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .hero-stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.3;
+  }
+
+  .btn-hero {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.01em;
+  }
+  .btn-hero:active { transform: scale(0.97); background: var(--orange-dark); }
+
+  /* ── HOW IT WORKS ── */
+  .section {
+    padding: 64px 24px;
+    background: var(--white);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(26px, 6.5vw, 34px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 32px;
+  }
+
+  .section-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .step {
+    background: var(--bg);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: white;
+    font-family: 'Comfortaa', cursive;
+    font-size: 17px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-soft);
+    line-height: 1.55;
+  }
+
+  /* ── WHY IT MATTERS ── */
+  .why-section {
+    background: var(--navy);
+    padding: 64px 24px;
+  }
+
+  .why-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 10px;
+  }
+
+  .why-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(26px, 6.5vw, 34px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .why-title em {
+    font-style: normal;
+    color: var(--yellow);
+  }
+
+  .why-intro {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.65;
+    margin-bottom: 32px;
+  }
+
+  .stat-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+  }
+
+  .stat-card-num {
+    font-family: 'Comfortaa', cursive;
+    font-size: 42px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-card-num .unit {
+    font-size: 24px;
+    color: var(--green-light);
+  }
+
+  .stat-card-desc {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.55;
+  }
+
+  .stat-card-desc strong { color: white; font-weight: 600; }
+
+  .why-quote {
+    background: rgba(78,138,77,0.12);
+    border: 1px solid rgba(78,138,77,0.22);
+    border-left: 4px solid var(--green);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+
+  .why-quote-text {
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+
+  .why-quote-source {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── FOOTER CTA ── */
+  .footer-cta {
+    padding: 56px 24px 64px;
+    text-align: center;
+    background: var(--bg-dark);
+  }
+
+  .footer-cta-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(26px, 6.5vw, 34px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .footer-cta-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .footer-cta-sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer-brand {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-align: left;
+  }
+
+  .footer-brand-uptake {
+    font-family: 'Comfortaa', cursive;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(10,41,59,0.4);
+  }
+
+  .footer-brand-games {
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-byline {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(0,0,0,0.28);
+  }
+
+  /* ════════════════════════════════════
+     SCREEN: NAME ENTRY
+  ════════════════════════════════════ */
+  #screen-name {
+    background: var(--navy);
+    justify-content: space-between;
+  }
+
+  .name-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 28px 32px;
+  }
+
+  .name-back {
+    position: absolute;
+    top: 52px;
+    left: 24px;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    border-radius: 100px;
+    color: rgba(255,255,255,0.65);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .name-welcome-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 14px;
+  }
+
+  .name-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(30px, 8vw, 42px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .name-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .name-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.65;
+    margin-bottom: 36px;
+    max-width: 300px;
+  }
+
+  .name-input-wrap {
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .name-input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: white;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .name-input::placeholder { color: rgba(255,255,255,0.3); }
+
+  .name-input:focus {
+    border-color: var(--green-light);
+    background: rgba(255,255,255,0.11);
+  }
+
+  .name-hint {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.3);
+    margin-top: 8px;
+    padding-left: 2px;
+  }
+
+  .name-bottom {
+    padding: 20px 28px 48px;
+    background: rgba(0,0,0,0.18);
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .btn-start {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, background 0.15s, opacity 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.01em;
+  }
+  .btn-start:active  { transform: scale(0.97); background: var(--orange-dark); }
+  .btn-start:disabled { opacity: 0.35; }
+
+  /* ════════════════════════════════════
+     SCREEN: GAME HUB
+  ════════════════════════════════════ */
+  #screen-hub {
+    background: var(--bg);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .hub-header {
+    background: var(--navy);
+    padding: 0 24px 28px;
+  }
+
+  .hub-back-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.45);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s;
+  }
+  .hub-back-bar:active { color: rgba(255,255,255,0.8); }
+  .hub-back-bar svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  .hub-header-top {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(env(safe-area-inset-top, 12px) + 12px) 20px 12px;
+    margin: 0;
+  }
+
+  .hub-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .hub-brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .hub-brand-uptake {
+    font-family: 'Comfortaa', cursive;
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .hub-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: rgba(255,255,255,0.35);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 0;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s;
+  }
+  .hub-logout-btn:active { color: rgba(255,255,255,0.7); }
+  .hub-logout-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  .hub-logo-games {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+
+  .hub-greeting {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 4px;
+    letter-spacing: 0.01em;
+  }
+
+  .hub-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .hub-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .hub-streak-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .hub-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hub-chip-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green-light);
+  }
+
+  .hub-chip.streak {
+    background: rgba(226,126,34,0.15);
+    border-color: rgba(226,126,34,0.3);
+    color: #f0a060;
+  }
+
+  /* ── PROGRESS CARD (returning users) ── */
+  .hub-progress-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    gap: 0;
+  }
+
+  .progress-stat {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+    border-right: 1px solid rgba(0,0,0,0.07);
+  }
+  .progress-stat:last-child { border-right: none; }
+
+  .progress-stat-num {
+    font-family: 'Comfortaa', cursive;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .progress-stat-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-soft);
+    line-height: 1.35;
+  }
+
+  .hub-body {
+    padding: 18px 18px 40px;
+  }
+
+  /* ── NOTIFICATION PROMPT ── */
+  .notif-prompt {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    position: relative;
+    display: none;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .notif-prompt-close {
+    position: absolute;
+    top: 10px; right: 12px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 4px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .notif-prompt-close:hover { color: white; }
+
+  .notif-prompt-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+    padding-right: 24px;
+  }
+
+  .notif-prompt-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+
+  .notif-prompt-btns {
+    display: flex;
+    gap: 8px;
+  }
+
+  .notif-btn-primary {
+    flex: 1;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.15s;
+  }
+  .notif-btn-primary:active { opacity: 0.8; }
+
+  .notif-btn-secondary {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.15s;
+  }
+  .notif-btn-secondary:active { opacity: 0.7; }
+
+  /* ── INSTALL BANNER ── */
+  .install-banner {
+    background: var(--orange);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    position: relative;
+    display: none;
+  }
+
+  .install-banner-close {
+    position: absolute;
+    top: 10px; right: 12px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 4px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .install-banner-close:hover { color: white; }
+
+  .install-banner-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+    padding-right: 24px;
+  }
+
+  .install-banner-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+
+  .install-banner-steps {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.15);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin-bottom: 14px;
+  }
+
+  .install-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .install-step-icon {
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .install-step-icon svg { width: 16px; height: 16px; }
+
+  .install-step-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.3;
+    font-weight: 500;
+  }
+
+  .install-step-arrow {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .install-banner-btns {
+    display: flex;
+    gap: 8px;
+  }
+
+  .install-banner-cta {
+    flex: 1;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.15s;
+  }
+  .install-banner-cta:active { opacity: 0.8; }
+
+  .hub-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 12px;
+    margin-top: 4px;
+  }
+
+  /* ── TODAY BANNER ── */
+  .today-banner {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s;
+  }
+  .today-banner:active { transform: scale(0.98); }
+  .today-banner.coming-soon { opacity: 0.6; cursor: default; }
+  .today-banner.coming-soon:active { transform: none; }
+
+  .today-icon { font-size: 30px; flex-shrink: 0; }
+  .today-info { flex: 1; }
+
+  .today-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 3px;
+  }
+
+  .today-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2px;
+  }
+
+  .today-sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .today-arrow {
+    color: rgba(255,255,255,0.35);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  /* ── GAME CARDS ── */
+  .game-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .game-card:active { transform: scale(0.98); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+
+  .game-card-banner {
+    height: 5px;
+    width: 100%;
+  }
+
+  .game-card.quiz  .game-card-banner { background: linear-gradient(90deg, var(--navy), #1a4258); }
+  .game-card.sort  .game-card-banner { background: linear-gradient(90deg, var(--orange), #f0a060); }
+  .game-card.water .game-card-banner { background: linear-gradient(90deg, #2199e6, #6bb8f5); }
+
+  .game-card-body {
+    padding: 18px 18px 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .game-card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .game-card.quiz  .game-card-icon { background: rgba(10,41,59,0.07); }
+  .game-card.sort  .game-card-icon { background: var(--orange-pale); }
+  .game-card.water .game-card-icon { background: #e8f4fd; }
+
+  .game-card-info { flex: 1; }
+
+  .game-card-tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .game-card.quiz  .game-card-tag { color: var(--navy); }
+  .game-card.sort  .game-card-tag { color: var(--orange); }
+  .game-card.water .game-card-tag { color: #2199e6; }
+
+  .game-card-name {
+    font-family: 'Comfortaa', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+
+  .game-card-desc {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  .game-card-footer {
+    padding: 11px 18px;
+    border-top: 1px solid rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .game-card-meta {
+    display: flex;
+    gap: 14px;
+  }
+
+  .game-card-meta-item {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .game-card-meta-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
+  .game-card-arrow {
+    color: var(--text-soft);
+    font-size: 16px;
+  }
+
+  .game-card.coming-soon {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .game-card.coming-soon:active { transform: none; box-shadow: none; }
+
+  /* Already played today */
+  .game-card.played-today {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .game-card.played-today:active { transform: none; box-shadow: none; }
+
+  .played-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--green-pale);
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .coming-badge {
+    background: rgba(0,0,0,0.06);
+    color: var(--text-soft);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .anim-1 { animation: fadeSlideUp 0.5s 0.05s both; }
+  .anim-2 { animation: fadeSlideUp 0.5s 0.15s both; }
+  .anim-3 { animation: fadeSlideUp 0.5s 0.25s both; }
+  .anim-4 { animation: fadeSlideUp 0.5s 0.35s both; }
+  .anim-5 { animation: fadeSlideUp 0.5s 0.45s both; }
+
+  @keyframes pop {
+    0%   { transform: scale(0.85); opacity: 0; }
+    60%  { transform: scale(1.06); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .pop-in { animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     LANDING PAGE
+════════════════════════════════════════════════════ -->
+<div id="landing">
+
+  <!-- Nav -->
+  <div class="nav-back-bar">
+    <a class="nav-back" href="https://the-uptake.com" aria-label="Back to main site">
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9,2 4,7 9,12"/>
+      </svg>
+      Back to the-uptake.com
+    </a>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <img src="_images/Environmentle_logo1.png" class="nav-logo-mark" alt="The Uptake logo">
+      <div class="nav-logo-text">
+        <span class="nav-logo-uptake">The Uptake</span>
+        <span class="nav-logo-games">GAMES</span>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="openNameScreen()">Play now</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-circle hero-circle-1"></div>
+      <div class="hero-circle hero-circle-2"></div>
+      <div class="hero-circle hero-circle-3"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow anim-1">
+        <div class="hero-eyebrow-dot"></div>
+        <span class="hero-eyebrow-text">Free to play · No app needed</span>
+      </div>
+      <div class="hero-brand anim-2">
+        <span class="hero-brand-uptake">The Uptake</span>
+        <span class="hero-brand-games">GAMES</span>
+      </div>
+      <p class="hero-title anim-3">
+        Small games.<br>
+        <strong>Real climate action.</strong>
+      </p>
+    </div>
+
+    <div class="hero-bottom anim-4">
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="font-size:16px;color:var(--green-light);">Play</div>
+          <div class="hero-stat-label">3 min per challenge</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="font-size:16px;color:var(--yellow);">Learn</div>
+          <div class="hero-stat-label">Guess, have fun &amp; discover real facts</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="font-size:16px;color:var(--orange);">Act</div>
+          <div class="hero-stat-label">Build an action-biased mindset</div>
+        </div>
+      </div>
+      <button class="btn-hero" onclick="openNameScreen()">
+        Start playing — it's free
+        <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Three minutes.<br><em>Three steps.</em></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <div class="step-title">Play today's challenge</div>
+          <div class="step-desc">Each day has a short themed challenge — a quiz, a sorting game, or a carbon calculator. Takes under 3 minutes.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <div class="step-title">Learn something surprising</div>
+          <div class="step-desc">After each question or round, we show you the fact behind it — something you can actually use. No lectures, just good information.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <div class="step-title">Commit to one action</div>
+          <div class="step-desc">Pick one thing you can do this week — tailored to what came up in your game. Small, realistic, and worth extra points.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why it matters -->
+  <section class="why-section">
+    <p class="why-label">Why it matters</p>
+    <h2 class="why-title">The gap between<br><em>knowing and doing</em></h2>
+    <p class="why-intro">Extensive research in Behavioural Change, Climate Communication, Gaming and Marketing tells us that people want a <strong>Simple · Hopeful · Fun</strong> way to access factual information. That's exactly what we built.</p>
+
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-card-num">80<span class="unit">%</span></div>
+        <div class="stat-card-desc">of Irish people are <strong>willing to make changes</strong> but most don't know where to start.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">52<span class="unit">%</span></div>
+        <div class="stat-card-desc">say they <strong>feel powerless</strong> and don't believe their individual actions can make a difference.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">45<span class="unit">%</span></div>
+        <div class="stat-card-desc">say it is <strong>almost impossible to find information</strong> about climate action that they can easily understand.</div>
+      </div>
+    </div>
+
+    <div class="why-quote" style="margin-bottom:12px;">
+      <p class="why-quote-text"><span style="font-size:32px;font-weight:700;color:white;">37<span style="font-size:20px;color:var(--green-light);">%</span></span></p>
+      <p class="why-quote-text">Individual efforts can contribute to reducing greenhouse gas emissions, according to the UN IPCC report. Every action counts.</p>
+      <p class="why-quote-source">UN IPCC Report — individual behaviour change potential</p>
+    </div>
+
+    <div class="why-quote">
+      <p class="why-quote-text">"When just 25% of a community commits to a new norm, it tends to spread to everyone else."</p>
+      <p class="why-quote-source">IPCC / Centola et al. — tipping point research on social norm change</p>
+    </div>
+  </section>
+
+  <!-- Footer CTA -->
+  <section class="footer-cta">
+    <h2 class="footer-cta-title">Ready to play<br><em>your part?</em></h2>
+    <p class="footer-cta-sub">Join thousands of people learning something new about sustainability every day.</p>
+    <button class="btn-hero" onclick="openNameScreen()" style="max-width:360px;margin:0 auto;display:flex;">
+      Start playing — it's free
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <div class="footer-brand-text">
+          <span class="footer-brand-uptake">The Uptake</span>
+          <span class="footer-brand-games">GAMES</span>
+        </div>
+      </div>
+      <p class="footer-byline">games.the-uptake.com · A UCD Innovation Academy project</p>
+    </div>
+
+  </section>
+
+</div><!-- /landing -->
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: NAME ENTRY
+════════════════════════════════════════════════════ -->
+<div id="screen-name" class="screen">
+  <button class="name-back" onclick="closeName()">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back
+  </button>
+
+  <div class="name-top">
+    <p class="name-welcome-label anim-1">Welcome</p>
+    <h2 class="name-title anim-2">What do<br>we call <em>you?</em></h2>
+    <p class="name-subtitle anim-3">No account needed. Just your name so we can make it feel a bit more personal.</p>
+
+    <div class="name-input-wrap anim-4">
+      <input
+        class="name-input"
+        id="name-input"
+        type="text"
+        placeholder="Your first name"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        maxlength="30"
+        oninput="onNameInput()"
+        onkeydown="if(event.key==='Enter') submitName()"
+      >
+    </div>
+    <p class="name-hint anim-4">No email, no password, no fuss.</p>
+  </div>
+
+  <div class="name-bottom">
+    <button class="btn-start" id="btn-start" onclick="submitName()" disabled>
+      Let's go
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: GAME HUB
+════════════════════════════════════════════════════ -->
+<div id="screen-hub" class="screen">
+  <!-- Sticky nav — direct child of scroll container so sticky works across full scroll height -->
+  <div class="hub-header-top">
+    <a class="hub-header-brand" href="https://the-uptake.com">
+      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
+      <div class="hub-brand-text">
+        <span class="hub-brand-uptake">The Uptake</span>
+        <span class="hub-logo-games">GAMES</span>
+      </div>
+    </a>
+    <button class="hub-logout-btn" onclick="logout()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Sign out
+    </button>
+  </div>
+  <div class="hub-header">
+    <p class="hub-greeting" id="hub-greeting">Good to see you,</p>
+    <h2 class="hub-title" id="hub-title">Pick your <em>challenge</em></h2>
+    <div class="hub-streak-row">
+      <div class="hub-chip">
+        <div class="hub-chip-dot"></div>
+        Daily challenge available
+      </div>
+      <div class="hub-chip streak" id="hub-streak-chip" style="display:none"></div>
+    </div>
+  </div>
+
+  <div class="hub-body">
+
+    <!-- Notification pre-prompt (shown after first game) -->
+    <div class="notif-prompt" id="notif-prompt">
+      <button class="notif-prompt-close" onclick="snoozeNotifPrompt()" aria-label="Close">✕</button>
+      <p class="notif-prompt-title">🔔 Never miss a daily challenge</p>
+      <p class="notif-prompt-desc">Get a gentle nudge each morning when your new challenge is ready. One notification a day, nothing else.</p>
+      <div class="notif-prompt-btns">
+        <button class="notif-btn-secondary" onclick="snoozeNotifPrompt()">Not now</button>
+        <button class="notif-btn-primary" onclick="requestNotifPermission()">Yes please!</button>
+      </div>
+    </div>
+
+    <!-- Install banner (mobile only, shown after first game) -->
+    <div class="install-banner" id="install-banner">
+      <button class="install-banner-close" onclick="closeInstallBanner()" aria-label="Close">✕</button>
+      <p class="install-banner-title">Play anytime. Add us to your home screen!</p>
+      <p class="install-banner-desc">Get instant access every day. No app install needed.</p>
+      <div class="install-banner-steps">
+        <div class="install-step">
+          <div class="install-step-icon">
+            <!-- iOS share icon: box with arrow up -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 6H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-2"/>
+              <polyline points="12 2 12 14"/>
+              <polyline points="9 5 12 2 15 5"/>
+            </svg>
+          </div>
+          <span class="install-step-text">Tap the <strong>Share</strong> icon in your browser bar</span>
+        </div>
+        <div class="install-step-arrow">→</div>
+        <div class="install-step">
+          <div class="install-step-icon">
+            <!-- Add to Home Screen: square with + -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="3"/>
+              <line x1="12" y1="8" x2="12" y2="16"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+          </div>
+          <span class="install-step-text">Select <strong>Add to Home Screen</strong></span>
+        </div>
+      </div>
+      <div class="install-banner-btns">
+        <button class="install-banner-cta" onclick="dismissInstallBanner()">Dismiss</button>
+        <button class="install-banner-cta" onclick="acceptInstallBanner()">Done</button>
+      </div>
+    </div>
+
+    <!-- Today's theme banner -->
+    <div class="today-banner" id="today-banner">
+      <div class="today-icon" id="today-icon">🌱</div>
+      <div class="today-info">
+        <div class="today-label" id="today-label">Today's theme</div>
+        <div class="today-title" id="today-challenge-title">Loading...</div>
+        <div class="today-sub" id="today-challenge-sub">Daily Challenge · 3 questions</div>
+      </div>
+      <div class="today-arrow" id="today-arrow">→</div>
+    </div>
+
+    <!-- Progress card (returning users only) -->
+    <div class="hub-progress-card" id="hub-progress" style="display:none;">
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-total-score">0</div>
+        <div class="progress-stat-label">Total score</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-sessions">0</div>
+        <div class="progress-stat-label">Games played</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-actions">0</div>
+        <div class="progress-stat-label">Actions pledged</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-streak">🔥 0</div>
+        <div class="progress-stat-label" id="progress-streak-label">Day streak</div>
+      </div>
+    </div>
+
+    <p class="hub-section-label">All games</p>
+
+    <!-- Random Quiz -->
+    <div class="game-card quiz anim-1" onclick="openGame('quiz','random')">
+      <div class="game-card-banner"></div>
+      <div class="game-card-body">
+        <div class="game-card-icon">🎲</div>
+        <div class="game-card-info">
+          <div class="game-card-tag">Quiz</div>
+          <div class="game-card-name">Random Challenge</div>
+          <div class="game-card-desc">Play any quiz you haven't tried yet — picked at random from our library.</div>
+        </div>
+      </div>
+      <div class="game-card-footer">
+        <div class="game-card-meta">
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> 3 questions</div>
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> 450 pts max</div>
+        </div>
+        <div class="game-card-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Carbon Challenge -->
+    <div class="game-card sort anim-2" onclick="openGame('sort')">
+      <div class="game-card-banner"></div>
+      <div class="game-card-body">
+        <div class="game-card-icon">♻️</div>
+        <div class="game-card-info">
+          <div class="game-card-tag">Sorting Game</div>
+          <div class="game-card-name">Carbon Challenge</div>
+          <div class="game-card-desc">6 everyday items. Drag them into order by carbon footprint — lowest to highest. 3 tries.</div>
+        </div>
+      </div>
+      <div class="game-card-footer">
+        <div class="game-card-meta">
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> 6 cards</div>
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> 3 tries</div>
+        </div>
+        <div class="game-card-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Water Challenge (coming soon) -->
+    <div class="game-card water coming-soon anim-3">
+      <div class="game-card-banner"></div>
+      <div class="game-card-body">
+        <div class="game-card-icon">💧</div>
+        <div class="game-card-info">
+          <div class="game-card-tag">Water Game</div>
+          <div class="game-card-name">Water Challenge</div>
+          <div class="game-card-desc">Guess the water footprint of everyday products — from a cup of coffee to a pair of jeans.</div>
+        </div>
+      </div>
+      <div class="game-card-footer">
+        <div class="game-card-meta">
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> Coming soon</div>
+        </div>
+        <div class="coming-badge">Coming soon</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+// ════════════════════════════════════
+// STATE
+// ════════════════════════════════════
+let playerName       = '';
+let _loadedChallenges = [];
+
+// ════════════════════════════════════
+// SCREEN TRANSITIONS
+// ════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => {
+    if (s.classList.contains('active')) {
+      s.classList.add('exit');
+      s.classList.remove('active');
+      setTimeout(() => s.classList.remove('exit'), 400);
+    }
+  });
+  document.body.style.overflow = id ? 'hidden' : '';
+  setTimeout(() => {
+    if (id) {
+      const next = document.getElementById(id);
+      next.classList.add('active');
+      next.scrollTop = 0;
+    }
+  }, 200);
+}
+
+function hideAllScreens() {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.add('exit');
+    s.classList.remove('active');
+    setTimeout(() => s.classList.remove('exit'), 400);
+  });
+  document.body.style.overflow = '';
+}
+
+// ════════════════════════════════════
+// NAME SCREEN
+// ════════════════════════════════════
+async function openNameScreen() {
+  const saved = localStorage.getItem('env_player_name');
+  if (saved) {
+    playerName = saved;
+    const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+    await loadPlayerProfile(nk);
+    openHub();
+    return;
+  }
+  showScreen('screen-name');
+  setTimeout(() => document.getElementById('name-input').focus(), 500);
+}
+
+function closeName() { hideAllScreens(); }
+
+function onNameInput() {
+  document.getElementById('btn-start').disabled =
+    document.getElementById('name-input').value.trim().length < 2;
+}
+
+async function submitName() {
+  const val = document.getElementById('name-input').value.trim();
+  if (val.length < 2) return;
+  playerName = val;
+  localStorage.setItem('env_player_name', playerName);
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  await loadPlayerProfile(nk);
+  openHub();
+}
+
+// ════════════════════════════════════
+// CATEGORY → ICON
+// ════════════════════════════════════
+function getCategoryIcon(cat) {
+  if (!cat) return '🌱';
+  const c = cat.toLowerCase();
+  if (c.includes('food') || c.includes('water'))        return '🍃';
+  if (c.includes('ocean') || c.includes('marine'))      return '🌊';
+  if (c.includes('nature') || c.includes('bio'))        return '🌿';
+  if (c.includes('health') || c.includes('well'))       return '💚';
+  if (c.includes('innovation') || c.includes('design')) return '⚡';
+  if (c.includes('climate') || c.includes('action'))    return '🌍';
+  return '🌱';
+}
+
+// ════════════════════════════════════
+// HUB
+// ════════════════════════════════════
+async function openHub() {
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('hub-greeting').textContent = `${greeting}, ${playerName} 👋`;
+  document.getElementById('hub-title').innerHTML = `Pick your <em>challenge</em>`;
+
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+
+  // Show returning user progress
+  const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || 'null');
+  if (progress && progress.sessionsPlayed > 0) {
+    document.getElementById('progress-total-score').textContent = progress.totalScore || 0;
+    document.getElementById('progress-sessions').textContent    = progress.sessionsPlayed || 0;
+    document.getElementById('progress-actions').textContent     = progress.actionsPledged || 0;
+    document.getElementById('hub-progress').style.display = 'flex';
+  } else {
+    document.getElementById('hub-progress').style.display = 'none';
+  }
+
+  // Show streak chip if streak >= 2
+  const streakData  = JSON.parse(localStorage.getItem('streak_' + nk) || '{}');
+  const streakCount = streakData.count || 0;
+  const streakChip  = document.getElementById('hub-streak-chip');
+  const bonus = streakCount >= 5 ? '+250 pts' : streakCount >= 3 ? '+100 pts' : '';
+  const bonusText = bonus ? ` · ${bonus}` : '';
+  streakChip.textContent = `🔥 ${streakCount}-day streak${bonusText}`;
+  streakChip.style.display = 'flex';
+
+  // Streak stat in progress card
+  document.getElementById('progress-streak').textContent = `🔥 ${streakCount}`;
+  document.getElementById('progress-streak-label').textContent = streakCount >= 5
+    ? 'Day streak · +250 pts'
+    : streakCount >= 3
+    ? 'Day streak · +100 pts'
+    : 'Day streak';
+
+  const sessionsPlayed = progress ? progress.sessionsPlayed || 0 : 0;
+
+  // Notification prompt — takes priority, only show one banner at a time
+  const showNotif = shouldShowNotifPrompt(nk, sessionsPlayed);
+  document.getElementById('notif-prompt').style.display = showNotif ? 'block' : 'none';
+
+  // Install banner — only show if notification prompt is not showing
+  document.getElementById('install-banner').style.display =
+    (!showNotif && shouldShowInstallBanner(nk, sessionsPlayed)) ? 'block' : 'none';
+
+  // Load challenges from JSON
+  try {
+    const res = await fetch('challenges.json');
+    const data = await res.json();
+    _loadedChallenges = data.challenges || [];
+  } catch(e) {
+    _loadedChallenges = [];
+  }
+
+  // Find today's featured challenge, or next upcoming
+  const today = new Date().toISOString().slice(0, 10);
+  let featuredChallenge = _loadedChallenges.find(c => c.date === today) || null;
+  let bannerLabel = "Today's theme";
+  if (!featuredChallenge) {
+    const upcoming = _loadedChallenges
+      .filter(c => c.date > today)
+      .sort((a, b) => a.date.localeCompare(b.date))[0];
+    if (upcoming) { featuredChallenge = upcoming; bannerLabel = "Coming up"; }
+  }
+
+  // Populate today-banner
+  if (featuredChallenge) {
+    document.getElementById('today-label').textContent           = bannerLabel;
+    document.getElementById('today-icon').textContent            = getCategoryIcon(featuredChallenge.category_badge);
+    document.getElementById('today-challenge-title').textContent = featuredChallenge.title_line1 + ' ' + featuredChallenge.title_line2;
+    document.getElementById('today-challenge-sub').textContent   = featuredChallenge.category_badge + ' · 3 questions';
+  } else {
+    document.getElementById('today-label').textContent           = "Today's theme";
+    document.getElementById('today-icon').textContent            = '☕';
+    document.getElementById('today-challenge-title').textContent = 'Irish Coffee Day';
+    document.getElementById('today-challenge-sub').textContent   = 'Food & Water · 3 questions';
+  }
+
+  // Reset states
+  const banner   = document.getElementById('today-banner');
+  const quizCard = document.querySelector('.game-card.quiz');
+  const sortCard = document.querySelector('.game-card.sort');
+
+  if (banner) {
+    banner.classList.remove('played-today');
+    const badge = banner.querySelector('.played-badge');
+    if (badge) badge.outerHTML = '<div class="today-arrow" id="today-arrow">→</div>';
+  }
+  if (quizCard) {
+    quizCard.classList.remove('played-today');
+    quizCard.onclick = () => openGame('quiz', 'random');
+    const badge = quizCard.querySelector('.played-badge');
+    if (badge) badge.outerHTML = '<div class="game-card-arrow">→</div>';
+  }
+
+  // Quiz played today? Disable both CTAs
+  const quizPlayedToday = localStorage.getItem('quiz_last_played_' + nk) === today;
+  if (quizPlayedToday) {
+    if (banner) {
+      banner.classList.add('played-today');
+      banner.onclick = null;
+      const arrow = document.getElementById('today-arrow');
+      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
+    }
+    if (quizCard) {
+      quizCard.classList.add('played-today');
+      quizCard.onclick = null;
+      const arrow = quizCard.querySelector('.game-card-arrow');
+      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
+    }
+  } else {
+    if (banner) {
+      if (bannerLabel === 'Coming up') {
+        // Future challenge — not playable yet, show "Coming soon"
+        banner.classList.add('coming-soon');
+        banner.onclick = null;
+        const arrow = document.getElementById('today-arrow');
+        if (arrow) arrow.outerHTML = '<span class="coming-badge">Coming soon</span>';
+      } else {
+        banner.onclick = () => openGame('quiz', 'daily');
+      }
+    }
+  }
+
+  // Sort game
+  if (sortCard) {
+    const sortPlayed = localStorage.getItem('sio_last_played_' + nk) === today;
+    sortCard.classList.remove('played-today');
+    const sortBadge = sortCard.querySelector('.played-badge');
+    if (sortBadge) sortBadge.outerHTML = '<div class="game-card-arrow">→</div>';
+    if (sortPlayed) {
+      sortCard.classList.add('played-today');
+      sortCard.onclick = null;
+      const arrow = sortCard.querySelector('.game-card-arrow');
+      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
+    } else {
+      sortCard.onclick = () => openGame('sort');
+    }
+  }
+
+  // Sync latest localStorage state up to Firestore
+  syncPlayerToFirestore(nk);
+
+  showScreen('screen-hub');
+}
+
+// ════════════════════════════════════
+// OPEN GAMES
+// ════════════════════════════════════
+const GAME_URLS = {
+  quiz: 'environmentle-quiz-game.html',
+  sort: 'environmentle-sort-it-out.html'
+};
+
+function openGame(type, mode) {
+  if (type === 'quiz') {
+    const today = new Date().toISOString().slice(0, 10);
+    let challengeId = '';
+
+    if (mode === 'daily') {
+      const c = _loadedChallenges.find(ch => ch.date === today);
+      if (c) challengeId = c.id;
+      // If no date match, quiz game falls back to its own logic
+    } else if (mode === 'random') {
+      const nk      = playerName.toLowerCase().replace(/\s+/g, '_');
+      const history = JSON.parse(localStorage.getItem('quiz_history_' + nk) || '[]');
+      const todayId = (_loadedChallenges.find(ch => ch.date === today) || {}).id;
+      // Prefer unplayed challenges, excluding today's daily
+      let pool = _loadedChallenges.filter(ch => !history.includes(ch.id) && ch.id !== todayId);
+      if (pool.length === 0) {
+        // All played — pick any except today's daily
+        pool = _loadedChallenges.filter(ch => ch.id !== todayId);
+      }
+      if (pool.length === 0) pool = _loadedChallenges; // absolute fallback
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      if (pick) challengeId = pick.id;
+    }
+
+    const params = new URLSearchParams({ player: playerName });
+    if (challengeId) params.set('challenge', challengeId);
+    if (mode === 'random') params.set('random', '1');
+    window.location.href = GAME_URLS.quiz + '?' + params.toString();
+    return;
+  }
+  window.location.href = GAME_URLS[type] + '?player=' + encodeURIComponent(playerName);
+}
+
+// ════════════════════════════════════
+// LOGOUT
+// ════════════════════════════════════
+function logout() {
+  localStorage.removeItem('env_player_name');
+  playerName = '';
+  hideAllScreens();
+}
+
+// ── FIRESTORE PLAYER SYNC ────────────────────────────────
+
+async function loadPlayerProfile(nk) {
+  try {
+    const doc = await _db.collection('players').doc(nk).get();
+    if (!doc.exists) return; // New player
+    const d = doc.data();
+
+    // Restore progress — take the higher value in case both contexts have data
+    const local = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+    localStorage.setItem('env_progress_' + nk, JSON.stringify({
+      totalScore:     Math.max(local.totalScore     || 0, d.totalScore     || 0),
+      sessionsPlayed: Math.max(local.sessionsPlayed || 0, d.sessionsPlayed || 0),
+      actionsPledged: Math.max(local.actionsPledged || 0, d.actionsPledged || 0),
+    }));
+
+    // Restore streak — use whichever lastDate is more recent
+    if (d.streak && d.streak.lastDate) {
+      const localStreak = JSON.parse(localStorage.getItem('streak_' + nk) || '{}');
+      if (!localStreak.lastDate || d.streak.lastDate >= localStreak.lastDate) {
+        localStorage.setItem('streak_' + nk, JSON.stringify(d.streak));
+      }
+    }
+
+    // Restore preferences
+    if (d.installPrompt) localStorage.setItem('install_prompt_' + nk, d.installPrompt);
+    if (d.notifPrompt)   localStorage.setItem('notif_prompt_'   + nk, d.notifPrompt);
+    if (d.appInstalled)  localStorage.setItem('app_installed_'  + nk, '1');
+
+  } catch(e) {
+    console.warn('loadPlayerProfile failed:', e);
+  }
+}
+
+async function syncPlayerToFirestore(nk) {
+  try {
+    const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+    const streak   = JSON.parse(localStorage.getItem('streak_'         + nk) || '{}');
+    const installPrompt = localStorage.getItem('install_prompt_' + nk);
+    const notifPrompt   = localStorage.getItem('notif_prompt_'   + nk);
+    const appInstalled  = localStorage.getItem('app_installed_'  + nk) === '1';
+
+    const update = {
+      totalScore:     progress.totalScore     || 0,
+      sessionsPlayed: progress.sessionsPlayed || 0,
+      actionsPledged: progress.actionsPledged || 0,
+      streak:         streak,
+      updatedAt:      firebase.firestore.FieldValue.serverTimestamp(),
+    };
+    if (installPrompt) update.installPrompt = installPrompt;
+    if (notifPrompt)   update.notifPrompt   = notifPrompt;
+    if (appInstalled)  update.appInstalled  = true;
+
+    await _db.collection('players').doc(nk).set(update, { merge: true });
+  } catch(e) {
+    console.warn('syncPlayerToFirestore failed:', e);
+  }
+}
+
+// ── FIREBASE + NOTIFICATIONS ─────────────────────────────
+const _fbConfig = {
+  apiKey:            "AIzaSyDyWJlg8LTpxW3UqHW2zQ9WVNMZ7mf4HUM",
+  authDomain:        "uptake-games.firebaseapp.com",
+  projectId:         "uptake-games",
+  storageBucket:     "uptake-games.firebasestorage.app",
+  messagingSenderId: "1002223512756",
+  appId:             "1:1002223512756:web:86afd3f7a46f0c59407be1",
+};
+const _fbApp  = firebase.apps.length ? firebase.app() : firebase.initializeApp(_fbConfig);
+const _db     = firebase.firestore();
+const _VAPID  = 'BDSqjH2qac-Y3zmnFzZzddzaAXAMKwe27jApW-wATMYWK4TpoxV-vVUA2HW76jp7rJuK6MqLLf7CyrqhyMgui2k';
+
+// Register service worker once on page load
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(err =>
+    console.warn('SW registration failed:', err)
+  );
+}
+
+function isAppInstalled(nk) {
+  // Signal 1: currently running in standalone mode (launched from home screen)
+  const standalone = window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true;
+  if (standalone) {
+    // Persist so we remember across sessions even if they open in browser later
+    localStorage.setItem('app_installed_' + nk, '1');
+    return true;
+  }
+  // Signal 2: appinstalled event fired in a previous session
+  if (localStorage.getItem('app_installed_' + nk) === '1') return true;
+  // Signal 3: user clicked "Done" on the install banner
+  if (localStorage.getItem('install_prompt_' + nk) === 'done') return true;
+  return false;
+}
+
+function shouldShowNotifPrompt(nk, sessionsPlayed) {
+  if (sessionsPlayed < 1) return false;
+  if (!('Notification' in window)) return false;
+  if (Notification.permission === 'granted') return false;
+  if (Notification.permission === 'denied') return false;
+  // Only ask once they've installed the app
+  if (!isAppInstalled(nk)) return false;
+  const data = localStorage.getItem('notif_prompt_' + nk);
+  if (!data) return true;
+  if (data === 'done') return false;
+  try {
+    const parsed = JSON.parse(data);
+    if (parsed.snoozed !== undefined) return sessionsPlayed >= parsed.snoozed + 5;
+  } catch(e) {}
+  return false;
+}
+
+// X or "Not now" — snooze for 5 sessions
+function snoozeNotifPrompt() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+  localStorage.setItem('notif_prompt_' + nk, JSON.stringify({ snoozed: progress.sessionsPlayed || 0 }));
+  document.getElementById('notif-prompt').style.display = 'none';
+  syncPlayerToFirestore(nk);
+}
+
+// "Yes please!" — trigger browser permission prompt
+async function requestNotifPermission() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  document.getElementById('notif-prompt').style.display = 'none';
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      localStorage.setItem('notif_prompt_' + nk, 'done');
+      await saveNotifToken(nk);
+    } else {
+      // Browser blocked — mark so we don't ask again
+      localStorage.setItem('notif_prompt_' + nk, JSON.stringify({ blocked: true }));
+    }
+    syncPlayerToFirestore(nk);
+  } catch(e) {
+    console.warn('Notification permission error:', e);
+  }
+}
+
+// Save FCM token to Firestore and subscribe to topic
+async function saveNotifToken(nk) {
+  try {
+    const sw   = await navigator.serviceWorker.ready;
+    const msg  = firebase.messaging();
+    const token = await msg.getToken({ vapidKey: _VAPID, serviceWorkerRegistration: sw });
+    if (token) {
+      await _db.collection('tokens').doc(token).set({
+        playerName: nk,
+        token,
+        createdAt:  firebase.firestore.FieldValue.serverTimestamp(),
+        lastSeen:   firebase.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true });
+      // Subscribe to topic so messages can be sent from FCM console
+      const subscribeToTopic = firebase.functions('europe-west1').httpsCallable('subscribeToTopic');
+      await subscribeToTopic({ token });
+    }
+  } catch(e) {
+    console.warn('Token save failed:', e);
+  }
+}
+
+// Opt out — delete token from Firestore and unsubscribe
+async function disableNotifications() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  try {
+    const sw  = await navigator.serviceWorker.ready;
+    const msg = firebase.messaging();
+    const token = await msg.getToken({ vapidKey: _VAPID, serviceWorkerRegistration: sw });
+    if (token) {
+      await _db.collection('tokens').doc(token).delete();
+      await msg.deleteToken();
+    }
+  } catch(e) { console.warn('Unsubscribe failed:', e); }
+  localStorage.setItem('notif_prompt_' + nk, JSON.stringify({ snoozed: 0 }));
+}
+
+// ── INSTALL BANNER ──────────────────────────────────────
+let _installPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _installPrompt = e;
+});
+window.addEventListener('appinstalled', () => {
+  if (playerName) {
+    const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+    localStorage.setItem('install_prompt_' + nk, 'done');
+    localStorage.setItem('app_installed_' + nk, '1');
+  }
+  document.getElementById('install-banner').style.display = 'none';
+});
+
+function shouldShowInstallBanner(nk, sessionsPlayed) {
+  if (sessionsPlayed < 1) return false;
+  const isMobile = /iPhone|iPad|iPod|Android/.test(navigator.userAgent);
+  if (!isMobile) return false;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true;
+  if (isStandalone) return false;
+  const data = localStorage.getItem('install_prompt_' + nk);
+  if (!data) return true;
+  if (data === 'done') return false;
+  try {
+    const parsed = JSON.parse(data);
+    // DISMISS: show again after 2 more sessions
+    if (parsed.snoozed_sessions !== undefined) {
+      return sessionsPlayed >= parsed.snoozed_sessions + 2;
+    }
+    // X: show again the next day
+    if (parsed.snooze_until) {
+      return new Date().toISOString().slice(0, 10) > parsed.snooze_until;
+    }
+  } catch(e) {}
+  return false;
+}
+
+// X button — show again tomorrow
+function closeInstallBanner() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+  localStorage.setItem('install_prompt_' + nk, JSON.stringify({ snooze_until: tomorrow }));
+  document.getElementById('install-banner').style.display = 'none';
+  syncPlayerToFirestore(nk);
+}
+
+// Dismiss button — show again after 2 more sessions
+function dismissInstallBanner() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+  localStorage.setItem('install_prompt_' + nk, JSON.stringify({ snoozed_sessions: progress.sessionsPlayed || 0 }));
+  document.getElementById('install-banner').style.display = 'none';
+  syncPlayerToFirestore(nk);
+}
+
+// Done button — never show again
+function acceptInstallBanner() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  localStorage.setItem('install_prompt_' + nk, 'done');
+  document.getElementById('install-banner').style.display = 'none';
+  syncPlayerToFirestore(nk);
+  if (_installPrompt) _installPrompt.prompt();
+}
+
+// ════════════════════════════════════
+// BOOT
+// ════════════════════════════════════
+(function init() {
+  const saved = localStorage.getItem('env_player_name');
+  if (saved) { playerName = saved; openHub(); return; }
+  if (new URLSearchParams(window.location.search).get('hub') === '1') { openNameScreen(); }
+})();
+</script>
+
+</body>
+</html>

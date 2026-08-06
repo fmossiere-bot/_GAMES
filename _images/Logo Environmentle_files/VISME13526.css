@@ -1,0 +1,42 @@
+@font-face {
+    font-family: SuperscriptNumbersFontFix;
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/VISME13526/NotoSans-Regular.woff') format('woff');
+    unicode-range: U+2070,U+b9,U+b2-b3,U+2074-2079;
+}
+@font-face {
+    font-family: SuperscriptNumbersFontFix;
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/VISME13526/NotoSans[wdth,wght].woff') format('woff');
+    unicode-range: U+2070,U+b9,U+b2-b3,U+2074-2079;
+}
+@font-face {
+    font-family: SuperscriptNumbersFontFix;
+    font-style: italic;
+    font-weight: 400;
+    src: url('../fonts/VISME13526/NotoSans-Italic.woff') format('woff');
+    unicode-range: U+2070,U+b9,U+b2-b3,U+2074-2079;
+}
+@font-face {
+    font-family: SuperscriptNumbersFontFix;
+    font-style: italic;
+    font-weight: 400;
+    src: url('../fonts/VISME13526/NotoSans-Italic[wdth,wght].woff') format('woff');
+    unicode-range: U+2070,U+b9,U+b2-b3,U+2074-2079;
+}
+@font-face {
+    font-family: SuperscriptNumbersFontFix;
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/VISME13526/NotoSans-Bold.woff') format('woff');
+    unicode-range: U+2070,U+b9,U+b2-b3,U+2074-2079;
+}
+@font-face {
+    font-family: SuperscriptNumbersFontFix;
+    font-style: italic;
+    font-weight: 700;
+    src: url('../fonts/VISME13526/NotoSans-BoldItalic.woff') format('woff');
+    unicode-range: U+2070,U+b9,U+b2-b3,U+2074-2079;
+}

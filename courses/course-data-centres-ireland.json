@@ -1,0 +1,102 @@
+{
+  "id": "data-centres-ireland",
+  "title": "Data Centres in Ireland",
+  "category": "Tech & Energy",
+  "accent": "data",
+  "readTime": 5,
+  "slides": [
+    {
+      "type": "photo",
+      "image": "ireland-night.jpg",
+      "align": "center",
+      "tag": "Energy & Consumption",
+      "text": "Data Centres in Ireland. Why are we talking so much about it?",
+      "bold": "Ireland"
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "Every time you stream a video, send an email, or ask a question to an AI, a server, somewhere has to do the work. That server sits in a data centre.",
+      "bold": "data centre",
+      "footer": "It requires electricity to run, water to cool down, material to build ... a lot of it. This is why it matters."
+    },
+    {
+      "type": "stat",
+      "theme": "blue",
+      "stat": "4%",
+      "caption": "In fact, it is estimated that 4% of global greenhouse gas emissions already come from our digital lives, more than aviation. It is growing fast as AI takes off. which requires more data centres to be built.",
+      "bold": "digital lives"
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "stat": "25%",
+      "caption": "And Ireland has a lot of them. In fact, Ireland hosts around 25% of all European Data Centres. Google, Meta, Amazon, Microsoft, they all built major operations here. Dublin has quietly become Europe's data capital."
+    },
+    {
+      "type": "stat",
+      "theme": "dark",
+      "icon": "⚡",
+      "stat": "22%",
+      "caption": "And powering those data centres consumed 22% of Ireland's entire electricity in 2025, up from almost nothing a decade ago.",
+      "footer": "For context, Ireland's entire peak national demand tops out at around 6,000 MW, and prospective new data centres are already requesting up to 5,800 MW."
+    },
+    {
+      "type": "text",
+      "theme": "blue",
+      "text": "Is this a problem? This debate looks very different depending on where you are.",
+      "bullets": [
+        "Iceland runs data centres on geothermal power. Not much concern there.",
+        "The UK has a diverse grid, a very different balance. Right now the main concern is more around water consumption. "
+      ],
+      "footer": "Ireland's grid on the other hand is still partly fossil-fuelled. Every new data centre is a direct competitor for green energy that was meant to decarbonise homes and factories.",
+      "bold": "competitor for green energy"
+    },
+    {
+      "type": "photo",
+      "image": "windfarms-ireland.jpg",
+      "stat": "16%",
+      "text": "Since 2015, nearly all growth in Ireland's electricity demand has come from data centres. The wind farms we're building aren't replacing fossil fuels — they're just keeping up with new AI demand.",
+      "bold": "aren't replacing fossil fuels",
+      "footer": "Between 2020 and 2023, only 16% of increased data centre demand was matched by new renewable purchases. The rest came from the standard grid mix, keeping us dependent on gas and coal."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "Ireland's grid is so strained that regulators have imposed a de facto moratorium on new connections in Dublin. New data centres must now build their own power generation or batteries before they can connect.",
+      "bold": "own power generation",
+      "footer": "Because renewable energy is intermittent, many are turning to on-site gas turbines. Decarbonisation, meet the bypass."
+    },
+    {
+      "type": "stat",
+      "theme": "blue",
+      "stat": "165%",
+      "caption": "New power demand for data centres is not just an Irish problem. It is projected to grow by 165% by 2030. AI will be a big part of it.",
+      "footer": "But as AI becomes more efficient, shouldn't energy demand be less?"
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "callout": "NO.",
+      "calloutTop": true,
+      "text": "When a technology becomes more efficient, total consumption goes up, not down. This is known as the Jevons Paradox",
+      "bold": "Jevons Paradox",
+      "footer": "Cheaper AI means more AI, everywhere. More efficient chips don't lower the electricity bill — they make it possible to build bigger, more powerful systems that were previously too expensive to run."
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "stat": "15-20%",
+      "caption": "But it's not all negative. Digital transformation and AI will have a significant positive impact in reducing emissions — up to 15-20% reduction in global greenhouse gas emissions according to the World Economic Forum.",
+      "bold": "not all negative",
+      "footer": "AI can optimise grids, model climate systems, cut industrial waste, and accelerate clean energy. The same technology stressing Ireland's grid could also help save it."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "The question is not whether Ireland should have data centres. It is whether we are setting the right terms.",
+      "bold": "right terms",
+      "footer": "Mandatory renewable energy requirements, community benefit agreements, water impact rules, and smarter location choices could make the difference between a tech boom that helps the energy transition, and one that derails it."
+    }
+  ]
+}

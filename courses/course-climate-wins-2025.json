@@ -1,0 +1,76 @@
+{
+  "id": "climate-wins-2025",
+  "title": "Climate Wins in 2025",
+  "category": "Good News",
+  "accent": "climate",
+  "readTime": 5,
+  "slides": [
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "2025 was a year of political noise, rollbacks, and broken promises in some corners of the world. But underneath it all, something remarkable was happening.",
+      "bold": "something remarkable was happening"
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "icon": "⚡",
+      "stat": "41%",
+      "caption": "of global electricity came from zero-emissions sources in 2025. A new record — and it happened in April, not at year-end."
+    },
+    {
+      "type": "visual",
+      "theme": "light",
+      "emoji": "🇮🇪",
+      "text": "Ireland closed its last coal plant in June — becoming the 6th European country to exit coal entirely. France ran its grid at 95% fossil-free for all of 2024.",
+      "bold": "95% fossil-free"
+    },
+    {
+      "type": "text",
+      "theme": "blue",
+      "text": "For the first time ever, renewables generation surpassed coal globally. Not in a target document. In actual electricity produced — in October 2025.",
+      "bold": "actual electricity produced"
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "icon": "🚗",
+      "stat": "1 in 4",
+      "caption": "cars sold worldwide in 2025 was electric. In Norway, that number was 99 in 100."
+    },
+    {
+      "type": "visual",
+      "theme": "light",
+      "emoji": "🌳",
+      "text": "Global deforestation is declining. Brazil's Amazon hit its lowest deforestation rate in a decade. China added 1 million hectares of wetlands since 2012.",
+      "bold": "lowest deforestation rate in a decade"
+    },
+    {
+      "type": "stat",
+      "theme": "blue",
+      "icon": "🌊",
+      "stat": "61%",
+      "caption": "of our oceans gained new protection when the High Seas Treaty entered into force in September 2025."
+    },
+    {
+      "type": "visual",
+      "theme": "light",
+      "emoji": "🏭",
+      "text": "China's CO2 emissions were flat or falling for 18 consecutive months. Its clean energy sector grew to 10% of GDP — larger than its entire property sector.",
+      "bold": "flat or falling for 18 consecutive months"
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "icon": "💼",
+      "stat": "82%",
+      "caption": "of all new US energy jobs in 2024 came from clean energy — growing 3× faster than the rest of the workforce."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "None of this means the problem is solved. But the energy transition is no longer a plan. It is happening — faster than almost anyone predicted.",
+      "bold": "faster than almost anyone predicted"
+    }
+  ]
+}

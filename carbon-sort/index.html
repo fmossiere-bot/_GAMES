@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbon Footprint - Higher or Lower</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #0f0f1a;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top navigation bar */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: #0a0a12;
+      border-bottom: 1px solid #1a1a2e;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #888;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #4ecdc4;
+    }
+
+    .back-link svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 30px;
+      background: #1a1a2e;
+      border-bottom: 2px solid #2a2a4a;
+    }
+
+    .logo {
+      display: inline-block;
+      background: #3454d1;
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .score-area {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .trails-left {
+      font-size: 16px;
+      font-weight: 700;
+      color: #aaa;
+    }
+
+    .trails-left span {
+      color: #ff6b6b;
+      font-size: 20px;
+    }
+
+    .score {
+      font-size: 16px;
+      font-weight: 700;
+      color: #aaa;
+    }
+
+    .score span {
+      color: #4ecdc4;
+      font-size: 20px;
+    }
+
+    .game-container {
+      max-width: 100%;
+      padding: 30px 20px;
+    }
+
+    .instruction {
+      text-align: center;
+      font-size: 18px;
+      color: #bbb;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .instruction-sub {
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 25px;
+    }
+
+    .arrow-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      font-weight: 800;
+      font-size: 14px;
+      color: #666;
+      letter-spacing: 2px;
+    }
+
+    .arrow-bar .arrow {
+      font-size: 28px;
+      color: #3454d1;
+    }
+
+    /* Card track */
+    .card-track-wrapper {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: visible;
+      padding-bottom: 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .card-track {
+      display: flex;
+      gap: 16px;
+      padding: 10px 20px;
+      min-width: min-content;
+      min-height: 420px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    /* Card */
+    .card {
+      flex-shrink: 0;
+      width: 220px;
+      height: 380px;
+      border-radius: 20px;
+      cursor: grab;
+      user-select: none;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .card.dragging {
+      opacity: 0.5;
+      transform: scale(0.95);
+      cursor: grabbing;
+    }
+
+    .card.drag-over {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 0 0 3px #fff, 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .card.locked {
+      cursor: default;
+      opacity: 0.85;
+    }
+
+    .card.locked:hover {
+      transform: none;
+      box-shadow: 0 0 0 4px #4ecdc4, 0 8px 30px rgba(78,205,196,0.3);
+    }
+
+    .card-top {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+      position: relative;
+    }
+
+    .card-emoji {
+      font-size: 72px;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.2;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .card-subtitle {
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      color: rgba(255,255,255,0.75);
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .card-bottom {
+      background: rgba(0,0,0,0.15);
+      padding: 12px 16px;
+      text-align: center;
+    }
+
+    .card-impact {
+      font-size: 14px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.9);
+      display: none;
+    }
+
+    .card-category {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .card-number {
+      position: absolute;
+      top: 10px;
+      left: 14px;
+      font-size: 14px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Card colors by category */
+    .card-cat-digital { background: #e74c3c; }
+    .card-cat-food { background: #27ae60; }
+    .card-cat-food-beverage { background: #27ae60; }
+    .card-cat-transport { background: #3454d1; }
+    .card-cat-household { background: #9b59b6; }
+    .card-cat-fashion { background: #e91e63; }
+    .card-cat-sport { background: #00bcd4; }
+    .card-cat-construction { background: #607d8b; }
+    .card-cat-finance { background: #f39c12; }
+
+    /* Result states */
+    .card.correct {
+      box-shadow: 0 0 0 4px #4ecdc4, 0 8px 30px rgba(78,205,196,0.3);
+    }
+
+    .card.correct::after {
+      content: '\2713';
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 22px;
+      color: #4ecdc4;
+      font-weight: 900;
+      z-index: 2;
+    }
+
+    .card.wrong {
+      box-shadow: 0 0 0 4px #ff6b6b, 0 8px 30px rgba(255,107,107,0.3);
+    }
+
+    .card.wrong::after {
+      content: '\2717';
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 22px;
+      color: #ff6b6b;
+      font-weight: 900;
+      z-index: 2;
+    }
+
+    .card.revealed .card-impact {
+      display: block;
+    }
+
+    /* Facts shown on card after final reveal */
+    .card-facts {
+      display: none;
+      margin-top: 8px;
+    }
+
+    .card.final-reveal .card-facts {
+      display: block;
+    }
+
+    .card-fact {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    .card-fact-italic {
+      font-style: italic;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .card.final-reveal {
+      height: auto;
+      min-height: 380px;
+    }
+
+    .card.final-reveal .card-bottom {
+      padding: 12px 14px 16px;
+    }
+
+    /* Buttons */
+    .button-area {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 14px 40px;
+      border: none;
+      border-radius: 30px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      letter-spacing: 0.5px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit {
+      background: #4ecdc4;
+      color: #0f0f1a;
+    }
+
+    .btn-new {
+      background: #3454d1;
+      color: #fff;
+    }
+
+    .btn-retry {
+      background: #f39c12;
+      color: #0f0f1a;
+    }
+
+    /* Results overlay */
+    .result-message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: 900;
+      min-height: 36px;
+    }
+
+    .result-message.perfect { color: #4ecdc4; }
+    .result-message.good { color: #f39c12; }
+    .result-message.fail { color: #ff6b6b; }
+
+    /* Touch hint */
+    .touch-hint {
+      text-align: center;
+      color: #555;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* Responsive - Tablet */
+    @media (max-width: 768px) {
+      .card {
+        width: 140px;
+        height: 240px;
+      }
+      .card-emoji { font-size: 40px; margin-bottom: 8px; }
+      .card-title { font-size: 13px; }
+      .card-subtitle { font-size: 9px; }
+      .card-top { padding: 12px 10px; }
+      .card-bottom { padding: 8px 10px; }
+      .card-impact { font-size: 12px; }
+      .card-category { font-size: 8px; }
+      .card-number { font-size: 12px; top: 6px; left: 10px; }
+      .card-track { gap: 10px; padding: 10px 10px; min-height: 280px; }
+      .header { padding: 14px 16px; }
+      .logo { font-size: 14px; padding: 8px 18px; }
+      .instruction { font-size: 16px; }
+      .arrow-bar { font-size: 12px; gap: 8px; }
+      .arrow-bar .arrow { font-size: 20px; }
+      .game-container { padding: 20px 10px; }
+      .card.final-reveal { min-height: 240px; }
+      .card-fact { font-size: 9px; }
+    }
+
+    /* Responsive - Mobile */
+    @media (max-width: 480px) {
+      .top-nav { padding: 10px 12px; }
+      .back-link { font-size: 12px; gap: 6px; }
+      .back-link svg { width: 16px; height: 16px; }
+
+      .header {
+        padding: 10px 12px;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .logo { font-size: 12px; padding: 6px 14px; }
+      .score-area { gap: 16px; }
+      .trails-left, .score { font-size: 13px; }
+      .trails-left span, .score span { font-size: 16px; }
+
+      .game-container { padding: 15px 8px; }
+      .instruction { font-size: 14px; margin-bottom: 6px; }
+      .instruction-sub { font-size: 12px; margin-bottom: 15px; }
+      .arrow-bar { font-size: 10px; gap: 6px; margin-bottom: 12px; letter-spacing: 1px; }
+      .arrow-bar .arrow { font-size: 16px; }
+
+      .card-track-wrapper { padding-bottom: 10px; }
+      .card-track {
+        gap: 8px;
+        padding: 8px 6px;
+        min-height: 200px;
+        justify-content: flex-start;
+      }
+
+      .card {
+        width: calc((100vw - 68px) / 3); /* Show 3 cards with gaps */
+        min-width: 95px;
+        max-width: 110px;
+        height: 180px;
+        border-radius: 12px;
+      }
+      .card-emoji { font-size: 28px; margin-bottom: 6px; }
+      .card-title { font-size: 11px; line-height: 1.1; }
+      .card-subtitle { font-size: 8px; margin-top: 4px; letter-spacing: 0.5px; }
+      .card-top { padding: 8px 6px; }
+      .card-bottom { padding: 6px 6px; }
+      .card-impact { font-size: 10px; }
+      .card-category { font-size: 7px; letter-spacing: 1px; }
+      .card-number { font-size: 10px; top: 4px; left: 6px; }
+
+      .card.correct::after, .card.wrong::after {
+        font-size: 16px;
+        top: 4px;
+        right: 6px;
+      }
+
+      .card.final-reveal {
+        min-height: 180px;
+        height: auto;
+      }
+      .card-fact { font-size: 8px; line-height: 1.3; }
+      .card-facts { margin-top: 4px; }
+
+      .touch-hint { font-size: 11px; margin-top: 8px; }
+      .result-message { font-size: 16px; margin-top: 15px; }
+      .button-area { margin-top: 20px; }
+      .btn { padding: 12px 30px; font-size: 14px; }
+    }
+
+    /* Extra small phones */
+    @media (max-width: 360px) {
+      .card {
+        width: calc((100vw - 56px) / 3);
+        min-width: 85px;
+        height: 165px;
+      }
+      .card-emoji { font-size: 24px; }
+      .card-title { font-size: 10px; }
+      .card-track { gap: 6px; padding: 6px 4px; min-height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top navigation -->
+  <nav class="top-nav">
+    <a href="https://www.the-uptake.com/games" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Back to Games
+    </a>
+  </nav>
+
+  <div class="header">
+    <div class="logo">Higher or Lower</div>
+    <div class="score-area">
+      <div class="trails-left">Tries left: <span id="trails">3</span></div>
+      <div class="score">Score: <span id="totalScore">0</span></div>
+    </div>
+  </div>
+
+  <div class="game-container" id="gameContainer">
+    <div class="instruction">Sort cards by carbon impact: lowest to highest</div>
+    <div class="instruction-sub" id="instrSub">Drag and drop cards to reorder them</div>
+
+    <div class="arrow-bar">
+      <span>LOWEST CO&#8322;</span>
+      <span class="arrow">&rarr; &rarr; &rarr;</span>
+      <span>HIGHEST CO&#8322;</span>
+    </div>
+
+    <div class="card-track-wrapper">
+      <div class="card-track" id="cardTrack"></div>
+    </div>
+
+    <div class="touch-hint">Drag cards to reorder them</div>
+
+    <div class="result-message" id="resultMessage"></div>
+
+    <div class="button-area" id="buttonArea">
+      <button class="btn btn-submit" onclick="submitAnswer()">Submit Order</button>
+    </div>
+  </div>
+
+
+  <script>
+    // ---- DATA (loaded from CSV) ----
+    let allCards = [];
+
+    // Parse CSV text into array of card objects
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      const headers = lines[0].split(',');
+      const cards = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const values = parseCSVLine(lines[i]);
+        if (values.length >= 5) {
+          cards.push({
+            title: values[0] || '',
+            sub: values[1] || '',
+            category: values[2] || 'OTHER',
+            impact: parseFloat(values[3]) || 0,
+            emoji: values[4] || '📦',
+            comparison: values[5] || '',
+            comment: values[6] || ''
+          });
+        }
+      }
+      return cards;
+    }
+
+    // Handle CSV fields that might contain commas (basic parser)
+    function parseCSVLine(line) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim());
+      return result;
+    }
+
+    // Google Sheets published CSV URL
+    const SHEETS_URL = 'https://docs.google.com/spreadsheets/d/1XNyZQAxnTbr8dHrqAqzfDQb8VobjUz_ucj0vCbGODZY/gviz/tq?tqx=out:csv';
+
+    // Load cards from Google Sheets
+    async function loadCards() {
+      try {
+        const response = await fetch(SHEETS_URL);
+        const text = await response.text();
+        allCards = parseGoogleCSV(text);
+        console.log(`Loaded ${allCards.length} cards from Google Sheets`);
+        if (allCards.length === 0) {
+          throw new Error('No valid cards found');
+        }
+        startRound();
+      } catch (err) {
+        console.error('Failed to load from Google Sheets:', err);
+        document.getElementById('resultMessage').textContent = 'Error loading data from Google Sheets. Check console for details.';
+        document.getElementById('resultMessage').className = 'result-message fail';
+      }
+    }
+
+    // Parse Google Sheets CSV (columns: A=Description, B=Sub, C=Category, D=Impact, E=Comparison, F=Comment)
+    function parseGoogleCSV(text) {
+      const lines = text.trim().split('\n');
+      const cards = [];
+
+      // Skip header row (index 0)
+      for (let i = 1; i < lines.length; i++) {
+        const values = parseCSVLine(lines[i]);
+        // Column mapping from your spreadsheet:
+        // A (0) = Description (title)
+        // B (1) = Sub-Description
+        // C (2) = Category
+        // D (3) = Impact (kg CO2-e)
+        // E (4) = Household Comparison
+        // F (5) = Comments
+        const impactStr = cleanQuotes(values[3] || '').replace(/,/g, ''); // Remove thousand separators
+        const impact = parseFloat(impactStr);
+        if (values[0] && !isNaN(impact)) {
+          cards.push({
+            title: cleanQuotes(values[0]),
+            sub: cleanQuotes(values[1] || ''),
+            category: cleanQuotes(values[2] || 'OTHER'),
+            impact: impact,
+            emoji: getCategoryEmoji(cleanQuotes(values[2] || ''), cleanQuotes(values[0])),
+            comparison: cleanQuotes(values[4] || ''),
+            comment: cleanQuotes(values[5] || '')
+          });
+        }
+      }
+      return cards;
+    }
+
+    function cleanQuotes(str) {
+      return str.replace(/^"|"$/g, '').replace(/""/g, '"').trim();
+    }
+
+    // Auto-assign emoji based on category and title keywords
+    function getCategoryEmoji(category, title) {
+      const cat = category.toUpperCase();
+      const t = title.toLowerCase();
+
+      // Specific matches first
+      if (t.includes('email')) return '📧';
+      if (t.includes('stream')) return '📺';
+      if (t.includes('banana')) return '🍌';
+      if (t.includes('potato')) return '🥔';
+      if (t.includes('washing') || t.includes('laundry')) return '👕';
+      if (t.includes('pizza')) return '🍕';
+      if (t.includes('shower')) return '🚿';
+      if (t.includes('burger') || t.includes('cheeseburger')) return '🍔';
+      if (t.includes('train')) return '🚆';
+      if (t.includes('coffee')) return '☕';
+      if (t.includes('car') && t.includes('driv')) return '🚗';
+      if (t.includes('lamb')) return '🐑';
+      if (t.includes('shoe')) return '👞';
+      if (t.includes('beef') || t.includes('steak')) return '🥩';
+      if (t.includes('smartphone') || t.includes('phone')) return '📱';
+      if (t.includes('bicycle') || t.includes('bike')) return '🚲';
+      if (t.includes('olympic')) return '🏅';
+      if (t.includes('laptop')) return '💻';
+      if (t.includes('flight') || t.includes('fly')) return '✈️';
+      if (t.includes('digital') && t.includes('year')) return '🌐';
+      if (t.includes('dog') || t.includes('pet')) return '🐕';
+      if (t.includes('cement') || t.includes('concrete')) return '🏗️';
+      if (t.includes('food waste') || t.includes('waste')) return '🗑️';
+      if (t.includes('bank')) return '🏦';
+      if (t.includes('range rover') || t.includes('suv')) return '🏎️';
+      if (t.includes('car') && (t.includes('new') || t.includes('manufactur'))) return '🚙';
+
+      // Category fallbacks
+      if (cat.includes('DIGITAL')) return '💻';
+      if (cat.includes('FOOD')) return '🍽️';
+      if (cat.includes('TRANSPORT')) return '🚗';
+      if (cat.includes('HOUSEHOLD')) return '🏠';
+      if (cat.includes('FASHION')) return '👗';
+      if (cat.includes('SPORT')) return '⚽';
+      if (cat.includes('CONSTRUCTION')) return '🏗️';
+      if (cat.includes('FINANCE')) return '💰';
+
+      return '📦';
+    }
+
+    const CARDS_PER_ROUND = 6;
+    const MAX_TRIES = 3;
+
+    // ---- SCORING CONSTANTS ----
+    const BASE_POINTS_PER_CARD = 100; // Points per correct card
+    const ATTEMPT_MULTIPLIERS = [3, 2, 1]; // Multiplier based on which attempt (1st=3x, 2nd=2x, 3rd=1x)
+    const TIME_BONUS_MAX = 500; // Max time bonus per round
+    const TIME_BONUS_THRESHOLD = 30; // Seconds within which you get max bonus (decreases after)
+
+    // ---- STATE ----
+    let currentCards = [];
+    let triesLeft = MAX_TRIES;
+    let roundNumber = 1;
+    let canDrag = true;
+    let isChecked = false; // whether the current attempt result is being shown
+    let lockedPositions = new Set(); // indices that are correct and locked
+    let draggedIdx = null;
+    let showingFinal = false;
+    let totalScore = 0;
+    let roundStartTime = null; // Timer for the round
+    let attemptStartTime = null; // Timer for each attempt
+
+    // ---- INIT ----
+    function startRound() {
+      canDrag = true;
+      isChecked = false;
+      showingFinal = false;
+      triesLeft = MAX_TRIES;
+      lockedPositions = new Set();
+
+      // Pick 6 random cards
+      const shuffled = [...allCards].sort(() => Math.random() - 0.5);
+      currentCards = shuffled.slice(0, CARDS_PER_ROUND);
+      // Shuffle play order
+      currentCards.sort(() => Math.random() - 0.5);
+
+      // Start timers
+      roundStartTime = Date.now();
+      attemptStartTime = Date.now();
+
+      renderCards();
+      updateUI();
+
+      document.getElementById('resultMessage').textContent = '';
+      document.getElementById('resultMessage').className = 'result-message';
+      document.getElementById('buttonArea').innerHTML =
+        '<button class="btn btn-submit" onclick="submitAnswer()">Submit Order</button>';
+      document.getElementById('gameContainer').style.display = '';
+      document.getElementById('instrSub').textContent = 'Drag and drop cards to reorder them';
+    }
+
+    function updateUI() {
+      document.getElementById('trails').textContent = triesLeft;
+      document.getElementById('totalScore').textContent = totalScore.toLocaleString();
+    }
+
+    // Calculate score based on correct cards, attempt number, and time taken
+    function calculateScore(correctCount, attemptNumber, timeSeconds) {
+      // Base score: points per correct card
+      const baseScore = correctCount * BASE_POINTS_PER_CARD;
+
+      // Attempt multiplier: first attempt = 3x, second = 2x, third = 1x
+      const attemptMultiplier = ATTEMPT_MULTIPLIERS[attemptNumber - 1] || 1;
+
+      // Time bonus: faster = more points (max 500, decreases after 30 seconds)
+      let timeBonus = 0;
+      if (timeSeconds <= TIME_BONUS_THRESHOLD) {
+        timeBonus = TIME_BONUS_MAX;
+      } else {
+        // Decrease by 10 points per second after threshold, min 0
+        timeBonus = Math.max(0, TIME_BONUS_MAX - ((timeSeconds - TIME_BONUS_THRESHOLD) * 10));
+      }
+
+      const totalPoints = Math.round((baseScore * attemptMultiplier) + timeBonus);
+      return { baseScore, attemptMultiplier, timeBonus, totalPoints };
+    }
+
+    function renderCards() {
+      const track = document.getElementById('cardTrack');
+      track.innerHTML = '';
+      const sorted = [...currentCards].sort((a, b) => a.impact - b.impact);
+
+      currentCards.forEach((card, idx) => {
+        const el = document.createElement('div');
+        const isLocked = lockedPositions.has(idx);
+        const catClass = 'card-cat-' + card.category.toLowerCase().replace(/ & /g, '-');
+        el.className = `card ${catClass}`;
+        if (isLocked) {
+          el.classList.add('locked', 'correct', 'revealed');
+        }
+        if (showingFinal) {
+          el.classList.add('final-reveal', 'revealed');
+        }
+        el.draggable = !isLocked && !showingFinal;
+        el.dataset.idx = idx;
+
+        let factsHTML = '';
+        if (card.comparison || card.comment) {
+          let lines = '';
+          if (card.comparison) lines += `<div class="card-fact">${card.comparison}</div>`;
+          if (card.comment) lines += `<div class="card-fact card-fact-italic">${card.comment}</div>`;
+          factsHTML = `<div class="card-facts">${lines}</div>`;
+        }
+
+        el.innerHTML = `
+          <div class="card-number">#${idx + 1}</div>
+          <div class="card-top">
+            <div class="card-emoji">${card.emoji}</div>
+            <div class="card-title">${card.title}</div>
+            <div class="card-subtitle">${card.sub}</div>
+          </div>
+          <div class="card-bottom">
+            <div class="card-impact">${formatImpact(card.impact)} kg CO\u2082</div>
+            <div class="card-category">${card.category}</div>
+            ${factsHTML}
+          </div>
+        `;
+
+        if (!isLocked) {
+          // Drag events
+          el.addEventListener('dragstart', onDragStart);
+          el.addEventListener('dragend', onDragEnd);
+          el.addEventListener('dragover', onDragOver);
+          el.addEventListener('dragenter', onDragEnter);
+          el.addEventListener('dragleave', onDragLeave);
+          el.addEventListener('drop', onDrop);
+
+          // Touch events
+          el.addEventListener('touchstart', onTouchStart, { passive: false });
+          el.addEventListener('touchmove', onTouchMove, { passive: false });
+          el.addEventListener('touchend', onTouchEnd);
+        }
+
+        track.appendChild(el);
+      });
+    }
+
+    function formatImpact(val) {
+      if (val < 1) return val.toString();
+      if (val >= 1000) return val.toLocaleString();
+      return val.toString();
+    }
+
+    // ---- DRAG & DROP (desktop) ----
+    function onDragStart(e) {
+      if (!canDrag) return e.preventDefault();
+      const idx = +e.currentTarget.dataset.idx;
+      if (lockedPositions.has(idx)) return e.preventDefault();
+      draggedIdx = idx;
+      e.currentTarget.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function onDragEnd(e) {
+      e.currentTarget.classList.remove('dragging');
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('drag-over'));
+      draggedIdx = null;
+    }
+
+    function onDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function onDragEnter(e) {
+      e.preventDefault();
+      const target = e.currentTarget;
+      const targetIdx = +target.dataset.idx;
+      if (lockedPositions.has(targetIdx)) return;
+      if (targetIdx !== draggedIdx) {
+        target.classList.add('drag-over');
+      }
+    }
+
+    function onDragLeave(e) {
+      e.currentTarget.classList.remove('drag-over');
+    }
+
+    function onDrop(e) {
+      e.preventDefault();
+      const targetIdx = +e.currentTarget.dataset.idx;
+      e.currentTarget.classList.remove('drag-over');
+      if (lockedPositions.has(targetIdx)) return;
+      if (draggedIdx !== null && draggedIdx !== targetIdx) {
+        const item = currentCards.splice(draggedIdx, 1)[0];
+        currentCards.splice(targetIdx, 0, item);
+        // Recalculate locked positions after swap
+        recalcLockedPositions();
+        renderCards();
+      }
+    }
+
+    // ---- TOUCH DRAG (mobile) ----
+    let touchCard = null;
+    let touchClone = null;
+    let touchIdx = null;
+
+    function onTouchStart(e) {
+      if (!canDrag) return;
+      const idx = +e.currentTarget.dataset.idx;
+      if (lockedPositions.has(idx)) return;
+      const touch = e.touches[0];
+      touchIdx = idx;
+      touchCard = e.currentTarget;
+
+      touchClone = touchCard.cloneNode(true);
+      touchClone.style.position = 'fixed';
+      touchClone.style.zIndex = '9999';
+      touchClone.style.width = touchCard.offsetWidth + 'px';
+      touchClone.style.height = touchCard.offsetHeight + 'px';
+      touchClone.style.pointerEvents = 'none';
+      touchClone.style.opacity = '0.85';
+      touchClone.style.transform = 'rotate(3deg) scale(1.05)';
+      touchClone.style.boxShadow = '0 20px 60px rgba(0,0,0,0.5)';
+      touchClone.style.left = (touch.clientX - touchCard.offsetWidth / 2) + 'px';
+      touchClone.style.top = (touch.clientY - touchCard.offsetHeight / 2) + 'px';
+      document.body.appendChild(touchClone);
+
+      touchCard.style.opacity = '0.3';
+      e.preventDefault();
+    }
+
+    function onTouchMove(e) {
+      if (!touchClone) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      touchClone.style.left = (touch.clientX - touchCard.offsetWidth / 2) + 'px';
+      touchClone.style.top = (touch.clientY - touchCard.offsetHeight / 2) + 'px';
+
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('drag-over'));
+      const elBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (elBelow) {
+        const cardBelow = elBelow.closest('.card');
+        if (cardBelow && cardBelow !== touchCard) {
+          const belowIdx = +cardBelow.dataset.idx;
+          if (!lockedPositions.has(belowIdx)) {
+            cardBelow.classList.add('drag-over');
+          }
+        }
+      }
+    }
+
+    function onTouchEnd(e) {
+      if (!touchClone) return;
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('drag-over'));
+
+      const touch = e.changedTouches[0];
+      touchClone.style.display = 'none';
+      const elBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+      touchClone.style.display = '';
+
+      if (elBelow) {
+        const cardBelow = elBelow.closest('.card');
+        if (cardBelow && cardBelow !== touchCard) {
+          const targetIdx = +cardBelow.dataset.idx;
+          if (!lockedPositions.has(targetIdx) && touchIdx !== null && touchIdx !== targetIdx) {
+            const item = currentCards.splice(touchIdx, 1)[0];
+            currentCards.splice(targetIdx, 0, item);
+            recalcLockedPositions();
+            renderCards();
+          }
+        }
+      }
+
+      if (touchCard) touchCard.style.opacity = '1';
+      if (touchClone && touchClone.parentNode) {
+        touchClone.parentNode.removeChild(touchClone);
+      }
+      touchCard = null;
+      touchClone = null;
+      touchIdx = null;
+    }
+
+    // Recalculate which positions are locked (only keeps previously locked ones that are still correct)
+    function recalcLockedPositions() {
+      const sorted = [...currentCards].sort((a, b) => a.impact - b.impact);
+      const newLocked = new Set();
+      for (const pos of lockedPositions) {
+        if (currentCards[pos] === sorted[pos]) {
+          newLocked.add(pos);
+        }
+      }
+      lockedPositions = newLocked;
+    }
+
+    // ---- SUBMIT ----
+    function submitAnswer() {
+      canDrag = false;
+      isChecked = true;
+      const sorted = [...currentCards].sort((a, b) => a.impact - b.impact);
+      let correctCount = 0;
+      let newCorrectCount = 0; // Cards that became correct this attempt
+
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((el, idx) => {
+        if (lockedPositions.has(idx)) {
+          // Already locked from previous try
+          correctCount++;
+          return;
+        }
+        if (currentCards[idx] === sorted[idx]) {
+          el.classList.add('correct', 'revealed');
+          correctCount++;
+          newCorrectCount++;
+          lockedPositions.add(idx);
+        } else {
+          el.classList.add('wrong');
+        }
+      });
+
+      // Calculate time for this attempt
+      const attemptTime = Math.round((Date.now() - attemptStartTime) / 1000);
+      const attemptNumber = MAX_TRIES - triesLeft; // 1, 2, or 3
+
+      triesLeft--;
+
+      const msg = document.getElementById('resultMessage');
+      const allCorrect = correctCount === CARDS_PER_ROUND;
+
+      if (allCorrect) {
+        // Calculate final round score
+        const totalTime = Math.round((Date.now() - roundStartTime) / 1000);
+        const scoreData = calculateScore(CARDS_PER_ROUND, attemptNumber, totalTime);
+        totalScore += scoreData.totalPoints;
+        updateUI();
+
+        msg.innerHTML = `🎉 Perfect! +${scoreData.totalPoints.toLocaleString()} points<br><small style="color:#888">(${attemptNumber}${getOrdinal(attemptNumber)} attempt · ${totalTime}s · ${scoreData.attemptMultiplier}x multiplier)</small>`;
+        msg.className = 'result-message perfect';
+        showFinalResult();
+      } else if (triesLeft > 0) {
+        updateUI();
+        msg.textContent = `${correctCount}/${CARDS_PER_ROUND} correct \u2014 ${triesLeft} ${triesLeft === 1 ? 'try' : 'tries'} left. Rearrange and try again!`;
+        msg.className = 'result-message ' + (correctCount >= 4 ? 'good' : 'fail');
+        document.getElementById('buttonArea').innerHTML =
+          '<button class="btn btn-retry" onclick="retryAttempt()">Try Again</button>';
+      } else {
+        // No tries left - calculate partial score
+        const totalTime = Math.round((Date.now() - roundStartTime) / 1000);
+        const scoreData = calculateScore(correctCount, MAX_TRIES, totalTime);
+        totalScore += scoreData.totalPoints;
+        updateUI();
+
+        msg.innerHTML = `${correctCount}/${CARDS_PER_ROUND} correct. +${scoreData.totalPoints.toLocaleString()} points<br><small style="color:#888">(${totalTime}s · 1x multiplier)</small>`;
+        msg.className = 'result-message fail';
+        showFinalResult();
+      }
+    }
+
+    // Helper for ordinal suffix (1st, 2nd, 3rd)
+    function getOrdinal(n) {
+      if (n === 1) return 'st';
+      if (n === 2) return 'nd';
+      if (n === 3) return 'rd';
+      return 'th';
+    }
+
+    function retryAttempt() {
+      isChecked = false;
+      canDrag = true;
+
+      // Reset attempt timer (but not round timer)
+      attemptStartTime = Date.now();
+
+      // Clear wrong states but keep correct/locked
+      document.getElementById('resultMessage').textContent = '';
+      document.getElementById('resultMessage').className = 'result-message';
+      document.getElementById('instrSub').textContent = 'Move the wrong cards and try again!';
+      document.getElementById('buttonArea').innerHTML =
+        '<button class="btn btn-submit" onclick="submitAnswer()">Submit Order</button>';
+
+      renderCards();
+    }
+
+    function showFinalResult() {
+      showingFinal = true;
+      // Reorder cards into the correct order and re-render
+      currentCards.sort((a, b) => a.impact - b.impact);
+      renderCards();
+
+      document.getElementById('buttonArea').innerHTML =
+        '<button class="btn btn-new" onclick="newRound()">New Round</button>';
+    }
+
+    function newRound() {
+      roundNumber++;
+      startRound();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---- START ----
+    loadCards();
+  </script>
+</body>
+</html>

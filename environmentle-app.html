@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Environmentle — Play your part</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark:  #1A5C38;
+    --green-mid:   #2E7D52;
+    --green-light: #7EC8A0;
+    --green-pale:  #EAF5EE;
+    --orange:      #E07B39;
+    --cream:       #F8F5EE;
+    --cream-dark:  #EEE9E0;
+    --text:        #1C2B1F;
+    --text-soft:   #4A6355;
+    --white:       #FFFFFF;
+    --radius:      20px;
+    --radius-sm:   12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── SCREEN MANAGER (for name + hub screens) ── */
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(20px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 200;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+  .screen.exit {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  /* ════════════════════════════════════
+     LANDING PAGE (scrollable)
+  ════════════════════════════════════ */
+  #landing {
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(248,245,238,0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--green-dark);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--orange); }
+
+  .nav-btn {
+    background: var(--green-dark);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-btn:active { transform: scale(0.96); background: #0f3d24; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--green-dark);
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative leaf shapes */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(126,200,160,0.08);
+  }
+
+  .hero-circle-1 {
+    width: 380px; height: 380px;
+    top: -80px; right: -100px;
+  }
+
+  .hero-circle-2 {
+    width: 220px; height: 220px;
+    top: 120px; right: 60px;
+    background: rgba(224,123,57,0.07);
+  }
+
+  .hero-circle-3 {
+    width: 160px; height: 160px;
+    bottom: 200px; left: -40px;
+    background: rgba(126,200,160,0.06);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 100px 28px 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+    width: fit-content;
+  }
+
+  .hero-eyebrow-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green-light);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  .hero-eyebrow-text {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(42px, 11vw, 64px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.0;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--green-light);
+    font-weight: 400;
+  }
+
+  .hero-title .orange { color: var(--orange); }
+
+  .hero-desc {
+    font-size: 17px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.6;
+    max-width: 340px;
+    margin-bottom: 32px;
+  }
+
+  .hero-desc strong { color: white; }
+
+  .hero-bottom {
+    position: relative;
+    z-index: 2;
+    padding: 24px 28px 48px;
+    background: rgba(0,0,0,0.18);
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+  }
+
+  .hero-stat {
+    flex: 1;
+    text-align: center;
+    padding: 0 8px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .hero-stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.3;
+  }
+
+  .btn-hero {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-hero:active { transform: scale(0.97); background: #c96e2d; }
+
+  /* ── HOW IT WORKS ── */
+  .section {
+    padding: 64px 24px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 7vw, 36px);
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 32px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--green-mid);
+    font-weight: 400;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .step {
+    background: white;
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--green-pale);
+    color: var(--green-dark);
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-content {}
+
+  .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  /* ── WHY IT MATTERS ── */
+  .why-section {
+    background: var(--green-dark);
+    padding: 64px 24px;
+  }
+
+  .why-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 12px;
+  }
+
+  .why-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 7vw, 36px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  .why-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--green-light);
+  }
+
+  .why-intro {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .stat-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+  }
+
+  .stat-card-num {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-card-num .unit {
+    font-size: 22px;
+    color: var(--green-light);
+  }
+
+  .stat-card-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+  }
+
+  .stat-card-desc strong { color: white; }
+
+  .why-quote {
+    background: rgba(126,200,160,0.12);
+    border: 1px solid rgba(126,200,160,0.2);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+
+  .why-quote-text {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .why-quote-source {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+  }
+
+  /* ── FOOTER CTA ── */
+  .footer-cta {
+    padding: 56px 24px 64px;
+    text-align: center;
+    background: var(--cream-dark);
+  }
+
+  .footer-cta-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 7vw, 36px);
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .footer-cta-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--green-mid);
+  }
+
+  .footer-cta-sub {
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer-logo {
+    margin-top: 40px;
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--text-soft);
+  }
+  .footer-logo span { color: var(--orange); }
+
+  .footer-byline {
+    font-size: 12px;
+    color: rgba(0,0,0,0.3);
+    margin-top: 6px;
+  }
+
+  /* ════════════════════════════════════
+     SCREEN: NAME ENTRY
+  ════════════════════════════════════ */
+  #screen-name {
+    background: var(--green-dark);
+    justify-content: space-between;
+  }
+
+  .name-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 28px 32px;
+  }
+
+  .name-back {
+    position: absolute;
+    top: 52px;
+    left: 24px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    border-radius: 100px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .name-welcome-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 14px;
+  }
+
+  .name-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 9vw, 44px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .name-title em {
+    font-style: italic;
+    color: var(--green-light);
+    font-weight: 400;
+  }
+
+  .name-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    margin-bottom: 36px;
+    max-width: 300px;
+  }
+
+  .name-input-wrap {
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .name-input {
+    width: 100%;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: white;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .name-input::placeholder { color: rgba(255,255,255,0.35); }
+
+  .name-input:focus {
+    border-color: var(--green-light);
+    background: rgba(255,255,255,0.13);
+  }
+
+  .name-hint {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 8px;
+    padding-left: 2px;
+  }
+
+  .name-bottom {
+    padding: 20px 28px 48px;
+    background: rgba(0,0,0,0.15);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .btn-start {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, background 0.15s, opacity 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-start:active  { transform: scale(0.97); background: #c96e2d; }
+  .btn-start:disabled { opacity: 0.4; }
+
+  /* ════════════════════════════════════
+     SCREEN: GAME HUB
+  ════════════════════════════════════ */
+  #screen-hub {
+    background: var(--cream);
+  }
+
+  .hub-header {
+    background: var(--green-dark);
+    padding: 52px 24px 28px;
+    flex-shrink: 0;
+  }
+
+  .hub-greeting {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .hub-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .hub-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--green-light);
+  }
+
+  .hub-streak-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .hub-chip {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .hub-chip-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green-light);
+  }
+
+  /* ── PROGRESS CARD (returning users) ── */
+  .hub-progress-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    gap: 0;
+  }
+
+  .progress-stat {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+    border-right: 1px solid rgba(0,0,0,0.07);
+  }
+  .progress-stat:last-child { border-right: none; }
+
+  .progress-stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--green-dark);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .progress-stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-soft);
+    line-height: 1.3;
+  }
+
+  .hub-body {
+    flex: 1;
+    padding: 20px 20px 40px;
+    overflow-y: auto;
+  }
+
+  .hub-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 14px;
+    margin-top: 4px;
+  }
+
+  /* ── GAME CARDS ── */
+  .game-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 2px solid rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .game-card:active { transform: scale(0.98); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+  .game-card-banner {
+    height: 6px;
+    width: 100%;
+  }
+
+  .game-card.quiz   .game-card-banner { background: linear-gradient(90deg, var(--green-dark), var(--green-mid)); }
+  .game-card.sort   .game-card-banner { background: linear-gradient(90deg, var(--orange), #f0a060); }
+  .game-card.carbon .game-card-banner { background: linear-gradient(90deg, #3454d1, #6b8cff); }
+
+  .game-card-body {
+    padding: 18px 18px 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .game-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  .game-card.quiz   .game-card-icon { background: var(--green-pale); }
+  .game-card.sort   .game-card-icon { background: var(--orange-pale); }
+  .game-card.carbon .game-card-icon { background: #EEF0FF; }
+
+  .game-card-info { flex: 1; }
+
+  .game-card-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .game-card.quiz   .game-card-tag { color: var(--green-mid); }
+  .game-card.sort   .game-card-tag { color: var(--orange); }
+  .game-card.carbon .game-card-tag { color: #3454d1; }
+
+  .game-card-name {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+
+  .game-card-desc {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.45;
+  }
+
+  .game-card-footer {
+    padding: 12px 18px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .game-card-meta {
+    display: flex;
+    gap: 14px;
+  }
+
+  .game-card-meta-item {
+    font-size: 12px;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .game-card-meta-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--green-light);
+  }
+
+  .game-card-arrow {
+    color: var(--text-soft);
+    font-size: 18px;
+  }
+
+  .game-card.coming-soon {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  .game-card.coming-soon:active { transform: none; box-shadow: none; }
+
+  .coming-badge {
+    background: rgba(0,0,0,0.06);
+    color: var(--text-soft);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ── TODAY BANNER ── */
+  .today-banner {
+    background: var(--green-dark);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .today-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .today-info { flex: 1; }
+
+  .today-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 3px;
+  }
+
+  .today-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2px;
+  }
+
+  .today-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .today-arrow {
+    color: rgba(255,255,255,0.4);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .anim-1 { animation: fadeSlideUp 0.5s 0.05s both; }
+  .anim-2 { animation: fadeSlideUp 0.5s 0.15s both; }
+  .anim-3 { animation: fadeSlideUp 0.5s 0.25s both; }
+  .anim-4 { animation: fadeSlideUp 0.5s 0.35s both; }
+  .anim-5 { animation: fadeSlideUp 0.5s 0.45s both; }
+
+  @keyframes pop {
+    0%   { transform: scale(0.85); opacity: 0; }
+    60%  { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .pop-in { animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     LANDING PAGE
+════════════════════════════════════════════════════ -->
+<div id="landing">
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-logo">Environment<span>le</span></div>
+    <button class="nav-btn" onclick="openNameScreen()">Play now</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-circle hero-circle-1"></div>
+      <div class="hero-circle hero-circle-2"></div>
+      <div class="hero-circle hero-circle-3"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow anim-1">
+        <div class="hero-eyebrow-dot"></div>
+        <span class="hero-eyebrow-text">Free to play · No app needed</span>
+      </div>
+      <h1 class="hero-title anim-2">
+        Small games.<br>
+        <em>Real</em> change.
+      </h1>
+      <p class="hero-desc anim-3">
+        Environmentle is a <strong>daily sustainability challenge</strong> that turns what you know — and what you do — into real climate action.
+      </p>
+    </div>
+
+    <div class="hero-bottom anim-4">
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">3<span style="font-size:16px;color:var(--green-light)">min</span></div>
+          <div class="hero-stat-label">Per challenge</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">72<span style="font-size:16px;color:var(--green-light)">%</span></div>
+          <div class="hero-stat-label">Of emissions linked to households</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">25<span style="font-size:16px;color:var(--green-light)">%</span></div>
+          <div class="hero-stat-label">Is all it takes to shift a norm</div>
+        </div>
+      </div>
+      <button class="btn-hero" onclick="openNameScreen()">
+        Start playing — it's free
+        <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Three minutes.<br><em>Three steps.</em></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <div class="step-title">Play today's challenge</div>
+          <div class="step-desc">Each day has a short themed challenge — a quiz, a sorting game, or a carbon calculator. Takes under 3 minutes.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <div class="step-title">Learn something surprising</div>
+          <div class="step-desc">After each question or round, we show you the fact behind it — something you can actually use. No lectures, just good information.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <div class="step-title">Commit to one action</div>
+          <div class="step-desc">Pick one thing you can do this week — tailored to what came up in your game. Small, realistic, and worth extra points.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why it matters -->
+  <section class="why-section">
+    <p class="why-label">Why it matters</p>
+    <h2 class="why-title">The gap between<br><em>knowing and doing</em></h2>
+    <p class="why-intro">Most people in Ireland care about the environment — but feel stuck. Environmentle is built around the research that explains why, and what actually helps.</p>
+
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-card-num">81<span class="unit">%</span></div>
+        <div class="stat-card-desc">of Irish people are <strong>worried about climate change</strong> — but only 16% think they personally should do more.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">72<span class="unit">%</span></div>
+        <div class="stat-card-desc">of all global greenhouse gas emissions can be <strong>traced back to household behaviour</strong> — energy, food, transport and goods.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">42<span class="unit">%</span></div>
+        <div class="stat-card-desc">of people feel <strong>lectured or overwhelmed</strong> when it comes to climate content. We built something different.</div>
+      </div>
+    </div>
+
+    <div class="why-quote">
+      <p class="why-quote-text">"When just 25% of a community commits to a new norm, it tends to spread to everyone else."</p>
+      <p class="why-quote-source">IPCC / Centola et al. — tipping point research on social norm change</p>
+    </div>
+  </section>
+
+  <!-- Footer CTA -->
+  <section class="footer-cta">
+    <h2 class="footer-cta-title">Ready to play<br><em>your part?</em></h2>
+    <p class="footer-cta-sub">Join thousands of people learning something new about sustainability every day.</p>
+    <button class="btn-hero" onclick="openNameScreen()" style="max-width:360px;margin:0 auto;display:flex;">
+      Start playing — it's free
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+    <div class="footer-logo">Environment<span>le</span></div>
+    <p class="footer-byline">A UCD Innovation Academy project · environmentle.ie</p>
+  </section>
+
+</div><!-- /landing -->
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: NAME ENTRY
+════════════════════════════════════════════════════ -->
+<div id="screen-name" class="screen">
+  <button class="name-back" onclick="closeName()">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back
+  </button>
+
+  <div class="name-top">
+    <p class="name-welcome-label anim-1">Welcome</p>
+    <h2 class="name-title anim-2">What do<br>we call <em>you?</em></h2>
+    <p class="name-subtitle anim-3">No account needed. Just your name so we can make it feel a bit more personal.</p>
+
+    <div class="name-input-wrap anim-4">
+      <input
+        class="name-input"
+        id="name-input"
+        type="text"
+        placeholder="Your first name"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        maxlength="30"
+        oninput="onNameInput()"
+        onkeydown="if(event.key==='Enter') submitName()"
+      >
+    </div>
+    <p class="name-hint anim-4">No email, no password, no fuss.</p>
+  </div>
+
+  <div class="name-bottom">
+    <button class="btn-start" id="btn-start" onclick="submitName()" disabled>
+      Let's go
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: GAME HUB
+════════════════════════════════════════════════════ -->
+<div id="screen-hub" class="screen">
+  <div class="hub-header">
+    <p class="hub-greeting" id="hub-greeting">Good to see you,</p>
+    <h2 class="hub-title" id="hub-title">Pick your <em>challenge</em></h2>
+    <div class="hub-streak-row">
+      <div class="hub-chip">
+        <div class="hub-chip-dot"></div>
+        Daily challenge available
+      </div>
+    </div>
+  </div>
+
+  <div class="hub-body">
+
+    <!-- Today's theme banner -->
+    <div class="today-banner" onclick="openGame('quiz')" style="cursor:pointer;">
+      <div class="today-icon">☕</div>
+      <div class="today-info">
+        <div class="today-label">Today's theme</div>
+        <div class="today-title">Irish Coffee Day</div>
+        <div class="today-sub">Food & Water · 3 questions</div>
+      </div>
+      <div class="today-arrow">→</div>
+    </div>
+
+    <!-- Progress card (returning users only) -->
+    <div class="hub-progress-card" id="hub-progress" style="display:none;">
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-total-score">0</div>
+        <div class="progress-stat-label">Total score</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-sessions">0</div>
+        <div class="progress-stat-label">Games played</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-actions">0</div>
+        <div class="progress-stat-label">Actions pledged</div>
+      </div>
+    </div>
+
+    <p class="hub-section-label">All games</p>
+
+    <!-- Daily Quiz -->
+    <div class="game-card quiz anim-1" onclick="openGame('quiz')">
+      <div class="game-card-banner"></div>
+      <div class="game-card-body">
+        <div class="game-card-icon">🌿</div>
+        <div class="game-card-info">
+          <div class="game-card-tag">Daily Quiz</div>
+          <div class="game-card-name">Today's Challenge</div>
+          <div class="game-card-desc">3 questions on today's environmental topic. Facts after each answer. New theme every day.</div>
+        </div>
+      </div>
+      <div class="game-card-footer">
+        <div class="game-card-meta">
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> 3 questions</div>
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> 300 pts max</div>
+        </div>
+        <div class="game-card-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Carbon Challenge -->
+    <div class="game-card sort anim-2" onclick="openGame('sort')">
+      <div class="game-card-banner"></div>
+      <div class="game-card-body">
+        <div class="game-card-icon">♻️</div>
+        <div class="game-card-info">
+          <div class="game-card-tag">Sorting Game</div>
+          <div class="game-card-name">Carbon Challenge</div>
+          <div class="game-card-desc">6 everyday items. Drag them into order by carbon footprint — lowest to highest. 3 tries.</div>
+        </div>
+      </div>
+      <div class="game-card-footer">
+        <div class="game-card-meta">
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> 6 cards</div>
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> 3 tries</div>
+        </div>
+        <div class="game-card-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Water Challenge (coming soon) -->
+    <div class="game-card carbon coming-soon anim-3">
+      <div class="game-card-banner"></div>
+      <div class="game-card-body">
+        <div class="game-card-icon">💧</div>
+        <div class="game-card-info">
+          <div class="game-card-tag">Water Game</div>
+          <div class="game-card-name">Water Challenge</div>
+          <div class="game-card-desc">Guess the water footprint of everyday products — from a cup of coffee to a pair of jeans.</div>
+        </div>
+      </div>
+      <div class="game-card-footer">
+        <div class="game-card-meta">
+          <div class="game-card-meta-item"><div class="game-card-meta-dot"></div> Coming soon</div>
+        </div>
+        <div class="coming-badge">Coming soon</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+// ════════════════════════════════════
+// STATE
+// ════════════════════════════════════
+let playerName = '';
+
+// ════════════════════════════════════
+// SCREEN TRANSITIONS
+// ════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => {
+    if (s.classList.contains('active')) {
+      s.classList.add('exit');
+      s.classList.remove('active');
+      setTimeout(() => s.classList.remove('exit'), 400);
+    }
+  });
+  // Freeze landing page scroll when a screen is open
+  document.body.style.overflow = id ? 'hidden' : '';
+  setTimeout(() => {
+    if (id) {
+      const next = document.getElementById(id);
+      next.classList.add('active');
+      next.scrollTop = 0;
+    }
+  }, 200);
+}
+
+function hideAllScreens() {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.add('exit');
+    s.classList.remove('active');
+    setTimeout(() => s.classList.remove('exit'), 400);
+  });
+  document.body.style.overflow = '';
+}
+
+// ════════════════════════════════════
+// NAME SCREEN
+// ════════════════════════════════════
+function openNameScreen() {
+  // Check if already has a name stored
+  const saved = localStorage.getItem('env_player_name');
+  if (saved) {
+    playerName = saved;
+    openHub();
+    return;
+  }
+  showScreen('screen-name');
+  setTimeout(() => {
+    document.getElementById('name-input').focus();
+  }, 500);
+}
+
+function closeName() {
+  hideAllScreens();
+}
+
+function onNameInput() {
+  const val = document.getElementById('name-input').value.trim();
+  document.getElementById('btn-start').disabled = val.length < 2;
+}
+
+function submitName() {
+  const val = document.getElementById('name-input').value.trim();
+  if (val.length < 2) return;
+  playerName = val;
+  localStorage.setItem('env_player_name', playerName);
+  openHub();
+}
+
+// ════════════════════════════════════
+// HUB
+// ════════════════════════════════════
+function openHub() {
+  // Greeting based on time of day
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('hub-greeting').textContent = `${greeting}, ${playerName} 👋`;
+  document.getElementById('hub-title').innerHTML = `Pick your <em>challenge</em>`;
+
+  // Show returning user progress if data exists
+  const progress = JSON.parse(localStorage.getItem('env_progress') || 'null');
+  if (progress && progress.sessionsPlayed > 0) {
+    document.getElementById('progress-total-score').textContent = progress.totalScore || 0;
+    document.getElementById('progress-sessions').textContent = progress.sessionsPlayed || 0;
+    document.getElementById('progress-actions').textContent = progress.actionsPledged || 0;
+    document.getElementById('hub-progress').style.display = 'flex';
+  } else {
+    document.getElementById('hub-progress').style.display = 'none';
+  }
+
+  showScreen('screen-hub');
+}
+
+// ════════════════════════════════════
+// OPEN GAMES
+// ════════════════════════════════════
+// Game file paths — update these to match wherever your files live
+const GAME_URLS = {
+  quiz: 'environmentle-quiz-game.html',
+  sort: 'environmentle-sort-it-out.html'
+};
+
+function openGame(type) {
+  if (!GAME_URLS[type]) return;
+  // Pass name in URL so game can optionally greet the player
+  const url = GAME_URLS[type] + '?player=' + encodeURIComponent(playerName);
+  window.location.href = url;
+}
+
+// ════════════════════════════════════
+// BOOT — check for saved name
+// ════════════════════════════════════
+(function init() {
+  const saved = localStorage.getItem('env_player_name');
+  if (saved) playerName = saved;
+})();
+</script>
+
+</body>
+</html>

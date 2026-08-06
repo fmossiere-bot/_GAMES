@@ -1,0 +1,5167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Uptake Games — Play your part</title>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5S6BPNG30H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5S6BPNG30H');
+</script>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="/_images/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/_images/icon-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Uptake Games">
+<meta name="theme-color" content="#0a293b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:        #0a293b;
+    --navy-mid:    #1a4258;
+    --green:       #4e8a4d;
+    --green-light: #7dbf7c;
+    --green-pale:  #eaf5ea;
+    --orange:      #e27e22;
+    --orange-pale: #fdf0e3;
+    --orange-dark: #904f15;
+    --yellow:      #f7b801;
+    --bg:          #f0f0f0;
+    --bg-dark:     #e2e2e2;
+    --text:        #0a293b;
+    --text-soft:   #4a6070;
+    --white:       #FFFFFF;
+    --radius:      14px;
+    --radius-sm:   8px;
+
+    /* ── APP-MODE DARK SURFACES ── */
+    --surface-deep:    #001523;
+    --surface-mid:     #022234;
+    --surface-card:    #0f2d3f;
+    --surface-card-hi: #1b384a;
+    --surface-bright:  #203c4f;
+    --on-surface-soft: #cae6fe;
+    --warm-peach:      #ffb781;
+    --gold:            #fcbc0c;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    overflow-x: hidden;
+  }
+
+  /* ── SCREEN MANAGER ── */
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(20px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 200;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+  .screen.exit {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  /* ════════════════════════════════════
+     LANDING PAGE
+  ════════════════════════════════════ */
+  #landing { min-height: 100vh; }
+
+  /* ── NAV ── */
+  .nav-back-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 101;
+    background: rgba(5, 22, 34, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    padding: 7px 16px;
+  }
+
+  .nav {
+    position: fixed;
+    top: 32px; left: 0; right: 0;
+    z-index: 100;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10,41,59,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo-mark {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .nav-logo-uptake {
+    font-family: 'Comfortaa', cursive;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nav-logo-games {
+    font-family: 'Comfortaa', cursive;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.38);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    transition: color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-back:hover { color: rgba(255,255,255,0.75); }
+  .nav-back svg { flex-shrink: 0; }
+
+  .nav-btn {
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.01em;
+  }
+  .nav-btn:active { transform: scale(0.96); background: var(--orange-dark); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(78,138,77,0.07);
+  }
+  .hero-circle-1 { width: 420px; height: 420px; top: -100px; right: -120px; }
+  .hero-circle-2 { width: 240px; height: 240px; top: 100px; right: 50px; background: rgba(226,126,34,0.06); }
+  .hero-circle-3 { width: 180px; height: 180px; bottom: 180px; left: -60px; background: rgba(78,138,77,0.05); }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 110px 28px 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+    width: fit-content;
+  }
+
+  .hero-eyebrow-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green-light);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-eyebrow-text {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .hero-brand {
+    margin-bottom: 10px;
+  }
+
+  .hero-brand-uptake {
+    font-family: 'Comfortaa', cursive;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .hero-brand-games {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(52px, 14vw, 72px);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 0.95;
+    display: block;
+    background: linear-gradient(120deg, #7dbf7c 0%, #e27e22 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(22px, 5.5vw, 30px);
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.35;
+    margin-bottom: 20px;
+    margin-top: 14px;
+    max-width: 320px;
+  }
+
+  .hero-title strong { color: white; font-weight: 600; }
+
+  .hero-bottom {
+    position: relative;
+    z-index: 2;
+    padding: 24px 28px 48px;
+    background: rgba(0,0,0,0.2);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+  }
+
+  .hero-stat {
+    flex: 1;
+    text-align: center;
+    padding: 0 8px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-num {
+    font-family: 'Comfortaa', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .hero-stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.3;
+  }
+
+  .btn-hero {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.01em;
+  }
+  .btn-hero:active { transform: scale(0.97); background: var(--orange-dark); }
+
+  /* ── HOW IT WORKS ── */
+  .section {
+    padding: 64px 24px;
+    background: var(--white);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(26px, 6.5vw, 34px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 32px;
+  }
+
+  .section-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .step {
+    background: var(--bg);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: white;
+    font-family: 'Comfortaa', cursive;
+    font-size: 17px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-soft);
+    line-height: 1.55;
+  }
+
+  /* ── WHY IT MATTERS ── */
+  .why-section {
+    background: var(--navy);
+    padding: 64px 24px;
+  }
+
+  .why-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 10px;
+  }
+
+  .why-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(26px, 6.5vw, 34px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .why-title em {
+    font-style: normal;
+    color: var(--yellow);
+  }
+
+  .why-intro {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.65;
+    margin-bottom: 32px;
+  }
+
+  /* Closing line under the stat cards — reads as the punchline of the section */
+  .why-close {
+    font-family: 'Comfortaa', cursive;
+    font-size: 17px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.5;
+    margin-top: 8px;
+    text-align: center;
+  }
+  .why-close em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .stat-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+  }
+
+  .stat-card-num {
+    font-family: 'Comfortaa', cursive;
+    font-size: 42px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-card-num .unit {
+    font-size: 24px;
+    color: var(--green-light);
+  }
+
+  .stat-card-desc {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.55;
+  }
+
+  .stat-card-desc strong { color: white; font-weight: 600; }
+
+  .why-quote {
+    background: rgba(78,138,77,0.12);
+    border: 1px solid rgba(78,138,77,0.22);
+    border-left: 4px solid var(--green);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+
+  .why-quote-text {
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+
+  .why-quote-source {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── FOOTER CTA ── */
+  .footer-cta {
+    padding: 56px 24px 64px;
+    text-align: center;
+    background: var(--bg-dark);
+  }
+
+  .footer-cta-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(26px, 6.5vw, 34px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .footer-cta-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .footer-cta-sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer-brand {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-align: left;
+  }
+
+  .footer-brand-uptake {
+    font-family: 'Comfortaa', cursive;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(10,41,59,0.4);
+  }
+
+  .footer-brand-games {
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-byline {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(0,0,0,0.28);
+  }
+
+  /* ════════════════════════════════════
+     SCREEN: NAME ENTRY
+  ════════════════════════════════════ */
+  #screen-name {
+    background: var(--navy);
+    justify-content: space-between;
+  }
+
+  .name-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 28px 32px;
+  }
+
+  .name-back {
+    position: absolute;
+    top: 52px;
+    left: 24px;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    border-radius: 100px;
+    color: rgba(255,255,255,0.65);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .name-welcome-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 14px;
+  }
+
+  .name-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(30px, 8vw, 42px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .name-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .name-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.65;
+    margin-bottom: 36px;
+    max-width: 300px;
+  }
+
+  .name-input-wrap {
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .name-input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: white;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .name-input::placeholder { color: rgba(255,255,255,0.3); }
+
+  .name-input:focus {
+    border-color: var(--green-light);
+    background: rgba(255,255,255,0.11);
+  }
+
+  .name-hint {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.3);
+    margin-top: 8px;
+    padding-left: 2px;
+  }
+
+  .name-bottom {
+    padding: 20px 28px 48px;
+    background: rgba(0,0,0,0.18);
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .btn-start {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, background 0.15s, opacity 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.01em;
+  }
+  .btn-start:active  { transform: scale(0.97); background: var(--orange-dark); }
+  .btn-start:disabled { opacity: 0.35; }
+
+  /* ════════════════════════════════════
+     SCREEN: GAME HUB
+  ════════════════════════════════════ */
+  #screen-hub {
+    background: var(--bg);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .hub-header {
+    background: var(--navy);
+    padding: 20px 18px 22px;
+  }
+
+  .hub-back-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.45);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s;
+  }
+  .hub-back-bar:active { color: rgba(255,255,255,0.8); }
+  .hub-back-bar svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  .hub-header-top {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(env(safe-area-inset-top, 12px) + 12px) 20px 12px;
+    margin: 0;
+  }
+
+  .hub-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .hub-brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .hub-brand-uptake {
+    font-family: 'Comfortaa', cursive;
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .hub-logo-games {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+
+  .hub-greeting {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 4px;
+    letter-spacing: 0.01em;
+  }
+
+  .hub-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .hub-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .hub-streak-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .hub-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hub-chip-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green-light);
+  }
+
+  .hub-chip.streak {
+    background: rgba(226,126,34,0.15);
+    border-color: rgba(226,126,34,0.3);
+    color: #f0a060;
+  }
+
+  /* ── PROGRESS CARD (returning users) ── */
+  .hub-progress-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    gap: 0;
+  }
+
+  .progress-stat {
+    flex: 1;
+    text-align: center;
+    padding: 0 6px;
+    border-right: 1px solid rgba(0,0,0,0.07);
+  }
+  .progress-stat:last-child { border-right: none; }
+
+  .progress-stat-num {
+    font-family: 'Comfortaa', cursive;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .progress-stat-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-soft);
+    line-height: 1.35;
+  }
+
+  .hub-body {
+    padding: 18px 18px 40px;
+  }
+
+  /* ── NOTIFICATION PROMPT ── */
+  .notif-prompt {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-top: 16px;
+    margin-bottom: 0;
+    position: relative;
+    display: none;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .notif-prompt-close {
+    position: absolute;
+    top: 10px; right: 12px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 4px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .notif-prompt-close:hover { color: white; }
+
+  .notif-prompt-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+    padding-right: 24px;
+  }
+
+  .notif-prompt-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+
+  .notif-prompt-btns {
+    display: flex;
+    gap: 8px;
+  }
+
+  .notif-btn-primary {
+    flex: 1;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.15s;
+  }
+  .notif-btn-primary:active { opacity: 0.8; }
+
+  .notif-btn-secondary {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.15s;
+  }
+  .notif-btn-secondary:active { opacity: 0.7; }
+
+  /* ── INSTALL BANNER ── */
+  .install-banner {
+    background: var(--orange);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-top: 16px;
+    position: relative;
+    display: none;
+  }
+
+  .install-banner-close {
+    position: absolute;
+    top: 10px; right: 12px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 4px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .install-banner-close:hover { color: white; }
+
+  .install-banner-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+    padding-right: 24px;
+  }
+
+  .install-banner-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+
+  .install-banner-steps {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.15);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin-bottom: 14px;
+  }
+
+  .install-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .install-step-icon {
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .install-step-icon svg { width: 16px; height: 16px; }
+
+  .install-step-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.3;
+    font-weight: 500;
+  }
+
+  .install-step-arrow {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .install-banner-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+  }
+
+  .install-banner-cta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 2px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s;
+  }
+  .install-banner-cta:last-child { color: white; }
+  .install-banner-cta:active { opacity: 0.7; }
+  .install-banner-cta .material-symbols-outlined { font-size: 18px !important; }
+
+  .hub-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 12px;
+    margin-top: 4px;
+  }
+
+  /* ── TODAY BANNER ── */
+  .today-banner {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s;
+  }
+  .today-banner:active { transform: scale(0.98); }
+  .today-banner.coming-soon { opacity: 0.6; cursor: default; }
+  .today-banner.coming-soon:active { transform: none; }
+
+  .today-icon { font-size: 30px; flex-shrink: 0; }
+  .today-info { flex: 1; }
+
+  .today-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 3px;
+  }
+
+  .today-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2px;
+  }
+
+  .today-sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .today-arrow {
+    color: rgba(255,255,255,0.35);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  /* ── GAME CARDS ── */
+  .game-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .game-card:active { transform: scale(0.98); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+
+  .game-card-banner {
+    height: 5px;
+    width: 100%;
+  }
+
+  .game-card.quiz  .game-card-banner { background: linear-gradient(90deg, var(--navy), #1a4258); }
+  .game-card.sort  .game-card-banner { background: linear-gradient(90deg, var(--orange), #f0a060); }
+  .game-card.water .game-card-banner { background: linear-gradient(90deg, #2199e6, #6bb8f5); }
+
+  .game-card-body {
+    padding: 18px 18px 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .game-card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .game-card.quiz  .game-card-icon { background: rgba(10,41,59,0.07); }
+  .game-card.sort  .game-card-icon { background: var(--orange-pale); }
+  .game-card.water .game-card-icon { background: #e8f4fd; }
+
+  .game-card-info { flex: 1; }
+
+  .game-card-tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .game-card.quiz  .game-card-tag { color: var(--navy); }
+  .game-card.sort  .game-card-tag { color: var(--orange); }
+  .game-card.water .game-card-tag { color: #2199e6; }
+
+  .game-card-name {
+    font-family: 'Comfortaa', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+
+  .game-card-desc {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  .game-card-footer {
+    padding: 11px 18px;
+    border-top: 1px solid rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .game-card-meta {
+    display: flex;
+    gap: 14px;
+  }
+
+  .game-card-meta-item {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .game-card-meta-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
+  .game-card-arrow {
+    color: var(--text-soft);
+    font-size: 16px;
+  }
+  .game-card-last-played {
+    font-size: 11px;
+    color: var(--text-soft);
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .game-card.coming-soon {
+    opacity: 0.72;
+    cursor: default;
+  }
+  .game-card.coming-soon:active { transform: none; box-shadow: none; }
+
+  /* Already played today */
+  .game-card.played-today {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .game-card.played-today:active { transform: none; box-shadow: none; }
+
+  .played-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--green-pale);
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .coming-badge {
+    background: rgba(0,0,0,0.06);
+    color: var(--text-soft);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .anim-1 { animation: fadeSlideUp 0.5s 0.05s both; }
+  .anim-2 { animation: fadeSlideUp 0.5s 0.15s both; }
+  .anim-3 { animation: fadeSlideUp 0.5s 0.25s both; }
+  .anim-4 { animation: fadeSlideUp 0.5s 0.35s both; }
+  .anim-5 { animation: fadeSlideUp 0.5s 0.45s both; }
+
+  @keyframes pop {
+    0%   { transform: scale(0.85); opacity: 0; }
+    60%  { transform: scale(1.06); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .pop-in { animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+  /* ════════════════════════════════════
+     MATERIAL SYMBOLS UTIL
+  ════════════════════════════════════ */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+    line-height: 1;
+  }
+
+  /* ════════════════════════════════════
+     APP TOPBAR (replaces hub-header-top)
+  ════════════════════════════════════ */
+  .app-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10,41,59,0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 20px 12px;
+    flex-shrink: 0;
+  }
+
+  /* ════════════════════════════════════
+     HUB SCREEN
+  ════════════════════════════════════ */
+  #screen-hub {
+    background: var(--bg);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-direction: column;
+  }
+
+  #screen-hub .hub-body {
+    padding: 18px 18px 96px;
+  }
+
+  #screen-hub .daily-hero {
+    margin-bottom: 16px;
+  }
+
+  /* ── STREAK CARD ── */
+  .streak-card {
+    background: var(--surface-card);
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .streak-card-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--warm-peach);
+    margin-bottom: 8px;
+  }
+
+  .streak-card-eyebrow .material-symbols-outlined {
+    font-size: 16px !important;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+  }
+
+  .streak-card-heading {
+    font-family: 'Comfortaa', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .streak-card-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+
+  .streak-progress {
+    display: flex;
+    gap: 5px;
+  }
+
+  .streak-bar {
+    height: 4px;
+    flex: 1;
+    background: rgba(255,255,255,0.12);
+    border-radius: 100px;
+    transition: background 0.3s;
+  }
+
+  .streak-bar.filled { background: var(--warm-peach); }
+
+  /* ── HERO GRID ── */
+  .hub-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  @media (min-width: 600px) {
+    .hub-hero-grid { grid-template-columns: 5fr 7fr; }
+  }
+
+  /* ── DAILY HERO CARD ── */
+  .daily-hero {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+    border-radius: var(--radius);
+    min-height: 220px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .daily-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(78,138,77,0.18) 0%, rgba(226,126,34,0.14) 100%);
+    pointer-events: none;
+  }
+
+  .daily-hero:active { transform: scale(0.98); }
+  .daily-hero.played-today { opacity: 0.6; cursor: default; }
+  .daily-hero.played-today:active { transform: none; }
+  .daily-hero.coming-soon { opacity: 0.65; cursor: default; }
+  .daily-hero.coming-soon:active { transform: none; }
+
+  .daily-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .daily-hero-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .daily-theme-badge {
+    background: var(--green);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  .daily-hero-date {
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+  }
+
+  .daily-hero .today-icon {
+    font-size: 34px;
+    margin: 8px 0 2px;
+    display: block;
+  }
+
+  .daily-hero-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(18px, 5vw, 24px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  .daily-hero-action { display: flex; align-items: center; }
+
+  .daily-play-btn {
+    background: linear-gradient(120deg, var(--green) 0%, var(--orange) 100%);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  /* played/coming badge overrides on dark hero */
+  .daily-hero .played-badge {
+    background: rgba(78,138,77,0.2);
+    color: var(--green-light);
+    border: 1px solid rgba(78,138,77,0.3);
+  }
+
+  .daily-hero .coming-badge {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+  }
+
+  /* ── GLOBAL STATS PANEL ── */
+  .global-stats-panel {
+    background: var(--surface-mid);
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .global-stats-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .global-stats-title .material-symbols-outlined {
+    font-size: 18px !important;
+    color: var(--gold);
+  }
+
+  .global-stats-grid {
+    display: flex;
+    gap: 0;
+  }
+
+  .global-stat-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 6px;
+  }
+
+  .global-stat-item + .global-stat-item {
+    border-left: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .global-stat-num {
+    font-family: 'Plus Jakarta Sans', 'Comfortaa', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+
+  .gs-orange { color: var(--warm-peach); }
+  .gs-green  { color: var(--green-light); }
+  .gs-gold   { color: var(--gold); }
+
+  .global-stat-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.4;
+  }
+
+  /* ── GAMES SECTION HEADER ── */
+  .hub-games-section { display: flex; flex-direction: column; }
+
+  .hub-games-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .hub-games-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2px;
+  }
+
+  .hub-games-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* Game card icon (Material Symbols version) */
+  .game-card-icon-wrap {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .game-card-icon-wrap .material-symbols-outlined { font-size: 24px !important; }
+  .game-card.quiz  .game-card-icon-wrap { background: rgba(10,41,59,0.07);   color: var(--navy); }
+  .game-card.sort  .game-card-icon-wrap { background: var(--orange-pale);     color: var(--orange); }
+  .game-card.water .game-card-icon-wrap { background: #e8f4fd;                color: #2199e6; }
+
+  /* ════════════════════════════════════
+     BOTTOM NAVIGATION
+  ════════════════════════════════════ */
+  #app-bottom-nav {
+    display: none; /* JS shows when in app mode */
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 300;
+    background: rgba(10,41,59,0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 -8px 28px rgba(0,0,0,0.35);
+    justify-content: space-around;
+    align-items: center;
+    height: calc(64px + env(safe-area-inset-bottom, 0px));
+    padding: 0 8px env(safe-area-inset-bottom, 0px);
+  }
+
+  .nav-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 7px 18px;
+    border-radius: 100px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    min-width: 60px;
+  }
+
+  .nav-tab .material-symbols-outlined { font-size: 18px !important; }
+
+  .nav-tab-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .nav-tab.active {
+    background: none;
+    color: var(--orange);
+  }
+
+  .nav-tab:active { transform: scale(0.88); }
+
+  /* ════════════════════════════════════
+     TAB SCREENS (placeholder)
+  ════════════════════════════════════ */
+  .tab-screen {
+    background: var(--surface-deep);
+    flex-direction: column;
+  }
+
+  .tab-screen-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px 24px 96px;
+    text-align: center;
+  }
+
+  .tab-screen-icon {
+    font-size: 52px !important;
+    color: rgba(255,255,255,0.12);
+  }
+
+  .tab-screen-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .tab-screen-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.2);
+    line-height: 1.6;
+  }
+
+  /* ════════════════════════════════════
+     PROFILE BUTTON (replaces Sign Out in top-right of hub/games/learn)
+  ════════════════════════════════════ */
+  .profile-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.9);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s, transform 0.12s;
+    padding: 0;
+  }
+  .profile-icon-btn:active { transform: scale(0.92); background: rgba(255,255,255,0.14); }
+  .profile-icon-btn .material-symbols-outlined { font-size: 22px; }
+
+  /* ════════════════════════════════════
+     ACTIONS TAKEN (profile screen)
+  ════════════════════════════════════ */
+  .actions-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .actions-history-empty {
+    background: var(--surface-card);
+    border: 1px dashed rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    text-align: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .actions-history-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--surface-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+  }
+  .actions-history-check {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--green-light);
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .actions-history-check .material-symbols-outlined { font-size: 14px; font-weight: 700; }
+  .actions-history-content { flex: 1; min-width: 0; }
+  .actions-history-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: white;
+    line-height: 1.4;
+    margin-bottom: 3px;
+  }
+  .actions-history-date {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ════════════════════════════════════
+     PROFILE SCREEN
+  ════════════════════════════════════ */
+  .profile-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10,41,59,0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 14px 12px;
+    flex-shrink: 0;
+  }
+  .profile-back, .profile-signout {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .profile-back { color: var(--orange); }
+  .profile-signout { color: rgba(255,255,255,0.55); transition: color 0.15s; }
+  .profile-signout:active { color: rgba(255,255,255,0.9); }
+  .profile-back .material-symbols-outlined,
+  .profile-signout .material-symbols-outlined { font-size: 18px; }
+  .profile-topbar-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--orange);
+  }
+
+  .profile-body {
+    flex: 1;
+    padding: 28px 18px 96px;
+  }
+
+  .profile-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .profile-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4e8a4d 0%, #1a4258 55%, #e27e22 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid rgba(255,255,255,0.12);
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .profile-avatar .material-symbols-outlined { font-size: 56px; color: white; }
+  .profile-avatar-badge {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--green-light);
+    border: 3px solid var(--surface-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .profile-avatar-badge .material-symbols-outlined { font-size: 12px; color: var(--navy); }
+  .profile-name {
+    font-family: 'Comfortaa', cursive;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .profile-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+
+  /* Re-style the homepage activity card on the dark profile background */
+  .profile-body .hub-progress-card {
+    background: var(--surface-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 24px;
+  }
+  .profile-body .progress-stat { border-right-color: rgba(255,255,255,0.08); }
+  .profile-body .progress-stat-num { color: white; }
+  .profile-body .progress-stat-label { color: rgba(255,255,255,0.55); }
+
+  /* Settings */
+  .profile-section-label {
+    font-family: 'Comfortaa', cursive;
+    font-size: 17px;
+    font-weight: 700;
+    color: white;
+    margin: 8px 0 12px;
+  }
+  .settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .settings-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    background: var(--surface-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    color: white;
+    text-align: left;
+    transition: background 0.15s;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .settings-item:active { background: var(--surface-card-hi); }
+  .settings-item .settings-item-icon {
+    color: rgba(255,255,255,0.55);
+    font-size: 22px !important;
+  }
+  .settings-item-label {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .settings-item .settings-item-chevron {
+    color: rgba(255,255,255,0.3);
+    font-size: 20px !important;
+  }
+
+  /* ── Home story card (light bg) ─────────────────── */
+  .story-card-home {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    border: 1px solid rgba(0,0,0,0.04);
+    display: flex;
+    align-items: stretch;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  }
+  .story-card-home:active { transform: scale(0.98); }
+  .story-card-home-accent {
+    width: 4px;
+    flex-shrink: 0;
+  }
+  .story-card-home.topic-climate .story-card-home-accent { background: linear-gradient(180deg,#7dbf7c,#2199e6); }
+  .story-card-home.topic-data    .story-card-home-accent { background: linear-gradient(180deg,#2199e6,#6bd0f5); }
+  .story-card-home.topic-food    .story-card-home-accent { background: linear-gradient(180deg,#4e8a4d,#7dbf7c); }
+  .story-card-home.topic-society .story-card-home-accent { background: linear-gradient(180deg,#e27e22,#f5b060); }
+  .story-card-home-body {
+    padding: 14px 14px 14px 16px;
+    flex: 1;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .story-card-home-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+  .story-card-home.topic-climate .story-card-home-icon { background: rgba(125,204,138,0.15); }
+  .story-card-home.topic-data    .story-card-home-icon { background: rgba(33,153,230,0.12); }
+  .story-card-home.topic-food    .story-card-home-icon { background: rgba(78,138,77,0.12);  }
+  .story-card-home.topic-society .story-card-home-icon { background: rgba(226,126,34,0.12); }
+  .story-card-home-info { flex: 1; }
+  .story-card-home-tag {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .story-card-home.topic-climate .story-card-home-tag { color: #2ea055; }
+  .story-card-home.topic-data    .story-card-home-tag { color: #2199e6; }
+  .story-card-home.topic-food    .story-card-home-tag { color: #4e8a4d; }
+  .story-card-home.topic-society .story-card-home-tag { color: #e27e22; }
+  .story-card-home-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px; font-weight: 700;
+    color: var(--text); line-height: 1.2;
+    margin-bottom: 3px;
+  }
+  .story-card-home-meta {
+    font-size: 11px; color: var(--text-soft); font-weight: 500;
+  }
+  .story-card-home-arrow { color: var(--text-soft); font-size: 16px; padding-right: 14px; }
+
+  /* ── Games Library Tab ─────────────────────────── */
+  .games-lib-hero {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+    padding: 22px 20px 26px;
+    flex-shrink: 0;
+  }
+  .games-lib-hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .games-lib-orb {
+    position: absolute;
+    border-radius: 50%;
+  }
+  .games-lib-orb-1 { width: 260px; height: 260px; top: -80px; right: -70px; background: rgba(78,138,77,0.10); }
+  .games-lib-orb-2 { width: 160px; height: 160px; top: 20px;  right: 40px;  background: rgba(226,126,34,0.08); }
+  .games-lib-orb-3 { width: 120px; height: 120px; bottom: -30px; left: -40px; background: rgba(78,138,77,0.07); }
+  .games-lib-hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  .games-lib-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    padding: 5px 12px;
+    margin-bottom: 12px;
+  }
+  .games-lib-eyebrow-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green-light);
+    animation: pulse 2s infinite;
+  }
+  .games-lib-eyebrow-text {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+  .games-lib-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(32px, 10vw, 48px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    background: linear-gradient(120deg, #7dbf7c 0%, #e27e22 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .games-lib-subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+    max-width: 280px;
+  }
+  .games-library-body {
+    padding: 20px 16px calc(80px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--surface-deep);
+  }
+  /* ── Rich game card for library ───────────────── */
+  .gl-card {
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.18s cubic-bezier(0.2,0,0,1), box-shadow 0.18s;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.22);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .gl-card:active { transform: scale(0.97); box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+  .gl-card.coming-soon { cursor: default; opacity: 0.82; }
+  .gl-card.coming-soon:active { transform: none; }
+
+  /* Full-bleed poster visual */
+  .gl-poster {
+    height: 172px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 14px 16px 16px;
+  }
+  /* Layered gradient + abstract shapes via pseudo-elements */
+  .gl-poster::before,
+  .gl-poster::after { content: ''; position: absolute; border-radius: 50%; pointer-events: none; }
+
+  /* Quiz — deep navy, teal glow */
+  .gl-card.quiz .gl-poster {
+    background: linear-gradient(140deg, #061e2e 0%, #0d3d5a 55%, #0a2a40 100%);
+  }
+  .gl-card.quiz .gl-poster::before {
+    width: 220px; height: 220px;
+    top: -60px; right: -50px;
+    background: radial-gradient(circle, rgba(33,153,230,0.35) 0%, transparent 70%);
+  }
+  .gl-card.quiz .gl-poster::after {
+    width: 140px; height: 140px;
+    bottom: -40px; left: -20px;
+    background: radial-gradient(circle, rgba(78,138,77,0.25) 0%, transparent 70%);
+  }
+
+  /* Sort / Carbon — deep orange, warm glow */
+  .gl-card.sort .gl-poster {
+    background: linear-gradient(140deg, #7a2e00 0%, #c85a00 50%, #e27e22 100%);
+  }
+  .gl-card.sort .gl-poster::before {
+    width: 200px; height: 200px;
+    top: -50px; right: -30px;
+    background: radial-gradient(circle, rgba(255,200,80,0.3) 0%, transparent 70%);
+  }
+  .gl-card.sort .gl-poster::after {
+    width: 120px; height: 120px;
+    bottom: -20px; left: 20px;
+    background: radial-gradient(circle, rgba(200,90,0,0.4) 0%, transparent 70%);
+  }
+
+  /* Water — deep ocean blue */
+  .gl-card.water .gl-poster {
+    background: linear-gradient(140deg, #052545 0%, #0d5fa0 55%, #1a8fcb 100%);
+  }
+  .gl-card.water .gl-poster::before {
+    width: 240px; height: 240px;
+    top: -70px; right: -60px;
+    background: radial-gradient(circle, rgba(107,208,245,0.3) 0%, transparent 65%);
+  }
+  .gl-card.water .gl-poster::after {
+    width: 100px; height: 100px;
+    bottom: -10px; left: 30px;
+    background: radial-gradient(circle, rgba(33,153,230,0.4) 0%, transparent 70%);
+  }
+
+  /* Greenwasher — deep forest green */
+  .gl-card.swipe .gl-poster {
+    background: linear-gradient(140deg, #0d3d1e 0%, #1a6b3a 55%, #2ea055 100%);
+  }
+  .gl-card.swipe .gl-poster::before {
+    width: 200px; height: 200px;
+    top: -50px; right: -40px;
+    background: radial-gradient(circle, rgba(125,204,138,0.28) 0%, transparent 65%);
+  }
+  .gl-card.swipe .gl-poster::after {
+    width: 130px; height: 130px;
+    bottom: -30px; left: -10px;
+    background: radial-gradient(circle, rgba(78,138,77,0.35) 0%, transparent 70%);
+  }
+
+  /* Top row: tag pill + coming soon */
+  .gl-poster-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+  .gl-tag-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.14);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 100px;
+    padding: 5px 11px 5px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+  }
+  .gl-tag-pill .material-symbols-outlined { font-size: 14px !important; }
+  .gl-coming-pill {
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.95);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 100px;
+  }
+
+  /* Bottom: big title + play cta on the poster */
+  .gl-poster-bottom {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .gl-poster-name {
+    font-family: 'Comfortaa', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.1;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+    flex: 1;
+  }
+  .gl-poster-play {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(6px);
+    border: 1.5px solid rgba(255,255,255,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    font-size: 20px;
+    padding-left: 2px; /* visual center for ▶ */
+  }
+  .gl-card.coming-soon .gl-poster-play { display: none; }
+
+  /* Info strip below poster */
+  .gl-info {
+    background: var(--surface-card);
+    padding: 14px 16px 16px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .gl-desc {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .gl-meta-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .gl-chip {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.55);
+    background: rgba(255,255,255,0.06);
+  }
+  .gl-card.quiz  .gl-chip.primary { color: #6ab8e8; border-color: rgba(106,184,232,0.3); background: rgba(33,153,230,0.12); }
+  .gl-card.sort  .gl-chip.primary { color: #f5a040; border-color: rgba(245,160,64,0.3);  background: rgba(226,126,34,0.12); }
+  .gl-card.water .gl-chip.primary { color: #6bd0f5; border-color: rgba(107,208,245,0.3); background: rgba(33,153,230,0.12); }
+  .gl-card.swipe .gl-chip.primary { color: #7dcc8a; border-color: rgba(125,204,138,0.3); background: rgba(46,160,85,0.12); }
+
+  /* ── Learn Tab ─────────────────────────────────── */
+  .learn-hero {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+    padding: 22px 20px 26px;
+    flex-shrink: 0;
+  }
+  .learn-hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .learn-orb {
+    position: absolute;
+    border-radius: 50%;
+  }
+  .learn-orb-1 { width: 260px; height: 260px; top: -80px; right: -70px; background: radial-gradient(circle, rgba(33,153,230,0.18) 0%, transparent 70%); }
+  .learn-orb-2 { width: 160px; height: 160px; bottom: -40px; left: -30px; background: radial-gradient(circle, rgba(78,138,77,0.15) 0%, transparent 70%); }
+  .learn-orb-3 { width: 100px; height: 100px; top: 30px; right: 60px; background: radial-gradient(circle, rgba(226,126,34,0.12) 0%, transparent 70%); }
+  .learn-hero-content { position: relative; z-index: 2; }
+  .learn-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    padding: 5px 12px;
+    margin-bottom: 12px;
+  }
+  .learn-hero-eyebrow-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #6bd0f5;
+    animation: pulse 2s infinite;
+  }
+  .learn-hero-eyebrow-text {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+  .learn-hero-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(32px, 10vw, 48px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    background: linear-gradient(120deg, #6bd0f5 0%, #7dbf7c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .learn-hero-subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+  .learn-body {
+    padding: 20px 16px calc(80px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--surface-deep);
+  }
+  .learn-section-label {
+    font-family: 'Comfortaa', cursive;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 8px 0 4px;
+  }
+
+  /* Micro-learning card */
+  .ml-card {
+    background: var(--surface-card);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s, box-shadow 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ml-card.active { cursor: pointer; }
+  .ml-card.active:active { transform: scale(0.98); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  .ml-card.coming-soon { opacity: 0.72; cursor: default; }
+
+  .ml-card-accent {
+    height: 4px;
+    width: 100%;
+    flex-shrink: 0;
+  }
+  .ml-card.topic-data    .ml-card-accent { background: linear-gradient(90deg, #2199e6, #6bd0f5); }
+  .ml-card.topic-food    .ml-card-accent { background: linear-gradient(90deg, #4e8a4d, #7dbf7c); }
+  .ml-card.topic-society .ml-card-accent { background: linear-gradient(90deg, #e27e22, #f5b060); }
+  .ml-card.topic-climate .ml-card-accent { background: linear-gradient(90deg, #7dbf7c, #2199e6); }
+
+  .ml-card-inner {
+    padding: 14px 16px 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .ml-card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .ml-card-icon .material-symbols-outlined { font-size: 20px !important; }
+  .ml-card.topic-data    .ml-card-icon { background: rgba(33,153,230,0.15); color: #6bd0f5; }
+  .ml-card.topic-food    .ml-card-icon { background: rgba(78,138,77,0.15);  color: #7dbf7c; }
+  .ml-card.topic-society .ml-card-icon { background: rgba(226,126,34,0.15); color: #f5b060; }
+  .ml-card.topic-climate .ml-card-icon { background: rgba(125,204,138,0.15);color: #7dbf7c; }
+
+  .ml-card-content { flex: 1; }
+  .ml-card-meta {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .ml-card.topic-data    .ml-card-meta { color: #6bd0f5; }
+  .ml-card.topic-food    .ml-card-meta { color: #7dbf7c; }
+  .ml-card.topic-society .ml-card-meta { color: #f5b060; }
+  .ml-card.topic-climate .ml-card-meta { color: #7dbf7c; }
+
+  .ml-card-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  .ml-card-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.55;
+  }
+  .ml-card-footer {
+    padding: 10px 16px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ml-chip {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.05);
+  }
+  .ml-coming-chip {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.05);
+    margin-left: auto;
+  }
+
+  /* ── Course Player ──────────────────────────────── */
+  .course-player {
+    position: fixed;
+    inset: 0;
+    z-index: 600;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .course-player.open { transform: translateY(0); }
+
+  /* Progress bar */
+  .cp-topbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: calc(env(safe-area-inset-top, 0px) + 14px) 16px 12px;
+  }
+  .cp-close {
+    background: rgba(255,255,255,0.18);
+    border: none;
+    color: white;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(6px);
+  }
+  .cp-progress {
+    flex: 1;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .cp-seg {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.25);
+    overflow: hidden;
+    position: relative;
+  }
+  .cp-seg-fill {
+    position: absolute;
+    inset: 0;
+    background: white;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: 2px;
+  }
+  .cp-seg.done   .cp-seg-fill { transform: scaleX(1); }
+  .cp-seg.active .cp-seg-fill { animation: cpFill var(--cp-duration, 3s) linear forwards; }
+  @keyframes cpFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* Slide stage */
+  .cp-stage {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+  }
+  .cp-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: calc(env(safe-area-inset-top,0px) + 80px) 32px calc(env(safe-area-inset-bottom,0px) + 80px);
+    transition: transform 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.32s;
+  }
+  .cp-slide.entering-right  { transform: translateX(100%); opacity: 0; }
+  .cp-slide.entering-left   { transform: translateX(-100%); opacity: 0; }
+  .cp-slide.active          { transform: translateX(0);    opacity: 1; }
+  .cp-slide.leaving-left    { transform: translateX(-100%); opacity: 0; }
+  .cp-slide.leaving-right   { transform: translateX(100%);  opacity: 0; }
+
+  /* ── THEME BACKGROUNDS ── */
+  .cp-slide.theme-dark   { background: linear-gradient(160deg, #061d2e 0%, #0d3a52 60%, #0a2840 100%); }
+  .cp-slide.theme-light  { background: linear-gradient(160deg, #cfe4f0 0%, #dff0f9 60%, #e8f5fd 100%); }
+  .cp-slide.theme-green  { background: linear-gradient(160deg, #071f10 0%, #0e4a22 55%, #1a7038 100%); }
+  .cp-slide.theme-blue   { background: linear-gradient(160deg, #030f22 0%, #0a3a66 55%, #0d5fa0 100%); }
+  .cp-slide.theme-orange { background: linear-gradient(160deg, #3d1200 0%, #8c3200 55%, #c85800 100%); }
+
+  /* Large decorative circle outline — visual depth */
+  .cp-slide::before {
+    content: '';
+    position: absolute;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    pointer-events: none;
+    top: -140px; right: -140px;
+  }
+  /* Second decorative element — filled blob bottom-left */
+  .cp-slide::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    bottom: -80px; left: -80px;
+  }
+
+  .cp-slide.theme-dark::before  {
+    border: 1.5px solid rgba(255,255,255,0.06);
+    background: radial-gradient(circle at 60% 40%, rgba(33,153,230,0.22) 0%, transparent 60%);
+  }
+  .cp-slide.theme-dark::after   { width:260px;height:260px; background:radial-gradient(circle,rgba(78,138,77,0.18) 0%,transparent 65%); }
+
+  .cp-slide.theme-green::before {
+    border: 1.5px solid rgba(255,255,255,0.07);
+    background: radial-gradient(circle at 60% 40%, rgba(125,204,138,0.28) 0%, transparent 60%);
+  }
+  .cp-slide.theme-green::after  { width:220px;height:220px; background:radial-gradient(circle,rgba(33,153,230,0.18) 0%,transparent 65%); }
+
+  .cp-slide.theme-blue::before  {
+    border: 1.5px solid rgba(255,255,255,0.07);
+    background: radial-gradient(circle at 60% 40%, rgba(107,208,245,0.28) 0%, transparent 60%);
+  }
+  .cp-slide.theme-blue::after   { width:240px;height:240px; background:radial-gradient(circle,rgba(13,95,160,0.5) 0%,transparent 65%); }
+
+  .cp-slide.theme-orange::before {
+    border: 1.5px solid rgba(255,255,255,0.06);
+    background: radial-gradient(circle at 60% 40%, rgba(245,160,64,0.25) 0%, transparent 60%);
+  }
+  .cp-slide.theme-orange::after { width:200px;height:200px; background:radial-gradient(circle,rgba(200,88,0,0.4) 0%,transparent 65%); }
+
+  .cp-slide.theme-light::before {
+    border: 1.5px solid rgba(10,41,59,0.06);
+    background: radial-gradient(circle at 60% 40%, rgba(33,153,230,0.10) 0%, transparent 60%);
+  }
+  .cp-slide.theme-light::after  { width:220px;height:220px; background:radial-gradient(circle,rgba(78,138,77,0.08) 0%,transparent 65%); }
+
+  /* Extra texture: faint diagonal lines on dark slides */
+  .cp-slide.theme-dark .cp-texture,
+  .cp-slide.theme-green .cp-texture,
+  .cp-slide.theme-blue .cp-texture  {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background: repeating-linear-gradient(
+      -55deg,
+      transparent, transparent 40px,
+      rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px
+    );
+  }
+
+  /* ── SLIDE TYPE: text ── */
+  .cp-text-body {
+    position: relative;
+    z-index: 1;
+  }
+  .cp-text {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(22px, 6vw, 30px);
+    font-weight: 400;
+    line-height: 1.45;
+  }
+  .theme-dark  .cp-text,
+  .theme-green .cp-text,
+  .theme-blue  .cp-text  { color: rgba(255,255,255,0.85); }
+  .theme-light .cp-text  { color: #0a293b; }
+  .cp-text strong { font-weight: 700; }
+  .theme-dark  .cp-text strong { color: white; }
+  .theme-green .cp-text strong { color: #a8edba; }
+  .theme-blue  .cp-text strong { color: #a0d8ef; }
+  .theme-light .cp-text strong { color: #0a293b; }
+
+  /* Photo slide */
+  .cp-slide-photo {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .cp-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.65) 100%);
+    z-index: 0;
+  }
+  /* Centered photo variant */
+  .cp-slide-photo.cp-photo-center {
+    justify-content: center;
+    align-items: center;
+  }
+  .cp-slide-photo.cp-photo-center .cp-photo-overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.72) 100%);
+  }
+  .cp-slide-photo.cp-photo-center .cp-text-body {
+    text-align: center;
+    width: 100%;
+  }
+  .cp-slide-photo.cp-photo-center .cp-text {
+    font-size: clamp(30px, 9vw, 46px);
+    font-weight: 700;
+    line-height: 1.25;
+    color: rgba(255,255,255,0.95);
+  }
+  .cp-photo-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 100px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* Callout — big number/phrase inside a text slide */
+  .cp-callout {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(64px, 18vw, 96px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #e27e22;
+    text-align: center;
+    width: 100%;
+    padding: 16px 0;
+  }
+
+  /* Bullet list inside text slides */
+  .cp-bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cp-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(14px, 4vw, 17px);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.45;
+  }
+  .cp-bullets li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #e27e22;
+    margin-top: 7px;
+  }
+  .cp-bullets li strong {
+    color: rgba(255,255,255,0.95);
+    font-weight: 700;
+  }
+  .cp-bullet-footer {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(14px, 4vw, 16px);
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  /* Compare slide */
+  .cp-compare-body {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .cp-compare-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(20px, 5.5vw, 26px);
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 4px;
+  }
+  .cp-compare-col {
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .cp-compare-bad {
+    background: rgba(180,40,40,0.18);
+    border: 1px solid rgba(180,40,40,0.35);
+  }
+  .cp-compare-good {
+    background: rgba(40,160,90,0.14);
+    border: 1px solid rgba(40,160,90,0.28);
+  }
+  .cp-compare-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .cp-compare-label-bad  { color: #ff6b6b; }
+  .cp-compare-label-good { color: #3de88a; }
+  .cp-compare-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(13px, 3.8vw, 15px);
+    color: rgba(255,255,255,0.72);
+    line-height: 1.4;
+  }
+  .cp-compare-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .cp-compare-dot-bad  { background: #ff6b6b; }
+  .cp-compare-dot-good { background: #3de88a; }
+
+  /* Pill highlight */
+  .cp-highlight {
+    display: inline;
+    background: #e27e22;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 1px 10px 2px;
+    box-shadow: 0 0 0 2px #fff;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* ── SLIDE TYPE: stat ── */
+  .cp-stat-body {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .cp-stat-icon {
+    font-size: 52px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .cp-stat-number {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(52px, 16vw, 80px);
+    font-weight: 700;
+    line-height: 1;
+    color: white;
+    letter-spacing: -0.02em;
+  }
+  .cp-stat-caption {
+    font-size: clamp(15px, 4.5vw, 20px);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.45;
+    max-width: 300px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+  }
+
+  /* ── SLIDE TYPE: visual ── */
+  .cp-visual-body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+  }
+  .cp-visual-emoji {
+    font-size: 80px;
+    line-height: 1;
+  }
+  .cp-visual-text {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(20px, 5.5vw, 28px);
+    font-weight: 400;
+    line-height: 1.45;
+  }
+  .theme-light .cp-visual-text { color: #0a293b; }
+  .theme-dark  .cp-visual-text { color: rgba(255,255,255,0.85); }
+  .cp-visual-text strong { font-weight: 700; }
+  .theme-light .cp-visual-text strong { color: #0a293b; }
+  .theme-dark  .cp-visual-text strong { color: white; }
+
+  /* Tap navigation zones (invisible) */
+  .cp-tap-prev, .cp-tap-next {
+    position: absolute;
+    top: 0; bottom: 0;
+    z-index: 5;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cp-tap-prev { left: 0; width: 30%; }
+  .cp-tap-next { right: 0; width: 70%; }
+
+  /* Slide counter + hint */
+  .cp-footer {
+    position: absolute;
+    bottom: calc(env(safe-area-inset-bottom,0px) + 20px);
+    left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .cp-counter {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.45);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.08em;
+  }
+  .cp-hint {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ── Story read state (home card) ───────────────── */
+  .story-card-home.story-read { opacity: 0.48; }
+  .story-card-home.story-read .story-card-home-arrow { color: var(--text-soft); }
+
+  /* ── Course completion toast ─────────────────────── */
+  .cp-points-toast {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 29, 46, 0.72);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .cp-points-toast.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .cp-toast-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    transform: scale(0.85);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .cp-points-toast.visible .cp-toast-inner { transform: scale(1); }
+  .cp-toast-emoji { font-size: 56px; line-height: 1; margin-bottom: 4px; }
+  .cp-toast-label {
+    font-family: 'Comfortaa', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+  }
+  .cp-toast-pts {
+    font-family: 'Comfortaa', cursive;
+    font-size: 48px;
+    font-weight: 700;
+    color: #7dbf7c;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .cp-toast-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 2px;
+  }
+
+  /* Also grey out completed cards in the Stories tab */
+  .ml-card.story-read { opacity: 0.48; }
+
+  /* FAQ Panel */
+  .faq-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: var(--navy);
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .faq-panel.open { transform: translateX(0); }
+  .faq-panel-topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  .faq-back {
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    color: var(--orange);
+    display: flex;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .faq-panel-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    flex: 1;
+  }
+  .faq-body {
+    overflow-y: auto;
+    padding: 24px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .faq-item {
+    background: var(--surface-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .faq-question-text { flex: 1; }
+  .faq-chevron {
+    color: rgba(255,255,255,0.35);
+    font-size: 20px !important;
+    transition: transform 0.22s;
+    flex-shrink: 0;
+  }
+  .faq-item.expanded .faq-chevron { transform: rotate(90deg); }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .faq-item.expanded .faq-answer { max-height: 800px; }
+  .faq-answer-inner {
+    padding: 0 18px 16px;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+  .faq-answer-inner p { margin: 0 0 10px; }
+  .faq-answer-inner p:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     LANDING PAGE
+════════════════════════════════════════════════════ -->
+<div id="landing">
+
+  <!-- Nav -->
+  <div class="nav-back-bar">
+    <a class="nav-back" href="https://the-uptake.com" aria-label="Back to main site">
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9,2 4,7 9,12"/>
+      </svg>
+      Back to the-uptake.com
+    </a>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <img src="_images/Environmentle_logo1.png" class="nav-logo-mark" alt="The Uptake logo">
+      <div class="nav-logo-text">
+        <span class="nav-logo-uptake">The Uptake</span>
+        <span class="nav-logo-games">GAMES</span>
+      </div>
+    </div>
+    <button class="nav-btn" onclick="openNameScreen()">Play now</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-circle hero-circle-1"></div>
+      <div class="hero-circle hero-circle-2"></div>
+      <div class="hero-circle hero-circle-3"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow anim-1">
+        <div class="hero-eyebrow-dot"></div>
+        <span class="hero-eyebrow-text">Free to play · No app needed</span>
+      </div>
+      <div class="hero-brand anim-2">
+        <span class="hero-brand-uptake">The Uptake</span>
+        <span class="hero-brand-games">GAMES</span>
+      </div>
+      <p class="hero-title anim-3">
+        Small games.<br>
+        <strong>Real climate action.</strong>
+      </p>
+    </div>
+
+    <div class="hero-bottom anim-4">
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="font-size:16px;color:var(--green-light);">Play</div>
+          <div class="hero-stat-label">3 min per challenge</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="font-size:16px;color:var(--yellow);">Learn</div>
+          <div class="hero-stat-label">Guess, have fun &amp; discover real facts</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="font-size:16px;color:var(--orange);">Act</div>
+          <div class="hero-stat-label">Build an action-biased mindset</div>
+        </div>
+      </div>
+      <button class="btn-hero" onclick="openNameScreen()">
+        Start playing — it's free
+        <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">A few short steps.<br><em>Your way.</em></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <div class="step-title">Play</div>
+          <div class="step-desc">Start with today's daily challenge. A quiz, sorting game, or carbon calculator. Easy, fun, under 3 minutes.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <div class="step-title">Learn</div>
+          <div class="step-desc">Pick things up through the game itself, or dip into our curated micro-learnings whenever you want a bit more depth.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <div class="step-title">Act</div>
+          <div class="step-desc">Find one small action you can take this week, tailored to what came up in your game. Action is the best antidote.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <div class="step-title">Go further</div>
+          <div class="step-desc">Want to dig deeper? Our AI companion is ready for any question on climate, sustainability, or how to take it further.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why it matters -->
+  <section class="why-section">
+    <p class="why-label">Why it matters</p>
+    <h2 class="why-title">The gap between<br><em>knowing and doing</em></h2>
+    <p class="why-intro">Extensive research in Behavioural Change, Climate Communication, Gaming and Marketing tells us that people want a <strong>Simple · Hopeful · Fun</strong> way to access factual information.</p>
+
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-card-num">80<span class="unit">%</span></div>
+        <div class="stat-card-desc">of Irish people are <strong>willing to make changes</strong> but most don't know where to start.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">52<span class="unit">%</span></div>
+        <div class="stat-card-desc">feel <strong>powerless</strong> to make a difference, yet the IPCC tells us <strong>individual action has a huge part to play</strong>.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">45<span class="unit">%</span></div>
+        <div class="stat-card-desc">say it is <strong>almost impossible to find information</strong> about climate action that they can easily understand.</div>
+      </div>
+    </div>
+
+    <p class="why-close">That's the <em>gap</em> we're trying to fill.</p>
+  </section>
+
+  <!-- Footer CTA -->
+  <section class="footer-cta">
+    <h2 class="footer-cta-title">Ready to play<br><em>your part?</em></h2>
+    <p class="footer-cta-sub">Join thousands of people learning something new about sustainability every day.</p>
+    <button class="btn-hero" onclick="openNameScreen()" style="max-width:360px;margin:0 auto;display:flex;">
+      Start playing — it's free
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <div class="footer-brand-text">
+          <span class="footer-brand-uptake">The Uptake</span>
+          <span class="footer-brand-games">GAMES</span>
+        </div>
+      </div>
+      <p class="footer-byline">games.the-uptake.com · A UCD Innovation Academy project</p>
+    </div>
+
+  </section>
+
+</div><!-- /landing -->
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: NAME ENTRY
+════════════════════════════════════════════════════ -->
+<div id="screen-name" class="screen">
+  <button class="name-back" onclick="closeName()">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back
+  </button>
+
+  <div class="name-top">
+    <p class="name-welcome-label anim-1">Welcome</p>
+    <h2 class="name-title anim-2">What do<br>we call <em>you?</em></h2>
+    <p class="name-subtitle anim-3">No account needed. Just your name so we can make it feel a bit more personal.</p>
+
+    <div class="name-input-wrap anim-4">
+      <input
+        class="name-input"
+        id="name-input"
+        type="text"
+        placeholder="Your first name"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        maxlength="30"
+        oninput="onNameInput()"
+        onkeydown="if(event.key==='Enter') submitName()"
+      >
+    </div>
+    <p class="name-hint anim-4">No email, no password, no fuss.</p>
+  </div>
+
+  <div class="name-bottom">
+    <button class="btn-start" id="btn-start" onclick="submitName()" disabled>
+      Let's go
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: GAME HUB
+════════════════════════════════════════════════════ -->
+<div id="screen-hub" class="screen">
+
+  <!-- Sticky top bar -->
+  <div class="app-topbar">
+    <a class="hub-header-brand" href="https://the-uptake.com">
+      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
+      <div class="hub-brand-text">
+        <span class="hub-brand-uptake">The Uptake</span>
+        <span class="hub-logo-games">GAMES</span>
+      </div>
+    </a>
+    <button class="profile-icon-btn" onclick="openProfile()" aria-label="Profile">
+      <span class="material-symbols-outlined">person</span>
+    </button>
+  </div>
+
+  <!-- Hub header — navy, with greeting + streak chips -->
+  <div class="hub-header">
+    <p class="hub-greeting" id="hub-greeting">Good to see you,</p>
+    <h2 class="hub-title" id="hub-title">Pick your <em>challenge</em></h2>
+    <div class="hub-streak-row">
+      <div class="hub-chip">
+        <div class="hub-chip-dot"></div>
+        Daily challenge available
+      </div>
+      <div class="hub-chip streak" id="hub-streak-chip" style="display:none"></div>
+    </div>
+
+    <!-- Notification prompt — lives inside navy header section -->
+    <div class="notif-prompt" id="notif-prompt">
+      <button class="notif-prompt-close" onclick="snoozeNotifPrompt()" aria-label="Close">✕</button>
+      <p class="notif-prompt-title">🔔 Never miss a daily challenge</p>
+      <p class="notif-prompt-desc">Get a gentle nudge each morning when your new challenge is ready. One notification a day, nothing else.</p>
+      <div class="notif-prompt-btns">
+        <button class="notif-btn-secondary" onclick="snoozeNotifPrompt()">Not now</button>
+        <button class="notif-btn-primary" onclick="requestNotifPermission()">Yes please!</button>
+      </div>
+    </div>
+
+    <!-- Install banner — lives inside navy header section -->
+    <div class="install-banner" id="install-banner">
+      <button class="install-banner-close" onclick="closeInstallBanner()" aria-label="Close">✕</button>
+      <p class="install-banner-title">Add us to your home screen</p>
+      <p class="install-banner-desc">No app install needed.</p>
+      <div class="install-banner-steps">
+        <div class="install-step">
+          <div class="install-step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 6H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-2"/>
+              <polyline points="12 2 12 14"/>
+              <polyline points="9 5 12 2 15 5"/>
+            </svg>
+          </div>
+          <span class="install-step-text">Tap the <strong>Share</strong> icon in your browser bar</span>
+        </div>
+        <div class="install-step-arrow">→</div>
+        <div class="install-step">
+          <div class="install-step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="3"/>
+              <line x1="12" y1="8" x2="12" y2="16"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+          </div>
+          <span class="install-step-text">Select <strong>Add to Home Screen</strong></span>
+        </div>
+      </div>
+      <div class="install-banner-btns">
+        <button class="install-banner-cta" onclick="dismissInstallBanner()">
+          <span class="material-symbols-outlined">close</span>
+          Dismiss
+        </button>
+        <button class="install-banner-cta" onclick="acceptInstallBanner()">
+          Done
+          <span class="material-symbols-outlined">check_circle</span>
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /hub-header -->
+
+  <!-- Scrollable body — grey starts here -->
+  <div class="hub-body">
+
+    <!-- Daily challenge hero (full width) -->
+    <div class="daily-hero" id="today-banner">
+      <div class="daily-hero-content">
+        <div class="daily-hero-top">
+          <span class="daily-theme-badge" id="today-label">Today's theme</span>
+          <span class="daily-hero-date" id="today-challenge-sub">Daily Challenge · 3 questions</span>
+        </div>
+        <span class="today-icon" id="today-icon">🌱</span>
+        <h3 class="daily-hero-title" id="today-challenge-title">Loading...</h3>
+        <div class="daily-hero-action">
+          <div class="daily-play-btn" id="today-arrow">PLAY NOW →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress card (returning users only) -->
+    <div class="hub-progress-card" id="hub-progress" style="display:none;">
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-total-score">0</div>
+        <div class="progress-stat-label">Total score</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-sessions">0</div>
+        <div class="progress-stat-label">Games played</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-actions">0</div>
+        <div class="progress-stat-label">Actions pledged</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="progress-streak">🔥 0</div>
+        <div class="progress-stat-label" id="progress-streak-label">Day streak</div>
+      </div>
+    </div>
+
+    <p class="hub-section-label" id="recent-games-label">Recently played</p>
+    <div id="recent-games-list"></div>
+
+    <div id="recent-stories-section" style="display:none;">
+      <p class="hub-section-label">Stories</p>
+      <div id="recent-stories-list"></div>
+    </div>
+
+  </div><!-- /hub-body -->
+</div><!-- /screen-hub -->
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: GAMES TAB
+════════════════════════════════════════════════════ -->
+<div id="screen-games" class="screen tab-screen">
+
+  <!-- Same sticky topbar as home screen -->
+  <div class="app-topbar">
+    <a class="hub-header-brand" href="https://the-uptake.com">
+      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
+      <div class="hub-brand-text">
+        <span class="hub-brand-uptake">The Uptake</span>
+        <span class="hub-logo-games">GAMES</span>
+      </div>
+    </a>
+    <button class="profile-icon-btn" onclick="openProfile()" aria-label="Profile">
+      <span class="material-symbols-outlined">person</span>
+    </button>
+  </div>
+
+  <!-- Hero banner below topbar -->
+  <div class="games-lib-hero">
+    <div class="games-lib-hero-bg">
+      <div class="games-lib-orb games-lib-orb-1"></div>
+      <div class="games-lib-orb games-lib-orb-2"></div>
+      <div class="games-lib-orb games-lib-orb-3"></div>
+    </div>
+    <div class="games-lib-hero-content">
+      <div class="games-lib-eyebrow">
+        <div class="games-lib-eyebrow-dot"></div>
+        <span class="games-lib-eyebrow-text">4 games · Free to play</span>
+      </div>
+      <div class="games-lib-title">GAMES</div>
+      <p class="games-lib-subtitle">Small games. Real climate action. Pick one and go.</p>
+    </div>
+  </div>
+
+  <div class="games-library-body">
+
+    <!-- Random Quiz -->
+    <div class="gl-card quiz" onclick="openGame('quiz','random')">
+      <div class="gl-poster">
+        <div class="gl-poster-top">
+          <div class="gl-tag-pill"><span class="material-symbols-outlined">casino</span> Quiz</div>
+        </div>
+        <div class="gl-poster-bottom">
+          <div class="gl-poster-name">Random<br>Challenge</div>
+          <div class="gl-poster-play" onclick="event.stopPropagation(); openGame('quiz','random')">▶</div>
+        </div>
+      </div>
+      <div class="gl-info">
+        <p class="gl-desc">A random quiz picked from our library of daily challenges. Three questions, real data, something new every time.</p>
+        <div class="gl-meta-row">
+          <span class="gl-chip primary">3 questions</span>
+          <span class="gl-chip primary">450 pts max</span>
+          <span class="gl-chip">~2 min</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carbon Challenge -->
+    <div class="gl-card sort" onclick="openGame('sort')">
+      <div class="gl-poster">
+        <div class="gl-poster-top">
+          <div class="gl-tag-pill"><span class="material-symbols-outlined">co2</span> Sorting Game</div>
+        </div>
+        <div class="gl-poster-bottom">
+          <div class="gl-poster-name">Carbon<br>Challenge</div>
+          <div class="gl-poster-play" onclick="event.stopPropagation(); openGame('sort')">▶</div>
+        </div>
+      </div>
+      <div class="gl-info">
+        <p class="gl-desc">Six everyday items. Drag them into order by carbon footprint, lowest to highest. The results might surprise you.</p>
+        <div class="gl-meta-row">
+          <span class="gl-chip primary">6 cards</span>
+          <span class="gl-chip primary">3 tries</span>
+          <span class="gl-chip">~3 min</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Water Challenge (coming soon) -->
+    <div class="gl-card water coming-soon">
+      <div class="gl-poster">
+        <div class="gl-poster-top">
+          <div class="gl-tag-pill"><span class="material-symbols-outlined">water_drop</span> Water Game</div>
+          <div class="gl-coming-pill">Coming soon</div>
+        </div>
+        <div class="gl-poster-bottom">
+          <div class="gl-poster-name">Water<br>Challenge</div>
+        </div>
+      </div>
+      <div class="gl-info">
+        <p class="gl-desc">Water is hidden in almost everything we buy and eat. Guess the water footprint of everyday products, from a cup of coffee to a pair of jeans.</p>
+        <div class="gl-meta-row">
+          <span class="gl-chip primary">Water footprint</span>
+          <span class="gl-chip">~3 min</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Greenwasher (coming soon) -->
+    <div class="gl-card swipe coming-soon">
+      <div class="gl-poster">
+        <div class="gl-poster-top">
+          <div class="gl-tag-pill"><span class="material-symbols-outlined">swipe</span> Swipe Game</div>
+          <div class="gl-coming-pill">Coming soon</div>
+        </div>
+        <div class="gl-poster-bottom">
+          <div class="gl-poster-name">Green-<br>washer</div>
+        </div>
+      </div>
+      <div class="gl-info">
+        <p class="gl-desc">Real brand claims. Real greenwashing. Swipe right if legit, left if you smell spin. How sharp is your BS detector?</p>
+        <div class="gl-meta-row">
+          <span class="gl-chip primary">Swipe to judge</span>
+          <span class="gl-chip">~4 min</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: STATS TAB
+════════════════════════════════════════════════════ -->
+<div id="screen-learn" class="screen tab-screen">
+
+  <!-- Same sticky topbar -->
+  <div class="app-topbar">
+    <a class="hub-header-brand" href="https://the-uptake.com">
+      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
+      <div class="hub-brand-text">
+        <span class="hub-brand-uptake">The Uptake</span>
+        <span class="hub-logo-games">GAMES</span>
+      </div>
+    </a>
+    <button class="profile-icon-btn" onclick="openProfile()" aria-label="Profile">
+      <span class="material-symbols-outlined">person</span>
+    </button>
+  </div>
+
+  <!-- Hero -->
+  <div class="learn-hero">
+    <div class="learn-hero-bg">
+      <div class="learn-orb learn-orb-1"></div>
+      <div class="learn-orb learn-orb-2"></div>
+      <div class="learn-orb learn-orb-3"></div>
+    </div>
+    <div class="learn-hero-content">
+      <div class="learn-hero-eyebrow">
+        <div class="learn-hero-eyebrow-dot"></div>
+        <span class="learn-hero-eyebrow-text">Short stories · Free</span>
+      </div>
+      <div class="learn-hero-title">STORIES</div>
+      <p class="learn-hero-subtitle">Short, visual stories on climate and sustainability. No jargon, no overwhelm.</p>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="learn-body">
+
+    <p class="learn-section-label">Available now</p>
+
+    <!-- Climate Wins in 2025 — LIVE -->
+    <div class="ml-card topic-climate active" onclick="openCourse('climate-wins-2025')">
+      <div class="ml-card-accent"></div>
+      <div class="ml-card-inner">
+        <div class="ml-card-icon"><span class="material-symbols-outlined">celebration</span></div>
+        <div class="ml-card-content">
+          <div class="ml-card-meta">Good News</div>
+          <div class="ml-card-title">Climate Wins in 2025</div>
+          <div class="ml-card-desc">Renewable records broken, new protected areas, policies that actually stuck. A look at what went right this year.</div>
+        </div>
+      </div>
+      <div class="ml-card-footer">
+        <span class="ml-chip">10 slides</span>
+        <span class="ml-chip">5 min</span>
+        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+      </div>
+    </div>
+
+    <!-- Data Centres in Ireland — LIVE -->
+    <div class="ml-card topic-data active" onclick="openCourse('data-centres-ireland')">
+      <div class="ml-card-accent"></div>
+      <div class="ml-card-inner">
+        <div class="ml-card-icon"><span class="material-symbols-outlined">dns</span></div>
+        <div class="ml-card-content">
+          <div class="ml-card-meta">Tech &amp; Energy</div>
+          <div class="ml-card-title">Data Centres in Ireland</div>
+          <div class="ml-card-desc">Ireland hosts a quarter of Europe's data centres. What does that mean for the grid, our renewable targets, and who pays the price?</div>
+        </div>
+      </div>
+      <div class="ml-card-footer">
+        <span class="ml-chip">11 slides</span>
+        <span class="ml-chip">5 min</span>
+        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+      </div>
+    </div>
+
+    <!-- Climate & Finance — LIVE -->
+    <div class="ml-card topic-finance active" onclick="openCourse('climate-and-finance')">
+      <div class="ml-card-accent"></div>
+      <div class="ml-card-inner">
+        <div class="ml-card-icon"><span class="material-symbols-outlined">account_balance</span></div>
+        <div class="ml-card-content">
+          <div class="ml-card-meta">Finance</div>
+          <div class="ml-card-title">Climate &amp; Finance</div>
+          <div class="ml-card-desc">Banks, green bonds, ESG investing, and your own account. How money flows determines whether the climate transition happens — and how fast.</div>
+        </div>
+      </div>
+      <div class="ml-card-footer">
+        <span class="ml-chip">10 slides</span>
+        <span class="ml-chip">6 min</span>
+        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+      </div>
+    </div>
+
+    <p class="learn-section-label" style="margin-top:16px;">Coming soon</p>
+
+    <!-- Food Waste & Composting -->
+    <div class="ml-card topic-food coming-soon">
+      <div class="ml-card-accent"></div>
+      <div class="ml-card-inner">
+        <div class="ml-card-icon"><span class="material-symbols-outlined">compost</span></div>
+        <div class="ml-card-content">
+          <div class="ml-card-meta">Food &amp; Waste</div>
+          <div class="ml-card-title">Food Waste and Composting</div>
+          <div class="ml-card-desc">One third of all food produced globally is wasted. How composting closes the loop — and what you can do at home.</div>
+        </div>
+      </div>
+      <div class="ml-card-footer">
+        <span class="ml-chip">4 min read</span>
+        <span class="ml-coming-chip">Coming soon</span>
+      </div>
+    </div>
+
+    <!-- Talking about Climate Change -->
+    <div class="ml-card topic-society coming-soon">
+      <div class="ml-card-accent"></div>
+      <div class="ml-card-inner">
+        <div class="ml-card-icon"><span class="material-symbols-outlined">forum</span></div>
+        <div class="ml-card-content">
+          <div class="ml-card-meta">Society</div>
+          <div class="ml-card-title">Talking about Climate Change</div>
+          <div class="ml-card-desc">Why climate conversations so often go wrong — and how to have them in a way that actually moves people.</div>
+        </div>
+      </div>
+      <div class="ml-card-footer">
+        <span class="ml-chip">6 min read</span>
+        <span class="ml-coming-chip">Coming soon</span>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: PROFILE TAB
+════════════════════════════════════════════════════ -->
+<div id="screen-profile" class="screen tab-screen">
+  <div class="profile-topbar">
+    <button class="profile-back" onclick="closeProfile()" aria-label="Back">
+      <span class="material-symbols-outlined">arrow_back</span>
+      Back
+    </button>
+    <span class="profile-topbar-title">Profile</span>
+    <button class="profile-signout" onclick="logout()">
+      <span class="material-symbols-outlined">logout</span>
+      Sign Out
+    </button>
+  </div>
+
+  <div class="profile-body">
+    <div class="profile-hero">
+      <div class="profile-avatar">
+        <span class="material-symbols-outlined">person</span>
+        <span class="profile-avatar-badge">
+          <span class="material-symbols-outlined">eco</span>
+        </span>
+      </div>
+      <h2 class="profile-name" id="profile-name">Player</h2>
+      <p class="profile-tag" id="profile-tag">Player · Level 1</p>
+    </div>
+
+    <!-- Activity card — same pattern as the homepage hub-progress-card -->
+    <div class="hub-progress-card">
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="profile-total-score">0</div>
+        <div class="progress-stat-label">Total score</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="profile-sessions">0</div>
+        <div class="progress-stat-label">Games played</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="profile-actions">0</div>
+        <div class="progress-stat-label">Actions pledged</div>
+      </div>
+      <div class="progress-stat">
+        <div class="progress-stat-num" id="profile-streak">🔥 0</div>
+        <div class="progress-stat-label">Day streak</div>
+      </div>
+    </div>
+
+    <p class="profile-section-label">Stories</p>
+    <div class="settings-list">
+      <button class="settings-item" type="button" onclick="openFaq()">
+        <span class="material-symbols-outlined settings-item-icon">help</span>
+        <span class="settings-item-label">FAQ</span>
+        <span class="material-symbols-outlined settings-item-chevron">chevron_right</span>
+      </button>
+    </div>
+
+    <p class="profile-section-label">Settings</p>
+    <div class="settings-list">
+      <button class="settings-item" type="button">
+        <span class="material-symbols-outlined settings-item-icon">manage_accounts</span>
+        <span class="settings-item-label">Account</span>
+        <span class="material-symbols-outlined settings-item-chevron">chevron_right</span>
+      </button>
+      <button class="settings-item" type="button">
+        <span class="material-symbols-outlined settings-item-icon">notifications</span>
+        <span class="settings-item-label">Notifications</span>
+        <span class="material-symbols-outlined settings-item-chevron">chevron_right</span>
+      </button>
+      <button class="settings-item" type="button">
+        <span class="material-symbols-outlined settings-item-icon">shield</span>
+        <span class="settings-item-label">Privacy</span>
+        <span class="material-symbols-outlined settings-item-chevron">chevron_right</span>
+      </button>
+    </div>
+
+    <p class="profile-section-label">Actions taken</p>
+    <div class="actions-history-list" id="actions-history-list">
+      <div class="actions-history-empty">Your pledged actions will show up here once you commit to one at the end of a game.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     COURSE PLAYER
+════════════════════════════════════════════════════ -->
+<div id="course-player" class="course-player">
+
+  <!-- Top bar: close + progress segments -->
+  <div class="cp-topbar">
+    <button class="cp-close" onclick="closeCourse()" aria-label="Close">✕</button>
+    <div class="cp-progress" id="cp-progress"></div>
+  </div>
+
+  <!-- Slide stage -->
+  <div class="cp-stage" id="cp-stage"></div>
+
+  <!-- Invisible tap zones -->
+  <div class="cp-tap-prev" id="cp-tap-prev" onclick="cpPrev()"></div>
+  <div class="cp-tap-next" id="cp-tap-next" onclick="cpNext()"></div>
+
+  <!-- Completion overlay — shown instead of a slide, above everything -->
+  <div id="cp-completion" style="display:none;position:absolute;inset:0;z-index:50;background:linear-gradient(160deg,#061d2e 0%,#0d3a52 60%,#0a2840 100%);flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:80px 32px;">
+    <div id="cp-completion-inner"></div>
+    <button onclick="closeCourse()" style="margin-top:8px;background:white;color:#0a293b;border:none;border-radius:100px;padding:16px 52px;font-family:'Comfortaa',cursive;font-size:17px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">Done</button>
+  </div>
+
+  <!-- Points toast (shown on first completion) -->
+  <div id="cp-points-toast" class="cp-points-toast">
+    <div class="cp-toast-inner">
+      <div class="cp-toast-emoji">🎉</div>
+      <div class="cp-toast-label">Story complete!</div>
+      <div class="cp-toast-pts" id="cp-toast-pts">+75 pts</div>
+      <div class="cp-toast-sub">Added to your score</div>
+    </div>
+  </div>
+
+  <!-- Footer: counter + swipe hint -->
+  <div class="cp-footer">
+    <span class="cp-counter" id="cp-counter">1 / 10</span>
+    <span class="cp-hint" id="cp-hint">
+      <span class="material-symbols-outlined" style="font-size:13px">swipe</span>
+      swipe to navigate
+    </span>
+  </div>
+
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     FAQ PANEL
+════════════════════════════════════════════════════ -->
+<div id="faq-panel" class="faq-panel">
+  <div class="faq-panel-topbar">
+    <button class="faq-back" onclick="closeFaq()" aria-label="Back">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <span class="faq-panel-title">FAQ</span>
+  </div>
+  <div class="faq-body">
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-question-text">What is the environmental impact of the AI used on this app, and what do we do about it?</span>
+        <span class="material-symbols-outlined faq-chevron">chevron_right</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>The rapid growth of AI, and the data centres needed to support it, is a real and important issue. It can affect energy grids and local water supplies, and we take that seriously.</p>
+          <p>That said, we believe AI has a genuine role to play in making climate and sustainability information more accessible. The challenge is doing it responsibly.</p>
+          <p>Here is how we try to get that balance right:</p>
+          <p><strong>We use Infomaniak as our AI provider.</strong> Infomaniak is a Swiss-based company widely recognised as one of the most ethical cloud and AI providers in the world. They run their infrastructure on renewable energy and are transparent about their environmental commitments.</p>
+          <p><strong>We use lightweight, efficient models.</strong> Not all AI models are equal when it comes to resource use. The most energy-intensive part of AI is training large models from scratch, not running them day to day. We use Mistral and Apertvs, two models specifically built to be compact and efficient.</p>
+          <p>Apertvs is fully open-source, developed by ETH Zurich and EPFL, two of Europe's leading research universities. It is released under an open licence, which means its training, architecture, and data are publicly documented. No black box.</p>
+          <p><strong>Your data stays in a controlled environment.</strong> Because we use Infomaniak's infrastructure, your queries are processed in a closed system, not sent to large commercial cloud platforms.</p>
+          <p>We are not perfect, and the field is evolving fast. But we believe choosing the right partners and tools makes a real difference.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-question-text">Where does the information in the AI Companion come from?</span>
+        <span class="material-symbols-outlined faq-chevron">chevron_right</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>The AI Companion draws on two sources, and it always tells you which one it is using.</p>
+          <p><strong>First: our own curated knowledge base.</strong> We have built and maintain a wiki of climate and sustainability information, sourced, reviewed, and validated by us. When you ask a question, the Companion first searches this wiki using MistralAI. If a clear answer is found there, that is what you get.</p>
+          <p><strong>Second: a fallback to broader AI knowledge.</strong> If the answer cannot be found in our wiki, the Companion falls back to Apertvs, an open-source model developed by Swiss research institutions ETH Zurich and EPFL, to provide a response based on its training data. When this happens, the answer is clearly labelled so you know it is coming from general AI knowledge rather than our curated sources.</p>
+          <p>This approach means that, as much as possible, answers are grounded in verified, local information, and you always know where they come from.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-question-text">How does this app approach digital wellbeing?</span>
+        <span class="material-symbols-outlined faq-chevron">chevron_right</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>This app is not trying to capture your attention or keep you scrolling. We are aware of the pressure that comes from constant digital noise, and from the weight of negative climate narratives. That is not what we want to add to your day.</p>
+          <p>Our research shows that people want simple, trustworthy ways to stay informed, and that short, playful challenges are a good way to do that without feeling overwhelmed.</p>
+          <p>With that in mind, The Uptake Games is built around very short, casual challenges. You can take 2 to 3 challenges a day, for a maximum of 3 to 5 minutes. That is intentional. We want you to get something useful out of it, and then get on with your day.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     BOTTOM NAVIGATION
+════════════════════════════════════════════════════ -->
+<nav id="app-bottom-nav">
+  <button class="nav-tab" data-tab="home" onclick="switchTab('home')">
+    <span class="material-symbols-outlined">home</span>
+    <span class="nav-tab-label">Home</span>
+  </button>
+  <button class="nav-tab" data-tab="games" onclick="switchTab('games')">
+    <span class="material-symbols-outlined">sports_esports</span>
+    <span class="nav-tab-label">Games</span>
+  </button>
+  <button class="nav-tab" data-tab="learn" onclick="switchTab('learn')">
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span class="nav-tab-label">Stories</span>
+  </button>
+  <button class="nav-tab" data-tab="companion" onclick="switchTab('companion')">
+    <span class="material-symbols-outlined">search</span>
+    <span class="nav-tab-label">Companion</span>
+  </button>
+</nav>
+
+
+<script>
+// ════════════════════════════════════
+// STATE
+// ════════════════════════════════════
+let playerName       = '';
+let _loadedChallenges = [];
+
+// ════════════════════════════════════
+// TAB NAVIGATION
+// ════════════════════════════════════
+const _tabScreenMap = { home: 'screen-hub', games: 'screen-games', learn: 'screen-learn' };
+
+function setActiveTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.tab === tab)
+  );
+}
+
+function switchTab(tab) {
+  // Companion lives on a separate page
+  if (tab === 'companion') {
+    window.location.href = 'companion.php';
+    return;
+  }
+  setActiveTab(tab);
+  showScreen(_tabScreenMap[tab]);
+  // Refresh home screen data every time the user taps the home tab
+  if (tab === 'home' && playerName) openHub();
+}
+
+// Pretty-print a YYYY-MM-DD string as "Today", "Yesterday", "N days ago", or "DD Mon"
+function formatRelativeDate(iso) {
+  if (!iso) return '';
+  const today     = new Date().toISOString().slice(0, 10);
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  if (iso === today)     return 'Today';
+  if (iso === yesterday) return 'Yesterday';
+  const days = Math.round((new Date(today) - new Date(iso)) / 86400000);
+  if (days > 0 && days < 7) return days + ' days ago';
+  return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+}
+
+function renderActionHistory(nk) {
+  const list = document.getElementById('actions-history-list');
+  if (!list) return;
+  const history = JSON.parse(localStorage.getItem('actions_history_' + nk) || '[]');
+  if (!history.length) {
+    list.innerHTML = '<div class="actions-history-empty">Your pledged actions will show up here once you commit to one at the end of a game.</div>';
+    return;
+  }
+  // Most recent first
+  const ordered = history.slice().reverse();
+  list.innerHTML = ordered.map(a => `
+    <div class="actions-history-item">
+      <div class="actions-history-check"><span class="material-symbols-outlined">check</span></div>
+      <div class="actions-history-content">
+        <p class="actions-history-title">${a.title}</p>
+        <p class="actions-history-date">${formatRelativeDate(a.date)}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Profile screen — opened from the top-right icon, not a bottom-nav tab
+function openProfile() {
+  const nk       = playerName.toLowerCase().replace(/\s+/g, '_');
+  const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+  const streak   = JSON.parse(localStorage.getItem('streak_'         + nk) || '{}');
+
+  const totalScore     = progress.totalScore     || 0;
+  const sessionsPlayed = progress.sessionsPlayed || 0;
+  const actionsPledged = progress.actionsPledged || 0;
+  const streakCount    = streak.count            || 0;
+  const level          = Math.floor(totalScore / 250) + 1;
+
+  document.getElementById('profile-name').textContent        = playerName || 'Player';
+  document.getElementById('profile-tag').textContent         = 'Player · Level ' + level;
+  document.getElementById('profile-total-score').textContent = totalScore.toLocaleString();
+  document.getElementById('profile-sessions').textContent    = sessionsPlayed;
+  document.getElementById('profile-actions').textContent     = actionsPledged;
+  document.getElementById('profile-streak').textContent      = '🔥 ' + streakCount;
+
+  renderActionHistory(nk);
+  showScreen('screen-profile');
+}
+
+function closeProfile() {
+  setActiveTab('home');
+  showScreen('screen-hub');
+}
+
+function openFaq() {
+  document.getElementById('faq-panel').classList.add('open');
+}
+
+function closeFaq() {
+  document.getElementById('faq-panel').classList.remove('open');
+}
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isExpanded = item.classList.contains('expanded');
+  document.querySelectorAll('.faq-item.expanded').forEach(el => el.classList.remove('expanded'));
+  if (!isExpanded) item.classList.add('expanded');
+}
+
+// ════════════════════════════════════
+// SCREEN TRANSITIONS
+// ════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => {
+    if (s.classList.contains('active')) {
+      s.classList.add('exit');
+      s.classList.remove('active');
+      setTimeout(() => s.classList.remove('exit'), 400);
+    }
+  });
+  document.body.style.overflow = id ? 'hidden' : '';
+  setTimeout(() => {
+    if (id) {
+      const next = document.getElementById(id);
+      next.classList.add('active');
+      next.scrollTop = 0;
+    }
+  }, 200);
+}
+
+function hideAllScreens() {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.add('exit');
+    s.classList.remove('active');
+    setTimeout(() => s.classList.remove('exit'), 400);
+  });
+  document.body.style.overflow = '';
+}
+
+// ════════════════════════════════════
+// NAME SCREEN
+// ════════════════════════════════════
+async function openNameScreen() {
+  const saved = localStorage.getItem('env_player_name');
+  if (saved) {
+    playerName = saved;
+    const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+    await loadPlayerProfile(nk);
+    openHub();
+    return;
+  }
+  showScreen('screen-name');
+  setTimeout(() => document.getElementById('name-input').focus(), 500);
+}
+
+function closeName() { hideAllScreens(); }
+
+function onNameInput() {
+  document.getElementById('btn-start').disabled =
+    document.getElementById('name-input').value.trim().length < 2;
+}
+
+async function submitName() {
+  const val = document.getElementById('name-input').value.trim();
+  if (val.length < 2) return;
+  playerName = val;
+  localStorage.setItem('env_player_name', playerName);
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  await loadPlayerProfile(nk);
+  openHub();
+}
+
+// ════════════════════════════════════
+// CATEGORY → ICON
+// ════════════════════════════════════
+function getCategoryIcon(cat) {
+  if (!cat) return '🌱';
+  const c = cat.toLowerCase();
+  if (c.includes('food') || c.includes('water'))        return '🍃';
+  if (c.includes('ocean') || c.includes('marine'))      return '🌊';
+  if (c.includes('nature') || c.includes('bio'))        return '🌿';
+  if (c.includes('health') || c.includes('well'))       return '💚';
+  if (c.includes('innovation') || c.includes('design')) return '⚡';
+  if (c.includes('climate') || c.includes('action'))    return '🌍';
+  return '🌱';
+}
+
+// ════════════════════════════════════
+// HUB
+// ════════════════════════════════════
+async function openHub() {
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('hub-greeting').textContent = `${greeting}, ${playerName} 👋`;
+  document.getElementById('hub-title').innerHTML = `Pick your <em>challenge</em>`;
+
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+
+  // Render recent games section (must be before played-today querySelector calls below)
+  renderRecentGames(nk);
+  renderHomeStories(nk);
+  _updateStoriesTabReadState(nk);
+
+  // Show returning user progress — show if they have any score OR sessions played
+  const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || 'null');
+  refreshHubProgress(nk, progress);
+
+  // Show streak chip if streak >= 2
+  const streakData  = JSON.parse(localStorage.getItem('streak_' + nk) || '{}');
+  const streakCount = streakData.count || 0;
+  const streakChip  = document.getElementById('hub-streak-chip');
+  const bonus = streakCount >= 5 ? '+250 pts' : streakCount >= 3 ? '+100 pts' : '';
+  const bonusText = bonus ? ` · ${bonus}` : '';
+  streakChip.textContent = `🔥 ${streakCount}-day streak${bonusText}`;
+  streakChip.style.display = 'flex';
+
+  // Streak stat in progress card
+  document.getElementById('progress-streak').textContent = `🔥 ${streakCount}`;
+  document.getElementById('progress-streak-label').textContent = streakCount >= 5
+    ? 'Day streak · +250 pts'
+    : streakCount >= 3
+    ? 'Day streak · +100 pts'
+    : 'Day streak';
+
+  const sessionsPlayed = progress ? progress.sessionsPlayed || 0 : 0;
+
+  // ── New streak card ──
+  const streakHeading = document.getElementById('streak-card-heading');
+  const streakDesc    = document.getElementById('streak-card-desc');
+  const streakProg    = document.getElementById('streak-progress');
+  if (streakHeading) streakHeading.textContent = streakCount + '-day streak';
+  if (streakDesc) streakDesc.textContent = streakCount === 0
+    ? 'Play today to start your streak!'
+    : streakCount < 3
+    ? "You're just getting started. Play tomorrow to build momentum!"
+    : streakCount < 5
+    ? streakCount + " days strong! Keep it up for a bonus!"
+    : streakCount + " days on fire! +250 pts bonus active 🔥";
+  if (streakProg) streakProg.innerHTML = [0,1,2,3,4].map(i =>
+    '<div class="streak-bar' + (i < Math.min(streakCount, 5) ? ' filled' : '') + '"></div>'
+  ).join('');
+
+  // ── New global stats ──
+  const gsScore    = document.getElementById('gs-score');
+  const gsSessions = document.getElementById('gs-sessions');
+  const gsActions  = document.getElementById('gs-actions');
+  if (gsScore)    gsScore.textContent    = progress ? (progress.totalScore    || 0).toLocaleString() : '0';
+  if (gsSessions) gsSessions.textContent = progress ? (progress.sessionsPlayed || 0) : '0';
+  if (gsActions)  gsActions.textContent  = progress ? (progress.actionsPledged || 0) : '0';
+
+  // ── Show bottom nav ──
+  document.getElementById('app-bottom-nav').style.display = 'flex';
+  setActiveTab('home');
+
+  // Notification prompt — takes priority, only show one banner at a time
+  const showNotif = shouldShowNotifPrompt(nk, sessionsPlayed);
+  document.getElementById('notif-prompt').style.display = showNotif ? 'block' : 'none';
+
+  // Install banner — only show if notification prompt is not showing
+  document.getElementById('install-banner').style.display =
+    (!showNotif && shouldShowInstallBanner(nk, sessionsPlayed)) ? 'block' : 'none';
+
+  // Load challenges from JSON
+  try {
+    const res = await fetch('challenges.json', { cache: 'no-cache' });
+    const data = await res.json();
+    _loadedChallenges = data.challenges || [];
+  } catch(e) {
+    _loadedChallenges = [];
+  }
+
+  // Find today's featured challenge, or next upcoming
+  const today = new Date().toISOString().slice(0, 10);
+  let featuredChallenge = _loadedChallenges.find(c => c.date === today) || null;
+  let bannerLabel = "Today's theme";
+  if (!featuredChallenge) {
+    const upcoming = _loadedChallenges
+      .filter(c => c.date > today)
+      .sort((a, b) => a.date.localeCompare(b.date))[0];
+    if (upcoming) { featuredChallenge = upcoming; bannerLabel = "Coming up"; }
+  }
+
+  // Populate today-banner
+  if (featuredChallenge) {
+    document.getElementById('today-label').textContent           = bannerLabel;
+    document.getElementById('today-icon').textContent            = getCategoryIcon(featuredChallenge.category_badge);
+    document.getElementById('today-challenge-title').textContent = featuredChallenge.title_line1 + ' ' + featuredChallenge.title_line2;
+    document.getElementById('today-challenge-sub').textContent   = featuredChallenge.category_badge + ' · 3 questions';
+  } else {
+    document.getElementById('today-label').textContent           = "Today's theme";
+    document.getElementById('today-icon').textContent            = '☕';
+    document.getElementById('today-challenge-title').textContent = 'Irish Coffee Day';
+    document.getElementById('today-challenge-sub').textContent   = 'Food & Water · 3 questions';
+  }
+
+  // Reset states
+  const banner   = document.getElementById('today-banner');
+  const quizCard = document.querySelector('.game-card.quiz');
+  const sortCard = document.querySelector('.game-card.sort');
+
+  if (banner) {
+    banner.classList.remove('played-today');
+    const badge = banner.querySelector('.played-badge');
+    if (badge) badge.outerHTML = '<div class="daily-play-btn" id="today-arrow">PLAY NOW →</div>';
+  }
+  if (quizCard) {
+    quizCard.classList.remove('played-today');
+    quizCard.onclick = () => openGame('quiz', 'random');
+    const badge = quizCard.querySelector('.played-badge');
+    if (badge) badge.outerHTML = '<div class="game-card-arrow">→</div>';
+  }
+
+  // Quiz played today? Disable both CTAs
+  const quizPlayedToday = localStorage.getItem('quiz_last_played_' + nk) === today;
+  if (quizPlayedToday) {
+    if (banner) {
+      banner.classList.add('played-today');
+      banner.onclick = null;
+      const arrow = document.getElementById('today-arrow');
+      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
+    }
+    if (quizCard) {
+      quizCard.classList.add('played-today');
+      quizCard.onclick = null;
+      const arrow = quizCard.querySelector('.game-card-arrow');
+      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
+    }
+  } else {
+    if (banner) {
+      if (bannerLabel === 'Coming up') {
+        // Future challenge — not playable yet, show "Coming soon"
+        banner.classList.add('coming-soon');
+        banner.onclick = null;
+        const arrow = document.getElementById('today-arrow');
+        if (arrow) arrow.outerHTML = '<span class="coming-badge">Coming soon</span>';
+      } else {
+        banner.onclick = () => openGame('quiz', 'daily');
+      }
+    }
+  }
+
+  // Sort game
+  if (sortCard) {
+    const sortPlayed = localStorage.getItem('sio_last_played_' + nk) === today;
+    sortCard.classList.remove('played-today');
+    const sortBadge = sortCard.querySelector('.played-badge');
+    if (sortBadge) sortBadge.outerHTML = '<div class="game-card-arrow">→</div>';
+    if (sortPlayed) {
+      sortCard.classList.add('played-today');
+      sortCard.onclick = null;
+      const arrow = sortCard.querySelector('.game-card-arrow');
+      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
+    } else {
+      sortCard.onclick = () => openGame('sort');
+    }
+  }
+
+  // Sync latest localStorage state up to Firestore
+  syncPlayerToFirestore(nk);
+
+  showScreen('screen-hub');
+}
+
+// ════════════════════════════════════
+// STORIES (home section)
+// ════════════════════════════════════
+
+const ALL_STORIES = [
+  {
+    id:    'climate-and-finance',
+    topic: 'topic-finance',
+    icon:  '🏦',
+    tag:   'Finance',
+    title: 'Climate & Finance',
+    meta:  '10 slides · 6 min',
+  },
+  {
+    id:    'data-centres-ireland',
+    topic: 'topic-data',
+    icon:  '🖥️',
+    tag:   'Tech & Energy',
+    title: 'Data Centres in Ireland',
+    meta:  '12 slides · 5 min',
+  },
+  {
+    id:    'climate-wins-2025',
+    topic: 'topic-climate',
+    icon:  '🎉',
+    tag:   'Good News',
+    title: 'Climate Wins in 2025',
+    meta:  '10 slides · 5 min',
+  }
+  // add more stories here as they go live
+];
+
+const STORY_POINTS = 75;
+
+function refreshHubProgress(nk, progress) {
+  // Accept either a progress object or re-read from localStorage
+  const p = progress || JSON.parse(localStorage.getItem('env_progress_' + nk) || 'null');
+  const hasActivity = p && ((p.totalScore || 0) > 0 || (p.sessionsPlayed || 0) > 0);
+  const el = document.getElementById('hub-progress');
+  if (!el) return;
+  if (hasActivity) {
+    document.getElementById('progress-total-score').textContent = (p.totalScore || 0).toLocaleString();
+    document.getElementById('progress-sessions').textContent    = p.sessionsPlayed || 0;
+    document.getElementById('progress-actions').textContent     = p.actionsPledged || 0;
+    el.style.display = 'flex';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function _updateStoriesTabReadState(nk) {
+  const completed = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
+  // Find all ml-cards in the stories tab and grey out completed ones
+  document.querySelectorAll('#screen-learn .ml-card.active').forEach(card => {
+    const onclick = card.getAttribute('onclick') || '';
+    const match   = onclick.match(/openCourse\('([^']+)'\)/);
+    if (match && completed.includes(match[1])) {
+      card.classList.add('story-read');
+      // Update footer chips
+      const footer = card.querySelector('.ml-card-footer');
+      if (footer) {
+        const readNow = footer.querySelector('[style]');
+        if (readNow) readNow.textContent = '✓ Read · Read again';
+      }
+    } else if (match) {
+      card.classList.remove('story-read');
+    }
+  });
+}
+
+function renderHomeStories(nk) {
+  const section = document.getElementById('recent-stories-section');
+  const list    = document.getElementById('recent-stories-list');
+  if (!section || !list) return;
+
+  if (ALL_STORIES.length === 0) { section.style.display = 'none'; return; }
+
+  const completed = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
+
+  section.style.display = 'block';
+  // Unread first, then completed (greyed)
+  const sorted = [
+    ...ALL_STORIES.filter(s => !completed.includes(s.id)),
+    ...ALL_STORIES.filter(s =>  completed.includes(s.id))
+  ];
+
+  list.innerHTML = sorted.map(s => {
+    const isRead = completed.includes(s.id);
+    return `
+    <div class="story-card-home ${s.topic}${isRead ? ' story-read' : ''}" onclick="openCourse('${s.id}')">
+      <div class="story-card-home-accent"></div>
+      <div class="story-card-home-body">
+        <div class="story-card-home-icon">${s.icon}</div>
+        <div class="story-card-home-info">
+          <div class="story-card-home-tag">${s.tag}</div>
+          <div class="story-card-home-title">${s.title}</div>
+          <div class="story-card-home-meta">${isRead ? '✓ Read · no new points' : s.meta}</div>
+        </div>
+      </div>
+      <div class="story-card-home-arrow">${isRead ? '↺' : '→'}</div>
+    </div>`;
+  }).join('');
+}
+
+function markStoryComplete(id) {
+  const nk        = playerName.toLowerCase().replace(/\s+/g, '_');
+  const completed = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
+  const isFirst   = !completed.includes(id);
+
+  if (isFirst) {
+    completed.push(id);
+    localStorage.setItem('completed_stories_' + nk, JSON.stringify(completed));
+
+    // Award points
+    const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+    progress.totalScore = (progress.totalScore || 0) + STORY_POINTS;
+    localStorage.setItem('env_progress_' + nk, JSON.stringify(progress));
+    syncPlayerToFirestore(nk);
+  }
+  return isFirst; // caller uses this to decide whether to show the toast
+}
+
+// ════════════════════════════════════
+// RECENT GAMES
+// ════════════════════════════════════
+
+const GAME_DEFS = {
+  'quiz:random': {
+    type: 'quiz', mode: 'random',
+    cls: 'quiz', icon: 'casino', tag: 'Quiz',
+    name: 'Random Challenge',
+    desc: 'A random quiz from our library of daily challenges. Three questions, real data.',
+    meta: ['3 questions', '450 pts max'],
+    onclick: "openGame('quiz','random')"
+  },
+  'sort': {
+    type: 'sort', mode: null,
+    cls: 'sort', icon: 'co2', tag: 'Sorting Game',
+    name: 'Carbon Challenge',
+    desc: '6 everyday items. Drag them into order by carbon footprint, lowest to highest. 3 tries.',
+    meta: ['6 cards', '3 tries'],
+    onclick: "openGame('sort')"
+  }
+};
+
+function timeAgo(ts) {
+  if (!ts) return null;
+  const diff = Date.now() - ts;
+  const mins  = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days  = Math.floor(diff / 86400000);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
+  if (mins  <  2)  return 'just now';
+  if (hours <  1)  return `${mins} min ago`;
+  if (hours < 24)  return `${hours}h ago`;
+  if (days  ===1)  return 'yesterday';
+  if (days  <  7)  return `${days} days ago`;
+  if (weeks ===1)  return 'last week';
+  if (weeks <  5)  return `${weeks} weeks ago`;
+  if (months===1)  return 'last month';
+  return `${months} months ago`;
+}
+
+function gameCardHTML(key, animClass, lastPlayedTs) {
+  const g = GAME_DEFS[key];
+  if (!g) return '';
+  const metaHTML = g.meta.map(m =>
+    `<div class="game-card-meta-item"><div class="game-card-meta-dot"></div> ${m}</div>`
+  ).join('');
+  const ago = lastPlayedTs ? timeAgo(lastPlayedTs) : null;
+  const playedRow = ago
+    ? `<div class="game-card-last-played"><span class="material-symbols-outlined" style="font-size:13px;vertical-align:-2px;margin-right:3px;color:var(--green)">schedule</span>Last played: ${ago}</div>`
+    : '';
+  return `
+    <div class="game-card ${g.cls} ${animClass}" onclick="${g.onclick}">
+      <div class="game-card-banner"></div>
+      <div class="game-card-body">
+        <div class="game-card-icon-wrap ${g.cls}">
+          <span class="material-symbols-outlined">${g.icon}</span>
+        </div>
+        <div class="game-card-info">
+          <div class="game-card-tag">${g.tag}</div>
+          <div class="game-card-name">${g.name}</div>
+          <div class="game-card-desc">${g.desc}</div>
+          ${playedRow}
+        </div>
+      </div>
+      <div class="game-card-footer">
+        <div class="game-card-meta">${metaHTML}</div>
+        <div class="game-card-arrow">→</div>
+      </div>
+    </div>`;
+}
+
+function renderRecentGames(nk) {
+  const list  = document.getElementById('recent-games-list');
+  const label = document.getElementById('recent-games-label');
+  if (!list) return;
+
+  // history is [{key, ts}, ...] newest first
+  const history = JSON.parse(localStorage.getItem('recent_games_' + nk) || '[]');
+
+  let entries; // [{key, ts}]
+  if (history.length === 0) {
+    label.textContent = 'Games to try';
+    entries = [{ key: 'quiz:random', ts: null }, { key: 'sort', ts: null }];
+  } else {
+    label.textContent = 'Recently played';
+    const seen = new Set();
+    entries = [];
+    for (const item of history) {
+      const k = typeof item === 'string' ? item : item.key; // back-compat
+      if (!seen.has(k)) {
+        seen.add(k);
+        entries.push({ key: k, ts: item.ts || null });
+      }
+      if (entries.length === 3) break;
+    }
+  }
+
+  const animClasses = ['anim-1', 'anim-2', 'anim-3'];
+  list.innerHTML = entries.map((e, i) => gameCardHTML(e.key, animClasses[i] || '', e.ts)).join('');
+}
+
+function recordRecentGame(type, mode) {
+  const nk  = playerName.toLowerCase().replace(/\s+/g, '_');
+  const key = type === 'quiz' ? 'quiz:random' : type;
+  const history = JSON.parse(localStorage.getItem('recent_games_' + nk) || '[]');
+  // Prepend with timestamp, keep last 50 entries (dedup happens at render time)
+  history.unshift({ key, ts: Date.now() });
+  localStorage.setItem('recent_games_' + nk, JSON.stringify(history.slice(0, 50)));
+}
+
+// ════════════════════════════════════
+// OPEN GAMES
+// ════════════════════════════════════
+const GAME_URLS = {
+  quiz: 'environmentle-quiz-game.html',
+  sort: 'environmentle-sort-it-out.html'
+};
+
+function openGame(type, mode) {
+  recordRecentGame(type, mode);
+  if (type === 'quiz') {
+    const today = new Date().toISOString().slice(0, 10);
+    let challengeId = '';
+
+    if (mode === 'daily') {
+      const c = _loadedChallenges.find(ch => ch.date === today);
+      if (c) challengeId = c.id;
+      // If no date match, quiz game falls back to its own logic
+    } else if (mode === 'random') {
+      const nk        = playerName.toLowerCase().replace(/\s+/g, '_');
+      const counts    = JSON.parse(localStorage.getItem('quiz_play_counts_' + nk) || '{}');
+      const todayId   = (_loadedChallenges.find(ch => ch.date === today) || {}).id;
+      const MAX_PLAYS = 3;
+
+      const eligible = _loadedChallenges.filter(ch => ch.id !== todayId);
+      // Prefer challenges still under the repetition cap; if all have hit it, reset to all eligible.
+      let pool = eligible.filter(ch => (counts[ch.id] || 0) < MAX_PLAYS);
+      if (pool.length === 0) pool = eligible;
+      if (pool.length === 0) pool = _loadedChallenges; // absolute fallback
+
+      // Within the pool, prefer the lowest play count to diversify exposure.
+      const minCount = Math.min(...pool.map(ch => counts[ch.id] || 0));
+      const leastPlayed = pool.filter(ch => (counts[ch.id] || 0) === minCount);
+      const pick = leastPlayed[Math.floor(Math.random() * leastPlayed.length)];
+      if (pick) challengeId = pick.id;
+    }
+
+    const params = new URLSearchParams({ player: playerName });
+    if (challengeId) params.set('challenge', challengeId);
+    if (mode === 'random') params.set('random', '1');
+    window.location.href = GAME_URLS.quiz + '?' + params.toString();
+    return;
+  }
+  window.location.href = GAME_URLS[type] + '?player=' + encodeURIComponent(playerName);
+}
+
+// ════════════════════════════════════
+// LOGOUT
+// ════════════════════════════════════
+function logout() {
+  localStorage.removeItem('env_player_name');
+  playerName = '';
+  document.getElementById('app-bottom-nav').style.display = 'none';
+  hideAllScreens();
+}
+
+// ── FIRESTORE PLAYER SYNC ────────────────────────────────
+
+const ACTIONS_HISTORY_CAP = 20;
+
+// Union-dedupe two action-history arrays by title+date, sort oldest-first, cap at 20
+function mergeActionHistory(localArr, remoteArr) {
+  const all  = [...(localArr || []), ...(remoteArr || [])];
+  const seen = new Set();
+  const out  = [];
+  for (const a of all) {
+    if (!a || !a.title || !a.date) continue;
+    const key = a.title + '|' + a.date;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push({ title: a.title, date: a.date });
+  }
+  out.sort((x, y) => (x.date || '').localeCompare(y.date || ''));
+  return out.slice(-ACTIONS_HISTORY_CAP);
+}
+
+async function loadPlayerProfile(nk) {
+  try {
+    const doc = await _db.collection('players').doc(nk).get();
+    if (!doc.exists) return; // New player
+    const d = doc.data();
+
+    // Restore progress — take the higher value in case both contexts have data
+    const local = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+    localStorage.setItem('env_progress_' + nk, JSON.stringify({
+      totalScore:     Math.max(local.totalScore     || 0, d.totalScore     || 0),
+      sessionsPlayed: Math.max(local.sessionsPlayed || 0, d.sessionsPlayed || 0),
+      actionsPledged: Math.max(local.actionsPledged || 0, d.actionsPledged || 0),
+    }));
+
+    // Restore streak — use whichever lastDate is more recent
+    if (d.streak && d.streak.lastDate) {
+      const localStreak = JSON.parse(localStorage.getItem('streak_' + nk) || '{}');
+      if (!localStreak.lastDate || d.streak.lastDate >= localStreak.lastDate) {
+        localStorage.setItem('streak_' + nk, JSON.stringify(d.streak));
+      }
+    }
+
+    // Restore actions history — union with whatever is in local storage
+    const localActions = JSON.parse(localStorage.getItem('actions_history_' + nk) || '[]');
+    const merged = mergeActionHistory(localActions, d.actionsHistory);
+    localStorage.setItem('actions_history_' + nk, JSON.stringify(merged));
+
+    // Restore preferences
+    if (d.installPrompt) localStorage.setItem('install_prompt_' + nk, d.installPrompt);
+    if (d.notifPrompt)   localStorage.setItem('notif_prompt_'   + nk, d.notifPrompt);
+    if (d.appInstalled)  localStorage.setItem('app_installed_'  + nk, '1');
+
+  } catch(e) {
+    console.warn('loadPlayerProfile failed:', e);
+  }
+}
+
+async function syncPlayerToFirestore(nk) {
+  try {
+    const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+    const streak   = JSON.parse(localStorage.getItem('streak_'         + nk) || '{}');
+    const actions  = JSON.parse(localStorage.getItem('actions_history_' + nk) || '[]');
+    const installPrompt = localStorage.getItem('install_prompt_' + nk);
+    const notifPrompt   = localStorage.getItem('notif_prompt_'   + nk);
+    const appInstalled  = localStorage.getItem('app_installed_'  + nk) === '1';
+
+    const update = {
+      totalScore:     progress.totalScore     || 0,
+      sessionsPlayed: progress.sessionsPlayed || 0,
+      actionsPledged: progress.actionsPledged || 0,
+      streak:         streak,
+      actionsHistory: actions.slice(-ACTIONS_HISTORY_CAP),
+      updatedAt:      firebase.firestore.FieldValue.serverTimestamp(),
+    };
+    if (installPrompt) update.installPrompt = installPrompt;
+    if (notifPrompt)   update.notifPrompt   = notifPrompt;
+    if (appInstalled)  update.appInstalled  = true;
+
+    await _db.collection('players').doc(nk).set(update, { merge: true });
+  } catch(e) {
+    console.warn('syncPlayerToFirestore failed:', e);
+  }
+}
+
+// ── FIREBASE + NOTIFICATIONS ─────────────────────────────
+const _fbConfig = {
+  apiKey:            "AIzaSyDyWJlg8LTpxW3UqHW2zQ9WVNMZ7mf4HUM",
+  authDomain:        "uptake-games.firebaseapp.com",
+  projectId:         "uptake-games",
+  storageBucket:     "uptake-games.firebasestorage.app",
+  messagingSenderId: "1002223512756",
+  appId:             "1:1002223512756:web:86afd3f7a46f0c59407be1",
+};
+const _fbApp  = firebase.apps.length ? firebase.app() : firebase.initializeApp(_fbConfig);
+const _db     = firebase.firestore();
+const _VAPID  = 'BDSqjH2qac-Y3zmnFzZzddzaAXAMKwe27jApW-wATMYWK4TpoxV-vVUA2HW76jp7rJuK6MqLLf7CyrqhyMgui2k';
+
+// Register service worker once on page load
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(err =>
+    console.warn('SW registration failed:', err)
+  );
+}
+
+function isAppInstalled(nk) {
+  // Signal 1: currently running in standalone mode (launched from home screen)
+  const standalone = window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true;
+  if (standalone) {
+    // Persist so we remember across sessions even if they open in browser later
+    localStorage.setItem('app_installed_' + nk, '1');
+    return true;
+  }
+  // Signal 2: appinstalled event fired in a previous session
+  if (localStorage.getItem('app_installed_' + nk) === '1') return true;
+  // Signal 3: user clicked "Done" on the install banner
+  if (localStorage.getItem('install_prompt_' + nk) === 'done') return true;
+  return false;
+}
+
+function shouldShowNotifPrompt(nk, sessionsPlayed) {
+  if (sessionsPlayed < 1) return false;
+  if (!('Notification' in window)) return false;
+  if (Notification.permission === 'granted') return false;
+  if (Notification.permission === 'denied') return false;
+  // Only ask once they've installed the app
+  if (!isAppInstalled(nk)) return false;
+  const data = localStorage.getItem('notif_prompt_' + nk);
+  if (!data) return true;
+  if (data === 'done') return false;
+  try {
+    const parsed = JSON.parse(data);
+    if (parsed.snoozed !== undefined) return sessionsPlayed >= parsed.snoozed + 5;
+  } catch(e) {}
+  return false;
+}
+
+// X or "Not now" — snooze for 5 sessions
+function snoozeNotifPrompt() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+  localStorage.setItem('notif_prompt_' + nk, JSON.stringify({ snoozed: progress.sessionsPlayed || 0 }));
+  document.getElementById('notif-prompt').style.display = 'none';
+  syncPlayerToFirestore(nk);
+}
+
+// "Yes please!" — trigger browser permission prompt
+async function requestNotifPermission() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  document.getElementById('notif-prompt').style.display = 'none';
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      localStorage.setItem('notif_prompt_' + nk, 'done');
+      await saveNotifToken(nk);
+    } else {
+      // Browser blocked — mark so we don't ask again
+      localStorage.setItem('notif_prompt_' + nk, JSON.stringify({ blocked: true }));
+    }
+    syncPlayerToFirestore(nk);
+  } catch(e) {
+    console.warn('Notification permission error:', e);
+  }
+}
+
+// Save FCM token to Firestore and subscribe to topic
+async function saveNotifToken(nk) {
+  try {
+    const sw   = await navigator.serviceWorker.ready;
+    const msg  = firebase.messaging();
+    const token = await msg.getToken({ vapidKey: _VAPID, serviceWorkerRegistration: sw });
+    if (token) {
+      await _db.collection('tokens').doc(token).set({
+        playerName: nk,
+        token,
+        createdAt:  firebase.firestore.FieldValue.serverTimestamp(),
+        lastSeen:   firebase.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true });
+      // Subscribe to topic so messages can be sent from FCM console
+      const subscribeToTopic = firebase.functions('europe-west1').httpsCallable('subscribeToTopic');
+      await subscribeToTopic({ token });
+    }
+  } catch(e) {
+    console.warn('Token save failed:', e);
+  }
+}
+
+// Opt out — delete token from Firestore and unsubscribe
+async function disableNotifications() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  try {
+    const sw  = await navigator.serviceWorker.ready;
+    const msg = firebase.messaging();
+    const token = await msg.getToken({ vapidKey: _VAPID, serviceWorkerRegistration: sw });
+    if (token) {
+      await _db.collection('tokens').doc(token).delete();
+      await msg.deleteToken();
+    }
+  } catch(e) { console.warn('Unsubscribe failed:', e); }
+  localStorage.setItem('notif_prompt_' + nk, JSON.stringify({ snoozed: 0 }));
+}
+
+// ── INSTALL BANNER ──────────────────────────────────────
+let _installPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _installPrompt = e;
+});
+window.addEventListener('appinstalled', () => {
+  if (playerName) {
+    const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+    localStorage.setItem('install_prompt_' + nk, 'done');
+    localStorage.setItem('app_installed_' + nk, '1');
+  }
+  document.getElementById('install-banner').style.display = 'none';
+});
+
+function shouldShowInstallBanner(nk, sessionsPlayed) {
+  if (sessionsPlayed < 1) return false;
+  const isMobile = /iPhone|iPad|iPod|Android/.test(navigator.userAgent);
+  if (!isMobile) return false;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true;
+  if (isStandalone) return false;
+  const data = localStorage.getItem('install_prompt_' + nk);
+  if (!data) return true;
+  if (data === 'done') return false;
+  try {
+    const parsed = JSON.parse(data);
+    // DISMISS: show again after 2 more sessions
+    if (parsed.snoozed_sessions !== undefined) {
+      return sessionsPlayed >= parsed.snoozed_sessions + 2;
+    }
+    // X: show again the next day
+    if (parsed.snooze_until) {
+      return new Date().toISOString().slice(0, 10) > parsed.snooze_until;
+    }
+  } catch(e) {}
+  return false;
+}
+
+// X button — show again tomorrow
+function closeInstallBanner() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+  localStorage.setItem('install_prompt_' + nk, JSON.stringify({ snooze_until: tomorrow }));
+  document.getElementById('install-banner').style.display = 'none';
+  syncPlayerToFirestore(nk);
+}
+
+// Dismiss button — show again after 2 more sessions
+function dismissInstallBanner() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
+  localStorage.setItem('install_prompt_' + nk, JSON.stringify({ snoozed_sessions: progress.sessionsPlayed || 0 }));
+  document.getElementById('install-banner').style.display = 'none';
+  syncPlayerToFirestore(nk);
+}
+
+// Done button — never show again
+function acceptInstallBanner() {
+  const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+  localStorage.setItem('install_prompt_' + nk, 'done');
+  document.getElementById('install-banner').style.display = 'none';
+  syncPlayerToFirestore(nk);
+  if (_installPrompt) _installPrompt.prompt();
+}
+
+// ════════════════════════════════════
+// BOOT
+// ════════════════════════════════════
+(async function init() {
+  const params = new URLSearchParams(window.location.search);
+  const saved  = localStorage.getItem('env_player_name');
+  if (saved) {
+    playerName = saved;
+    await openHub();
+    // Honour ?tab= (from companion.php's bottom nav) and ?profile=1 (from its top-right icon)
+    const tab = params.get('tab');
+    if (tab && _tabScreenMap[tab]) switchTab(tab);
+    if (params.get('profile') === '1') openProfile();
+    return;
+  }
+  if (params.get('hub') === '1') openNameScreen();
+})();
+
+// ════════════════════════════════════════════════════
+// COURSE PLAYER
+// ════════════════════════════════════════════════════
+
+let _course       = null;   // loaded course data
+let _cpIndex      = 0;      // current slide index
+let _cpLocked     = false;  // true during min-read timer
+let _cpTimer      = null;   // setTimeout handle
+
+const MIN_READ_MS = 2000;   // minimum ms before forward tap works
+const SLIDE_READ_MS = 3500; // progress-bar fill duration (visual only)
+
+// ── Load & open ─────────────────────────────────────
+async function openCourse(id) {
+  try {
+    const res  = await fetch(`courses/course-${id}.json`, { cache: 'no-cache' });
+    _course    = await res.json();
+  } catch(e) {
+    alert('Could not load this course. Please try again.');
+    return;
+  }
+  _cpIndex = 0;
+  _buildProgressBar();
+  _renderSlide(_cpIndex, 'none');
+  // Restore tap zones and hide completion overlay from any previous session
+  document.getElementById('cp-tap-prev').style.pointerEvents = '';
+  document.getElementById('cp-tap-next').style.pointerEvents = '';
+  document.getElementById('cp-completion').style.display = 'none';
+
+  document.getElementById('course-player').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  _startSlideTimer();
+  _attachSwipe();
+}
+
+function closeCourse() {
+  document.getElementById('course-player').classList.remove('open');
+  document.body.style.overflow = '';
+  clearTimeout(_cpTimer);
+  const id = _course ? _course.id : null;
+  _course  = null;
+  // Refresh read states + score display
+  if (playerName) {
+    const nk = playerName.toLowerCase().replace(/\s+/g, '_');
+    renderHomeStories(nk);
+    _updateStoriesTabReadState(nk);
+    refreshHubProgress(nk, null); // re-reads localStorage, picks up new points
+  }
+}
+
+// ── Progress bar ─────────────────────────────────────
+function _buildProgressBar() {
+  const bar = document.getElementById('cp-progress');
+  // N content slides only — completion screen fills the whole bar
+  bar.innerHTML = _course.slides.map((_, i) =>
+    `<div class="cp-seg" id="cp-seg-${i}"><div class="cp-seg-fill"></div></div>`
+  ).join('');
+}
+
+function _updateProgressBar(idx) {
+  const n = _course.slides.length;
+  // If idx >= n (completion screen), mark all done
+  const effectiveIdx = Math.min(idx, n);
+  for (let i = 0; i < n; i++) {
+    const seg = document.getElementById(`cp-seg-${i}`);
+    if (!seg) continue;
+    seg.className = 'cp-seg';
+    const fill = seg.querySelector('.cp-seg-fill');
+    fill.style.animation = 'none';
+    if (i < effectiveIdx || effectiveIdx === n) {
+      seg.classList.add('done');
+    } else if (i === effectiveIdx) {
+      seg.classList.add('active');
+      seg.offsetWidth; // reflow
+      fill.style.animation = '';
+      seg.style.setProperty('--cp-duration', SLIDE_READ_MS + 'ms');
+    }
+  }
+}
+
+// ── Slide rendering ──────────────────────────────────
+function _boldify(text, bold) {
+  if (!bold || !text.includes(bold)) return text;
+  return text.replace(bold, `<span class="cp-highlight">${bold}</span>`);
+}
+
+function _slideHTML(slide) {
+  const th = `theme-${slide.theme || 'dark'}`;
+  const texture = (slide.theme !== 'light') ? '<div class="cp-texture"></div>' : '';
+
+  if (slide.type === 'photo') {
+    const html = _boldify(slide.text, slide.bold);
+    const centered = slide.align === 'center';
+    const tagHtml  = slide.tag ? `<div class="cp-photo-tag">${slide.tag}</div>` : '';
+    const statHtml = slide.stat ? `<div style="font-family:'Comfortaa',cursive;font-size:clamp(72px,20vw,100px);font-weight:700;line-height:1;letter-spacing:-0.03em;color:#fff;margin-bottom:8px;">${slide.stat}</div>` : '';
+    const photoFooter = slide.footer ? `<p style="font-family:'Montserrat',sans-serif;font-size:clamp(13px,3.8vw,15px);color:rgba(255,255,255,0.5);line-height:1.5;margin-top:16px;font-style:italic;">${slide.footer}</p>` : '';
+    return `<div class="cp-slide cp-slide-photo${centered ? ' cp-photo-center' : ''}" style="background-image:url('courses/images/${slide.image}');">
+      <div class="cp-photo-overlay"></div>
+      <div class="cp-text-body" style="position:relative;z-index:1;">
+        ${tagHtml}
+        ${statHtml}
+        <p class="cp-text" style="color:rgba(255,255,255,0.9);">${html}</p>
+        ${photoFooter}
+      </div>
+    </div>`;
+  }
+
+  if (slide.type === 'text') {
+    const html = _boldify(slide.text, slide.bold);
+    const calloutHtml = slide.callout
+      ? `<div class="cp-callout">${slide.callout}</div>` : '';
+    const bulletsHtml = slide.bullets
+      ? `<ul class="cp-bullets">${slide.bullets.map(b => {
+          const sep = b.indexOf(':');
+          if (sep > -1) {
+            return `<li><strong>${b.slice(0, sep + 1)}</strong> ${b.slice(sep + 1).trim()}</li>`;
+          }
+          return `<li>${b}</li>`;
+        }).join('')}</ul>` : '';
+    const footerHtml = slide.footer
+      ? `<p class="cp-bullet-footer">${_boldify(slide.footer, slide.bold)}</p>` : '';
+    return `<div class="cp-slide ${th}">
+      ${texture}
+      <div class="cp-text-body" style="position:relative;z-index:1;display:flex;flex-direction:column;gap:20px;">
+        ${slide.calloutTop ? calloutHtml : ''}
+        ${slide.text ? `<p class="cp-text">${html}</p>` : ''}
+        ${slide.calloutTop ? '' : calloutHtml}
+        ${bulletsHtml}
+        ${footerHtml}
+      </div>
+    </div>`;
+  }
+
+  if (slide.type === 'stat') {
+    const ghost = slide.stat.replace(/[^0-9a-zA-Z%+]/g,'');
+    const captionHtml = _boldify(slide.caption, slide.bold);
+    const sourceHtml = slide.source
+      ? `<div style="font-family:'Montserrat',sans-serif;font-size:12px;color:rgba(255,255,255,0.3);font-style:italic;margin-top:4px;">${slide.source}</div>` : '';
+    const noteHtml = slide.note
+      ? `<div style="font-family:'Montserrat',sans-serif;font-size:clamp(13px,3.8vw,15px);color:rgba(255,255,255,0.55);line-height:1.45;margin-top:8px;border-left:2px solid rgba(255,255,255,0.15);padding-left:12px;">${slide.note}</div>` : '';
+    return `<div class="cp-slide ${th}" style="overflow:hidden;">
+      ${texture}
+      <div style="position:absolute;bottom:-20px;right:-10px;font-family:'Comfortaa',cursive;font-size:clamp(120px,38vw,200px);font-weight:700;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none;z-index:0;letter-spacing:-0.04em;">${ghost}</div>
+      <div class="cp-stat-body" style="position:relative;z-index:1;">
+        <div class="cp-stat-number">${slide.stat}</div>
+        <div class="cp-stat-caption">${captionHtml}</div>
+        ${noteHtml}
+        ${sourceHtml}
+        ${slide.footer ? `<p class="cp-bullet-footer" style="margin-top:12px;">${slide.footer}</p>` : ''}
+      </div>
+    </div>`;
+  }
+
+  if (slide.type === 'compare') {
+    const badRows  = (slide.bad  || []).map(t => `<div class="cp-compare-row"><div class="cp-compare-dot cp-compare-dot-bad"></div><div>${t}</div></div>`).join('');
+    const goodRows = (slide.good || []).map(t => `<div class="cp-compare-row"><div class="cp-compare-dot cp-compare-dot-good"></div><div>${t}</div></div>`).join('');
+    return `<div class="cp-slide ${th}" style="overflow:hidden;">
+      ${texture}
+      <div class="cp-compare-body">
+        ${slide.title ? `<div class="cp-compare-title">${slide.title}</div>` : ''}
+        <div class="cp-compare-col cp-compare-bad">
+          <div class="cp-compare-label cp-compare-label-bad">${slide.badLabel || 'Still funding the problem'}</div>
+          ${badRows}
+        </div>
+        <div class="cp-compare-col cp-compare-good">
+          <div class="cp-compare-label cp-compare-label-good">${slide.goodLabel || 'Aligned with the transition'}</div>
+          ${goodRows}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if (slide.type === 'visual') {
+    const html = _boldify(slide.text, slide.bold);
+    return `<div class="cp-slide ${th}">
+      ${texture}
+      <div class="cp-visual-body" style="position:relative;z-index:1;">
+        ${slide.emoji  ? `<div class="cp-visual-emoji">${slide.emoji}</div>`          : ''}
+        ${slide.image  ? `<img src="${slide.image}" style="width:100%;border-radius:12px;max-height:220px;object-fit:cover;">` : ''}
+        <p class="cp-visual-text">${html}</p>
+      </div>
+    </div>`;
+  }
+
+  return `<div class="cp-slide theme-dark"><p class="cp-text">${slide.text || ''}</p></div>`;
+}
+
+function _renderSlide(idx, direction) {
+  const stage  = document.getElementById('cp-stage');
+  const slide  = _course.slides[idx];
+  const total  = _course.slides.length;
+
+  // Determine enter class
+  const enterClass = direction === 'forward'  ? 'entering-right'
+                   : direction === 'backward' ? 'entering-left'
+                   : 'active';
+
+  // Build new slide element
+  const el = document.createElement('div');
+  el.style.cssText = 'position:absolute;inset:0;';
+  el.innerHTML = _slideHTML(slide);
+  const slideDiv = el.firstElementChild;
+  slideDiv.classList.add(enterClass);
+  stage.appendChild(slideDiv);
+
+  // Animate out old slide if any
+  const old = stage.querySelector(`.cp-slide.active`);
+  if (old && old !== slideDiv) {
+    old.classList.remove('active');
+    old.classList.add(direction === 'forward' ? 'leaving-left' : 'leaving-right');
+    setTimeout(() => old.remove(), 350);
+  }
+
+  // Trigger enter animation
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      slideDiv.classList.remove('entering-right', 'entering-left');
+      slideDiv.classList.add('active');
+    });
+  });
+
+  // Update counter
+  document.getElementById('cp-counter').textContent = `${idx + 1} / ${total}`;
+
+  // Update progress bar
+  _updateProgressBar(idx);
+
+  // Show/hide hint
+  const hint = document.getElementById('cp-hint');
+  if (hint) hint.style.opacity = idx === 0 ? '1' : '0.4';
+}
+
+// ── Navigation ───────────────────────────────────────
+function _startSlideTimer() {
+  _cpLocked = true;
+  clearTimeout(_cpTimer);
+  _cpTimer = setTimeout(() => { _cpLocked = false; }, MIN_READ_MS);
+}
+
+function cpNext() {
+  if (_cpLocked) return;
+  if (!_course) return;
+  // +1 because we append a completion slide automatically
+  const lastContent = _course.slides.length - 1;
+  const lastSlide   = _course.slides.length;      // completion screen index
+
+  if (_cpIndex === lastSlide) return; // already on completion screen, do nothing
+
+  if (_cpIndex === lastContent) {
+    // Move to the auto-generated completion screen
+    _cpIndex = lastSlide;
+    _renderCompletionSlide();
+    _startSlideTimer();
+    return;
+  }
+  _cpIndex++;
+  _renderSlide(_cpIndex, 'forward');
+  _startSlideTimer();
+}
+
+function _renderCompletionSlide() {
+  const stage   = document.getElementById('cp-stage');
+  const isFirst = markStoryComplete(_course.id);
+  const total   = _course.slides.length + 1;
+
+  // Update progress bar — mark all segments done
+  _updateProgressBar(_course.slides.length);
+
+  // Slide out the last content slide
+  const old = stage.querySelector('.cp-slide.active');
+  if (old) {
+    old.classList.remove('active');
+    old.classList.add('leaving-left');
+    setTimeout(() => old.remove(), 350);
+  }
+
+  // Populate and show the dedicated completion overlay (z-index:50, above tap zones)
+  const inner = document.getElementById('cp-completion-inner');
+  inner.innerHTML = `
+    <div style="font-size:64px;line-height:1;margin-bottom:8px;">🎉</div>
+    <div style="font-family:'Comfortaa',cursive;font-size:22px;font-weight:700;color:white;margin-bottom:12px;">Story complete!</div>
+    ${isFirst ? `
+      <div style="background:rgba(125,204,138,0.15);border:1.5px solid rgba(125,204,138,0.35);border-radius:16px;padding:16px 28px;margin-bottom:8px;">
+        <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:#7dbf7c;line-height:1;letter-spacing:-0.02em;">+${STORY_POINTS}</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:6px;font-family:'Montserrat',sans-serif;">pts added to your score</div>
+      </div>` : `
+      <div style="font-size:13px;color:rgba(255,255,255,0.45);font-family:'Montserrat',sans-serif;margin-bottom:8px;">You've read this one before — no new points.</div>`}
+  `;
+  const overlay = document.getElementById('cp-completion');
+  overlay.style.display = 'flex';
+
+  // Update counter
+  document.getElementById('cp-counter').textContent = `${total} / ${total}`;
+}
+
+
+function cpPrev() {
+  if (!_course || _cpIndex <= 0) return;
+  _cpIndex--;
+  _renderSlide(_cpIndex, 'backward');
+  _startSlideTimer();
+}
+
+// ── Swipe detection ──────────────────────────────────
+let _swipeStartX = 0;
+let _swipeStartY = 0;
+
+function _attachSwipe() {
+  const player = document.getElementById('course-player');
+  player.addEventListener('touchstart', e => {
+    _swipeStartX = e.touches[0].clientX;
+    _swipeStartY = e.touches[0].clientY;
+  }, { passive: true });
+  player.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - _swipeStartX;
+    const dy = e.changedTouches[0].clientY - _swipeStartY;
+    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return; // not a horizontal swipe
+    if (dx < 0) cpNext();
+    else         cpPrev();
+  }, { passive: true });
+}
+</script>
+
+</body>
+</html>
