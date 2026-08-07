@@ -2792,17 +2792,20 @@
   var MIN_UNSEEN = 8;         // below this, a pool's seen list is recycled
   var POOL_ORDER = ['per-kg', 'per-unit'];
 
-  // ── SCORING, calibrated against the Carbon Challenge ─
-  // Carbon: correct * 100 * multiplier + timeBonus, best case
-  //   6 correct * 100 * 3 (first try) + 300 (under 30s) = 2100.
-  // Water:  correct * 300 + perfect bonus + timeBonus, best case
-  //   5 correct * 300 + 300 (all five) + 300 (under 45s) = 2100.
-  // Same ceiling, so a perfect run in either game is worth the same.
-  var POINTS_PER_CORRECT = 300;
-  var PERFECT_BONUS = 300;
-  var TIME_BONUS_MAX = 300;
+  // ── SCORING ─────────────────────────────────────────
+  // The owner set this game's ceiling at 480. It no longer tracks the Carbon
+  // Challenge's 2100; that game keeps its own scale.
+  //   5 correct * 60 + 90 (all five) + 90 (under 45s) = 480.
+  // The three parts keep the shape they had: the correct answers carry most of
+  // the run, and the two bonuses are equal to each other and smaller.
+  var POINTS_PER_CORRECT = 60;
+  var PERFECT_BONUS = 90;
+  var TIME_BONUS_MAX = 90;
   var TIME_BONUS_FREE = 45;   // seconds before the speed bonus starts to decay
-  var TIME_BONUS_DECAY = 8;   // points lost per second after that
+  var TIME_BONUS_DECAY = 3;   // points lost per second after that. Scaled with
+                              // the bonus it eats, so the taper keeps its old
+                              // shape: it empties in 30 seconds and lands on
+                              // zero at a round 75.
   var MAX_POINTS = ROUNDS_PER_RUN * POINTS_PER_CORRECT + PERFECT_BONUS + TIME_BONUS_MAX;
 
   var ACTIONS_PER_RUN = 4;    // of the six in the dataset, rotated between runs
@@ -3405,7 +3408,7 @@
   // ══════════════════════════════════════════════════════
   // SCORING — see the constants block for the calibration
   // The speed bonus is only paid on a completed run. Paying it on an early
-  // exit would make quitting on round one worth 300 points, which is silly.
+  // exit would make quitting on round one worth 90 points, which is silly.
   // ══════════════════════════════════════════════════════
   function calcScore(correct, timeSec) {
     var perfect = correct >= ROUNDS_PER_RUN;

@@ -78,28 +78,50 @@ while the spare attempt is still on the table.
 A missing, unreadable or corrupt stored value always means "you may play". A
 storage failure must never lock anyone out.
 
-### Points, calibrated against the Carbon Challenge
+### Points
 
-The Carbon Challenge scores `correct × 100 × multiplier + timeBonus`, where the
-multiplier is 3, 2 or 1 for a first, second or third try, and the time bonus is
-300 under thirty seconds, decaying by 8 a second after that. Its best case is
-`6 × 100 × 3 + 300 = 2100`.
-
-The Water Challenge is built to land on the same ceiling:
+A perfect run is worth 480. The owner set that ceiling; it is this game's own
+number and deliberately not the Carbon Challenge's 2100, which is unchanged.
 
 ```
-5 correct × 300            = 1500
-+ perfect bonus              300
-+ speed bonus, under 45s     300
-                           -----
-maximum                     2100
+5 correct × 60             =  300
++ perfect bonus                90
++ speed bonus, under 45s       90
+                            -----
+maximum                       480
 ```
+
+The three parts keep the shape they had at the old scale: the correct answers
+carry most of the run, and the two bonuses are equal to each other and smaller.
+
+The speed bonus is not all-or-nothing past the free window. It pays the full 90
+up to and including 45 seconds, then decays by 3 a second, so it empties in
+thirty seconds and reaches zero at 75. A perfect run therefore scores 480 at its
+fastest and 390 once it passes 75 seconds, with everything between the two on a
+straight line: 477 at 46 seconds, 435 at 60, 390 from 75 on. The decay was
+scaled with the bonus it eats, so the taper keeps its old shape rather than
+suddenly biting harder at a smaller ceiling.
+
+Worked examples, for anyone changing the constants again:
+
+| Run | Score |
+| --- | --- |
+| 5 correct in under 45s | `5×60 + 90 + 90` = **480** |
+| 5 correct in 60s | `5×60 + 90 + 45` = **435** |
+| 5 correct in 75s or more | `5×60 + 90 + 0` = **390** |
+| 3 correct | `3×60` = **180** |
+| 0 correct | **0** |
 
 The speed bonus is paid on completed runs only. Paying it on an early exit would
-make quitting on round one worth 300 points, which is silly. Points go into the
+make quitting on round one worth 90 points, which is silly. Points go into the
 shared `env_progress_<nk>.totalScore` alongside the same `streak_<nk>` daily
 bonus the Carbon Challenge maintains, so any hub or profile total picks the water
-game up without special-casing it.
+game up without special-casing it. Both are plain addition and neither assumes
+anything about how large a water run can be, so the smaller numbers need no
+change there — a water run simply contributes less to the hub total than it did,
+which is what a lower ceiling means. The shared daily streak bonus (100 from
+three days, 250 from five) is Carbon's to set and is left alone, so it is now
+worth more relative to a water run than before.
 
 `wc_best_streak_<nk>` survives, but "best" now means best score out of five. A
 value left behind by the earlier endless build can be larger than a run can ever
