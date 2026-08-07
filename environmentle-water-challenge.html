@@ -1,0 +1,4336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Uptake Games — Water Challenge</title>
+<meta name="description" content="A one-tap game about the fresh water hidden in everyday things. Higher or lower, water edition.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5S6BPNG30H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5S6BPNG30H');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* Several blocks below set display, which would otherwise beat the hidden
+     attribute. The game leans on [hidden] for the answer buttons, the verdict
+     and the reality-check overlay. */
+  [hidden] { display: none !important; }
+
+  /* The Carbon Challenge's palette, in water. --water-dark is the same shell
+     navy the Carbon Challenge uses for --green-dark, so the two games share
+     their chrome; the mid/light/pale ramp is the blue the hub already gives
+     the Water Challenge card in index.html. */
+  :root {
+    --water-dark:  #0a293b;
+    --water-mid:   #2199e6;
+    --water-light: #6bd0f5;
+    --water-pale:  #e8f4fd;
+    --orange:      #e27e22;
+    --orange-pale: #fdf0e3;
+    --cream:       #f0f0f0;
+    --text:        #0a293b;
+    --text-soft:   #4a6070;
+    --white:       #FFFFFF;
+    --good:        #3fbf87;
+    --bad:         #c03030;
+    --radius:      14px;
+    --radius-sm:   8px;
+    --nav-h:       56px;
+  }
+
+  html {
+    height: 100%;
+    background: #05182a;
+    /* The outgoing screen sits at translateY(16px) during a transition, which
+       makes the document 16px scrollable. Focusing an answer button then
+       scrolls it, sliding the header under the fixed .back-to-hub bar. */
+    overflow: hidden;
+  }
+
+  body {
+    height: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    position: relative;
+    background: var(--cream);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text);
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,0,0,0.5);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ── SCREEN MANAGER ── */
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    transform: translateY(16px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+  .screen.exit {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+
+  /* ══════════════════════════════════════
+     SCREEN 1 — INTRO
+  ══════════════════════════════════════ */
+  #screen-intro {
+    background: var(--water-dark);
+    justify-content: space-between;
+  }
+
+  .intro-top {
+    padding: 52px 28px 32px;
+    flex: 1;
+  }
+
+  .badge-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .category-badge {
+    background: var(--water-mid);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+  }
+
+  .sub-badge {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .intro-label {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .intro-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(38px, 10vw, 52px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .intro-title em {
+    color: var(--water-light);
+    font-style: italic;
+  }
+
+  .did-you-know {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+
+  .dyk-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--water-light);
+    margin-bottom: 8px;
+  }
+
+  .dyk-text {
+    font-family: 'Comfortaa', cursive;
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.5;
+  }
+
+  .dyk-text strong { color: white; font-weight: 700; }
+
+  .best-line {
+    margin-top: 16px;
+    color: var(--water-light);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .best-line:empty { display: none; }
+
+  .intro-bottom {
+    padding: 24px 28px 44px;
+    background: rgba(0,0,0,0.15);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+  }
+
+  .meta-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--water-light);
+  }
+
+  .btn-play {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-play:active { transform: scale(0.97); background: #c96e2d; }
+
+  .micro {
+    margin-top: 14px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ══════════════════════════════════════
+     SCREEN 2 — GAME
+  ══════════════════════════════════════ */
+  #screen-game {
+    background: var(--cream);
+    flex-direction: column;
+    overflow: hidden; /* card-track-wrapper handles its own scroll */
+  }
+
+  /* 58px of top padding clears the fixed .back-to-hub bar. The Carbon
+     Challenge uses 52px for a single-line header row; this one carries a
+     label above each number, so it needs a little more. */
+  .game-header {
+    background: var(--water-dark);
+    padding: 58px 24px 14px;
+    flex-shrink: 0;
+  }
+
+  .game-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .game-title-label {
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .streak-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .streak-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    line-height: 1.1;
+  }
+
+  .streak-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .streak-value {
+    font-family: 'Comfortaa', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    font-variant-numeric: tabular-nums;
+  }
+  .streak-value.best { color: rgba(255,255,255,0.55); font-size: 15px; }
+
+  /* A run is capped at ten, so the header carries two new things: where you
+     are in the run, and a way out of it. Same chrome as the Carbon
+     Challenge's tries row — low-opacity white on the dark header. */
+  .game-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .progress-label {
+    color: rgba(255,255,255,0.55);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .progress-track {
+    flex: 1;
+    min-width: 40px;
+    height: 4px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.14);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    display: block;
+    height: 100%;
+    width: 0%;
+    border-radius: 100px;
+    background: var(--water-light);
+    transition: width 0.35s ease;
+  }
+
+  .btn-exit {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.8);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    padding: 4px 11px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .btn-exit:hover { background: rgba(255,255,255,0.18); color: var(--white); }
+  .btn-exit:active { transform: scale(0.97); }
+  .btn-exit:focus-visible {
+    outline: 2px solid var(--water-light);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress-fill { transition: none; }
+  }
+
+  .card-track-wrapper {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 14px 14px 20px;
+  }
+
+  .game-question {
+    font-family: 'Comfortaa', cursive;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .game-basis {
+    font-size: 11px;
+    text-align: center;
+    color: var(--text-soft);
+    margin-bottom: 14px;
+  }
+
+  .card-track {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    position: relative;
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 2px 10px rgba(10,41,59,0.07);
+    padding: 14px 16px 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .card-color-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: var(--water-mid);
+  }
+
+  .card-emoji {
+    font-size: 30px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .card-body { flex: 1; min-width: 0; }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text);
+  }
+
+  .card-sub {
+    font-size: 11px;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+
+  .card-footer {
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .card-impact {
+    font-family: 'Comfortaa', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--water-dark);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+
+  .card-impact-unit {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-soft);
+  }
+
+  .card-cat-label {
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--water-mid);
+    margin-top: 3px;
+  }
+
+  /* Category accents, the Carbon Challenge's cat-* pattern in water blues */
+  .card.cat-animal    .card-color-bar { background: #1b6fa8; }
+  .card.cat-plant     .card-color-bar { background: #3fb8a0; }
+  .card.cat-drink     .card-color-bar { background: #2199e6; }
+  .card.cat-goods     .card-color-bar { background: #6b83a8; }
+  .card.cat-home      .card-color-bar { background: #6bd0f5; }
+  .card.cat-animal    .card-cat-label { color: #1b6fa8; }
+  .card.cat-plant     .card-cat-label { color: #2f9884; }
+  .card.cat-drink     .card-cat-label { color: #2199e6; }
+  .card.cat-goods     .card-cat-label { color: #6b83a8; }
+  .card.cat-home      .card-cat-label { color: #3aaad6; }
+
+  /* The mystery card: number hidden until answered */
+  .card-mystery .card-impact { color: var(--water-mid); }
+  .card-mystery:not(.revealed) .card-impact-unit { opacity: 0.45; }
+  .card-mystery.correct { border-color: var(--good); box-shadow: 0 0 0 1.5px var(--good) inset; }
+  .card-mystery.wrong   { border-color: var(--bad);  box-shadow: 0 0 0 1.5px var(--bad) inset; }
+
+  .versus {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    padding: 2px 0;
+  }
+
+  /* ── VERDICT ── */
+  .card-detail {
+    background: white;
+    border-left: 4px solid var(--water-mid);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-top: 10px;
+    box-shadow: 0 2px 10px rgba(10,41,59,0.06);
+  }
+
+  .card-fact-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .card-fact-title.correct-msg { color: var(--good); }
+  .card-fact-title.wrong-msg   { color: var(--bad); }
+
+  .card-fact-text {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .card-fact-comment {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text-soft);
+  }
+
+  /* ── BOTTOM ACTION BAR ── */
+  .game-footer {
+    flex-shrink: 0;
+    padding: 12px 14px env(safe-area-inset-bottom, 14px);
+    background: var(--cream);
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .btn-submit {
+    flex: 1;
+    background: var(--water-dark);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 13px 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 60px;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-submit:active { transform: scale(0.97); background: #06202f; }
+  .btn-submit:focus-visible { outline: 3px solid var(--water-light); outline-offset: 2px; }
+
+  .btn-word {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .btn-hint {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .btn-submit.next {
+    background: var(--orange);
+    flex-direction: row;
+  }
+  .btn-submit.next:active { background: #c96e2d; }
+
+  /* ══════════════════════════════════════
+     SCREEN 3 — SCORE
+  ══════════════════════════════════════ */
+  #screen-score {
+    background: var(--water-dark);
+    justify-content: flex-start;
+  }
+
+  .score-top {
+    padding: 56px 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .score-label {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .score-number {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(72px, 20vw, 96px);
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .score-max {
+    color: rgba(255,255,255,0.4);
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .score-message {
+    font-family: 'Comfortaa', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .score-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    max-width: 280px;
+  }
+
+  .score-pills {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .score-pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 100px;
+  }
+
+  .score-pill.highlight {
+    background: rgba(107,208,245,0.18);
+    border-color: var(--water-light);
+    color: var(--water-light);
+  }
+
+  .score-body {
+    /* the bottom nav is hidden here now, as it is in the other games, so this
+       only needs ordinary breathing room at the end of the scroll */
+    padding: 4px 20px 28px;
+  }
+
+  /* Panels on the score screen, styled like the Carbon Challenge's action cards */
+  .panel {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+
+  .panel-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+  }
+
+  .panel-intro {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 10px;
+  }
+
+  .panel p {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 9px;
+  }
+  .panel p:last-child { margin-bottom: 0; }
+
+  .panel-caveat { background: rgba(33,153,230,0.1); border-color: rgba(107,208,245,0.22); }
+
+  .fact-list { margin: 0; padding-left: 18px; }
+  .fact-list li {
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 8px;
+  }
+  .fact-list li:last-child { margin-bottom: 0; }
+  .fact-list li::marker { color: var(--water-light); }
+
+  .explainer { margin: 0; }
+  .explainer dt {
+    margin-top: 10px;
+    font-weight: 700;
+    font-size: 13px;
+    color: white;
+  }
+  .explainer dt:first-child { margin-top: 0; }
+  .explainer dt::before {
+    content: "";
+    display: inline-block;
+    width: 10px; height: 10px;
+    margin-right: 8px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+  .swatch-green::before { background: #6fd08c; }
+  .swatch-blue::before  { background: #4aa8ff; }
+  .swatch-grey::before  { background: #9aa9b4; }
+  .explainer dd {
+    margin: 3px 0 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .wiki-link {
+    display: inline-block;
+    margin-top: 4px;
+    color: var(--water-light);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  /* Same padding and stacking as the Carbon Challenge's score-bottom */
+  .score-bottom {
+    padding: 16px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  /* Primary CTA — Take further action */
+  .btn-action {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 13px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-action:active { transform: scale(0.97); background: #c96e2d; }
+
+  /* Finish button — dark with orange border */
+  .btn-finish {
+    width: 100%;
+    background: var(--water-dark);
+    color: rgba(255,255,255,0.9);
+    border: 1.5px solid var(--orange);
+    border-radius: var(--radius);
+    padding: 13px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  .btn-finish:active { transform: scale(0.97); background: rgba(255,255,255,0.05); }
+
+  /* ══════════════════════════════════════
+     REALITY CHECK OVERLAY
+  ══════════════════════════════════════ */
+  .reality {
+    position: fixed;
+    inset: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 460px;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(5,24,42,0.95);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .reality-card {
+    width: 100%;
+    background:
+      radial-gradient(90% 70% at 50% 0%, rgba(33,153,230,0.28), transparent 70%),
+      rgba(255,255,255,0.07);
+    border: 1px solid rgba(107,208,245,0.28);
+    border-radius: 22px;
+    padding: 28px 22px;
+    text-align: center;
+  }
+
+  .reality-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--water-light);
+    margin-bottom: 14px;
+  }
+
+  .reality-lead {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .reality-big {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(24px, 8vw, 32px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .reality-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+
+  .reality-streak {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--water-light);
+    margin-bottom: 18px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes pop {
+    0%   { transform: scale(0.8); opacity: 0; }
+    60%  { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  .pop-in { animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+  .stagger-1 { animation: slideUp 0.4s 0.05s both; }
+  .stagger-2 { animation: slideUp 0.4s 0.15s both; }
+  .stagger-3 { animation: slideUp 0.4s 0.25s both; }
+  .stagger-4 { animation: slideUp 0.4s 0.35s both; }
+
+  /* ── BACK TO HUB ── */
+  .back-to-hub {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 460px;
+    z-index: 999;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px 10px 14px;
+    background: var(--water-dark);
+    opacity: 1;
+    transition: opacity 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .back-to-hub:active { opacity: 0.6; }
+  .back-to-hub-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .back-to-hub-uptake {
+    font-family: 'Comfortaa', cursive;
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .back-to-hub-games {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(120deg, #2199e6 0%, #e27e22 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── GAME BOTTOM NAV ── */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle; line-height: 1;
+  }
+  /* ══════════════════════════════════════
+     SCREEN 4 — ACTIONS
+     Ported from the Carbon Challenge so a pledge looks and behaves the same in
+     both games. Only the palette changes: green-dark/mid/pale become the water
+     equivalents. Class names, structure and sizing are deliberately identical.
+  ══════════════════════════════════════ */
+  #screen-action {
+    background: var(--cream);
+    flex-direction: column;
+    /* the body scrolls, the header and footer stay put, as in the other games */
+    overflow: hidden;
+  }
+
+  .action-header {
+    background: var(--water-dark);
+    padding: 52px 24px 28px;
+    flex-shrink: 0;
+  }
+
+  .action-header-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 26px;
+    font-weight: 900;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .action-header-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+  }
+
+  .action-body {
+    flex: 1;
+    min-height: 0;
+    padding: 20px 20px 20px;
+    overflow-y: auto;
+  }
+
+  .action-intro {
+    font-size: 14px;
+    color: var(--text-soft);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: white;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--water-mid);
+  }
+
+  .action-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    margin-bottom: 12px;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .action-card.selected {
+    border-color: var(--water-mid);
+    background: var(--water-pale);
+  }
+
+  .action-card:focus-visible {
+    outline: 3px solid var(--water-mid);
+    outline-offset: 2px;
+  }
+
+  .action-card-nothing {
+    background: transparent;
+    border: 1.5px dashed rgba(0,0,0,0.15);
+    margin-bottom: 16px; /* extra gap to separate from real actions */
+  }
+  .action-card-nothing .action-card-title {
+    color: var(--text-soft);
+    font-weight: 500;
+  }
+  .action-card-nothing.selected {
+    border-style: solid;
+    border-color: var(--text-soft);
+    background: rgba(0,0,0,0.04);
+  }
+
+  .action-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .action-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    flex: 1;
+  }
+
+  .action-level {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 100px;
+    flex-shrink: 0;
+  }
+
+  .level-beginner     { background: #E8F5E9; color: #2E7D32; }
+  .level-intermediate { background: #FFF3E0; color: #E65100; }
+  .level-advanced     { background: #FCE4EC; color: #AD1457; }
+
+  .action-card-desc {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .action-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .action-pts    { font-size: 12px; font-weight: 600; color: var(--water-mid); }
+  .action-carbon { font-size: 12px; color: var(--text-soft); }
+
+  .action-checkbox {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    transition: background 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .action-card.selected .action-checkbox {
+    background: var(--water-mid);
+    border-color: var(--water-mid);
+  }
+
+  .action-footer {
+    flex-shrink: 0;
+    background: var(--cream);
+    padding: 16px 20px 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  /* Sized and coloured exactly as the Carbon Challenge and the quiz do it: the
+     game's own dark tone, not the orange, which belongs to "Take further
+     action" one screen earlier. */
+  .btn-commit {
+    width: 100%;
+    background: var(--water-dark);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 17px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-commit:active { transform: scale(0.97); }
+  .btn-commit:disabled { opacity: 0.45; }
+
+  .btn-action-back {
+    background: none;
+    border: none;
+    color: var(--text-soft);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 4px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-action-back:active { opacity: 0.6; }
+  .btn-action-back svg { width: 13px; height: 13px; }
+
+  .app-nav {
+    display: none; /* the other games never show it mid-game, and neither do we */
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%; max-width: 460px;
+    height: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+    padding: 0 8px env(safe-area-inset-bottom, 0px);
+    background: rgba(10,41,59,0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 -8px 28px rgba(0,0,0,0.35);
+    justify-content: space-around;
+    align-items: center;
+    z-index: 300;
+  }
+  .app-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 7px 14px;
+    border-radius: 100px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+  }
+  .app-nav-item .material-symbols-outlined { font-size: 22px !important; }
+  .app-nav-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.07em;
+  }
+  .app-nav-item.active { background: #e27e22; color: white; }
+  .app-nav-item:active { transform: scale(0.88); }
+
+  /* ── REDUCED MOTION ── */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<a class="back-to-hub" href="index.html">
+  <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
+  <div class="back-to-hub-text">
+    <span class="back-to-hub-uptake">The Uptake</span>
+    <span class="back-to-hub-games">GAMES</span>
+  </div>
+</a>
+
+<!-- ══════════════════════════════════════════════════════
+     SCREEN 0 — ALREADY PLAYED TODAY
+     Same shape and wording as the Carbon Challenge's played screen, in this
+     game's palette. Shown instead of the intro when the day's play is used up.
+══════════════════════════════════════════════════════ -->
+<div id="screen-played" class="screen">
+  <div class="intro-top" style="justify-content:center;align-items:center;text-align:center;gap:16px;">
+    <div style="font-size:56px;margin-bottom:4px;">💧</div>
+    <p class="intro-label">You have already played today</p>
+    <h1 class="intro-title" style="font-size:clamp(28px,7vw,42px);">Come back<br><em>tomorrow</em></h1>
+    <p style="font-size:14px;color:rgba(255,255,255,0.6);max-width:280px;line-height:1.6;">
+      One run a day, that is part of the fun. Your score from today:
+    </p>
+    <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:white;" id="played-score">—</div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">pts</p>
+    <p style="font-size:13px;color:rgba(255,255,255,0.5);max-width:280px;line-height:1.6;" id="played-when">
+      A fresh run unlocks at midnight.
+    </p>
+  </div>
+  <div class="intro-bottom">
+    <a class="btn-play stagger-4" href="index.html?hub=1" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;">
+      ← Back to games
+    </a>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     SCREEN 1 — INTRO
+══════════════════════════════════════════════════════ -->
+<div id="screen-intro" class="screen active">
+  <div class="intro-top">
+    <div class="badge-row stagger-1">
+      <span class="category-badge">Water Footprint</span>
+      <span class="sub-badge">Higher or Lower</span>
+    </div>
+    <p class="intro-label stagger-1">The Game</p>
+    <h1 class="intro-title stagger-2">Which one<br><em>drinks more?</em></h1>
+    <div class="did-you-know stagger-3">
+      <p class="dyk-label">How it works</p>
+      <p class="dyk-text">
+        Every card shows the fresh water it takes to make <strong>one thing</strong>. Say whether the
+        new item needs <strong>more or less</strong> than the one next to it. A run is
+        <strong>five rounds</strong>. Get all five and you have a perfect run.
+      </p>
+    </div>
+    <p class="best-line stagger-3" id="retry-note" hidden></p>
+    <p class="best-line stagger-3" id="start-best"></p>
+  </div>
+  <div class="intro-bottom">
+    <div class="meta-row stagger-4">
+      <div class="meta-item"><div class="meta-dot"></div> 5 rounds</div>
+      <div class="meta-item"><div class="meta-dot"></div> Once a day</div>
+      <div class="meta-item"><div class="meta-dot"></div> 2,100 pts max</div>
+    </div>
+    <button class="btn-play stagger-4" id="btn-start">
+      <span id="btn-start-label">Start guessing</span>
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+    <p class="micro stagger-4">
+      Figures are global averages, mostly from the Water Footprint Network. Real numbers move with
+      the country, the farm and the season. Treat them as a compass, not a GPS.
+    </p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     SCREEN 2 — GAME
+══════════════════════════════════════════════════════ -->
+<div id="screen-game" class="screen">
+  <div class="game-header">
+    <div class="game-header-row">
+      <span class="game-title-label">More or less water?</span>
+      <div class="streak-row" id="streak-row">
+        <div class="streak-stat">
+          <span class="streak-label">Streak</span>
+          <span class="streak-value" id="streak">0</span>
+        </div>
+        <div class="streak-stat">
+          <span class="streak-label">Best</span>
+          <span class="streak-value best" id="best">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-progress-row">
+      <p class="progress-label" id="progress-label">Round 1 of 5</p>
+      <div class="progress-track" aria-hidden="true">
+        <span class="progress-fill" id="progress-fill"></span>
+      </div>
+      <!-- hidden until a run is actually in play; showScreen() manages it -->
+      <button type="button" class="btn-exit" id="btn-exit" hidden
+              aria-label="End this run and see your score">
+        End run
+      </button>
+    </div>
+  </div>
+
+  <div class="card-track-wrapper" id="card-track-wrapper">
+    <p class="game-question" id="question"></p>
+    <p class="game-basis" id="basis-note"></p>
+
+    <div class="card-track" id="card-track">
+      <article class="card revealed" id="card-left" aria-label="Known item">
+        <div class="card-color-bar"></div>
+        <div class="card-emoji"></div>
+        <div class="card-body">
+          <div class="card-title"></div>
+          <div class="card-sub"></div>
+        </div>
+        <div class="card-footer">
+          <div class="card-impact"><span class="card-value"></span> <span class="card-impact-unit">litres</span></div>
+          <div class="card-cat-label"></div>
+        </div>
+      </article>
+
+      <p class="versus" aria-hidden="true">vs</p>
+
+      <article class="card card-mystery" id="card-right" aria-label="Item to guess">
+        <div class="card-color-bar"></div>
+        <div class="card-emoji"></div>
+        <div class="card-body">
+          <div class="card-title"></div>
+          <div class="card-sub"></div>
+        </div>
+        <div class="card-footer">
+          <div class="card-impact"><span class="card-value">?</span> <span class="card-impact-unit">litres</span></div>
+          <div class="card-cat-label"></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="card-detail" id="verdict" hidden>
+      <p class="card-fact-title" id="verdict-title"></p>
+      <p class="card-fact-text" id="verdict-line"></p>
+      <p class="card-fact-comment" id="verdict-fact"></p>
+    </div>
+  </div>
+
+  <div class="game-footer">
+    <button class="btn-submit" id="btn-less">
+      <span class="btn-word">Less</span>
+      <span class="btn-hint">left arrow</span>
+    </button>
+    <button class="btn-submit" id="btn-more">
+      <span class="btn-word">More</span>
+      <span class="btn-hint">right arrow</span>
+    </button>
+    <button class="btn-submit next" id="btn-next" hidden>Next</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     SCREEN 3 — SCORE
+══════════════════════════════════════════════════════ -->
+<div id="screen-score" class="screen">
+  <div class="score-top">
+    <p class="score-label" id="score-label">Your score</p>
+    <div class="score-number pop-in" id="end-points">0</div>
+    <p class="score-max" id="score-max">pts this round</p>
+    <p class="score-message" id="score-message">Nice one!</p>
+    <p class="score-sub" id="end-lead"></p>
+    <div class="score-pills">
+      <span class="score-pill highlight" id="score-pill-streak"></span>
+      <span class="score-pill" id="score-pill-best"></span>
+      <span class="score-pill" id="score-pill-bonus"></span>
+    </div>
+  </div>
+
+  <div class="score-body">
+    <div class="panel">
+      <p class="panel-title">From what you just saw</p>
+      <ul class="fact-list" id="end-facts"></ul>
+    </div>
+
+    <div class="panel">
+      <p class="panel-title" id="explainer-title">Green, blue and grey water</p>
+      <p class="panel-intro" id="explainer-intro"></p>
+      <dl class="explainer" id="explainer-list"></dl>
+    </div>
+
+    <div class="panel panel-caveat">
+      <p class="panel-title">One thing to keep in perspective</p>
+      <p>
+        Farming uses somewhere between 70 and 87 per cent of the fresh water people consume,
+        depending on whether you count what is withdrawn or what is used up. Everything you do at
+        home sits inside the small remainder. That is why the list above starts with a food choice
+        rather than a shorter shower.
+      </p>
+      <p>
+        It does not make your choices pointless. It does mean water is mostly a systems problem:
+        what gets grown, where it gets grown, and who is allowed to pump. Shorter showers will not
+        fix that on their own, and no game should pretend otherwise.
+      </p>
+      <p class="panel-intro">
+        Every figure here is a global average with real uncertainty behind it. A few are disputed
+        between sources. <code>water-cards.json</code> records which ones, and why.
+      </p>
+      <p>
+        <a class="wiki-link" href="https://wiki.the-uptake.com" target="_blank" rel="noopener">
+          Read the longer version on the wiki
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Below the reading, not above it: the score first, then what it meant,
+       then the invitation to do something about it. -->
+  <div class="score-bottom">
+    <button class="btn-action" id="btn-action">Take further action</button>
+    <button class="btn-finish" id="end-replay" hidden>Play again</button>
+    <button class="btn-finish" id="btn-finish">Finish</button>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     SCREEN 4 — ACTIONS
+     The same pledge flow the Carbon Challenge uses, down to the class names, so
+     a water pledge lands in the same places a carbon one does.
+══════════════════════════════════════════════════════ -->
+<div id="screen-action" class="screen">
+  <div class="action-header">
+    <p class="action-header-title">Take some action</p>
+    <p class="action-header-sub" id="action-header-sub">Pick what you can commit to. Earn extra points.</p>
+  </div>
+  <div class="action-body" id="action-body">
+    <p class="action-intro" id="action-intro-text">
+      Biggest lever first. The order matters more than the list: the food choices at
+      the top save far more water than the tap and shower habits below them.
+    </p>
+  </div>
+  <div class="action-footer">
+    <button class="btn-commit" id="btn-commit" disabled>
+      Commit &amp; go to my dashboard
+    </button>
+    <button class="btn-action-back" id="btn-action-back">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Back to my score
+    </button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     REALITY CHECK — once a run, after the third correct answer
+══════════════════════════════════════════════════════ -->
+<div class="reality" id="reality" hidden role="dialog" aria-modal="true" aria-labelledby="reality-big">
+  <div class="reality-card">
+    <p class="reality-eyebrow">Reality check</p>
+    <p class="reality-lead" id="reality-lead"></p>
+    <p class="reality-big" id="reality-big"></p>
+    <p class="reality-sub" id="reality-sub"></p>
+    <p class="reality-streak" id="reality-streak"></p>
+    <button class="btn-play" id="reality-btn">Keep going</button>
+  </div>
+</div>
+
+<p class="sr-only" id="live" aria-live="polite" role="status"></p>
+
+<!--
+  The same dataset as water-cards.json, inlined so that opening this file
+  straight from disk works. Chrome blocks fetch() on file:// URLs. If you edit
+  the JSON file, refresh this block:
+
+    python3 - <<'PY'
+    import re
+    d = open('water-cards.json').read().rstrip()
+    h = open('environmentle-water-challenge.html').read()
+    new, n = re.subn(r'(?s)(<script id="water-data" type="application/json">\n).*?(\n</script>)',
+                     lambda m: m.group(1) + d + m.group(2), h)
+    assert n == 1
+    open('environmentle-water-challenge.html', 'w').write(new)
+    PY
+-->
+<script id="water-data" type="application/json">
+{
+  "meta": {
+    "title": "Water Challenge, game dataset",
+    "version": "1.0",
+    "compiled": "2026-08-06",
+    "basis": "Global averages unless stated otherwise. Total water footprint = green + blue + grey.",
+    "units_note": "impact_unit is one of 'L/kg', 'L/L', 'L per unit'. When 'L per unit', unit_detail states exactly what the unit is. Never compare an L/kg row directly with an L per unit row without converting.",
+    "research_caveat": "In this environment direct page fetching (WebFetch/curl) was blocked for every domain, including waterfootprint.org, hess.copernicus.org and usgs.gov. All verification was done through web search result summaries, not by opening the primary PDFs. Confidence ratings reflect that: 'high' = the exact figure was returned verbatim in search results and matches the canonical Water Footprint Network value; 'medium' = corroborated approximately or by a single source, or sources disagree; 'low' = not confirmed online, relying on recall.",
+    "primary_sources": [
+      {
+        "id": "MH2011",
+        "citation": "Mekonnen & Hoekstra 2010/2011, 'The green, blue and grey water footprint of crops and derived crop products', Value of Water Research Report No. 47, UNESCO-IHE; peer-reviewed as Hydrol. Earth Syst. Sci. 15: 1577-1600",
+        "url": "https://hess.copernicus.org/articles/15/1577/2011/"
+      },
+      {
+        "id": "MH2012",
+        "citation": "Mekonnen & Hoekstra 2010/2012, 'The green, blue and grey water footprint of farm animals and animal products', Value of Water Research Report No. 48, UNESCO-IHE; peer-reviewed as Ecosystems 15: 401-415",
+        "url": "https://link.springer.com/article/10.1007/s10021-011-9517-8"
+      },
+      {
+        "id": "WFN-PG",
+        "citation": "Water Footprint Network, Product Gallery",
+        "url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/"
+      }
+    ],
+    "derived_from": "water-data.json v1.0, compiled 2026-08-06, 69 rows, all of them carried over here",
+    "pools": {
+      "per-kg": "Foods and goods sold by weight. Every card reads per kg.",
+      "per-unit": "One of the thing: one egg, one cup, one shower, one flush, one wash cycle, one pair of jeans.",
+      "per-litre": "Drinks priced by volume. Reference only, not played, see excluded_reason on each row."
+    },
+    "units_rule": "A round only ever pairs two items that share the same basis and the same pool. Per-kg is never compared with per-unit, and never with per-litre. Every card states its unit on screen.",
+    "near_tie_threshold": 0.1,
+    "near_tie_rule": "If two items are within 10% of each other the pairing is dropped and another is drawn, because a near-tie is not a fair question.",
+    "field_note": "Field names follow cards.csv (the Carbon Challenge dataset): title, sub, category, emoji, impact, comment. `impact` is litres of fresh water. Unlike carbon, water figures come on three different bases, so every card also carries `basis` and `pool` and the game only ever pairs two cards from the same pool. `in_play: false` marks reference-only rows."
+  },
+  "explainer": {
+    "title": "Green, blue and grey water",
+    "intro": "A water footprint adds up three different things. They are not interchangeable.",
+    "green": "Green water is rain that a plant drinks straight out of the soil. It is free, local, and usually the biggest part of a food's footprint.",
+    "blue": "Blue water is the water we pump or divert from rivers, lakes and groundwater to irrigate crops or run factories. This is the part that can actually drain a river.",
+    "grey": "Grey water is not water used but water dirtied: the amount of clean water it would take to dilute the fertiliser and other pollution from making something back to a safe level."
+  },
+  "yardsticks": [
+    {
+      "title": "Household water use per person per day (USA)",
+      "plural": "days of home water use in the USA"
+    },
+    {
+      "title": "Household water use per person per day (Europe)",
+      "plural": "days of home water use in Europe"
+    },
+    {
+      "title": "Bath",
+      "plural": "full baths"
+    },
+    {
+      "title": "Shower (typical, 8 minutes)",
+      "plural": "8-minute showers"
+    },
+    {
+      "title": "Washing machine cycle",
+      "plural": "washing machine cycles"
+    },
+    {
+      "title": "Brushing teeth with the tap running",
+      "plural": "tooth-brushings with the tap left running"
+    },
+    {
+      "title": "Dishwasher cycle",
+      "plural": "dishwasher cycles"
+    },
+    {
+      "title": "Toilet flush (modern dual-flush, full)",
+      "plural": "flushes of a modern toilet"
+    }
+  ],
+  "cards": [
+    {
+      "title": "Beef",
+      "short_title": "Beef",
+      "sub": "1 kg of beef",
+      "category": "ANIMAL FOOD",
+      "category_key": "food-animal",
+      "emoji": "🥩",
+      "impact": 15415,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Only about 1% is water the cow drinks; almost all of it grows the feed.",
+      "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "high"
+    },
+    {
+      "title": "Lamb (sheep meat)",
+      "short_title": "Lamb",
+      "sub": "1 kg of lamb",
+      "category": "ANIMAL FOOD",
+      "category_key": "food-animal",
+      "emoji": "🐑",
+      "impact": 10412,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Sheep drink far less than cattle, yet lamb still ranks second-thirstiest of the common meats.",
+      "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "medium"
+    },
+    {
+      "title": "Pork",
+      "short_title": "Pork",
+      "sub": "1 kg of pork",
+      "category": "ANIMAL FOOD",
+      "category_key": "food-animal",
+      "emoji": "🥓",
+      "impact": 5988,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Pigs convert feed to meat faster than cattle, which cuts pork's water bill by about 60%.",
+      "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "high"
+    },
+    {
+      "title": "Chicken",
+      "short_title": "Chicken",
+      "sub": "1 kg of chicken",
+      "category": "ANIMAL FOOD",
+      "category_key": "food-animal",
+      "emoji": "🍗",
+      "impact": 4325,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Chicken is the thriftiest common meat, roughly a quarter of beef's water per kilogram.",
+      "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "high"
+    },
+    {
+      "title": "Eggs",
+      "short_title": "Eggs",
+      "sub": "1 kg of eggs",
+      "category": "ANIMAL FOOD",
+      "category_key": "food-animal",
+      "emoji": "🥚",
+      "impact": 3265,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "A kilo of eggs costs less water than a kilo of chicken meat from the very same bird.",
+      "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "high"
+    },
+    {
+      "title": "One egg",
+      "short_title": "One egg",
+      "sub": "one egg",
+      "category": "ANIMAL FOOD",
+      "category_key": "food-animal",
+      "emoji": "🥚",
+      "impact": 196,
+      "impact_unit": "L per unit",
+      "unit_label": "per egg",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "One egg hides about 196 litres, more than a bath and a half.",
+      "source": "Derived from Mekonnen & Hoekstra 2012 (3,265 L/kg x 0.06 kg)",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "high",
+      "unit_detail": "per one 60 g egg"
+    },
+    {
+      "title": "Butter",
+      "short_title": "Butter",
+      "sub": "1 kg of butter",
+      "category": "ANIMAL FOOD",
+      "category_key": "food-animal",
+      "emoji": "🧈",
+      "impact": 5553,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "It takes roughly the milk of 18 litres to make one kilo of butter, hence the high figure.",
+      "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "medium"
+    },
+    {
+      "title": "Cheese",
+      "short_title": "Cheese",
+      "sub": "1 kg of cheese",
+      "category": "ANIMAL FOOD",
+      "category_key": "food-animal",
+      "emoji": "🧀",
+      "impact": 3178,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Cheese concentrates milk about tenfold, so its water footprint triples milk's per kilogram.",
+      "note": "Sources disagree: WFN gives 3,178 L/kg; some compilations quote 5,000-5,990 L/kg depending on cheese type and milk-to-cheese ratio.",
+      "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "medium"
+    },
+    {
+      "title": "Milk",
+      "short_title": "Milk",
+      "sub": "1 litre of milk",
+      "category": "ANIMAL FOOD",
+      "category_key": "food-animal",
+      "emoji": "🥛",
+      "impact": 1020,
+      "impact_unit": "L/L",
+      "unit_label": "per litre",
+      "basis": "per-litre",
+      "pool": "per-litre",
+      "in_play": false,
+      "excluded_reason": "Sold by volume, so it sits on a per-litre basis and cannot share a round with per-kg or per-unit items. Only four items share that basis, too few for a fair pool, so the per-litre rows are reference only. The 250 ml glass of milk carries the same figure into play.",
+      "comment": "Every litre of milk in the fridge represents about a thousand litres out in the fields.",
+      "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "high"
+    },
+    {
+      "title": "Glass of milk",
+      "short_title": "A glass of milk",
+      "sub": "one glass of milk",
+      "category": "DRINK",
+      "category_key": "drink",
+      "emoji": "🥛",
+      "impact": 255,
+      "impact_unit": "L per unit",
+      "unit_label": "per 250 ml glass",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "A single glass of milk carries more hidden water than three full baths.",
+      "source": "Derived from Mekonnen & Hoekstra 2012 (1,020 L/L x 0.25 L)",
+      "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
+      "confidence": "high",
+      "unit_detail": "per 250 ml glass"
+    },
+    {
+      "title": "Chocolate",
+      "short_title": "Chocolate",
+      "sub": "1 kg of chocolate",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍫",
+      "impact": 17196,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Kilo for kilo, chocolate is thirstier than beef, cocoa trees are the reason.",
+      "source": "Water Footprint Network Product Gallery (from Mekonnen & Hoekstra 2011)",
+      "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
+      "confidence": "high"
+    },
+    {
+      "title": "Cocoa beans",
+      "short_title": "Cocoa beans",
+      "sub": "1 kg of cocoa beans",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🫘",
+      "impact": 19928,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Cocoa has the largest water footprint of any major crop measured by the Water Footprint Network.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Coffee (roasted beans)",
+      "short_title": "Coffee beans",
+      "sub": "1 kg of roasted coffee",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "☕",
+      "impact": 18900,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Roasting drives the number up: green beans are 15,897 L/kg, roasted ones nearly 19,000.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (18,925 L/kg roasted; 15,897 L/kg green)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Coffee (one cup)",
+      "short_title": "A cup of coffee",
+      "sub": "one cup of coffee",
+      "category": "DRINK",
+      "category_key": "drink",
+      "emoji": "☕",
+      "impact": 132,
+      "impact_unit": "L per unit",
+      "unit_label": "per 125 ml cup",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "One small cup of coffee took 132 litres to reach you, about 1,000 times its own volume.",
+      "source": "Chapagain & Hoekstra 2007, Ecological Economics; WFN",
+      "source_url": "https://ayhoekstra.nl/pubs/Chapagain-Hoekstra-2007.pdf",
+      "confidence": "high",
+      "unit_detail": "per 125 ml cup (about 7 g of roasted coffee)"
+    },
+    {
+      "title": "Tea (dried leaves)",
+      "short_title": "Tea leaves",
+      "sub": "1 kg of dried tea",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍵",
+      "impact": 8856,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Tea leaves need less than half the water of coffee beans, and you use fewer grams per cup.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Tea (one cup)",
+      "short_title": "A cup of tea",
+      "sub": "one cup of tea",
+      "category": "DRINK",
+      "category_key": "drink",
+      "emoji": "🍵",
+      "impact": 27,
+      "impact_unit": "L per unit",
+      "unit_label": "per 250 ml cup",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Swapping a coffee for a tea saves about 105 litres, roughly a bath and a bit.",
+      "source": "Chapagain & Hoekstra 2007, Ecological Economics; WFN",
+      "source_url": "https://ayhoekstra.nl/pubs/Chapagain-Hoekstra-2007.pdf",
+      "confidence": "high",
+      "unit_detail": "per 250 ml cup (about 3 g of dried tea)"
+    },
+    {
+      "title": "Rice (milled, white)",
+      "short_title": "White rice",
+      "sub": "1 kg of white rice",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍚",
+      "impact": 2497,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Rice is the single biggest user of irrigation water on Earth, ahead of wheat and cotton.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (paddy rice 1,673 L/kg)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Wheat",
+      "short_title": "Wheat",
+      "sub": "1 kg of wheat",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🌾",
+      "impact": 1827,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "About 70% of wheat's water is rain the plant drinks straight from the soil, not irrigation.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Bread",
+      "short_title": "Bread",
+      "sub": "1 kg of bread",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍞",
+      "impact": 1608,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "A standard 800 g loaf carries around 1,290 litres, mostly rain that fell on a wheat field.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (derived wheat products)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Maize (corn)",
+      "short_title": "Maize",
+      "sub": "1 kg of maize",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🌽",
+      "impact": 1222,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Maize is the most efficient major cereal per kilogram, beating both wheat and rice.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Potatoes",
+      "short_title": "Potatoes",
+      "sub": "1 kg of potatoes",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🥔",
+      "impact": 287,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Potatoes are about 80% water themselves, and one of the thriftiest staples to grow.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Pasta (dry)",
+      "short_title": "Dry pasta",
+      "sub": "1 kg of dry pasta",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍝",
+      "impact": 1849,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Dry pasta costs slightly more water than the wheat it came from, because drying loses mass.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (derived crop products)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Soybeans",
+      "short_title": "Soybeans",
+      "sub": "1 kg of soybeans",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🫛",
+      "impact": 2145,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Most soy never reaches a plate. It is grown to feed livestock, not people.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Tofu",
+      "short_title": "Tofu",
+      "sub": "1 kg of tofu",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🧊",
+      "impact": 2523,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Tofu needs roughly a sixth of beef's water for the same weight of protein-rich food.",
+      "source": "Water Footprint Network Product Gallery (from Mekonnen & Hoekstra 2011)",
+      "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
+      "confidence": "medium"
+    },
+    {
+      "title": "Lentils",
+      "short_title": "Lentils",
+      "sub": "1 kg of lentils",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🫘",
+      "impact": 5874,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Lentils look thirsty per kilogram, but they are sold dry. Cooked, they roughly triple in weight.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Almonds (shelled)",
+      "short_title": "Almonds",
+      "sub": "1 kg of shelled almonds",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🌰",
+      "impact": 16095,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Shelling doubles the figure: half an almond's harvested weight is shell you throw away.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (in-shell about 8,050 L/kg)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Walnuts (shelled)",
+      "short_title": "Walnuts",
+      "sub": "1 kg of shelled walnuts",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🌰",
+      "impact": 9280,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Walnuts come in at roughly half of almonds. Nuts vary far more than people expect.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (in-shell about 4,920 L/kg)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "medium"
+    },
+    {
+      "title": "Peanuts (groundnuts, in shell)",
+      "short_title": "Peanuts",
+      "sub": "1 kg of peanuts",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🥜",
+      "impact": 2782,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Peanuts are legumes, not nuts, and they drink about a sixth of what almonds do.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "low"
+    },
+    {
+      "title": "Apples",
+      "short_title": "Apples",
+      "sub": "1 kg of apples",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍎",
+      "impact": 822,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Apple trees are perennial, so their water use is spread over decades of harvests.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "One apple",
+      "short_title": "One apple",
+      "sub": "one apple",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍎",
+      "impact": 125,
+      "impact_unit": "L per unit",
+      "unit_label": "per apple",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "One apple, about 125 litres, roughly one and a half baths for a piece of fruit.",
+      "source": "Derived from Mekonnen & Hoekstra 2011 (822 L/kg x 0.15 kg)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high",
+      "unit_detail": "per one 150 g apple"
+    },
+    {
+      "title": "Bananas",
+      "short_title": "Bananas",
+      "sub": "1 kg of bananas",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍌",
+      "impact": 790,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Bananas grow in the wet tropics, so almost all their water is rain rather than irrigation.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Oranges",
+      "short_title": "Oranges",
+      "sub": "1 kg of oranges",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍊",
+      "impact": 560,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Eating the orange beats drinking it: juice needs several fruits per glass.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Orange juice",
+      "short_title": "Orange juice",
+      "sub": "1 litre of orange juice",
+      "category": "DRINK",
+      "category_key": "drink",
+      "emoji": "🧃",
+      "impact": 1000,
+      "impact_unit": "L/L",
+      "unit_label": "per litre",
+      "basis": "per-litre",
+      "pool": "per-litre",
+      "in_play": false,
+      "excluded_reason": "Sold by volume, so it sits on a per-litre basis and cannot share a round with per-kg or per-unit items. Only four items share that basis, too few for a fair pool, so the per-litre rows are reference only.",
+      "comment": "A 200 ml glass of orange juice hides about 200 litres, juicing concentrates the footprint.",
+      "source": "Hoekstra 2008, 'The water footprint of food', WFN",
+      "source_url": "https://www.waterfootprint.org/resources/Hoekstra-2008-WaterfootprintFood.pdf",
+      "confidence": "medium"
+    },
+    {
+      "title": "Tomatoes",
+      "short_title": "Tomatoes",
+      "sub": "1 kg of tomatoes",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍅",
+      "impact": 214,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Tomatoes are one of the lightest-footprint foods there is, about a bath and a half per kilo.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Lettuce",
+      "short_title": "Lettuce",
+      "sub": "1 kg of lettuce",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🥬",
+      "impact": 237,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "A whole kilo of lettuce costs less water than one egg.",
+      "note": "Older Chapagain & Hoekstra (2004) compilations list lettuce at about 130 L/kg.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "medium"
+    },
+    {
+      "title": "Cabbage",
+      "short_title": "Cabbage",
+      "sub": "1 kg of cabbage",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🥬",
+      "impact": 280,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Cabbage stores well for months, so almost none of its water is wasted on spoilage.",
+      "note": "Older WFN compilations list cabbage at about 200 L/kg.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "medium"
+    },
+    {
+      "title": "Cucumber",
+      "short_title": "Cucumber",
+      "sub": "1 kg of cucumber",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🥒",
+      "impact": 353,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "A cucumber is about 96% water, yet takes only around 350 litres per kilo to grow.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "medium"
+    },
+    {
+      "title": "Avocado",
+      "short_title": "Avocado",
+      "sub": "1 kg of avocado",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🥑",
+      "impact": 1981,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "One 200 g avocado is about 400 litres, nearly ten times a tomato of the same weight.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Olives",
+      "short_title": "Olives",
+      "sub": "1 kg of olives",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🫒",
+      "impact": 3025,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Olive trees survive on very little rain, but it takes about five kilos of olives per litre of oil.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "low"
+    },
+    {
+      "title": "Olive oil",
+      "short_title": "Olive oil",
+      "sub": "1 kg of olive oil",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🫒",
+      "impact": 14431,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Olive oil is the thirstiest common cooking oil, roughly triple palm oil per kilogram.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "high"
+    },
+    {
+      "title": "Palm oil",
+      "short_title": "Palm oil",
+      "sub": "1 kg of palm oil",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🌴",
+      "impact": 4971,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Oil palms yield more oil per hectare than any other crop, which keeps their water figure low.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "medium"
+    },
+    {
+      "title": "Sugar cane",
+      "short_title": "Sugar cane",
+      "sub": "1 kg of sugar cane",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🎋",
+      "impact": 210,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Raw cane looks cheap in water terms, but only about a tenth of it becomes sugar.",
+      "source": "Gerbens-Leenes & Hoekstra 2009, WFN Report 38 (209 m3/tonne)",
+      "source_url": "https://www.waterfootprint.org/resources/Report38-WaterFootprint-sweeteners-ethanol.pdf",
+      "confidence": "high"
+    },
+    {
+      "title": "Sugar beet",
+      "short_title": "Sugar beet",
+      "sub": "1 kg of sugar beet",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍠",
+      "impact": 132,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Beet grows in cool, rainy places, so it needs about a third less water than cane.",
+      "source": "Gerbens-Leenes & Hoekstra 2009, WFN Report 38 (133 m3/tonne)",
+      "source_url": "https://www.waterfootprint.org/resources/Report38-WaterFootprint-sweeteners-ethanol.pdf",
+      "confidence": "high"
+    },
+    {
+      "title": "Refined sugar (from cane)",
+      "short_title": "Refined sugar",
+      "sub": "1 kg of refined sugar",
+      "category": "PLANT FOOD",
+      "category_key": "food-plant",
+      "emoji": "🍬",
+      "impact": 1782,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "A single teaspoon of sugar carries roughly seven litres of hidden water.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (derived crop products)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "low"
+    },
+    {
+      "title": "Beer",
+      "short_title": "Beer",
+      "sub": "1 litre of beer",
+      "category": "DRINK",
+      "category_key": "drink",
+      "emoji": "🍺",
+      "impact": 298,
+      "impact_unit": "L/L",
+      "unit_label": "per litre",
+      "basis": "per-litre",
+      "pool": "per-litre",
+      "in_play": false,
+      "excluded_reason": "Sold by volume, so it sits on a per-litre basis and cannot share a round with per-kg or per-unit items. Only four items share that basis, too few for a fair pool, so the per-litre rows are reference only. The 250 ml glass of beer carries the same figure into play.",
+      "comment": "Over 90% of beer's footprint is the barley field, not the brewery.",
+      "source": "Water Footprint Network (from Mekonnen & Hoekstra 2011, barley products)",
+      "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
+      "confidence": "high"
+    },
+    {
+      "title": "Beer (one glass)",
+      "short_title": "A glass of beer",
+      "sub": "one glass of beer",
+      "category": "DRINK",
+      "category_key": "drink",
+      "emoji": "🍺",
+      "impact": 74,
+      "impact_unit": "L per unit",
+      "unit_label": "per 250 ml glass",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "One glass of beer equals about 300 glasses of water once you count the barley.",
+      "source": "Derived from WFN beer figure (298 L/L x 0.25 L)",
+      "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
+      "confidence": "high",
+      "unit_detail": "per 250 ml glass"
+    },
+    {
+      "title": "Wine",
+      "short_title": "Wine",
+      "sub": "1 litre of wine",
+      "category": "DRINK",
+      "category_key": "drink",
+      "emoji": "🍷",
+      "impact": 869,
+      "impact_unit": "L/L",
+      "unit_label": "per litre",
+      "basis": "per-litre",
+      "pool": "per-litre",
+      "in_play": false,
+      "excluded_reason": "Sold by volume, so it sits on a per-litre basis and cannot share a round with per-kg or per-unit items. Only four items share that basis, too few for a fair pool, so the per-litre rows are reference only. The 125 ml glass of wine carries the same figure into play.",
+      "comment": "Wine costs roughly three times beer per litre, because grapes give less juice per plant.",
+      "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (wine grapes 869 m3/tonne)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "medium"
+    },
+    {
+      "title": "Wine (one glass)",
+      "short_title": "A glass of wine",
+      "sub": "one glass of wine",
+      "category": "DRINK",
+      "category_key": "drink",
+      "emoji": "🍷",
+      "impact": 109,
+      "impact_unit": "L per unit",
+      "unit_label": "per 125 ml glass",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "A small glass of wine hides more water than a full bath.",
+      "note": "Older Chapagain & Hoekstra (2004) figures put a 125 ml glass at about 120 litres.",
+      "source": "Derived from WFN wine figure (869 L/L x 0.125 L)",
+      "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
+      "confidence": "medium",
+      "unit_detail": "per 125 ml glass"
+    },
+    {
+      "title": "Cotton (lint)",
+      "short_title": "Cotton fabric",
+      "sub": "1 kg of cotton fabric",
+      "category": "GOODS",
+      "category_key": "goods",
+      "emoji": "🧵",
+      "impact": 10000,
+      "impact_unit": "L/kg",
+      "unit_label": "per kg",
+      "basis": "per-kg",
+      "pool": "per-kg",
+      "in_play": true,
+      "comment": "Cotton is the thirstiest non-food crop, and it grows mostly in already-dry countries.",
+      "note": "Seed cotton (unginned) is roughly 3,600 L/kg; the 10,000 figure is for processed lint/fabric.",
+      "source": "Chapagain, Hoekstra et al. 2006, WFN Report 18 (cotton consumption)",
+      "source_url": "https://www.waterfootprint.org/resources/Report18.pdf",
+      "confidence": "medium"
+    },
+    {
+      "title": "Cotton t-shirt",
+      "short_title": "A cotton t-shirt",
+      "sub": "one cotton t-shirt",
+      "category": "GOODS",
+      "category_key": "goods",
+      "emoji": "👕",
+      "impact": 2495,
+      "impact_unit": "L per unit",
+      "unit_label": "per t-shirt",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "One t-shirt is about 2,500 litres, roughly what one person drinks in three years.",
+      "source": "Water Footprint Network / Chapagain et al. 2006",
+      "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
+      "confidence": "high",
+      "unit_detail": "per one 250 g cotton t-shirt"
+    },
+    {
+      "title": "Pair of jeans",
+      "short_title": "A pair of jeans",
+      "sub": "one pair of jeans",
+      "category": "GOODS",
+      "category_key": "goods",
+      "emoji": "👖",
+      "impact": 8000,
+      "impact_unit": "L per unit",
+      "unit_label": "per pair",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Jeans cost about 8,000 litres, and most of it fell as rain on a cotton field.",
+      "source": "Water Footprint Network / Chapagain et al. 2006",
+      "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
+      "confidence": "high",
+      "unit_detail": "per one 800 g pair of cotton jeans"
+    },
+    {
+      "title": "Pair of leather shoes",
+      "short_title": "Leather shoes",
+      "sub": "one pair of leather shoes",
+      "category": "GOODS",
+      "category_key": "goods",
+      "emoji": "👞",
+      "impact": 8000,
+      "impact_unit": "L per unit",
+      "unit_label": "per pair",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Leather shoes inherit the cow's footprint. The tanning itself is a tiny share.",
+      "note": "Estimates vary widely: 8,000 L/pair is the commonly cited WFN figure, some sources quote 14,000-16,600 L/pair depending on leather weight allocated.",
+      "source": "Water Footprint Network (bovine leather about 17,100 L/kg)",
+      "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
+      "confidence": "medium",
+      "unit_detail": "per one pair of bovine-leather shoes"
+    },
+    {
+      "title": "Sheet of A4 paper",
+      "short_title": "A sheet of A4 paper",
+      "sub": "one sheet of A4 paper",
+      "category": "GOODS",
+      "category_key": "goods",
+      "emoji": "📄",
+      "impact": 10,
+      "impact_unit": "L per unit",
+      "unit_label": "per sheet",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Most of a sheet's water is not the mill. It is rain the tree drank while growing.",
+      "source": "Van Oel & Hoekstra 2010, WFN Report 46 (300-2,600 m3/tonne, about 2-13 L per A4 sheet)",
+      "source_url": "https://waterfootprint.org/resources/Report46-WaterFootprintPaper.pdf",
+      "confidence": "medium",
+      "unit_detail": "per one A4 sheet of 80 gsm printing paper"
+    },
+    {
+      "title": "Smartphone",
+      "short_title": "A smartphone",
+      "sub": "one smartphone",
+      "category": "GOODS",
+      "category_key": "goods",
+      "emoji": "📱",
+      "impact": 12760,
+      "impact_unit": "L per unit",
+      "unit_label": "per phone",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Chip fabs rinse silicon wafers in ultra-pure water hundreds of times per device.",
+      "source": "Friends of the Earth 'Mind Your Step' report; commonly quoted 12,000-13,000 L",
+      "source_url": "https://www.twosides.info/wp-content/uploads/2018/05/mind-your-step-report-76803.pdf",
+      "confidence": "medium",
+      "unit_detail": "per one smartphone, whole manufacturing chain"
+    },
+    {
+      "title": "Car",
+      "short_title": "A car",
+      "sub": "one car",
+      "category": "GOODS",
+      "category_key": "goods",
+      "emoji": "🚗",
+      "impact": 65000,
+      "impact_unit": "L per unit",
+      "unit_label": "per car",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Over 95% of a car's water is spent before you ever turn the key.",
+      "note": "Older popular figures of 400,000 L per car come from different, broader virtual-water accounting and are not supported by the peer-reviewed LCA.",
+      "source": "Berger et al. 2012, Environ. Sci. Technol., 'Water Footprint of European Cars'",
+      "source_url": "https://pubs.acs.org/doi/10.1021/es2040043",
+      "confidence": "medium",
+      "unit_detail": "per one mid-size car, production phase (range 52,000-83,000 L)"
+    },
+    {
+      "title": "Shower (per minute)",
+      "short_title": "A shower, per minute",
+      "sub": "one minute in the shower",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🚿",
+      "impact": 9,
+      "impact_unit": "L per unit",
+      "unit_label": "per minute",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": false,
+      "excluded_reason": "A flow rate rather than a single act, and the 8-minute shower row already represents showering in the per-unit pool. Kept here because the reality checks and the actions list both use the 9 litres a minute figure.",
+      "comment": "A power shower can hit 15 litres a minute, nearly double a standard head.",
+      "source": "Waterwise UK (average shower 8-10 L/min)",
+      "source_url": "https://waterwise.org.uk/how-to-save-water/",
+      "confidence": "high",
+      "unit_detail": "per minute, standard showerhead"
+    },
+    {
+      "title": "Shower (typical, 8 minutes)",
+      "short_title": "An 8-minute shower",
+      "sub": "one 8-minute shower",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🚿",
+      "impact": 72,
+      "impact_unit": "L per unit",
+      "unit_label": "per 8-minute shower",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Showers are the single biggest water use in a typical home, about a quarter of the total.",
+      "source": "Derived from Waterwise UK flow rate; Energy Saving Trust 'At Home with Water'",
+      "source_url": "https://database.waterwise.org.uk/wp-content/uploads/2019/09/Energy-Saving-Trust_At-Home-With-Water.pdf",
+      "confidence": "high",
+      "unit_detail": "per one 8-minute shower at 9 L/min"
+    },
+    {
+      "title": "Bath",
+      "short_title": "A full bath",
+      "sub": "one full bath",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🛁",
+      "impact": 80,
+      "impact_unit": "L per unit",
+      "unit_label": "per bath",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "A bath and a long shower are surprisingly close. The loser is whichever runs longer.",
+      "source": "Waterwise UK",
+      "source_url": "https://waterwise.org.uk/how-to-save-water/",
+      "confidence": "high",
+      "unit_detail": "per one full bath"
+    },
+    {
+      "title": "Toilet flush (old single-flush)",
+      "short_title": "An old toilet flush",
+      "sub": "one old-cistern flush",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🚽",
+      "impact": 13,
+      "impact_unit": "L per unit",
+      "unit_label": "per flush",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Old cisterns sent up to 13 litres of drinking-quality water down the drain each flush.",
+      "source": "European Commission water efficiency study; USGS Water Science School",
+      "source_url": "https://www.usgs.gov/water-science-school/science/water-qa-how-much-water-do-i-use-home-each-day",
+      "confidence": "medium",
+      "unit_detail": "per flush, pre-1990s cistern"
+    },
+    {
+      "title": "Toilet flush (modern dual-flush, full)",
+      "short_title": "A modern flush, full",
+      "sub": "one full dual-flush",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🚽",
+      "impact": 6,
+      "impact_unit": "L per unit",
+      "unit_label": "per full flush",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Dual-flush cisterns cut each flush by more than half without anyone noticing.",
+      "source": "European Commission water efficiency standards study",
+      "source_url": "https://ec.europa.eu/programmes/erasmus-plus/project-result-content/f3abca0c-bd78-42d3-8c78-c42d9dfce5ac/AQUAVET_H-P3_Background%20information%20on%20this%20topic.pdf",
+      "confidence": "high",
+      "unit_detail": "per full flush"
+    },
+    {
+      "title": "Toilet flush (modern dual-flush, half)",
+      "short_title": "A modern flush, half",
+      "sub": "one half dual-flush",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🚽",
+      "impact": 3,
+      "impact_unit": "L per unit",
+      "unit_label": "per half flush",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "The small button uses 3 litres, about one glass of milk's worth of real water.",
+      "source": "European Commission water efficiency standards study",
+      "source_url": "https://ec.europa.eu/programmes/erasmus-plus/project-result-content/f3abca0c-bd78-42d3-8c78-c42d9dfce5ac/AQUAVET_H-P3_Background%20information%20on%20this%20topic.pdf",
+      "confidence": "high",
+      "unit_detail": "per half flush"
+    },
+    {
+      "title": "Dishwasher cycle",
+      "short_title": "A dishwasher cycle",
+      "sub": "one dishwasher cycle",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🍽️",
+      "impact": 10,
+      "impact_unit": "L per unit",
+      "unit_label": "per cycle",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "A full dishwasher beats hand-washing. The tap alone runs at about 6 litres a minute.",
+      "source": "APPLiA Europe statistical report 2022-2023",
+      "source_url": "https://statreport2023.applia-europe.eu/pillar/1/average-water-consumption-of-washing-machines-and-dishwashers",
+      "confidence": "high",
+      "unit_detail": "per cycle, modern full-size machine on eco"
+    },
+    {
+      "title": "Washing machine cycle",
+      "short_title": "A washing machine cycle",
+      "sub": "one washing machine cycle",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🧺",
+      "impact": 50,
+      "impact_unit": "L per unit",
+      "unit_label": "per cycle",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Machines have quietly cut their water use by a third since the late 1990s.",
+      "source": "APPLiA Europe statistical report 2022-2023 (about 46 L/cycle in 2022, down from 65 L in the late 1990s)",
+      "source_url": "https://statreport2023.applia-europe.eu/pillar/1/average-water-consumption-of-washing-machines-and-dishwashers",
+      "confidence": "high",
+      "unit_detail": "per cycle, modern front-loading machine"
+    },
+    {
+      "title": "Brushing teeth with the tap running",
+      "short_title": "Brushing teeth, tap on",
+      "sub": "brushing your teeth with the tap running",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🪥",
+      "impact": 12,
+      "impact_unit": "L per unit",
+      "unit_label": "per 2-minute brushing",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Two minutes of running tap is 12 litres, twice what a modern toilet flush uses.",
+      "source": "Waterwise UK / Cambridge Water (tap runs at about 6 L/min)",
+      "source_url": "https://waterwise.org.uk/how-to-save-water/",
+      "confidence": "high",
+      "unit_detail": "per 2-minute brushing at 6 L/min"
+    },
+    {
+      "title": "Brushing teeth with the tap off",
+      "short_title": "Brushing teeth, tap off",
+      "sub": "brushing your teeth with the tap off",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🪥",
+      "impact": 1,
+      "impact_unit": "L per unit",
+      "unit_label": "per brushing",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Turning the tap off while brushing cuts that step by more than 90%.",
+      "source": "Waterwise UK water-saving guidance",
+      "source_url": "https://waterwise.org.uk/how-to-save-water/",
+      "confidence": "medium",
+      "unit_detail": "per brushing, wetting brush plus a glass to rinse"
+    },
+    {
+      "title": "Dripping tap (per day)",
+      "short_title": "A dripping tap",
+      "sub": "one dripping tap for a day",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "💧",
+      "impact": 15,
+      "impact_unit": "L per unit",
+      "unit_label": "per day",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "A single slow drip wastes over 5,000 litres a year, about 70 baths.",
+      "source": "USGS drip calculator; UK water utility guidance",
+      "source_url": "https://water.usgs.gov/edu/dripcalculator.html",
+      "confidence": "medium",
+      "unit_detail": "per day, one slowly dripping tap (range 3-30 L/day)"
+    },
+    {
+      "title": "Household water use per person per day (Europe)",
+      "short_title": "A day at home, Europe",
+      "sub": "one day of home water use in Europe",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🏠",
+      "impact": 124,
+      "impact_unit": "L per unit",
+      "unit_label": "per person per day",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Europeans use about 124 litres a day at home, less than one cup of coffee's hidden water.",
+      "source": "European Environment Agency / Eurostat-based estimates (range about 120-145 L)",
+      "source_url": "https://www.eea.europa.eu/en/analysis/publications/water-savings-for-a-water-resilient-europe",
+      "confidence": "medium",
+      "unit_detail": "per person per day, direct domestic use"
+    },
+    {
+      "title": "Household water use per person per day (USA)",
+      "short_title": "A day at home, USA",
+      "sub": "one day of home water use in the USA",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🏠",
+      "impact": 310,
+      "impact_unit": "L per unit",
+      "unit_label": "per person per day",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Americans use roughly two and a half times as much water at home as Europeans.",
+      "source": "US EPA WaterSense / USGS Water Science School",
+      "source_url": "https://www.usgs.gov/water-science-school/science/water-qa-how-much-water-do-i-use-home-each-day",
+      "confidence": "high",
+      "unit_detail": "per person per day, direct domestic use (82 US gallons)"
+    },
+    {
+      "title": "Minimum for basic human needs",
+      "short_title": "Basic daily needs, WHO",
+      "sub": "one person's basic daily water needs",
+      "category": "AT HOME",
+      "category_key": "household",
+      "emoji": "🚰",
+      "impact": 50,
+      "impact_unit": "L per unit",
+      "unit_label": "per person per day",
+      "basis": "per-unit",
+      "pool": "per-unit",
+      "in_play": true,
+      "comment": "Fifty litres a day covers drinking, cooking and washing, one seventh of US home use.",
+      "source": "WHO, 'How much water is needed in emergencies' (50-100 L/person/day)",
+      "source_url": "https://www.who.int/publications/i/item/WHO-technical-notes-for-emergencies",
+      "confidence": "high",
+      "unit_detail": "per person per day, WHO guidance for drinking, cooking and hygiene"
+    }
+  ],
+  "actions": [
+    {
+      "rank": 1,
+      "level": "beginner",
+      "basePoints": 250,
+      "saving": "about 115,000 L a year",
+      "action": "Swap one beef meal a week for chicken, or for beans and lentils.",
+      "number": "A 200 g beef portion is 3,083 L; the same portion of chicken is 865 L.",
+      "arithmetic": "(15,415 - 4,325) L/kg x 0.2 kg = 2,218 L saved per meal; x 52 weeks = about 115,000 L a year",
+      "framing": "Biggest single lever in the whole dataset. One meal, not your whole diet."
+    },
+    {
+      "rank": 2,
+      "level": "beginner",
+      "basePoints": 220,
+      "saving": "3,178 L per wasted kilo of cheese",
+      "action": "Eat what you buy: finish the cheese, the bread and the leftovers before they go off.",
+      "number": "A wasted 1 kg block of cheese throws away 3,178 L; a wasted 800 g loaf, 1,286 L.",
+      "arithmetic": "3,178 L/kg x 1 kg = 3,178 L; 1,608 L/kg x 0.8 kg = 1,286 L",
+      "framing": "Food you already own is the cheapest water saving available."
+    },
+    {
+      "rank": 3,
+      "level": "intermediate",
+      "basePoints": 190,
+      "saving": "10,495 L per replacement avoided",
+      "action": "Get one more year out of the clothes you own before replacing them.",
+      "number": "One t-shirt is 2,495 L and one pair of jeans is 8,000 L.",
+      "arithmetic": "2,495 + 8,000 = 10,495 L for a single shirt-and-jeans replacement avoided",
+      "framing": "One garment not bought beats months of shorter showers."
+    },
+    {
+      "rank": 4,
+      "level": "beginner",
+      "basePoints": 160,
+      "saving": "8,030 L a year",
+      "action": "Turn the tap off while you brush.",
+      "number": "12 L becomes 1 L, twice a day.",
+      "arithmetic": "(12 - 1) L x 2 x 365 = 8,030 L a year",
+      "framing": "Costs nothing, and it is about three t-shirts' worth of water a year."
+    },
+    {
+      "rank": 5,
+      "level": "beginner",
+      "basePoints": 130,
+      "saving": "6,570 L a year",
+      "action": "Take two minutes off your shower.",
+      "number": "A standard showerhead runs at 9 L a minute.",
+      "arithmetic": "9 L/min x 2 min x 365 = 6,570 L a year",
+      "framing": "Same order of magnitude as the toothbrush habit. Small, but it compounds daily."
+    },
+    {
+      "rank": 6,
+      "level": "intermediate",
+      "basePoints": 100,
+      "saving": "5,475 L a year",
+      "action": "Fix the tap that drips.",
+      "number": "A slow drip is about 15 L a day.",
+      "arithmetic": "15 L/day x 365 = 5,475 L a year, roughly 68 baths",
+      "framing": "A ten-minute job that runs in the background for the rest of the year."
+    }
+  ],
+  "comparisons": [
+    {
+      "line": "One beef burger (150 g patty) = about 32 showers.",
+      "arithmetic": "15,415 L/kg x 0.15 kg = 2,312 L; 2,312 / 72 L per 8-min shower = 32.1",
+      "relates_to": [
+        "Beef",
+        "Shower (typical, 8 minutes)"
+      ]
+    },
+    {
+      "line": "One cup of coffee = 11 tooth-brushings with the tap left running.",
+      "arithmetic": "132 L per cup / 12 L per 2-min running-tap brushing = 11.0",
+      "relates_to": [
+        "Coffee (one cup)",
+        "Brushing teeth with the tap running"
+      ]
+    },
+    {
+      "line": "One cotton t-shirt = 35 showers, or 20 days of a European's entire home water use.",
+      "arithmetic": "2,495 L / 72 L = 34.7 showers; 2,495 / 124 L per person per day = 20.1 days",
+      "relates_to": [
+        "Cotton t-shirt",
+        "Shower (typical, 8 minutes)",
+        "Household water use per person per day (Europe)"
+      ]
+    },
+    {
+      "line": "One pair of jeans = 65 days of everything one European does with water at home.",
+      "arithmetic": "8,000 L / 124 L per person per day = 64.5 days",
+      "relates_to": [
+        "Pair of jeans",
+        "Household water use per person per day (Europe)"
+      ]
+    },
+    {
+      "line": "One kilo of chocolate = 215 baths.",
+      "arithmetic": "17,196 L / 80 L per bath = 215.0",
+      "relates_to": [
+        "Chocolate",
+        "Bath"
+      ]
+    },
+    {
+      "line": "One egg = 33 flushes of a modern dual-flush toilet.",
+      "arithmetic": "196 L / 6 L per full flush = 32.7",
+      "relates_to": [
+        "One egg",
+        "Toilet flush (modern dual-flush, full)"
+      ]
+    },
+    {
+      "line": "One kilo of cheese = 64 washing-machine cycles.",
+      "arithmetic": "3,178 L / 50 L per cycle = 63.6",
+      "relates_to": [
+        "Cheese",
+        "Washing machine cycle"
+      ]
+    },
+    {
+      "line": "One kilo of beef = 50 days of an average American's home water use.",
+      "arithmetic": "15,415 L / 310 L per person per day = 49.7 days",
+      "relates_to": [
+        "Beef",
+        "Household water use per person per day (USA)"
+      ]
+    },
+    {
+      "line": "A small glass of wine = more water than a full bath.",
+      "arithmetic": "109 L per 125 ml glass vs 80 L per bath = 1.36x",
+      "relates_to": [
+        "Wine (one glass)",
+        "Bath"
+      ]
+    },
+    {
+      "line": "A whole kilo of lettuce = 3 baths; a kilo of lamb = 130 baths.",
+      "arithmetic": "237 / 80 = 2.96 baths; 10,412 / 80 = 130.2 baths",
+      "relates_to": [
+        "Lettuce",
+        "Lamb (sheep meat)",
+        "Bath"
+      ]
+    },
+    {
+      "line": "Swapping one coffee for one tea saves as much water as skipping a bath and a third.",
+      "arithmetic": "132 L - 27 L = 105 L saved; 105 / 80 L per bath = 1.31",
+      "relates_to": [
+        "Coffee (one cup)",
+        "Tea (one cup)",
+        "Bath"
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+// ══════════════════════════════════════════════════════
+// Water Challenge — higher-or-lower on hidden water.
+// Sibling of the Carbon Challenge (environmentle-sort-it-out.html):
+// same shell, same screen manager, same player/progress conventions.
+// No framework, no build step.
+// ══════════════════════════════════════════════════════
+(function () {
+  'use strict';
+
+  // ── THE ONE KNOB ────────────────────────────────────
+  // How many comparisons make up a run. Everything that depends on the run
+  // length is derived from this, so it is safe to change on its own.
+  var ROUNDS_PER_RUN = 5;
+
+  var NEAR_TIE = 0.10;        // pairings closer than this are redrawn
+  var REALITY_AT = 3;         // the single mid-run reality check, after this
+                              // many correct answers. One per run: in a run
+                              // this short, two would drown the game. It also
+                              // marks where the pool switches.
+  var RECENT_MEMORY = 10;     // cards we avoid repeating too soon
+  var MIN_UNSEEN = 8;         // below this, a pool's seen list is recycled
+  var POOL_ORDER = ['per-kg', 'per-unit'];
+
+  // ── SCORING ─────────────────────────────────────────
+  // The owner set this game's ceiling at 480. It no longer tracks the Carbon
+  // Challenge's 2100; that game keeps its own scale.
+  //   5 correct * 60 + 90 (all five) + 90 (under 45s) = 480.
+  // The three parts keep the shape they had: the correct answers carry most of
+  // the run, and the two bonuses are equal to each other and smaller.
+  var POINTS_PER_CORRECT = 60;
+  var PERFECT_BONUS = 90;
+  var TIME_BONUS_MAX = 90;
+  var TIME_BONUS_FREE = 45;   // seconds before the speed bonus starts to decay
+  var TIME_BONUS_DECAY = 3;   // points lost per second after that. Scaled with
+                              // the bonus it eats, so the taper keeps its old
+                              // shape: it empties in 30 seconds and lands on
+                              // zero at a round 75.
+  var MAX_POINTS = ROUNDS_PER_RUN * POINTS_PER_CORRECT + PERFECT_BONUS + TIME_BONUS_MAX;
+
+  var ACTIONS_PER_RUN = 4;    // of the six in the dataset, rotated between runs
+
+  var DATA = null;
+  var pools = {};             // pool name -> playable cards
+  var state = null;
+  var els = {};
+  var pairLog = [];           // every pairing this session, for verification
+
+  // Pledge screen state. Mirrors the Carbon Challenge's selectedActions set and
+  // bonusPoints counter; a plain object stands in for the Set so nothing here
+  // needs anything newer than the rest of the file uses.
+  var runActions = [];        // the actions this run offered, in dataset order
+  var selectedActions = {};   // index -> true, plus 'nothing' for the opt-out
+  var selectedCount = 0;
+  var bonusPoints = 0;
+
+  var reduceMotion = window.matchMedia
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    : false;
+
+  // ══════════════════════════════════════════════════════
+  // STORAGE — localStorage when it works, memory when it does not.
+  // Private browsing throws on both read and write in some browsers, and even
+  // touching window.localStorage can throw, so every access is wrapped. The
+  // game must never break over a disabled store; it just forgets.
+  // ══════════════════════════════════════════════════════
+  var memStore = {};
+
+  function storeGet(key) {
+    try {
+      var value = window.localStorage.getItem(key);
+      if (value !== null && value !== undefined) return value;
+    } catch (err) { /* fall through to memory */ }
+    return Object.prototype.hasOwnProperty.call(memStore, key) ? memStore[key] : null;
+  }
+
+  function storeSet(key, value) {
+    memStore[key] = value;
+    try { window.localStorage.setItem(key, value); }
+    catch (err) { /* memory only for this session */ }
+  }
+
+  // ── PLAYER KEY ──────────────────────────────────────
+  // Same convention as the Carbon Challenge: ?player= wins, then localStorage.
+  var _playerName = new URLSearchParams(location.search).get('player') ||
+                    storeGet('env_player_name') || 'guest';
+  var _nk = _playerName.toLowerCase().replace(/\s+/g, '_');
+  var BEST_KEY     = 'wc_best_streak_' + _nk;
+  var SEEN_KEY     = 'wc_seen_' + _nk;
+  var PLAYED_KEY   = 'wc_last_played_' + _nk;   // mirrors sio_last_played_<nk>
+  var SCORE_KEY    = 'wc_last_score_' + _nk;    // mirrors sio_last_score_<nk>
+  var FIRSTQ_KEY   = 'wc_first_loss_' + _nk;    // last run today died on round 1
+  var MULLIGAN_KEY = 'wc_retry_used_' + _nk;    // the one extra go has been taken
+  var ROTATE_KEY   = 'wc_rotation_' + _nk;      // which slice of the summary to show
+
+  // ══════════════════════════════════════════════════════
+  // ONCE A DAY — with a first-question mulligan
+  // Same key shape and the same YYYY-MM-DD day boundary as the Carbon
+  // Challenge, so the hub can gate both games identically. Local midnight,
+  // via toISOString on a local Date, exactly as sort-it-out does it.
+  // A missing or unreadable value always means "you may play".
+  // ══════════════════════════════════════════════════════
+  function todayStr() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function hasPlayedToday() {
+    return storeGet(PLAYED_KEY) === todayStr();
+  }
+
+  // The exception the owner asked for: go out on the very first question with
+  // nothing on the board and you get one more attempt, but only one.
+  function retryAvailable() {
+    return hasPlayedToday() &&
+      storeGet(FIRSTQ_KEY) === todayStr() &&
+      storeGet(MULLIGAN_KEY) !== todayStr();
+  }
+
+  function canPlayNow() {
+    return !hasPlayedToday() || retryAvailable();
+  }
+
+  function markPlayedToday(points, lostOnFirst) {
+    storeSet(PLAYED_KEY, todayStr());
+    storeSet(SCORE_KEY, String(points));
+    storeSet(FIRSTQ_KEY, lostOnFirst ? todayStr() : '');
+  }
+
+  // ══════════════════════════════════════════════════════
+  // DATA — tries to load water-cards.json from the server; falls back to the
+  // copy inlined above when the file is opened straight off disk.
+  // ══════════════════════════════════════════════════════
+  function readInline() {
+    var node = document.getElementById('water-data');
+    if (!node) throw new Error('Inline dataset missing');
+    return JSON.parse(node.textContent);
+  }
+
+  function loadCards() {
+    // Chrome blocks fetch() on file:// and logs a CORS error, so do not even
+    // try it there: the same JSON is inlined in the page.
+    if (window.location.protocol === 'file:') {
+      return Promise.resolve(readInline());
+    }
+    return fetch('water-cards.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .catch(function () {
+        return readInline();
+      });
+  }
+
+  // ══════════════════════════════════════════════════════
+  // SEEN ITEMS — so a second run does not replay the first
+  // Stored per player as { "per-kg": [title, ...], "per-unit": [...] }.
+  // This layer only ever *prefers* unseen cards. It can never override the
+  // pool, basis and near-tie rule: every candidate still goes through
+  // comparable() first, and every picker falls back to a valid pairing.
+  // ══════════════════════════════════════════════════════
+  var seenStore = null;
+
+  function loadSeenStore() {
+    var parsed = null;
+    try { parsed = JSON.parse(storeGet(SEEN_KEY) || 'null'); }
+    catch (err) { parsed = null; }
+    var out = {};
+    POOL_ORDER.forEach(function (pool) {
+      var list = (parsed && Array.isArray(parsed[pool])) ? parsed[pool] : [];
+      out[pool] = list.filter(function (title) { return typeof title === 'string'; });
+    });
+    return out;
+  }
+
+  function saveSeenStore() {
+    storeSet(SEEN_KEY, JSON.stringify(seenStore));
+  }
+
+  function markSeen(card) {
+    var list = seenStore[card.pool];
+    if (!list) return;
+    if (list.indexOf(card.title) === -1) list.push(card.title);
+    var run = state && state.runSeen && state.runSeen[card.pool];
+    if (run && run.indexOf(card.title) === -1) run.push(card.title);
+    saveSeenStore();
+  }
+
+  function unseenCount(pool) {
+    var list = seenStore[pool];
+    var n = 0;
+    for (var i = 0; i < pools[pool].length; i++) {
+      if (list.indexOf(pools[pool][i].title) === -1) n++;
+    }
+    return n;
+  }
+
+  // When a pool runs low, forget everything except what this run has already
+  // used. The next chain then draws from the whole pool again, in a fresh
+  // random order, without immediately repeating what is still on screen.
+  // Never deadlocks: the picks below all fall back to the full pool.
+  function recycleSeen(pool) {
+    var keep = (state && state.runSeen && state.runSeen[pool])
+      ? state.runSeen[pool].slice()
+      : [];
+    seenStore[pool] = keep;
+    saveSeenStore();
+  }
+
+  // ══════════════════════════════════════════════════════
+  // PAIRING — the one rule that must never bend
+  // ══════════════════════════════════════════════════════
+  function ratio(a, b) {
+    return Math.max(a, b) / Math.min(a, b);
+  }
+
+  function comparable(a, b) {
+    // Same pool, same basis, and far enough apart that the question is answerable.
+    return a !== b &&
+      a.pool === b.pool &&
+      a.basis === b.basis &&
+      ratio(a.impact, b.impact) >= 1 + NEAR_TIE;
+  }
+
+  function pick(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  // Three tiers of preference, one hard rule. comparable() gates every tier,
+  // so preferring an unseen card can never produce a cross-pool, cross-basis
+  // or near-tie pairing: when the preferred tiers are empty we drop back to
+  // any valid opponent rather than bending the rule.
+  function drawOpponent(card, recent, seenTitles) {
+    var all = pools[card.pool];
+    var unseen = [];
+    var fresh = [];
+    var any = [];
+    for (var i = 0; i < all.length; i++) {
+      var candidate = all[i];
+      if (!comparable(card, candidate)) continue;
+      any.push(candidate);
+      if (recent.indexOf(candidate.title) === -1) {
+        fresh.push(candidate);
+        if (seenTitles && seenTitles.indexOf(candidate.title) === -1) {
+          unseen.push(candidate);
+        }
+      }
+    }
+    if (unseen.length) return pick(unseen);
+    return pick(fresh.length ? fresh : any);
+  }
+
+  // The run is split at the reality check: one pool before it, the other
+  // after. Which pool leads is drawn per run, so two runs in a row do not
+  // open on the same kind of question. The pool never changes mid-chain, so
+  // the same-pool, same-basis rule is untouched.
+  function poolForStreak(streak, order) {
+    var ord = order || (state && state.poolOrder) || POOL_ORDER;
+    var segment = Math.min(Math.floor(streak / REALITY_AT), ord.length - 1);
+    return ord[segment];
+  }
+
+  function shuffledPoolOrder() {
+    var ord = POOL_ORDER.slice();
+    for (var i = ord.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = ord[i]; ord[i] = ord[j]; ord[j] = tmp;
+    }
+    return ord;
+  }
+
+  // Never on the last round: the run ending and a modal appearing at the same
+  // moment reads as a bug.
+  function realityDue(streak) {
+    return streak === REALITY_AT && streak < ROUNDS_PER_RUN;
+  }
+
+  function remember(card) {
+    state.recent.push(card.title);
+    while (state.recent.length > RECENT_MEMORY) state.recent.shift();
+    if (state.seen.indexOf(card) === -1) state.seen.push(card);
+    markSeen(card);
+  }
+
+  // Prefer a starting card this player has not met. Same fallback ladder as
+  // drawOpponent: unseen and not recent, then not recent, then anything.
+  function pickStarter(pool) {
+    var seenTitles = seenStore[pool];
+    var unseen = [];
+    var fresh = [];
+    for (var i = 0; i < pools[pool].length; i++) {
+      var card = pools[pool][i];
+      if (state.recent.indexOf(card.title) !== -1) continue;
+      fresh.push(card);
+      if (seenTitles.indexOf(card.title) === -1) unseen.push(card);
+    }
+    if (unseen.length) return pick(unseen);
+    return pick(fresh.length ? fresh : pools[pool]);
+  }
+
+  function startChain() {
+    var pool = poolForStreak(state.streak);
+    if (unseenCount(pool) < MIN_UNSEEN) recycleSeen(pool);
+    state.pool = pool;
+    state.left = pickStarter(pool);
+    state.right = drawOpponent(state.left, state.recent, seenStore[pool]);
+    remember(state.left);
+    remember(state.right);
+    logPair(state.left, state.right);
+  }
+
+  function advanceChain() {
+    if (poolForStreak(state.streak) !== state.pool) {
+      startChain();
+      return;
+    }
+    state.left = state.right;
+    state.right = drawOpponent(state.left, state.recent, seenStore[state.pool]);
+    remember(state.right);
+    logPair(state.left, state.right);
+  }
+
+  function logPair(left, right) {
+    pairLog.push({
+      left:  { title: left.title,  pool: left.pool,  basis: left.basis,  impact: left.impact },
+      right: { title: right.title, pool: right.pool, basis: right.basis, impact: right.impact },
+      ratio: ratio(left.impact, right.impact)
+    });
+    if (pairLog.length > 500) pairLog.shift();
+  }
+
+  // ══════════════════════════════════════════════════════
+  // REALITY CHECKS
+  // ══════════════════════════════════════════════════════
+  function realityCheck() {
+    // Convert something the player just met into household terms. Household
+    // rows are the yardstick, so they are never the subject.
+    var subject = null;
+    for (var i = state.seen.length - 1; i >= 0; i--) {
+      if (state.seen[i].category_key !== 'household') { subject = state.seen[i]; break; }
+    }
+    if (!subject) subject = state.seen[state.seen.length - 1];
+
+    var best = null;
+    for (var y = 0; y < DATA.yardsticks.length; y++) {
+      var yard = byTitle(DATA.yardsticks[y].title);
+      if (!yard || yard.title === subject.title) continue;
+      var count = subject.impact / yard.impact;
+      var candidate = { yard: yard, plural: DATA.yardsticks[y].plural, count: count };
+      if (count >= 3 && count <= 400) { best = candidate; break; }
+      if (!best || Math.abs(Math.log(count / 30)) < Math.abs(Math.log(best.count / 30))) {
+        best = candidate;
+      }
+    }
+    return {
+      subject: subject,
+      yardstick: best.yard,
+      plural: best.plural,
+      count: best.count
+    };
+  }
+
+  function byTitle(title) {
+    for (var i = 0; i < DATA.cards.length; i++) {
+      if (DATA.cards[i].title === title) return DATA.cards[i];
+    }
+    return null;
+  }
+
+  // ══════════════════════════════════════════════════════
+  // FORMAT
+  // ══════════════════════════════════════════════════════
+  function litres(value) {
+    return value.toLocaleString('en-GB');
+  }
+
+  function roughly(count) {
+    if (count >= 10) return String(Math.round(count));
+    return (Math.round(count * 10) / 10).toString();
+  }
+
+  // focus() scrolls the nearest scroll container, and the body still counts as
+  // one even with overflow:hidden — that slid the game header under the fixed
+  // back-to-hub bar. Move focus without moving the page.
+  function focusNoScroll(node) {
+    if (!node) return;
+    try { node.focus({ preventScroll: true }); }
+    catch (err) { node.focus(); }
+    if (document.body.scrollTop) document.body.scrollTop = 0;
+  }
+
+  function capitalise(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  function basisSentence(pool) {
+    if (pool === 'per-kg') return 'Both figures are for one kilogram of the product.';
+    if (pool === 'per-unit') return 'Both figures are for one of the thing, as labelled on the card.';
+    return 'Both figures share the same basis.';
+  }
+
+  function getCatClass(key) {
+    var map = {
+      'food-animal': 'cat-animal',
+      'food-plant':  'cat-plant',
+      'drink':       'cat-drink',
+      'goods':       'cat-goods',
+      'household':   'cat-home'
+    };
+    return map[key] || 'cat-plant';
+  }
+
+  // ══════════════════════════════════════════════════════
+  // RENDER
+  // ══════════════════════════════════════════════════════
+  function renderCard(node, card, revealed) {
+    node.className = 'card ' + getCatClass(card.category_key) +
+      (node.id === 'card-right' ? ' card-mystery' : '');
+    node.querySelector('.card-emoji').textContent = card.emoji;
+    node.querySelector('.card-title').textContent = card.short_title;
+    node.querySelector('.card-sub').textContent = card.unit_label;
+    node.querySelector('.card-cat-label').textContent = card.category;
+    var figure = node.querySelector('.card-value');
+    if (revealed) {
+      figure.textContent = litres(card.impact);
+      node.classList.add('revealed');
+    } else {
+      figure.textContent = '?';
+      node.classList.remove('revealed');
+    }
+  }
+
+  // "Round 3 of 5" plus a bar. The round in play is the streak so far plus
+  // one, capped so the label never overshoots the run.
+  function renderProgress() {
+    var round = Math.min(state.streak + 1, ROUNDS_PER_RUN);
+    var done = state.streak;
+    els.progressLabel.textContent = 'Round ' + round + ' of ' + ROUNDS_PER_RUN;
+    els.progressFill.style.width = Math.round((done / ROUNDS_PER_RUN) * 100) + '%';
+  }
+
+  function renderRound() {
+    stopCountUp();
+    els.streak.textContent = String(state.streak);
+    els.best.textContent = String(state.best);
+    renderProgress();
+    els.basisNote.textContent = basisSentence(state.pool);
+    els.question.textContent = 'Does ' + state.right.short_title +
+      ' need more or less water than ' + state.left.short_title + '?';
+    renderCard(els.cardLeft, state.left, true);
+    renderCard(els.cardRight, state.right, false);
+    els.verdict.hidden = true;
+    setControls('asking');
+    els.cardTrackWrapper.scrollTop = 0;
+    focusNoScroll(els.btnLess);
+  }
+
+  var countHandle = null;
+
+  function stopCountUp() {
+    if (countHandle !== null) {
+      window.cancelAnimationFrame(countHandle);
+      countHandle = null;
+    }
+  }
+
+  function countUp(node, target) {
+    stopCountUp();
+    if (reduceMotion) {
+      node.textContent = litres(target);
+      return;
+    }
+    var duration = 800;
+    var started = null;
+    function step(now) {
+      if (started === null) started = now;
+      var t = Math.min(1, (now - started) / duration);
+      var eased = 1 - Math.pow(1 - t, 3);
+      node.textContent = litres(Math.round(target * eased));
+      countHandle = t < 1 ? window.requestAnimationFrame(step) : null;
+    }
+    countHandle = window.requestAnimationFrame(step);
+  }
+
+  function setControls(phase) {
+    state.phase = phase;
+    var asking = phase === 'asking';
+    els.btnLess.hidden = !asking;
+    els.btnMore.hidden = !asking;
+    els.btnNext.hidden = asking;
+    if (!asking) {
+      els.btnNext.textContent = (phase === 'lost' || phase === 'won')
+        ? 'See how you did'
+        : 'Next';
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  // ROUNDS
+  // ══════════════════════════════════════════════════════
+  function correctChoice() {
+    return state.right.impact > state.left.impact ? 'more' : 'less';
+  }
+
+  function answer(choice) {
+    if (!state || state.phase !== 'asking') return;
+    var right = choice === correctChoice();
+
+    els.cardRight.classList.add('revealed', right ? 'correct' : 'wrong');
+    countUp(els.cardRight.querySelector('.card-value'), state.right.impact);
+
+    els.verdict.hidden = false;
+    els.verdictTitle.textContent = right ? 'Correct' : 'Not quite';
+    els.verdictTitle.className = 'card-fact-title ' + (right ? 'correct-msg' : 'wrong-msg');
+    els.verdictLine.textContent = capitalise(state.right.sub) + ' takes about ' +
+      litres(state.right.impact) + ' litres of fresh water.';
+    els.verdictFact.textContent = state.right.comment;
+
+    if (right) {
+      state.streak += 1;
+      state.best = Math.max(state.best, state.streak);
+      saveBest(state.best);
+      if (state.streak >= ROUNDS_PER_RUN) {
+        state.outcome = 'perfect';
+        setControls('won');
+      } else {
+        setControls(realityDue(state.streak) ? 'reality-due' : 'revealed');
+      }
+    } else {
+      state.outcome = 'wrong';
+      setControls('lost');
+    }
+
+    els.streak.textContent = String(state.streak);
+    els.best.textContent = String(state.best);
+    renderProgress();
+    announce((right ? 'Correct. ' : 'Not quite. ') + state.right.short_title + ', ' +
+      litres(state.right.impact) + ' litres ' + state.right.unit_label + '. ' +
+      (state.outcome === 'perfect'
+        ? 'That is all five. Perfect run.'
+        : right ? 'Round ' + state.streak + ' of ' + ROUNDS_PER_RUN + ' complete.'
+                : 'Run over. Final score ' + state.streak + ' of ' + ROUNDS_PER_RUN + '.'));
+    focusNoScroll(els.btnNext);
+    // On short screens the verdict can land under the sticky answer bar.
+    if (els.verdict.scrollIntoView) {
+      els.verdict.scrollIntoView({
+        block: 'nearest',
+        behavior: reduceMotion ? 'auto' : 'smooth'
+      });
+    }
+  }
+
+  function proceed() {
+    if (!state) return;
+    if (state.phase === 'lost' || state.phase === 'won') { showResults(); return; }
+    if (state.phase === 'reality-due') { showReality(); return; }
+    if (state.phase === 'revealed') { advanceChain(); renderRound(); }
+  }
+
+  // The explicit way out. No confirmation: whatever is on the board is kept,
+  // so an accidental tap costs nothing but the rest of the run. If the run is
+  // already over this is just a shortcut to the score screen.
+  function exitRun() {
+    if (!state || !els.screenGame.classList.contains('active')) return;
+    if (!els.reality.hidden) els.reality.hidden = true;
+    if (state.phase !== 'lost' && state.phase !== 'won') state.outcome = 'exit';
+    showResults();
+  }
+
+  // ══════════════════════════════════════════════════════
+  // SCREEN TRANSITIONS — the Carbon Challenge's manager
+  // ══════════════════════════════════════════════════════
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(function (s) {
+      if (s.classList.contains('active')) {
+        s.classList.add('exit');
+        s.classList.remove('active');
+        setTimeout(function () { s.classList.remove('exit'); }, 400);
+      }
+    });
+    // The Carbon Challenge and the quiz keep this hidden on every screen: the
+    // bottom nav belongs to the hub, and the score screen's own buttons are the
+    // way out. This game used to show it on the score screen, which put two
+    // competing sets of controls at the bottom. Matched to the others.
+    var nav = document.getElementById('game-bottom-nav');
+    if (nav) nav.style.display = 'none';
+    // Inactive screens are only faded out, not removed, so the exit control
+    // would still be focusable from the intro and score screens. Hide it
+    // outright: it belongs to an active run and nothing else.
+    if (els.btnExit) els.btnExit.hidden = (id !== 'screen-game');
+    var next = document.getElementById(id);
+    next.classList.add('active');
+    next.scrollTop = 0;
+  }
+
+  function newGame() {
+    // The gate is re-checked here, not just on load, so a tab left open
+    // overnight or a stale score screen cannot buy a second run.
+    if (!canPlayNow()) { showPlayedScreen(); return; }
+    // Taking the extra go spends it immediately, whatever happens next.
+    if (hasPlayedToday() && retryAvailable()) storeSet(MULLIGAN_KEY, todayStr());
+
+    var runSeen = {};
+    POOL_ORDER.forEach(function (pool) { runSeen[pool] = []; });
+
+    state = {
+      streak: 0,
+      best: loadBest(),
+      recent: [],
+      seen: [],
+      runSeen: runSeen,
+      poolOrder: shuffledPoolOrder(),
+      pool: null,
+      left: null,
+      right: null,
+      phase: 'asking',
+      outcome: null,
+      startedAt: Date.now(),
+      points: 0,
+      saved: false,
+      pledged: false
+    };
+    runActions = [];
+    selectedActions = {};
+    selectedCount = 0;
+    bonusPoints = 0;
+    pairLog = [];
+    startChain();
+    showScreen('screen-game');
+    renderRound();
+    announce('Round one of ' + ROUNDS_PER_RUN + '. ' + els.question.textContent);
+  }
+
+  function showReality() {
+    var check = realityCheck();
+    els.realityLead.textContent = capitalise(check.subject.sub) + ' is ' +
+      litres(check.subject.impact) + ' litres.';
+    els.realityBig.textContent = 'About ' + roughly(check.count) + ' ' + check.plural + '.';
+    els.realitySub.textContent = capitalise(check.yardstick.sub) + ' is ' +
+      litres(check.yardstick.impact) + ' litres.';
+    els.realityStreak.textContent = 'Round ' + state.streak + ' of ' + ROUNDS_PER_RUN;
+    els.reality.hidden = false;
+    focusNoScroll(els.realityBtn);
+    announce('Reality check. ' + els.realityLead.textContent + ' ' + els.realityBig.textContent);
+    state.phase = 'reality';
+  }
+
+  function dismissReality() {
+    els.reality.hidden = true;
+    state.phase = 'revealed';
+    advanceChain();
+    renderRound();
+  }
+
+  // ══════════════════════════════════════════════════════
+  // SCORING — see the constants block for the calibration
+  // The speed bonus is only paid on a completed run. Paying it on an early
+  // exit would make quitting on round one worth 90 points, which is silly.
+  // ══════════════════════════════════════════════════════
+  function calcScore(correct, timeSec) {
+    var perfect = correct >= ROUNDS_PER_RUN;
+    var speed = 0;
+    if (perfect) {
+      speed = timeSec <= TIME_BONUS_FREE
+        ? TIME_BONUS_MAX
+        : Math.max(0, TIME_BONUS_MAX - (timeSec - TIME_BONUS_FREE) * TIME_BONUS_DECAY);
+    }
+    return {
+      base:    correct * POINTS_PER_CORRECT,
+      perfect: perfect ? PERFECT_BONUS : 0,
+      speed:   Math.round(speed),
+      total:   Math.round(correct * POINTS_PER_CORRECT + (perfect ? PERFECT_BONUS : 0) + speed)
+    };
+  }
+
+  // ══════════════════════════════════════════════════════
+  // SUMMARY ROTATION
+  // The comparison lines already vary, because they are drawn from the cards
+  // this player actually met. The action list did not: it printed all six,
+  // in the same order, every time. Now each run shows a slice, always led by
+  // the biggest lever and always in dataset order, so the ranking survives.
+  // Nothing new is invented; this only rotates what the dataset holds.
+  // ══════════════════════════════════════════════════════
+  function rotationIndex() {
+    var n = parseInt(storeGet(ROTATE_KEY), 10);
+    if (isNaN(n) || n < 0) n = Math.floor(Math.random() * 1000);
+    return n;
+  }
+
+  function bumpRotation() {
+    storeSet(ROTATE_KEY, String((rotationIndex() + 1) % 1000000));
+  }
+
+  function actionsForRun(rot) {
+    var all = DATA.actions;
+    if (all.length <= ACTIONS_PER_RUN) return all.slice();
+    var rest = [];
+    for (var i = 1; i < all.length; i++) rest.push(i);
+    var picked = [0];                       // the biggest lever is never dropped
+    for (var k = 0; k < ACTIONS_PER_RUN - 1; k++) {
+      picked.push(rest[(rot + k) % rest.length]);
+    }
+    picked.sort(function (a, b) { return a - b; });
+    return picked.map(function (index) { return all[index]; });
+  }
+
+  function renderFacts(rot) {
+    // Comparison lines that use cards this player actually met. Ties are
+    // broken by the rotation, so two runs that saw similar cards still read
+    // differently.
+    var seenTitles = state.seen.map(function (card) { return card.title; });
+    var total = DATA.comparisons.length;
+    var ranked = DATA.comparisons.map(function (row, index) {
+      var hits = row.relates_to.filter(function (title) {
+        return seenTitles.indexOf(title) !== -1;
+      }).length;
+      return { row: row, hits: hits, tie: (index + rot) % total };
+    }).sort(function (a, b) { return (b.hits - a.hits) || (a.tie - b.tie); });
+
+    var chosen = ranked.filter(function (r) { return r.hits > 0; }).slice(0, 3);
+    if (!chosen.length) chosen = ranked.slice(0, 2);
+
+    els.endFacts.innerHTML = '';
+    chosen.forEach(function (entry) {
+      var li = document.createElement('li');
+      li.textContent = entry.row.line;
+      els.endFacts.appendChild(li);
+    });
+  }
+
+  function showResults() {
+    var seconds = Math.round((Date.now() - state.startedAt) / 1000);
+    var score = calcScore(state.streak, seconds);
+    state.points = score.total;
+
+    var perfect = state.outcome === 'perfect';
+    var rot = rotationIndex();
+
+    els.endPoints.textContent = String(score.total);
+    els.scoreLabel.textContent = perfect ? 'Perfect run' : 'Your score';
+    els.scoreMax.textContent = 'pts this round';
+    els.scorePillStreak.textContent = state.streak + ' of ' + ROUNDS_PER_RUN + ' correct';
+    els.scorePillBest.textContent = 'Best ' + state.best + ' of ' + ROUNDS_PER_RUN;
+    els.scorePillBonus.textContent = perfect
+      ? 'Speed bonus ' + score.speed
+      : 'Max ' + MAX_POINTS + ' pts';
+
+    if (perfect) {
+      els.scoreMessage.textContent = 'All five! 💧';
+    } else if (state.streak >= 4) {
+      els.scoreMessage.textContent = 'So close! 🌊';
+    } else if (state.streak >= 2) {
+      els.scoreMessage.textContent = 'Good going! 🙌';
+    } else {
+      els.scoreMessage.textContent = 'Good start! 🌱';
+    }
+
+    var lead;
+    if (perfect) {
+      lead = 'Five out of five. You have a real feel for this.';
+    } else if (state.outcome === 'exit') {
+      lead = 'You stopped after ' + state.streak + ' of ' + ROUNDS_PER_RUN +
+             '. Your score is safe.';
+    } else {
+      lead = 'That one caught you out on round ' + (state.streak + 1) +
+             ' of ' + ROUNDS_PER_RUN + '.';
+    }
+    if (state.streak > 0 && state.streak >= state.best) {
+      lead += ' Your best yet.';
+    }
+    els.endLead.textContent = lead;
+
+    renderFacts(rot);
+    runActions = actionsForRun(rot);
+    bumpRotation();
+    saveProgress();
+
+    // The gate is spent, unless the mulligan is now on the table.
+    var again = retryAvailable();
+    els.endReplay.hidden = !again;
+    if (again) els.endReplay.textContent = 'One more go';
+
+    showScreen('screen-score');
+    focusNoScroll(again ? els.endReplay : els.btnAction);
+    announce('Run over. ' + state.streak + ' of ' + ROUNDS_PER_RUN + ' correct, ' +
+      score.total + ' points.');
+  }
+
+  function hoursToMidnight() {
+    var now = new Date();
+    var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    var hours = (midnight - now) / 3600000;
+    if (hours < 1) return 'in under an hour';
+    return 'in about ' + Math.round(hours) + (Math.round(hours) === 1 ? ' hour' : ' hours');
+  }
+
+  function showPlayedScreen() {
+    var score = storeGet(SCORE_KEY);
+    els.playedScore.textContent = (score === null || score === '') ? '—' : score;
+    els.playedWhen.textContent = 'Your next run unlocks at midnight, ' + hoursToMidnight() + '.';
+    showScreen('screen-played');
+    announce('You have already played today. Your score was ' +
+      (score || 'not recorded') + ' points.');
+  }
+
+  // ══════════════════════════════════════════════════════
+  // STATIC BLOCKS
+  // ══════════════════════════════════════════════════════
+  function buildStaticContent() {
+    els.explainerTitle.textContent = DATA.explainer.title;
+    els.explainerIntro.textContent = DATA.explainer.intro;
+    [['Green', DATA.explainer.green], ['Blue', DATA.explainer.blue], ['Grey', DATA.explainer.grey]]
+      .forEach(function (pair) {
+        var dt = document.createElement('dt');
+        dt.textContent = pair[0];
+        dt.className = 'swatch swatch-' + pair[0].toLowerCase();
+        var dd = document.createElement('dd');
+        dd.textContent = pair[1];
+        els.explainerList.appendChild(dt);
+        els.explainerList.appendChild(dd);
+      });
+    // The action list is no longer built here: it is rotated per run by
+    // the pledge cards, so that a once-a-day player is not offered the same six
+    // lines every day. The green/blue/grey explainer above stays put — the
+    // dataset holds one version of it and padding it out would be invention.
+  }
+
+  // ══════════════════════════════════════════════════════
+  // PERSISTENCE — the Carbon Challenge's keys, so the hub sees this game too
+  // ══════════════════════════════════════════════════════
+  // "Best" now means the best score out of ROUNDS_PER_RUN, not an endless
+  // streak. Anything stored by the earlier endless build can be larger than a
+  // run can ever be, so it is clamped and written back once. Showing "Best 23
+  // of 5" would be nonsense.
+  function loadBest() {
+    var value = parseInt(storeGet(BEST_KEY), 10);
+    if (isNaN(value) || value < 0) return 0;
+    if (value > ROUNDS_PER_RUN) {
+      value = ROUNDS_PER_RUN;
+      saveBest(value);
+    }
+    return value;
+  }
+
+  function saveBest(value) {
+    storeSet(BEST_KEY, String(value));
+  }
+
+  // The shared daily streak the Carbon Challenge maintains. Same key, same
+  // thresholds, and idempotent within a day, so both games can bump it.
+  function dailyStreakBonus() {
+    try {
+      var today = todayStr();
+      var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+      var key = 'streak_' + _nk;
+      var data = JSON.parse(storeGet(key) || '{}');
+      if (data.lastDate === today) {
+        /* already counted today, leave the streak alone */
+      } else if (data.lastDate === yesterday) {
+        data.count = (data.count || 1) + 1;
+        data.lastDate = today;
+        storeSet(key, JSON.stringify(data));
+      } else {
+        data.count = 1;
+        data.lastDate = today;
+        storeSet(key, JSON.stringify(data));
+      }
+      var count = data.count || 1;
+      if (count >= 5) return 250;
+      if (count >= 3) return 100;
+      return 0;
+    } catch (err) {
+      return 0;
+    }
+  }
+
+  // Feed the shared hub progress once per run, exactly as the Carbon Challenge
+  // does, and stamp the day so the hub and this game agree the play is used.
+  function saveProgress() {
+    if (state.saved) return;
+    state.saved = true;
+    markPlayedToday(state.points, state.streak === 0);
+    var bonus = dailyStreakBonus();
+    try {
+      var progKey = 'env_progress_' + _nk;
+      var prev = JSON.parse(storeGet(progKey) || '{}');
+      storeSet(progKey, JSON.stringify({
+        totalScore:     (prev.totalScore || 0) + state.points + bonus,
+        sessionsPlayed: (prev.sessionsPlayed || 0) + 1,
+        actionsPledged: (prev.actionsPledged || 0)
+      }));
+    } catch (err) {
+      /* storage disabled — the run still counts on screen */
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  // PLEDGES
+  // The Carbon Challenge's flow, reproduced: pick actions on a screen of their
+  // own, each worth points, then commit. Same keys, same shapes, so a water
+  // pledge shows up wherever a carbon one does.
+  //
+  // One deliberate difference. Carbon defers writing the run to storage until
+  // Finish or Commit. This game cannot: the daily gate is stamped the moment
+  // the score screen appears, otherwise a reload would buy a second run. So the
+  // run and the pledge are two separate writes, and the pledge write only ever
+  // adds the bonus on top. The run's own ceiling stays 480.
+  // ══════════════════════════════════════════════════════
+  function actionPoints(action) {
+    // Flat per-action points, taken from the dataset. There is no size bonus
+    // here, unlike Carbon's log-scaled CO2 bonus: see the notes in the markdown
+    // for why the litres figures in this dataset cannot carry one.
+    var pts = parseInt(action.basePoints, 10);
+    return isNaN(pts) ? 0 : pts;
+  }
+
+  function renderPledgeCards() {
+    selectedActions = {};
+    selectedCount = 0;
+    bonusPoints = 0;
+
+    Array.prototype.slice.call(els.actionBody.querySelectorAll('.action-card'))
+      .forEach(function (card) { card.parentNode.removeChild(card); });
+
+    els.actionHeaderSub.textContent =
+      'Your run scored ' + state.points + '. Anything you commit to here is extra, on top.';
+
+    // The opt-out, always first, exactly as the Carbon Challenge has it.
+    var nothing = document.createElement('div');
+    nothing.className = 'action-card action-card-nothing';
+    nothing.id = 'action-card-nothing';
+    nothing.setAttribute('role', 'checkbox');
+    nothing.setAttribute('aria-checked', 'false');
+    nothing.tabIndex = 0;
+    nothing.innerHTML =
+      '<div class="action-card-top">' +
+        '<span class="action-card-title">Nothing for now — I changed my mind</span>' +
+      '</div>' +
+      '<div class="action-card-meta">' +
+        '<span class="action-pts" style="color:var(--text-soft)">+0 pts</span>' +
+        '<div class="action-checkbox" id="acheck-nothing">' +
+          '<svg width="12" height="12" fill="none" stroke="white" stroke-width="2.5" ' +
+          'viewBox="0 0 24 24" style="display:none" id="acheckmark-nothing">' +
+          '<path d="M20 6L9 17l-5-5"/></svg>' +
+        '</div>' +
+      '</div>';
+    nothing.addEventListener('click', function () { toggleNothingAction(nothing); });
+    nothing.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleNothingAction(nothing);
+      }
+    });
+    els.actionBody.appendChild(nothing);
+
+    // Biggest lever first: runActions is already in dataset order, and rank 1
+    // is never dropped from it, so the ordering survives the pledge UI.
+    runActions.forEach(function (a, i) {
+      var pts = actionPoints(a);
+      var card = document.createElement('div');
+      card.className = 'action-card';
+      card.setAttribute('role', 'checkbox');
+      card.setAttribute('aria-checked', 'false');
+      card.tabIndex = 0;
+      card.innerHTML =
+        '<div class="action-card-top">' +
+          '<span class="action-card-title"></span>' +
+          '<span class="action-level level-' + a.level + '">' + a.level + '</span>' +
+        '</div>' +
+        '<p class="action-card-desc"></p>' +
+        '<div class="action-card-meta">' +
+          '<span class="action-pts">+' + pts + ' pts</span>' +
+          '<span class="action-carbon"></span>' +
+          '<div class="action-checkbox" id="acheck-' + i + '">' +
+            '<svg width="12" height="12" fill="none" stroke="white" stroke-width="2.5" ' +
+            'viewBox="0 0 24 24" style="display:none" id="acheckmark-' + i + '">' +
+            '<path d="M20 6L9 17l-5-5"/></svg>' +
+          '</div>' +
+        '</div>';
+      // Dataset strings go in as text, never as markup.
+      card.querySelector('.action-card-title').textContent = a.action;
+      // The evidence line and the framing, the same two the score screen's
+      // old passive list carried. Nothing is lost by moving them here.
+      card.querySelector('.action-card-desc').textContent = a.number + ' ' + a.framing;
+      card.querySelector('.action-carbon').textContent = a.saving;
+      card.addEventListener('click', function () { toggleAction(i, card, pts); });
+      card.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          toggleAction(i, card, pts);
+        }
+      });
+      els.actionBody.appendChild(card);
+    });
+
+    updateCommitButton();
+  }
+
+  function updateCommitButton() {
+    var nothingPicked = selectedActions['nothing'] === true;
+    els.btnCommit.disabled = selectedCount === 0 && !nothingPicked;
+    els.btnCommit.textContent = nothingPicked
+      ? 'Confirm — no actions'
+      : (selectedCount > 0
+          ? 'Commit & collect +' + bonusPoints + ' pts'
+          : 'Commit & collect points');
+  }
+
+  function setCheck(id, on) {
+    var mark = document.getElementById('acheckmark-' + id);
+    if (mark) mark.style.display = on ? 'block' : 'none';
+  }
+
+  function toggleNothingAction(card) {
+    if (selectedActions['nothing']) {
+      delete selectedActions['nothing'];
+      card.classList.remove('selected');
+      card.setAttribute('aria-checked', 'false');
+      setCheck('nothing', false);
+    } else {
+      // Picking "nothing" clears everything else, as it does in Carbon.
+      selectedActions = {};
+      selectedCount = 0;
+      bonusPoints = 0;
+      Array.prototype.slice.call(
+        els.actionBody.querySelectorAll('.action-card:not(.action-card-nothing)')
+      ).forEach(function (c, i) {
+        c.classList.remove('selected');
+        c.setAttribute('aria-checked', 'false');
+        setCheck(i, false);
+      });
+      selectedActions['nothing'] = true;
+      card.classList.add('selected');
+      card.setAttribute('aria-checked', 'true');
+      setCheck('nothing', true);
+    }
+    updateCommitButton();
+  }
+
+  function toggleAction(index, card, pts) {
+    if (selectedActions['nothing']) {
+      delete selectedActions['nothing'];
+      var nothing = document.getElementById('action-card-nothing');
+      if (nothing) {
+        nothing.classList.remove('selected');
+        nothing.setAttribute('aria-checked', 'false');
+      }
+      setCheck('nothing', false);
+    }
+    if (selectedActions[index]) {
+      delete selectedActions[index];
+      selectedCount -= 1;
+      bonusPoints -= pts;
+      card.classList.remove('selected');
+      card.setAttribute('aria-checked', 'false');
+      setCheck(index, false);
+    } else {
+      selectedActions[index] = true;
+      selectedCount += 1;
+      bonusPoints += pts;
+      card.classList.add('selected');
+      card.setAttribute('aria-checked', 'true');
+      setCheck(index, true);
+    }
+    updateCommitButton();
+  }
+
+  function showActions() {
+    renderPledgeCards();
+    showScreen('screen-action');
+    focusNoScroll(document.getElementById('action-card-nothing'));
+  }
+
+  // The titles of pledged actions, so the hub can list them. Same key, same
+  // {title, date} shape and the same cap at the 20 most recent as Carbon, so
+  // the hub's renderActionHistory() reads water pledges without changing.
+  function saveActionHistory() {
+    if (selectedActions['nothing'] || selectedCount === 0) return;
+    try {
+      var key = 'actions_history_' + _nk;
+      var history = JSON.parse(storeGet(key) || '[]');
+      if (!Array.isArray(history)) history = [];
+      var today = todayStr();
+      runActions.forEach(function (a, i) {
+        if (selectedActions[i] && a.action) {
+          history.push({ title: a.action, date: today });
+        }
+      });
+      storeSet(key, JSON.stringify(history.slice(-20)));
+    } catch (err) {
+      /* storage disabled — the pledge still counted on screen */
+    }
+  }
+
+  // Adds the pledge on top of the run that was already saved. Guarded so a
+  // double tap, or a commit after a back-and-forth, cannot collect twice.
+  function savePledge() {
+    if (state.pledged) return;
+    state.pledged = true;
+    var count = selectedActions['nothing'] ? 0 : selectedCount;
+    saveActionHistory();
+    try {
+      var progKey = 'env_progress_' + _nk;
+      var prev = JSON.parse(storeGet(progKey) || '{}');
+      storeSet(progKey, JSON.stringify({
+        totalScore:     (prev.totalScore || 0) + bonusPoints,
+        sessionsPlayed: (prev.sessionsPlayed || 0),
+        actionsPledged: (prev.actionsPledged || 0) + count
+      }));
+    } catch (err) {
+      /* storage disabled — nothing to persist */
+    }
+  }
+
+  function commitActions() {
+    savePledge();
+    window.location.href = 'index.html?hub=1';
+  }
+
+  function announce(text) {
+    els.live.textContent = text;
+  }
+
+  // ══════════════════════════════════════════════════════
+  // KEYBOARD
+  // ══════════════════════════════════════════════════════
+  function onKey(event) {
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    var key = event.key.toLowerCase();
+    var onButton = document.activeElement &&
+      document.activeElement.tagName === 'BUTTON' &&
+      !document.activeElement.hidden;
+
+    // Escape is the keyboard twin of the End run button, and it works with
+    // the reality check open too.
+    if (key === 'escape' && els.screenGame.classList.contains('active')) {
+      event.preventDefault();
+      exitRun();
+      return;
+    }
+
+    if (!els.reality.hidden) {
+      if (key === 'enter' || key === ' ') {
+        if (!onButton) { event.preventDefault(); dismissReality(); }
+      }
+      return;
+    }
+    if (!els.screenGame.classList.contains('active')) return;
+
+    if (state && state.phase === 'asking') {
+      if (key === 'arrowleft' || key === 'l') { event.preventDefault(); answer('less'); }
+      else if (key === 'arrowright' || key === 'm') { event.preventDefault(); answer('more'); }
+      return;
+    }
+    if ((key === 'enter' || key === ' ') && !onButton) { event.preventDefault(); proceed(); }
+  }
+
+  // ══════════════════════════════════════════════════════
+  // INIT
+  // ══════════════════════════════════════════════════════
+  function cacheElements() {
+    ['screenIntro', 'screenGame', 'screenScore', 'screenPlayed', 'cardTrackWrapper',
+      'streak', 'best', 'progressLabel', 'progressFill', 'btnExit', 'retryNote',
+      'basisNote', 'question', 'cardLeft', 'cardRight', 'verdict', 'verdictTitle', 'verdictLine',
+      'verdictFact', 'btnLess', 'btnMore', 'btnNext', 'btnStart', 'btnStartLabel',
+      'startBest', 'reality',
+      'realityLead', 'realityBig', 'realitySub', 'realityStreak', 'realityBtn', 'endPoints',
+      'scoreLabel', 'scoreMax', 'playedScore', 'playedWhen',
+      'endLead', 'endFacts', 'endReplay', 'scoreMessage', 'scorePillStreak', 'scorePillBest',
+      'scorePillBonus', 'explainerTitle', 'explainerIntro', 'explainerList', 'live',
+      'btnAction', 'btnFinish', 'btnCommit', 'btnActionBack', 'actionBody', 'actionHeaderSub'
+    ].forEach(function (key) {
+      var id = key.replace(/[A-Z]/g, function (c) { return '-' + c.toLowerCase(); });
+      els[key] = document.getElementById(id);
+    });
+  }
+
+  function init(data) {
+    DATA = data;
+    POOL_ORDER.forEach(function (pool) {
+      pools[pool] = DATA.cards.filter(function (card) {
+        return card.in_play && card.pool === pool;
+      });
+      if (pools[pool].length < 4) throw new Error('Pool ' + pool + ' is too small to play');
+    });
+
+    seenStore = loadSeenStore();
+
+    cacheElements();
+    buildStaticContent();
+
+    var best = loadBest();
+    els.startBest.textContent = best > 0
+      ? 'Your best run so far: ' + best + ' out of ' + ROUNDS_PER_RUN + '.'
+      : '';
+
+    // Three ways in: never played today, or the mulligan is on the table, or
+    // the day is spent and we say so warmly rather than showing a dead button.
+    if (retryAvailable()) {
+      els.retryNote.hidden = false;
+      els.retryNote.textContent = 'That first one caught you out, so here is one more go today.';
+      els.btnStartLabel.textContent = 'One more go';
+    } else if (hasPlayedToday()) {
+      showPlayedScreen();
+    }
+
+    els.btnStart.addEventListener('click', newGame);
+    els.endReplay.addEventListener('click', newGame);
+    els.btnAction.addEventListener('click', showActions);
+    els.btnCommit.addEventListener('click', commitActions);
+    els.btnActionBack.addEventListener('click', function () { showScreen('screen-score'); });
+    // Finish leaves without a pledge, exactly as it does in the other games.
+    els.btnFinish.addEventListener('click', function () {
+      window.location.href = 'index.html?hub=1';
+    });
+    els.btnLess.addEventListener('click', function () { answer('less'); });
+    els.btnMore.addEventListener('click', function () { answer('more'); });
+    els.btnNext.addEventListener('click', proceed);
+    els.btnExit.addEventListener('click', exitRun);
+    els.realityBtn.addEventListener('click', dismissReality);
+    els.reality.addEventListener('click', function (event) {
+      if (event.target === els.reality) dismissReality();
+    });
+    document.addEventListener('keydown', onKey);
+
+    // Small surface for automated testing and for anyone poking at the console.
+    window.waterChallenge = {
+      data: DATA,
+      pools: pools,
+      rounds: ROUNDS_PER_RUN,
+      maxPoints: MAX_POINTS,
+      realityAt: REALITY_AT,
+      pairLog: function () { return pairLog.slice(); },
+      state: function () { return state; },
+      seenStore: function () { return seenStore; },
+      correctChoice: correctChoice,
+      answer: answer,
+      proceed: proceed,
+      exitRun: exitRun,
+      newGame: newGame,
+      canPlayNow: canPlayNow,
+      retryAvailable: retryAvailable,
+      calcScore: calcScore,
+      simulatePairings: simulatePairings,
+      showActions: showActions,
+      commitActions: commitActions,
+      actionPoints: actionPoints,
+      runActions: function () { return runActions.slice(); },
+      pledge: function () {
+        return { bonus: bonusPoints, count: selectedCount,
+                 nothing: selectedActions['nothing'] === true };
+      }
+    };
+  }
+
+  // Headless replay of the pairing logic only, for checking the units rule.
+  // Runs with the live seen store attached, so the rule is checked with the
+  // unseen-first filter switched on.
+  function simulatePairings(rounds) {
+    var log = [];
+    var recent = [];
+    var streak = 0;
+    var order = shuffledPoolOrder();
+    var pool = poolForStreak(streak, order);
+    var left = pick(pools[pool]);
+    for (var i = 0; i < rounds; i++) {
+      if (streak > 0 && streak % ROUNDS_PER_RUN === 0) {
+        order = shuffledPoolOrder();          // a fresh run
+      }
+      var wanted = poolForStreak(streak % ROUNDS_PER_RUN, order);
+      if (wanted !== pool) {
+        pool = wanted;
+        left = pick(pools[pool]);
+        recent = [];
+      }
+      var right = drawOpponent(left, recent, seenStore[pool]);
+      log.push({
+        left:  { title: left.title,  pool: left.pool,  basis: left.basis,  impact: left.impact },
+        right: { title: right.title, pool: right.pool, basis: right.basis, impact: right.impact },
+        ratio: ratio(left.impact, right.impact)
+      });
+      recent.push(right.title);
+      while (recent.length > RECENT_MEMORY) recent.shift();
+      left = right;
+      streak += 1;
+    }
+    return log;
+  }
+
+  function fail(message) {
+    var node = document.querySelector('#screen-intro .intro-top');
+    if (node) {
+      node.innerHTML = '<p class="intro-label">Problem</p>' +
+        '<h1 class="intro-title">The data<br><em>would not load</em></h1>' +
+        '<div class="did-you-know"><p class="dyk-text">' + message + '</p></div>';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    loadCards().then(init).catch(function (err) {
+      fail(err && err.message ? err.message : 'Unknown error.');
+    });
+  });
+}());
+</script>
+
+<!-- Bottom nav — shown on the score screen only -->
+<nav class="app-nav" id="game-bottom-nav">
+  <a class="app-nav-item active" href="index.html">
+    <span class="material-symbols-outlined">home</span>
+    <span class="app-nav-label">Home</span>
+  </a>
+  <a class="app-nav-item" href="index.html?tab=games">
+    <span class="material-symbols-outlined">sports_esports</span>
+    <span class="app-nav-label">Games</span>
+  </a>
+  <a class="app-nav-item" href="index.html?tab=learn">
+    <span class="material-symbols-outlined">school</span>
+    <span class="app-nav-label">Learn</span>
+  </a>
+  <a class="app-nav-item" href="companion.php">
+    <span class="material-symbols-outlined">search</span>
+    <span class="app-nav-label">Companion</span>
+  </a>
+</nav>
+</body>
+</html>
