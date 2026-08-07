@@ -26,9 +26,11 @@ moves on; get it wrong and the run ends there.
 Two things are layered on top. Once per run, after the third correct answer, the
 game interrupts with a full-screen **reality check** that converts something you
 just met into household terms, for example one kilogram of roasted coffee against
-days of home water use. The end screen shows your points, the comparison lines
-for the items you actually saw, the green/blue/grey explainer, and a rotating
-slice of the actions, always ranked biggest lever first.
+days of home water use. The end screen shows your points, then the comparison
+lines for the items you actually saw and the green/blue/grey explainer to read,
+and then a **Take further action** button leading to a rotating slice of the
+actions, always ranked biggest lever first, which you can pledge for extra
+points on top of the run.
 
 ## A run is five rounds, once a day
 
@@ -128,6 +130,130 @@ value left behind by the earlier endless build can be larger than a run can ever
 be, so `loadBest()` clamps it to `ROUNDS_PER_RUN` and writes the clamped value
 back once. "Best 23 of 5" would be nonsense.
 
+### Actions are a pledge, not a list
+
+The score screen used to print four actions as text you could not do anything
+with. They are now the Carbon Challenge's pledge flow, reproduced rather than
+approximated, so a water pledge behaves and looks like a carbon one.
+
+**The flow, side by side.**
+
+| Step | Carbon Challenge | Water Challenge |
+|---|---|---|
+| 1 | Score screen: number, message, pills | Same, plus the panels of comparisons, explainer and caveat to read |
+| 2 | Bottom buttons: `Take further action` (orange) then `Finish` (outlined) | The same two, in the same order and treatment, sitting **below** the reading rather than above it |
+| 3 | `showActions()` opens `#screen-action` | `showActions()` opens `#screen-action` |
+| 4 | Header "Take some action", an intro line, a dashed "Nothing for now" opt-out, then 2 action cards | Identical, with 4 action cards, because a water run offers four |
+| 5 | Each card: title, level chip, description, `+N pts`, a saving line, a round tick | Identical, same classes |
+| 6 | Footer: `Commit & collect +N pts` and a text `Back to my score` | Identical |
+| 7 | `commitActions()` adds the bonus, writes progress and history, goes to the hub | Same, except the run itself was already written (see below) |
+
+**Where a pledge is stored.** Exactly where carbon puts it, so nothing
+downstream needs to know which game produced it.
+
+| Key | Shape | Written by |
+|---|---|---|
+| `env_progress_<nk>.actionsPledged` | integer, incremented by the number committed | both games |
+| `env_progress_<nk>.totalScore` | integer, incremented by the pledge bonus | both games |
+| `actions_history_<nk>` | `[{ title, date }]`, most recent last, capped at 20 | both games |
+
+`index.html` reads all three already. `renderActionHistory()` lists
+`actions_history_<nk>` on the profile screen and `openProfile()` shows
+`actionsPledged`, both keyed only by player, so a water pledge appears in the
+shared list alongside carbon's with no special-casing.
+
+**One deliberate difference from carbon.** Carbon defers writing the run until
+you press Finish or Commit. This game cannot: the daily gate is stamped the
+moment the score screen appears, or a reload would buy a second run. So the run
+and the pledge are two separate writes. `saveProgress()` writes the run once,
+`savePledge()` adds the bonus on top once, each guarded by its own flag, so
+committing twice cannot collect twice.
+
+**The 480 cap is the run's cap.** Pledge points sit on top of it, as they do in
+carbon, and the pledge screen's header says the run's score out loud so the two
+are never confused.
+
+### Bottom controls, matched to the other games
+
+The owner asked for the buttons at the bottom to be the same as the other games.
+They mostly already were, sharing `.btn-action`, `.btn-finish` and `.app-nav`
+verbatim. Four things had drifted, and one has no counterpart at all.
+
+| Screen | Control | Carbon and quiz | Water before | Water now |
+|---|---|---|---|---|
+| Intro | `.btn-play` | orange, 18px/24px, 17px text | identical already | unchanged |
+| Mid-run | `.btn-submit` | one full-width button | two `flex: 1` buttons plus an orange Next | unchanged, see below |
+| Score | `.score-bottom` | `16px 20px 16px` | `4px 20px 20px`, and **above** the reading panels | `16px 20px 16px`, **below** them |
+| Score | primary orange | `Take further action` opening the action screen | `Play again`, only ever visible on a mulligan | `Take further action`, same label and target |
+| Score | `Finish` | a `<button>` calling a handler | an `<a href>` styled to look like one | a `<button>`, same as theirs |
+| Score | `.app-nav` | hidden on every screen | shown on the score screen | hidden, same as theirs |
+| Action | `.btn-commit` | game's dark tone, 17px/24px, 16px text | did not exist | identical bar the palette |
+| Action | `.btn-action-back` | text and a back arrow | did not exist | identical |
+
+Two deliberate non-matches:
+
+- **The mid-run footer.** Carbon reveals answers with one full-width button.
+  This game asks a two-way question, so it needs two buttons side by side and a
+  full-width Next after them. Matching carbon's single button would mean
+  removing a choice the game is built on, so the pair stays.
+- **The exit control and the mulligan.** `#btn-exit` and the `One more go`
+  button are water-only. The exit control keeps its own header chrome. The
+  mulligan button now uses the outlined `.btn-finish` treatment rather than the
+  orange one, so the orange stays reserved for `Take further action` exactly as
+  it is in the other two games, and the score screen never shows two orange
+  buttons competing.
+
+### What a pledged action is worth, and why there is no size bonus
+
+Carbon scales its action bonus with the card's footprint:
+`basePoints + max(0, round(log10(impact_kg / 10) * 50))`. Water saves litres,
+not CO2, so the obvious move is the same log shape on litres. It does not work,
+and it is worth writing down why.
+
+The six actions in `water-cards.json` do each carry a quantified saving, but not
+on a comparable basis:
+
+| Rank | Action | Figure the dataset states | Basis |
+|---|---|---|---|
+| 1 | Swap a beef meal | about 115,000 L | a year |
+| 2 | Eat what you buy | 3,178 L / 1,286 L | per wasted item |
+| 3 | One more year from your clothes | 10,495 L | per replacement avoided |
+| 4 | Tap off while brushing | 8,030 L | a year |
+| 5 | Two minutes off the shower | 6,570 L | a year |
+| 6 | Fix the dripping tap | 5,475 L | a year |
+
+Four are annual, two are per-event. Putting all six on one basis means deciding
+how often a household wastes a kilo of cheese or replaces a pair of jeans, and
+the dataset holds neither number. Worse, using the figures as they stand
+inverts the dataset's own ranking: food waste is authored as the second biggest
+lever, but its stated 3,178 L would score it below shorter showers, which is
+ranked fifth. That is exactly the thing the ranking exists to prevent.
+
+So there is no size bonus. Each action carries a flat `basePoints`, the same
+convention carbon uses for the base half of its number, and the value follows
+the dataset's own `rank`, which is its explicit statement about comparability:
+
+```
+points = 250 - (rank - 1) x 30
+
+rank 1  250      rank 4  160
+rank 2  220      rank 5  130
+rank 3  190      rank 6  100
+```
+
+**Calibration against carbon.** Computing carbon's own per-pledge totals from
+`CARD_ACTIONS` and `FALLBACK_CARDS` gives 18 possible pledges ranging 59 to 370,
+median 174, mean 176. Water's ramp gives 100 to 250, median and mean both 175.
+A water pledge is therefore worth almost exactly what a carbon pledge is worth,
+with a narrower spread, which is honest: water's actions are closer together in
+size than carbon's cards are.
+
+One difference to flag rather than hide: carbon offers 2 actions per run and
+water offers 4, so a player who commits to everything can collect more in water
+(820) than in carbon (about 600 at the top end). Per pledge the two match; per
+run water is more generous. Narrowing that means showing fewer actions, which
+would cost the rotation, so it is left as it is for the owner to call.
+
 ### The exit control
 
 `#btn-exit` sits in the game header next to the progress bar, in the same
@@ -167,12 +293,14 @@ Partly, and more than it used to.
 |---|---|
 | Points, message, lead line, pills | Yes, with the run |
 | "From what you just saw" comparison lines | Yes. Ranked by how many of the cards you actually met they mention, with ties broken by a stored rotation counter |
-| "What actually moves the needle" actions | Yes, now. Four of the six each run, always led by the biggest lever and always in dataset order |
+| The action cards behind "Take further action" | Yes. Four of the six each run, always led by the biggest lever and always in dataset order |
 | Green, blue and grey explainer | No. The dataset holds one version of it |
 | The closing caveat panel | No. It is fixed copy |
 
 The action rotation walks a window over actions 1 to 5 while always keeping
-action 0, so consecutive runs never show the same four and the ranking survives.
+action 0, so consecutive runs never offer the same four and the ranking
+survives. They used to sit on the score screen as a passive list; they are now
+the pledge cards, which is the only place they appear.
 The explainer is deliberately left alone: there is one version of it in
 `water-cards.json` and rotating it would mean inventing copy that no source
 backs. If more explainer framings are wanted, they belong in the dataset first.
@@ -182,8 +310,11 @@ backs. If more explainer framings are wanted, they belong in the dataset first.
 Everything here follows the Carbon Challenge (`environmentle-sort-it-out.html`):
 
 - **Same shell.** `back-to-hub` header, `.screen` / `.screen.active` manager,
-  `app-nav` bottom nav, 460 px centred frame, the same `gtag` snippet, Comfortaa
-  for display and Montserrat for body text, Material Symbols for icons.
+  `app-nav` markup kept but hidden throughout as the others keep it, 460 px
+  centred frame, the same `gtag` snippet, Comfortaa for display and Montserrat
+  for body text, Material Symbols for icons.
+- **Same pledge screen.** `#screen-action` and its `.action-*` classes are the
+  Carbon Challenge's, reproduced rather than reinvented.
 - **Same palette shape.** `:root` carries `--water-dark / --water-mid /
   --water-light / --water-pale` where the Carbon Challenge carries `--green-*`,
   plus the shared `--orange`, `--cream`, `--text`, `--text-soft`, `--radius`,
@@ -193,7 +324,8 @@ Everything here follows the Carbon Challenge (`environmentle-sort-it-out.html`):
 - **Same player conventions.** `?player=` wins, then `localStorage`
   `env_player_name`; the name is lowercased and underscored into `_nk` the same
   way. Progress is written once per run into the shared `env_progress_<nk>`
-  (`totalScore`, `sessionsPlayed`), so the hub counts this game like any other.
+  (`totalScore`, `sessionsPlayed`, `actionsPledged`), and pledged actions into
+  the shared `actions_history_<nk>`, so the hub counts this game like any other.
   The water keys sit alongside the Carbon Challenge's `sio_*` keys and mirror
   their shape: `wc_best_streak_<nk>`, `wc_last_played_<nk>`,
   `wc_last_score_<nk>`, `wc_seen_<nk>`.

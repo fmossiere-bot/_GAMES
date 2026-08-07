@@ -1361,6 +1361,9 @@
   "actions": [
     {
       "rank": 1,
+      "level": "beginner",
+      "basePoints": 250,
+      "saving": "about 115,000 L a year",
       "action": "Swap one beef meal a week for chicken, or for beans and lentils.",
       "number": "A 200 g beef portion is 3,083 L; the same portion of chicken is 865 L.",
       "arithmetic": "(15,415 - 4,325) L/kg x 0.2 kg = 2,218 L saved per meal; x 52 weeks = about 115,000 L a year",
@@ -1368,6 +1371,9 @@
     },
     {
       "rank": 2,
+      "level": "beginner",
+      "basePoints": 220,
+      "saving": "3,178 L per wasted kilo of cheese",
       "action": "Eat what you buy: finish the cheese, the bread and the leftovers before they go off.",
       "number": "A wasted 1 kg block of cheese throws away 3,178 L; a wasted 800 g loaf, 1,286 L.",
       "arithmetic": "3,178 L/kg x 1 kg = 3,178 L; 1,608 L/kg x 0.8 kg = 1,286 L",
@@ -1375,6 +1381,9 @@
     },
     {
       "rank": 3,
+      "level": "intermediate",
+      "basePoints": 190,
+      "saving": "10,495 L per replacement avoided",
       "action": "Get one more year out of the clothes you own before replacing them.",
       "number": "One t-shirt is 2,495 L and one pair of jeans is 8,000 L.",
       "arithmetic": "2,495 + 8,000 = 10,495 L for a single shirt-and-jeans replacement avoided",
@@ -1382,6 +1391,9 @@
     },
     {
       "rank": 4,
+      "level": "beginner",
+      "basePoints": 160,
+      "saving": "8,030 L a year",
       "action": "Turn the tap off while you brush.",
       "number": "12 L becomes 1 L, twice a day.",
       "arithmetic": "(12 - 1) L x 2 x 365 = 8,030 L a year",
@@ -1389,6 +1401,9 @@
     },
     {
       "rank": 5,
+      "level": "beginner",
+      "basePoints": 130,
+      "saving": "6,570 L a year",
       "action": "Take two minutes off your shower.",
       "number": "A standard showerhead runs at 9 L a minute.",
       "arithmetic": "9 L/min x 2 min x 365 = 6,570 L a year",
@@ -1396,6 +1411,9 @@
     },
     {
       "rank": 6,
+      "level": "intermediate",
+      "basePoints": 100,
+      "saving": "5,475 L a year",
       "action": "Fix the tap that drips.",
       "number": "A slow drip is about 15 L a day.",
       "arithmetic": "15 L/day x 365 = 5,475 L a year, roughly 68 baths",
