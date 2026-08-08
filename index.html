@@ -4499,23 +4499,31 @@ function renderRecentGames(nk) {
   // history is [{key, ts}, ...] newest first
   const history = JSON.parse(localStorage.getItem('recent_games_' + nk) || '[]');
 
-  let entries; // [{key, ts}]
-  if (history.length === 0) {
-    label.textContent = 'Games to try';
-    entries = [{ key: 'quiz:random', ts: null }, { key: 'sort', ts: null }, { key: 'water', ts: null }];
-  } else {
-    label.textContent = 'Recently played';
-    const seen = new Set();
-    entries = [];
-    for (const item of history) {
-      const k = typeof item === 'string' ? item : item.key; // back-compat
-      if (!seen.has(k)) {
-        seen.add(k);
-        entries.push({ key: k, ts: item.ts || null });
-      }
-      if (entries.length === 3) break;
-    }
+  // Most recently played first, then top up with the games that are not in the
+  // history yet. Without the top-up the home list is rebuilt from the history
+  // alone, so playing one game hides every game you have not played (a newly
+  // released one disappears from the home screen the moment you play anything
+  // else). Unknown keys from older builds are skipped rather than rendered as
+  // an empty slot.
+  const seen    = new Set();
+  const entries = []; // [{key, ts}]
+  for (const item of history) {
+    const k = typeof item === 'string' ? item : item.key; // back-compat
+    if (seen.has(k) || !GAME_DEFS[k]) continue;
+    seen.add(k);
+    entries.push({ key: k, ts: item.ts || null });
+    if (entries.length === 3) break;
   }
+  for (const k of Object.keys(GAME_DEFS)) {
+    if (entries.length === 3) break;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    entries.push({ key: k, ts: null });
+  }
+
+  label.textContent = entries.every(e => e.ts) ? 'Recently played'
+                    : entries.some(e => e.ts)  ? 'Your games'
+                    : 'Games to try';
 
   const animClasses = ['anim-1', 'anim-2', 'anim-3'];
   list.innerHTML = entries.map((e, i) => gameCardHTML(e.key, animClasses[i] || '', e.ts)).join('');
