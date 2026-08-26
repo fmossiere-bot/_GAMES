@@ -62,8 +62,8 @@
       "type": "stat",
       "theme": "orange",
       "stat": "$326M",
-      "caption": "In 2000, Unilever bought Ben &amp; Jerry's for $326 million — on one unusual condition: a separate, independent board with legal authority over the brand's social mission, in perpetuity.",
-      "note": "Business schools held the structure up for years as a model for preserving a company's purpose after acquisition.",
+      "caption": "In 2000, Unilever bought Ben &amp; Jerry's for $326 million — on one condition: an independent board with legal authority over the brand's social mission, in perpetuity.",
+      "note": "Business schools cited the structure for years as a model for preserving purpose after acquisition.",
       "source": "The Guardian, 2026"
     },
     {
@@ -78,9 +78,9 @@
       "theme": "blue",
       "callout": "\"It's a good question. I don't know.\"",
       "calloutTop": true,
-      "text": "Asked directly whether Ben &amp; Jerry's should tell customers plainly that milk and cream carry a real climate cost — the way it takes a stand on almost everything else — co-founder Ben Cohen gave a disarmingly honest answer.",
+      "text": "Asked whether Ben &amp; Jerry's should tell customers plainly that milk and cream carry a real climate cost, co-founder Ben Cohen gave a disarmingly honest answer.",
       "bold": "disarmingly honest",
-      "footer": "It's not greenwashing — nothing is being misrepresented. But it's a real gap between a brand loud about Gaza or voting rights, and quieter about the emissions baked into its own best-selling product.",
+      "footer": "Not greenwashing — nothing here is misrepresented. But it's a real gap between a brand loud about Gaza or voting rights, and quieter about its own best-selling product's emissions.",
       "source": "Bloomberg Green podcast, 2026"
     },
     {
@@ -96,15 +96,15 @@
       "theme": "green",
       "icon": "🌱",
       "stat": "20 years",
-      "caption": "For nearly two decades, Ben &amp; Jerry's 'Caring Dairy' programme has worked with farms in Vermont, the Netherlands, Germany and the UK on climate-smart practices and animal welfare — and it's since launched a full oat-based, non-dairy range as a lower-footprint alternative.",
-      "footer": "A real step. Not yet the plain admission that the flagship product has a cost worth confronting head-on."
+      "caption": "For nearly two decades, Ben &amp; Jerry's 'Caring Dairy' programme has worked with farms in Vermont, the Netherlands, Germany and the UK on climate-smart practices — and it's since launched a full oat-based, non-dairy range.",
+      "footer": "A real step. Not yet the plain admission the flagship product's cost is worth confronting head-on."
     },
     {
       "type": "text",
       "theme": "dark",
-      "text": "In 2021, Ben &amp; Jerry's independent board voted to stop selling ice cream in the occupied West Bank. Unilever sold the local trademark instead. By 2025, the company's ice cream division was spun off into a new company, Magnum — and the founders' fight to keep the brand's voice intact went public.",
+      "text": "In 2021, Ben &amp; Jerry's independent board voted to stop selling ice cream in the occupied West Bank. Unilever sold the local trademark instead — and by 2025, spun the ice cream business off into a new company, Magnum.",
       "bold": "Free Ben &amp; Jerry's",
-      "footer": "Jerry Greenfield resigned from the board in 2025 — the first time in nearly 50 years he'd stepped away — writing that a company that can't stand up for what it believes 'isn't worth being a company at all.'"
+      "footer": "Jerry Greenfield resigned from the board in 2025 — his first step away in nearly 50 years — writing that a company that can't stand up for what it believes 'isn't worth being a company at all.'"
     },
     {
       "type": "photo",
