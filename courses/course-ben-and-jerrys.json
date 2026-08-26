@@ -80,7 +80,10 @@
       "calloutTop": true,
       "text": "Asked whether Ben &amp; Jerry's should tell customers plainly that milk and cream carry a real climate cost, co-founder Ben Cohen gave a disarmingly honest answer.",
       "bold": "disarmingly honest",
-      "footer": "Not greenwashing — nothing here is misrepresented. But it's a real gap between a brand loud about Gaza or voting rights, and quieter about its own best-selling product's emissions.",
+      "bullets": [
+        "Not greenwashing — nothing here is misrepresented",
+        "But it's a real gap: a brand loud about Gaza or voting rights, quieter about its own best-selling product's emissions"
+      ],
       "source": "Bloomberg Green podcast, 2026"
     },
     {
@@ -102,9 +105,14 @@
     {
       "type": "text",
       "theme": "dark",
-      "text": "In 2021, Ben &amp; Jerry's independent board voted to stop selling ice cream in the occupied West Bank. Unilever sold the local trademark instead — and by 2025, spun the ice cream business off into a new company, Magnum.",
+      "text": "The relationship with Unilever broke down over Israel and Palestine.",
       "bold": "Free Ben &amp; Jerry's",
-      "footer": "Jerry Greenfield resigned from the board in 2025 — his first step away in nearly 50 years — writing that a company that can't stand up for what it believes 'isn't worth being a company at all.'"
+      "bullets": [
+        "2021: the independent board voted to stop selling ice cream in the occupied West Bank — Unilever sold the local trademark instead",
+        "2025: the ice cream business was spun off into a new company, Magnum",
+        "Jerry Greenfield resigned from the board in 2025 — his first step away in nearly 50 years — writing that a company that can't stand up for what it believes 'isn't worth being a company at all'"
+      ],
+      "footer": "The 'Free Ben &amp; Jerry's' campaign — Cohen's push to buy the brand back — is still ongoing."
     },
     {
       "type": "photo",

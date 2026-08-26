@@ -2905,6 +2905,23 @@
   .theme-light .cp-visual-text strong { color: #0a293b; }
   .theme-dark  .cp-visual-text strong { color: white; }
 
+  /* Scrollable safety net — if a slide's content is taller than the
+     available space (between the fixed top/bottom chrome), let the
+     reader scroll to see the rest instead of silently clipping it.
+     max-height:100% resolves against .cp-slide's content box, which
+     already excludes the chrome via its own padding, so this has no
+     visible effect when content already fits (no stray scrollbar). */
+  .cp-text-body,
+  .cp-stat-body,
+  .cp-compare-body,
+  .cp-visual-body {
+    max-height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    pointer-events: auto;
+  }
+
   /* Tap navigation zones (invisible) */
   .cp-tap-prev, .cp-tap-next {
     position: absolute;
