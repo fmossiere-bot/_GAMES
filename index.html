@@ -2721,7 +2721,7 @@
     width: 100%;
   }
   .cp-slide-photo.cp-photo-center .cp-text {
-    font-size: clamp(30px, 9vw, 46px);
+    font-size: clamp(22px, 7vw, 32px);
     font-weight: 700;
     line-height: 1.25;
     color: rgba(255,255,255,0.95);
@@ -2745,7 +2745,7 @@
   /* Callout — big number/phrase inside a text slide */
   .cp-callout {
     font-family: 'Comfortaa', cursive;
-    font-size: clamp(64px, 18vw, 96px);
+    font-size: clamp(36px, 13vw, 56px);
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.03em;
@@ -2765,9 +2765,9 @@
     gap: 12px;
   }
   .cp-bullets li {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    display: block;
+    position: relative;
+    padding-left: 20px;
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(14px, 4vw, 17px);
     color: rgba(255,255,255,0.75);
@@ -2775,12 +2775,13 @@
   }
   .cp-bullets li::before {
     content: '';
-    flex-shrink: 0;
+    position: absolute;
+    left: 0;
+    top: 7px;
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: #e27e22;
-    margin-top: 7px;
   }
   .cp-bullets li strong {
     color: rgba(255,255,255,0.95);

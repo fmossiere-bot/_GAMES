@@ -10,8 +10,9 @@
       "image": "vermont-ice-cream-van.jpg",
       "align": "center",
       "tag": "Brands &amp; Activism",
-      "text": "It started in a converted petrol station in Burlington, Vermont, and was sold out of vans just like this one. It became one of the most values-driven brands on Earth.",
-      "bold": "values-driven"
+      "text": "It started in a converted petrol station in Vermont, sold out of vans just like this one.",
+      "bold": "petrol station",
+      "footer": "It became one of the most values-driven brands on Earth."
     },
     {
       "type": "text",
@@ -91,8 +92,9 @@
       "image": "chocolate-cone.jpg",
       "align": "center",
       "tag": "The Product Itself",
-      "text": "The ice cream is still the thing: rich, indulgent, and, like nearly all dairy, carrying a real climate cost the company is still working out how loudly to talk about.",
-      "bold": "a real climate cost"
+      "text": "The ice cream is still rich and indulgent.",
+      "bold": "rich and indulgent",
+      "footer": "But like nearly all dairy, it carries a real climate cost worth talking about."
     },
     {
       "type": "stat",
@@ -119,8 +121,10 @@
       "image": "resist-illustration.jpg",
       "align": "center",
       "tag": "The Honest Picture",
-      "text": "Ben &amp; Jerry's proves values-led business can build both loyalty and profit: Magnum reports over 9% growth even as the brand keeps picking fights. The real test of authenticity isn't the causes a brand is loud about. It's the ones closer to home.",
-      "bold": "the ones closer to home"
+      "stat": "9%+",
+      "text": "The real test of authenticity isn't the causes a brand is loud about. It's the ones closer to home.",
+      "bold": "the ones closer to home",
+      "footer": "Magnum's growth rate even as Ben &amp; Jerry's keeps picking fights."
     }
   ]
 }
