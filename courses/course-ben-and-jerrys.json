@@ -3,13 +3,14 @@
   "title": "The Ben &amp; Jerry's Story",
   "category": "Brands &amp; Activism",
   "accent": "activism",
-  "readTime": 6,
+  "readTime": 7,
   "slides": [
     {
-      "type": "visual",
-      "theme": "light",
-      "emoji": "🍦",
-      "text": "It started in a converted petrol station in Burlington, Vermont. It became one of the most values-driven brands on Earth.",
+      "type": "photo",
+      "image": "vermont-ice-cream-van.jpg",
+      "align": "center",
+      "tag": "Brands &amp; Activism",
+      "text": "It started in a converted petrol station in Burlington, Vermont — sold out of vans just like this one. It became one of the most values-driven brands on Earth.",
       "bold": "values-driven"
     },
     {
@@ -18,6 +19,14 @@
       "text": "In 1978, childhood friends Ben Cohen and Jerry Greenfield opened an ice cream shop with a $12,000 investment — nearly half of it borrowed. A decade later, President Reagan named them US Small Business Persons of the Year.",
       "bold": "$12,000",
       "footer": "But the real story isn't the ice cream. It's what they did with the platform it gave them."
+    },
+    {
+      "type": "photo",
+      "image": "founders-activism.jpg",
+      "align": "center",
+      "tag": "Founders &amp; Activism",
+      "text": "Ben Cohen and Jerry Greenfield never stopped showing up in person for causes they believed in — long before 'purpose-driven business' became a marketing category.",
+      "bold": "showing up in person"
     },
     {
       "type": "visual",
@@ -31,6 +40,14 @@
       "theme": "blue",
       "text": "It set the template for the next four decades: turn customer goodwill into pressure, and use the brand itself as an activism tool — on refugee support, LGBTQ+ rights, and climate justice.",
       "bold": "the brand itself as an activism tool"
+    },
+    {
+      "type": "photo",
+      "image": "pride-pint.jpg",
+      "align": "center",
+      "tag": "Values, Not Just Marketing",
+      "text": "It backed LGBTQ+ rights in its flavors as much as its statements — an early corporate supporter of same-sex marriage, years before it was safe to be.",
+      "bold": "years before it was safe to be"
     },
     {
       "type": "compare",
@@ -67,6 +84,14 @@
       "source": "Bloomberg Green podcast, 2026"
     },
     {
+      "type": "photo",
+      "image": "chocolate-cone.jpg",
+      "align": "center",
+      "tag": "The Product Itself",
+      "text": "The ice cream is still the thing — rich, indulgent, and, like nearly all dairy, carrying a real climate cost the company is still working out how loudly to talk about.",
+      "bold": "a real climate cost"
+    },
+    {
       "type": "stat",
       "theme": "green",
       "icon": "🌱",
@@ -82,9 +107,10 @@
       "footer": "Jerry Greenfield resigned from the board in 2025 — the first time in nearly 50 years he'd stepped away — writing that a company that can't stand up for what it believes 'isn't worth being a company at all.'"
     },
     {
-      "type": "visual",
-      "theme": "light",
-      "emoji": "🌍",
+      "type": "photo",
+      "image": "resist-illustration.jpg",
+      "align": "center",
+      "tag": "The Honest Picture",
       "text": "Ben &amp; Jerry's proves values-led business can build both loyalty and profit — Magnum reports over 9% growth even as the brand keeps picking fights. The real test of authenticity isn't the causes a brand is loud about. It's the ones closer to home.",
       "bold": "the ones closer to home"
     }
