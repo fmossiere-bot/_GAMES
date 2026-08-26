@@ -2015,6 +2015,7 @@
   .story-card-home.topic-data    .story-card-home-accent { background: linear-gradient(180deg,#2199e6,#6bd0f5); }
   .story-card-home.topic-food    .story-card-home-accent { background: linear-gradient(180deg,#4e8a4d,#7dbf7c); }
   .story-card-home.topic-society .story-card-home-accent { background: linear-gradient(180deg,#e27e22,#f5b060); }
+  .story-card-home.topic-activism .story-card-home-accent { background: linear-gradient(180deg,#d9364f,#ff8fa3); }
   .story-card-home-body {
     padding: 14px 14px 14px 16px;
     flex: 1;
@@ -2033,6 +2034,7 @@
   .story-card-home.topic-data    .story-card-home-icon { background: rgba(33,153,230,0.12); }
   .story-card-home.topic-food    .story-card-home-icon { background: rgba(78,138,77,0.12);  }
   .story-card-home.topic-society .story-card-home-icon { background: rgba(226,126,34,0.12); }
+  .story-card-home.topic-activism .story-card-home-icon { background: rgba(217,54,79,0.12); }
   .story-card-home-info { flex: 1; }
   .story-card-home-tag {
     font-size: 9px; font-weight: 700;
@@ -2043,6 +2045,7 @@
   .story-card-home.topic-data    .story-card-home-tag { color: #2199e6; }
   .story-card-home.topic-food    .story-card-home-tag { color: #4e8a4d; }
   .story-card-home.topic-society .story-card-home-tag { color: #e27e22; }
+  .story-card-home.topic-activism .story-card-home-tag { color: #d9364f; }
   .story-card-home-title {
     font-family: 'Comfortaa', cursive;
     font-size: 15px; font-weight: 700;
@@ -2420,6 +2423,7 @@
   .ml-card.topic-food    .ml-card-accent { background: linear-gradient(90deg, #4e8a4d, #7dbf7c); }
   .ml-card.topic-society .ml-card-accent { background: linear-gradient(90deg, #e27e22, #f5b060); }
   .ml-card.topic-climate .ml-card-accent { background: linear-gradient(90deg, #7dbf7c, #2199e6); }
+  .ml-card.topic-activism .ml-card-accent { background: linear-gradient(90deg, #d9364f, #ff8fa3); }
 
   .ml-card-inner {
     padding: 14px 16px 16px;
@@ -2442,6 +2446,7 @@
   .ml-card.topic-food    .ml-card-icon { background: rgba(78,138,77,0.15);  color: #7dbf7c; }
   .ml-card.topic-society .ml-card-icon { background: rgba(226,126,34,0.15); color: #f5b060; }
   .ml-card.topic-climate .ml-card-icon { background: rgba(125,204,138,0.15);color: #7dbf7c; }
+  .ml-card.topic-activism .ml-card-icon { background: rgba(217,54,79,0.15); color: #ff8fa3; }
 
   .ml-card-content { flex: 1; }
   .ml-card-meta {
@@ -2455,6 +2460,7 @@
   .ml-card.topic-food    .ml-card-meta { color: #7dbf7c; }
   .ml-card.topic-society .ml-card-meta { color: #f5b060; }
   .ml-card.topic-climate .ml-card-meta { color: #7dbf7c; }
+  .ml-card.topic-activism .ml-card-meta { color: #ff8fa3; }
 
   .ml-card-title {
     font-family: 'Comfortaa', cursive;
@@ -2657,6 +2663,23 @@
     position: relative;
     z-index: 1;
   }
+  /* Center narrative copy (2026-08-26). Scoped away from .cp-slide-photo
+     so the non-centered photo variant's tag/caption overlay (see
+     course-climate-and-finance and course-data-centres-ireland) keeps its
+     left-aligned layout; the centered photo variant already centers via
+     the .cp-photo-center rule below and is unaffected either way.
+     width:100% makes the box span the full slide so text-align has a
+     wide-enough box to center within even for short, unwrapped lines. */
+  .cp-slide:not(.cp-slide-photo) .cp-text-body {
+    width: 100%;
+    text-align: center;
+  }
+  /* Bullet lists read better left-aligned even inside a centered text
+     body: the list still sits centered as a block (it stretches to
+     the body's full width), only the item text itself stays left. */
+  .cp-bullets {
+    text-align: left;
+  }
   .cp-text {
     font-family: 'Comfortaa', cursive;
     font-size: clamp(22px, 6vw, 30px);
@@ -2698,7 +2721,7 @@
     width: 100%;
   }
   .cp-slide-photo.cp-photo-center .cp-text {
-    font-size: clamp(30px, 9vw, 46px);
+    font-size: clamp(22px, 7vw, 32px);
     font-weight: 700;
     line-height: 1.25;
     color: rgba(255,255,255,0.95);
@@ -2722,7 +2745,7 @@
   /* Callout — big number/phrase inside a text slide */
   .cp-callout {
     font-family: 'Comfortaa', cursive;
-    font-size: clamp(64px, 18vw, 96px);
+    font-size: clamp(36px, 13vw, 56px);
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.03em;
@@ -2742,9 +2765,9 @@
     gap: 12px;
   }
   .cp-bullets li {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    display: block;
+    position: relative;
+    padding-left: 20px;
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(14px, 4vw, 17px);
     color: rgba(255,255,255,0.75);
@@ -2752,12 +2775,13 @@
   }
   .cp-bullets li::before {
     content: '';
-    flex-shrink: 0;
+    position: absolute;
+    left: 0;
+    top: 7px;
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: #e27e22;
-    margin-top: 7px;
   }
   .cp-bullets li strong {
     color: rgba(255,255,255,0.95);
@@ -2769,6 +2793,7 @@
     color: rgba(255,255,255,0.6);
     line-height: 1.5;
     margin-top: 4px;
+    text-align: center;
   }
 
   /* Compare slide */
@@ -2786,6 +2811,7 @@
     font-weight: 700;
     color: rgba(255,255,255,0.9);
     margin-bottom: 4px;
+    text-align: center;
   }
   .cp-compare-col {
     border-radius: 14px;
@@ -2849,13 +2875,16 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    /* center (was flex-start) so the number/caption/note/source stack
+       reads as a centered block, not left-anchored (2026-08-26). */
+    align-items: center;
     gap: 10px;
   }
   .cp-stat-icon {
     font-size: 52px;
     line-height: 1;
     margin-bottom: 4px;
+    text-align: center;
   }
   .cp-stat-number {
     font-family: 'Comfortaa', cursive;
@@ -2864,6 +2893,7 @@
     line-height: 1;
     color: white;
     letter-spacing: -0.02em;
+    text-align: center;
   }
   .cp-stat-caption {
     font-size: clamp(15px, 4.5vw, 20px);
@@ -2872,6 +2902,7 @@
     max-width: 300px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
+    text-align: center;
   }
 
   /* ── SLIDE TYPE: visual ── */
@@ -2882,6 +2913,7 @@
     flex-direction: column;
     gap: 24px;
     width: 100%;
+    text-align: center;
   }
   .cp-visual-emoji {
     font-size: 80px;
@@ -2898,6 +2930,23 @@
   .cp-visual-text strong { font-weight: 700; }
   .theme-light .cp-visual-text strong { color: #0a293b; }
   .theme-dark  .cp-visual-text strong { color: white; }
+
+  /* Scrollable safety net — if a slide's content is taller than the
+     available space (between the fixed top/bottom chrome), let the
+     reader scroll to see the rest instead of silently clipping it.
+     max-height:100% resolves against .cp-slide's content box, which
+     already excludes the chrome via its own padding, so this has no
+     visible effect when content already fits (no stray scrollbar). */
+  .cp-text-body,
+  .cp-stat-body,
+  .cp-compare-body,
+  .cp-visual-body {
+    max-height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    pointer-events: auto;
+  }
 
   /* Tap navigation zones (invisible) */
   .cp-tap-prev, .cp-tap-next {
@@ -3647,6 +3696,24 @@
       </div>
     </div>
 
+    <!-- The Ben & Jerry's Story — LIVE -->
+    <div class="ml-card topic-activism active" onclick="openCourse('ben-and-jerrys')">
+      <div class="ml-card-accent"></div>
+      <div class="ml-card-inner">
+        <div class="ml-card-icon"><span class="material-symbols-outlined">icecream</span></div>
+        <div class="ml-card-content">
+          <div class="ml-card-meta">Brands &amp; Activism</div>
+          <div class="ml-card-title">The Ben &amp; Jerry's Story</div>
+          <div class="ml-card-desc">From a converted petrol station to a global brand that never stopped picking fights. How values-driven business really works — and where it gets complicated.</div>
+        </div>
+      </div>
+      <div class="ml-card-footer">
+        <span class="ml-chip">14 slides</span>
+        <span class="ml-chip">7 min</span>
+        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+      </div>
+    </div>
+
     <p class="learn-section-label" style="margin-top:16px;">Coming soon</p>
 
     <!-- Food Waste & Composting -->
@@ -4316,6 +4383,14 @@ const ALL_STORIES = [
     tag:   'Good News',
     title: 'Climate Wins in 2025',
     meta:  '10 slides · 5 min',
+  },
+  {
+    id:    'ben-and-jerrys',
+    topic: 'topic-activism',
+    icon:  '🍦',
+    tag:   'Brands & Activism',
+    title: "The Ben & Jerry's Story",
+    meta:  '14 slides · 7 min',
   }
   // add more stories here as they go live
 ];

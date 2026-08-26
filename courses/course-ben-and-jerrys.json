@@ -1,0 +1,130 @@
+{
+  "id": "ben-and-jerrys",
+  "title": "The Ben &amp; Jerry's Story",
+  "category": "Brands &amp; Activism",
+  "accent": "activism",
+  "readTime": 7,
+  "slides": [
+    {
+      "type": "photo",
+      "image": "vermont-ice-cream-van.jpg",
+      "align": "center",
+      "tag": "Brands &amp; Activism",
+      "text": "It started in a converted petrol station in Vermont, sold out of vans just like this one.",
+      "bold": "petrol station",
+      "footer": "It became one of the most values-driven brands on Earth."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "In 1978, childhood friends Ben Cohen and Jerry Greenfield opened an ice cream shop with a $12,000 investment, nearly half of it borrowed. A decade later, President Reagan named them US Small Business Persons of the Year.",
+      "bold": "$12,000",
+      "footer": "But the real story isn't the ice cream. It's what they did with the platform it gave them."
+    },
+    {
+      "type": "photo",
+      "image": "founders-activism.jpg",
+      "align": "center",
+      "tag": "Founders &amp; Activism",
+      "text": "Ben Cohen and Jerry Greenfield never stopped showing up in person for causes they believed in, long before 'purpose-driven business' became a marketing category.",
+      "bold": "showing up in person"
+    },
+    {
+      "type": "visual",
+      "theme": "light",
+      "emoji": "🎪",
+      "text": "When Pillsbury, the owner of rival Häagen-Dazs, pressured shared distributors to drop Ben &amp; Jerry's, the pair didn't sue quietly. They flew banners over Boston stadiums and printed an 800-number on their tubs: 'What's the Doughboy Afraid Of?'",
+      "bold": "What's the Doughboy Afraid Of?"
+    },
+    {
+      "type": "text",
+      "theme": "blue",
+      "text": "It set the template for the next four decades: turn customer goodwill into pressure, and use the brand itself as an activism tool for refugee support, LGBTQ+ rights, and climate justice.",
+      "bold": "the brand itself as an activism tool"
+    },
+    {
+      "type": "photo",
+      "image": "pride-pint.jpg",
+      "align": "center",
+      "tag": "Values, Not Just Marketing",
+      "text": "It backed LGBTQ+ rights in its flavors as much as its statements, becoming an early corporate supporter of same-sex marriage years before it was safe to be.",
+      "bold": "years before it was safe to be"
+    },
+    {
+      "type": "compare",
+      "theme": "dark",
+      "title": "Most brands market their values. Ben &amp; Jerry's spent decades acting on them.",
+      "badLabel": "A marketing campaign",
+      "bad": ["Adopts a cause when it's convenient", "Drops it when it gets costly", "Builds loyalty through advertising"],
+      "goodLabel": "Ben &amp; Jerry's, in practice",
+      "good": ["Criticized the Iraq War and backed Occupy Wall Street, all while under corporate ownership", "Called to 'dismantle white supremacy' after George Floyd's murder", "Built loyalty on shared values, not ad spend"]
+    },
+    {
+      "type": "stat",
+      "theme": "orange",
+      "stat": "$326M",
+      "caption": "In 2000, Unilever bought Ben &amp; Jerry's for $326 million, on one condition: an independent board with legal authority over the brand's social mission, in perpetuity.",
+      "note": "Business schools cited the structure for years as a model for preserving purpose after acquisition.",
+      "source": "The Guardian, 2026"
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "But the brand's clearest reputation is for taking a stand on someone else's issue: war, politics, human rights. Its own core product tells a harder story.",
+      "bold": "its own core product",
+      "footer": "Dairy farming is one of the largest sources of methane on the planet."
+    },
+    {
+      "type": "text",
+      "theme": "blue",
+      "callout": "\"It's a good question. I don't know.\"",
+      "calloutTop": true,
+      "text": "Asked whether Ben &amp; Jerry's should tell customers plainly that milk and cream carry a real climate cost, co-founder Ben Cohen gave a disarmingly honest answer.",
+      "bold": "disarmingly honest",
+      "bullets": [
+        "Not greenwashing: nothing here is misrepresented",
+        "But it's a real gap: a brand loud about Gaza or voting rights, quieter about its own best-selling product's emissions"
+      ],
+      "source": "Bloomberg Green podcast, 2026"
+    },
+    {
+      "type": "photo",
+      "image": "chocolate-cone.jpg",
+      "align": "center",
+      "tag": "The Product Itself",
+      "text": "The ice cream is still rich and indulgent.",
+      "bold": "rich and indulgent",
+      "footer": "But like nearly all dairy, it carries a real climate cost worth talking about."
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "icon": "🌱",
+      "stat": "20 years",
+      "caption": "For nearly two decades, Ben &amp; Jerry's 'Caring Dairy' programme has worked with farms in Vermont, the Netherlands, Germany and the UK on climate-smart practices, and it's since launched a full oat-based, non-dairy range.",
+      "footer": "A real step. Not yet the plain admission the flagship product's cost is worth confronting head-on."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "The relationship with Unilever broke down over Israel and Palestine.",
+      "bold": "Free Ben &amp; Jerry's",
+      "bullets": [
+        "2021: the independent board voted to stop selling ice cream in the occupied West Bank, so Unilever sold the local trademark instead",
+        "2025: the ice cream business was spun off into a new company, Magnum",
+        "Jerry Greenfield resigned from the board in 2025, his first step away in nearly 50 years, writing that a company that can't stand up for what it believes 'isn't worth being a company at all'"
+      ],
+      "footer": "The 'Free Ben &amp; Jerry's' campaign, Cohen's push to buy the brand back, is still ongoing."
+    },
+    {
+      "type": "photo",
+      "image": "resist-illustration.jpg",
+      "align": "center",
+      "tag": "The Honest Picture",
+      "stat": "9%+",
+      "text": "The real test of authenticity isn't the causes a brand is loud about. It's the ones closer to home.",
+      "bold": "the ones closer to home",
+      "footer": "Magnum's growth rate even as Ben &amp; Jerry's keeps picking fights."
+    }
+  ]
+}
