@@ -2694,12 +2694,14 @@
   }
   .theme-dark  .cp-text,
   .theme-green .cp-text,
-  .theme-blue  .cp-text  { color: rgba(255,255,255,0.85); }
+  .theme-blue  .cp-text,
+  .theme-orange .cp-text { color: rgba(255,255,255,0.85); }
   .theme-light .cp-text  { color: #0a293b; }
   .cp-text strong { font-weight: 700; }
   .theme-dark  .cp-text strong { color: white; }
   .theme-green .cp-text strong { color: #a8edba; }
   .theme-blue  .cp-text strong { color: #a0d8ef; }
+  .theme-orange .cp-text strong { color: #ffd9a8; }
   .theme-light .cp-text strong { color: #0a293b; }
 
   /* Photo slide */
@@ -5083,7 +5085,7 @@ function _slideHTML(slide) {
     const centered = slide.align === 'center';
     const tagHtml  = slide.tag ? `<div class="cp-photo-tag">${slide.tag}</div>` : '';
     const statHtml = slide.stat ? `<div style="font-family:'Comfortaa',cursive;font-size:clamp(72px,20vw,100px);font-weight:700;line-height:1;letter-spacing:-0.03em;color:#fff;margin-bottom:8px;">${slide.stat}</div>` : '';
-    const photoFooter = slide.footer ? `<p style="font-family:'Montserrat',sans-serif;font-size:clamp(13px,3.8vw,15px);color:rgba(255,255,255,0.5);line-height:1.5;margin-top:16px;font-style:italic;">${slide.footer}</p>` : '';
+    const photoFooter = slide.footer ? `<p style="font-family:'Montserrat',sans-serif;font-size:clamp(14px,4vw,16px);color:rgba(255,255,255,0.82);line-height:1.5;margin-top:16px;font-style:italic;text-shadow:0 1px 3px rgba(0,0,0,0.6);">${slide.footer}</p>` : '';
     return `<div class="cp-slide cp-slide-photo${centered ? ' cp-photo-center' : ''}" style="background-image:url('courses/images/${slide.image}');">
       <div class="cp-photo-overlay"></div>
       <div class="cp-text-body" style="position:relative;z-index:1;">

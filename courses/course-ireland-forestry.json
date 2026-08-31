@@ -18,16 +18,9 @@
       "type": "stat",
       "theme": "dark",
       "stat": "10%",
-      "caption": "Just 10% of Ireland's land is forest. The EU average is 39.8%, nearly four times higher.",
-      "bold": "10%",
+      "caption": "Just over 10% of Ireland's land is forest. The EU average is 39.8%, nearly four times higher.",
+      "bold": "over 10%",
       "source": "Teagasc / Ireland Climate Action Plan"
-    },
-    {
-      "type": "text",
-      "theme": "blue",
-      "text": "Ireland's Climate Action Plan needs 8,000 hectares of new forest planted every year to hit its 2030 targets. Planting rates have been falling, not rising.",
-      "bold": "8,000 hectares",
-      "footer": "The gap between target and reality keeps growing."
     },
     {
       "type": "text",
@@ -35,6 +28,13 @@
       "text": "Forests aren't just scenery. Under Ireland's climate law, they're one of the tools meant to help pull the country to net zero.",
       "bold": "net zero",
       "footer": "Ireland's Climate Action and Low Carbon Development Act commits to a 51% emissions cut by 2030 and net-zero by 2050."
+    },
+    {
+      "type": "text",
+      "theme": "blue",
+      "text": "Growing Ireland's forest cover is a core piece of the Climate Action Plan, alongside restoring wetlands and peat bogs. It relies on two things together: better management of the forest already in the ground, and afforestation, planting entirely new ground.",
+      "bold": "afforestation",
+      "footer": "The plan targets about 8,000 hectares of new planting a year, alongside rehabilitating roughly 77,600 hectares of peatland by 2030."
     },
     {
       "type": "photo",
@@ -46,20 +46,11 @@
       "footer": "Ireland's forests already hold an estimated 312 million tonnes of carbon."
     },
     {
-      "type": "stat",
-      "theme": "green",
-      "stat": "312 Mt",
-      "caption": "Ireland's forests hold an estimated 312 million tonnes of carbon, pulling in roughly 3 million more tonnes every year.",
-      "source": "2017 estimate, Ireland Land Use &amp; Forestry"
-    },
-    {
-      "type": "stat",
+      "type": "text",
       "theme": "orange",
-      "stat": "9.7 Mt",
-      "caption": "But that's about to flip. A large share of Irish forest is now over 30 years old and reaching harvest age. By 2030 this sector is projected to emit 9.7 million tonnes of CO2 a year instead of absorbing it.",
-      "bold": "flip",
-      "note": "A 31.7% increase in projected emissions from this sector compared with 2021.",
-      "footer": "Without new planting, today's carbon sink becomes tomorrow's carbon source."
+      "text": "Right now, Ireland's forests are a net carbon sink. That's about to change. A large share of that forest is reaching maturity and being cut for commercial timber.",
+      "bold": "That's about to change.",
+      "footer": "It's also a chance to replant with a more diverse mix of trees that better support wildlife, which is exactly why continued afforestation matters."
     },
     {
       "type": "text",
@@ -78,18 +69,18 @@
     },
     {
       "type": "stat",
-      "theme": "light",
+      "theme": "dark",
       "stat": "1% &rarr; 10%",
       "caption": "From a low point of roughly 1% at the start of the 1900s, forest cover has climbed back to about 10% today, still far short of where it started, and far short of the EU average.",
-      "bold": "1% &rarr; 10%",
+      "bold": "climbed back to about 10%",
       "source": "Ireland Land Use &amp; Forestry"
     },
     {
       "type": "text",
       "theme": "blue",
-      "text": "Most of the recovery so far hasn't been oak or ash. It's been one fast-growing conifer, planted in rows.",
-      "bold": "one fast-growing conifer",
-      "footer": "Sitka spruce, a non-native species from the Pacific Northwest, dominates Ireland's commercial forestry."
+      "text": "Unfortunately, most of the recovery hasn't been oak or ash. It's been Sitka spruce, a fast-growing conifer planted in rows.",
+      "bold": "Sitka spruce",
+      "footer": "Non-native, originally from the Pacific Northwest, it now dominates Ireland's commercial forestry."
     },
     {
       "type": "photo",
@@ -105,14 +96,21 @@
       "image": "clearfelling-ireland.jpg",
       "align": "center",
       "tag": "Happening Now",
-      "text": "This clear-felling isn't history. It's happening across Ireland's commercial forests right now.",
+      "text": "It's happening across Ireland's commercial forests right now.",
       "bold": "right now",
       "footer": "Clear-felling removes an entire plantation block in one pass, not just mature trees."
     },
     {
+      "type": "text",
+      "theme": "dark",
+      "text": "There's a growing recognition that Ireland needs more than commercial conifer. Native, mixed-species forest supports far more biodiversity, and diversifying away from pure Sitka is now part of the conversation.",
+      "bold": "far more biodiversity",
+      "footer": "But not everyone got that message."
+    },
+    {
       "type": "compare",
       "theme": "dark",
-      "title": "In 2026, a children's book sent to Irish primary schools told a very different story.",
+      "title": "In 2026, a children's book sent to Irish primary schools told a very different message.",
       "badLabel": "What the book claimed",
       "bad": ["Plantations shown as thriving, wildlife-rich forests", "Framed as reliable long-term carbon storage", "Distributed to classrooms as environmental education"],
       "goodLabel": "What foresters and ecologists point out",
@@ -153,7 +151,7 @@
       "type": "text",
       "theme": "dark",
       "text": "Getting from 10% to anywhere near the European average means two things happening at once: planting a lot more, and planting differently.",
-      "bold": "more, and differently",
+      "bold": "a lot more, and planting differently",
       "footer": "Native broadleaf mixed in with commercial conifer. Incentives that pay farmers for more than fast timber. A plan that treats forests as long-term infrastructure, not a line item."
     }
   ]
