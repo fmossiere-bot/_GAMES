@@ -2016,6 +2016,7 @@
   .story-card-home.topic-food    .story-card-home-accent { background: linear-gradient(180deg,#4e8a4d,#7dbf7c); }
   .story-card-home.topic-society .story-card-home-accent { background: linear-gradient(180deg,#e27e22,#f5b060); }
   .story-card-home.topic-activism .story-card-home-accent { background: linear-gradient(180deg,#d9364f,#ff8fa3); }
+  .story-card-home.topic-forestry .story-card-home-accent { background: linear-gradient(180deg,#2d5a3d,#8a6d3f); }
   .story-card-home-body {
     padding: 14px 14px 14px 16px;
     flex: 1;
@@ -2035,6 +2036,7 @@
   .story-card-home.topic-food    .story-card-home-icon { background: rgba(78,138,77,0.12);  }
   .story-card-home.topic-society .story-card-home-icon { background: rgba(226,126,34,0.12); }
   .story-card-home.topic-activism .story-card-home-icon { background: rgba(217,54,79,0.12); }
+  .story-card-home.topic-forestry .story-card-home-icon { background: rgba(45,90,61,0.15); }
   .story-card-home-info { flex: 1; }
   .story-card-home-tag {
     font-size: 9px; font-weight: 700;
@@ -2046,6 +2048,7 @@
   .story-card-home.topic-food    .story-card-home-tag { color: #4e8a4d; }
   .story-card-home.topic-society .story-card-home-tag { color: #e27e22; }
   .story-card-home.topic-activism .story-card-home-tag { color: #d9364f; }
+  .story-card-home.topic-forestry .story-card-home-tag { color: #3d7a52; }
   .story-card-home-title {
     font-family: 'Comfortaa', cursive;
     font-size: 15px; font-weight: 700;
@@ -2424,6 +2427,7 @@
   .ml-card.topic-society .ml-card-accent { background: linear-gradient(90deg, #e27e22, #f5b060); }
   .ml-card.topic-climate .ml-card-accent { background: linear-gradient(90deg, #7dbf7c, #2199e6); }
   .ml-card.topic-activism .ml-card-accent { background: linear-gradient(90deg, #d9364f, #ff8fa3); }
+  .ml-card.topic-forestry .ml-card-accent { background: linear-gradient(90deg, #2d5a3d, #8a6d3f); }
 
   .ml-card-inner {
     padding: 14px 16px 16px;
@@ -2447,6 +2451,7 @@
   .ml-card.topic-society .ml-card-icon { background: rgba(226,126,34,0.15); color: #f5b060; }
   .ml-card.topic-climate .ml-card-icon { background: rgba(125,204,138,0.15);color: #7dbf7c; }
   .ml-card.topic-activism .ml-card-icon { background: rgba(217,54,79,0.15); color: #ff8fa3; }
+  .ml-card.topic-forestry .ml-card-icon { background: rgba(45,90,61,0.15); color: #4a7c59; }
 
   .ml-card-content { flex: 1; }
   .ml-card-meta {
@@ -2461,6 +2466,7 @@
   .ml-card.topic-society .ml-card-meta { color: #f5b060; }
   .ml-card.topic-climate .ml-card-meta { color: #7dbf7c; }
   .ml-card.topic-activism .ml-card-meta { color: #ff8fa3; }
+  .ml-card.topic-forestry .ml-card-meta { color: #4a7c59; }
 
   .ml-card-title {
     font-family: 'Comfortaa', cursive;
@@ -2688,12 +2694,14 @@
   }
   .theme-dark  .cp-text,
   .theme-green .cp-text,
-  .theme-blue  .cp-text  { color: rgba(255,255,255,0.85); }
+  .theme-blue  .cp-text,
+  .theme-orange .cp-text { color: rgba(255,255,255,0.85); }
   .theme-light .cp-text  { color: #0a293b; }
   .cp-text strong { font-weight: 700; }
   .theme-dark  .cp-text strong { color: white; }
   .theme-green .cp-text strong { color: #a8edba; }
   .theme-blue  .cp-text strong { color: #a0d8ef; }
+  .theme-orange .cp-text strong { color: #ffd9a8; }
   .theme-light .cp-text strong { color: #0a293b; }
 
   /* Photo slide */
@@ -3714,6 +3722,24 @@
       </div>
     </div>
 
+    <!-- Ireland's Forestry Problem — LIVE -->
+    <div class="ml-card topic-forestry active" onclick="openCourse('ireland-forestry')">
+      <div class="ml-card-accent"></div>
+      <div class="ml-card-inner">
+        <div class="ml-card-icon"><span class="material-symbols-outlined">forest</span></div>
+        <div class="ml-card-content">
+          <div class="ml-card-meta">Land &amp; Nature</div>
+          <div class="ml-card-title">Ireland's Forestry Problem</div>
+          <div class="ml-card-desc">Ireland is one of the least forested countries in Europe, and much of what it has planted is a single, contested conifer. What happened, and what comes next.</div>
+        </div>
+      </div>
+      <div class="ml-card-footer">
+        <span class="ml-chip">19 slides</span>
+        <span class="ml-chip">8 min</span>
+        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+      </div>
+    </div>
+
     <p class="learn-section-label" style="margin-top:16px;">Coming soon</p>
 
     <!-- Food Waste & Composting -->
@@ -4391,6 +4417,14 @@ const ALL_STORIES = [
     tag:   'Brands & Activism',
     title: "The Ben & Jerry's Story",
     meta:  '14 slides · 7 min',
+  },
+  {
+    id:    'ireland-forestry',
+    topic: 'topic-forestry',
+    icon:  '🌲',
+    tag:   'Land & Nature',
+    title: "Ireland's Forestry Problem",
+    meta:  '19 slides · 8 min',
   }
   // add more stories here as they go live
 ];
@@ -5051,7 +5085,7 @@ function _slideHTML(slide) {
     const centered = slide.align === 'center';
     const tagHtml  = slide.tag ? `<div class="cp-photo-tag">${slide.tag}</div>` : '';
     const statHtml = slide.stat ? `<div style="font-family:'Comfortaa',cursive;font-size:clamp(72px,20vw,100px);font-weight:700;line-height:1;letter-spacing:-0.03em;color:#fff;margin-bottom:8px;">${slide.stat}</div>` : '';
-    const photoFooter = slide.footer ? `<p style="font-family:'Montserrat',sans-serif;font-size:clamp(13px,3.8vw,15px);color:rgba(255,255,255,0.5);line-height:1.5;margin-top:16px;font-style:italic;">${slide.footer}</p>` : '';
+    const photoFooter = slide.footer ? `<p style="font-family:'Montserrat',sans-serif;font-size:clamp(14px,4vw,16px);color:rgba(255,255,255,0.82);line-height:1.5;margin-top:16px;font-style:italic;text-shadow:0 1px 3px rgba(0,0,0,0.6);">${slide.footer}</p>` : '';
     return `<div class="cp-slide cp-slide-photo${centered ? ' cp-photo-center' : ''}" style="background-image:url('courses/images/${slide.image}');">
       <div class="cp-photo-overlay"></div>
       <div class="cp-text-body" style="position:relative;z-index:1;">
