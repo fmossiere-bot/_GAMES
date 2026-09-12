@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>AI Companion — The Uptake Games</title>
+<title>AI Companion, Environmentle</title>
 <link rel="icon" type="image/png" sizes="32x32" href="/_images/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/_images/icon-180.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -12,7 +12,8 @@
 <meta name="apple-mobile-web-app-title" content="AI Companion">
 <meta name="theme-color" content="#0a293b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Rubik:wght@500&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script src="envie.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -91,6 +92,54 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  /* Environmentle wordmark, live text per brand kit */
+  .em-lockup {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .em-wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    position: relative;
+    font-family: 'Rubik', 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+  .em-wordmark .em-le {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.3em;
+    line-height: 1;
+    color: #62c46a;
+    margin-left: 0.03em;
+    position: relative;
+    top: 0.2em;
+  }
+  .em-tagline {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 8.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #62c46a;
+    margin-top: 8px;
+  }
+  .em-swoosh::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0.6em;
+    bottom: -0.16em;
+    height: 0.14em;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M1 8.5 Q 50 1 99 5.5' fill='none' stroke='%2362c46a' stroke-width='2.2' stroke-linecap='round'/></svg>") no-repeat center / 100% 100%;
+    pointer-events: none;
   }
 
   /* Profile button — matches the homepage */
@@ -1187,8 +1236,11 @@
 <!-- TOP BAR -->
 <header class="top-bar">
   <a class="top-bar-brand" href="/">
-    <img class="top-bar-logo" src="_images/Environmentle_logo1.png" width="32" height="32" alt="Environmentle logo">
-    <span class="top-bar-title">Climate Companion</span>
+    <img class="top-bar-logo" src="_images/_logo/assets/environmentle-icon-hero.svg" width="36" height="36" alt="Environmentle logo">
+    <span class="em-lockup">
+      <span class="em-wordmark em-swoosh">Environment<span class="em-le">le</span></span>
+      <span class="em-tagline">Play. Learn. Act.</span>
+    </span>
   </a>
   <a class="profile-icon-btn" href="/?profile=1" aria-label="Profile">
     <span class="material-symbols-outlined">person</span>
@@ -1275,11 +1327,9 @@
   </div>
 
   <div class="chat-empty" id="chat-empty">
-    <div class="chat-empty-icon">
-      <span class="material-symbols-outlined">eco</span>
-    </div>
+    <envie-mascot pose="spyglass" hat="cap" tee="science" style="width:104px;color:#fff;margin-bottom:6px"></envie-mascot>
     <div class="chat-empty-title">Ask me anything</div>
-    <p class="chat-empty-sub">Climate action, sustainability, net zero, renewables — I'm here to help.</p>
+    <p class="chat-empty-sub">Climate action, sustainability, net zero, renewables, I'm here to help.</p>
     <div class="chat-empty-suggestions">
       <button class="suggestion-chip" onclick="sendSuggestion(this)">What is carbon neutrality and how is it different from net zero?</button>
       <button class="suggestion-chip" onclick="sendSuggestion(this)">What are the most effective actions individuals can take on climate?</button>

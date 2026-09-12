@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>The Uptake Games — Play your part</title>
+<title>Environmentle, Play your part</title>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
@@ -18,16 +18,18 @@
   gtag('config', 'G-5S6BPNG30H');
 </script>
 <link rel="manifest" href="/manifest.json">
-<link rel="icon" type="image/png" sizes="32x32" href="/_images/favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/_images/icon-180.png">
+<link rel="icon" type="image/svg+xml" href="/_images/_logo/assets/environmentle-favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/_images/_logo/assets/environmentle-favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/_images/_logo/assets/environmentle-icon-hero-180.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Uptake Games">
+<meta name="apple-mobile-web-app-title" content="Environmentle">
 <meta name="theme-color" content="#0a293b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Plus+Jakarta+Sans:wght@700&family=Rubik:wght@500&family=Caveat:wght@700&family=Mulish:wght@600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<script src="envie.js" defer></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -94,27 +96,55 @@
   }
 
   /* ════════════════════════════════════
+     ENVIE — mascot placements (envie.js)
+  ════════════════════════════════════ */
+  .name-envie {
+    width: 92px;
+    color: #fff;
+    margin-bottom: 22px;
+    margin-right: 170px; /* room for the speech bubble */
+    --envie-bubble-width: 175%;
+    align-self: flex-start;
+  }
+  .hub-header { position: relative; }
+  .hub-envie {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 68px;
+    color: #fff;
+    pointer-events: none;
+  }
+  .hub-envie.bob { animation: envieBob 8s ease-in-out infinite; }
+  .games-lib-hero-content, .learn-hero-content { padding-right: 96px; }
+  .tab-envie {
+    position: absolute;
+    right: 18px;
+    bottom: -6px;
+    width: 78px;
+    color: #fff;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .profile-avatar { overflow: hidden; }
+  .profile-avatar .profile-envie {
+    width: 62px;
+    color: #fff;
+    margin-top: 40px; /* peek: head and raised hands over the rim */
+  }
+  .cp-toast-envie { width: 74px; color: #fff; margin: 0 auto 6px; }
+  @keyframes envieBob { 0%,100% { transform: translateY(0) rotate(-2deg) } 50% { transform: translateY(-6px) rotate(2deg) } }
+  @media (prefers-reduced-motion: reduce) { .hub-envie.bob { animation: none; } }
+
+  /* ════════════════════════════════════
      LANDING PAGE
   ════════════════════════════════════ */
   #landing { min-height: 100vh; }
 
   /* ── NAV ── */
-  .nav-back-bar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 101;
-    background: rgba(5, 22, 34, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    align-items: center;
-    padding: 7px 16px;
-  }
-
   .nav {
     position: fixed;
-    top: 32px; left: 0; right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 100;
     padding: 14px 20px;
     display: flex;
@@ -133,55 +163,74 @@
     text-decoration: none;
   }
 
-  .nav-logo-mark {
+  /* ── Environmentle wordmark (live text, per brand kit) ──
+     Rubik Medium name, "le" in Caveat Bold at 1.3x with the baseline dropped.
+     White + light green on navy; add .em-on-light for navy + green on light. */
+  .em-wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    position: relative;
+    font-family: 'Rubik', 'Montserrat', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+
+  .em-wordmark .em-le {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.3em;
+    line-height: 1;
+    color: #62c46a;
+    margin-left: 0.03em;
+    position: relative;
+    top: 0.2em;
+  }
+
+  .em-wordmark.em-on-light { color: var(--navy); }
+  .em-wordmark.em-on-light .em-le { color: var(--green); }
+
+  .em-tagline {
+    font-family: 'Mulish', 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #62c46a;
+  }
+
+  /* Stacked lockup: wordmark over tagline (headers + footer) */
+  .em-lockup {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Swoosh underline from the brand lockup */
+  .em-swoosh::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0.6em;
+    bottom: -0.16em;
+    height: 0.14em;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M1 8.5 Q 50 1 99 5.5' fill='none' stroke='%2362c46a' stroke-width='2.2' stroke-linecap='round'/></svg>") no-repeat center / 100% 100%;
+    pointer-events: none;
+  }
+  .em-swoosh.em-on-light::after {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M1 8.5 Q 50 1 99 5.5' fill='none' stroke='%234e8a4d' stroke-width='2.2' stroke-linecap='round'/></svg>");
+  }
+
+  .header-lockup .em-wordmark { font-size: 22px; }
+  .header-lockup .em-tagline  { font-size: 8.5px; margin-top: 8px; }
+
+  .header-logo-mark {
     width: 36px;
     height: 36px;
     flex-shrink: 0;
   }
-
-  .nav-logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-  }
-
-  .nav-logo-uptake {
-    font-family: 'Comfortaa', cursive;
-    font-size: 11px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.55);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .nav-logo-games {
-    font-family: 'Comfortaa', cursive;
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.1;
-  }
-
-  .nav-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    text-decoration: none;
-    color: rgba(255,255,255,0.38);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.01em;
-    text-transform: none;
-    transition: color 0.15s;
-    white-space: nowrap;
-  }
-  .nav-back:hover { color: rgba(255,255,255,0.75); }
-  .nav-back svg { flex-shrink: 0; }
 
   .nav-btn {
     background: var(--orange);
@@ -269,31 +318,17 @@
   }
 
   .hero-brand {
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
 
-  .hero-brand-uptake {
-    font-family: 'Comfortaa', cursive;
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.45);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 2px;
+  .hero-wordmark {
+    font-size: clamp(38px, 10.5vw, 56px);
   }
 
-  .hero-brand-games {
-    font-family: 'Comfortaa', cursive;
-    font-size: clamp(52px, 14vw, 72px);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    line-height: 0.95;
+  .hero-tagline {
     display: block;
-    background: linear-gradient(120deg, #7dbf7c 0%, #e27e22 80%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    margin-top: 16px;
+    font-size: 13px;
   }
 
   .hero-title {
@@ -367,6 +402,17 @@
     letter-spacing: 0.01em;
   }
   .btn-hero:active { transform: scale(0.97); background: var(--orange-dark); }
+
+  .btn-hero-cycle {
+    display: inline-block;
+    width: 72px;
+    text-align: left;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .btn-hero-cycle.is-swiping {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 
   /* ── HOW IT WORKS ── */
   .section {
@@ -479,11 +525,22 @@
     margin-bottom: 32px;
   }
 
+  .why-gap-label {
+    font-family: 'Comfortaa', cursive;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .why-gap {
+    margin-bottom: 20px;
+  }
+
   /* Closing line under the stat cards — reads as the punchline of the section */
   .why-close {
     font-family: 'Comfortaa', cursive;
     font-size: 17px;
-    font-weight: 600;
+    font-weight: 400;
     color: rgba(255,255,255,0.9);
     line-height: 1.5;
     margin-top: 8px;
@@ -595,43 +652,19 @@
     gap: 6px;
   }
 
-  .footer-brand-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  /* Footer: one-ink navy mark over the on-light lockup */
+  .footer-logo-tile {
+    display: block;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 10px;
   }
 
-  .footer-brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-    text-align: left;
-  }
-
-  .footer-brand-uptake {
-    font-family: 'Comfortaa', cursive;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(10,41,59,0.4);
-  }
-
-  .footer-brand-games {
-    font-family: 'Comfortaa', cursive;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .footer-byline {
-    font-size: 11px;
-    font-weight: 400;
-    color: rgba(0,0,0,0.28);
+  .footer-lockup { align-items: center; }
+  .footer-lockup .em-wordmark { font-size: 26px; }
+  .footer-lockup .em-wordmark.em-on-light .em-le { color: var(--navy); }
+  .footer-lockup .em-swoosh.em-on-light::after {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M1 8.5 Q 50 1 99 5.5' fill='none' stroke='%230a293b' stroke-width='2.2' stroke-linecap='round'/></svg>");
   }
 
   /* ════════════════════════════════════
@@ -813,34 +846,6 @@
     gap: 8px;
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
-  }
-
-  .hub-brand-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .hub-brand-uptake {
-    font-family: 'Comfortaa', cursive;
-    font-size: 9px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    line-height: 1.2;
-  }
-
-  .hub-logo-games {
-    font-family: 'Comfortaa', cursive;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.1;
   }
 
   .hub-greeting {
@@ -3153,22 +3158,13 @@
 <div id="landing">
 
   <!-- Nav -->
-  <div class="nav-back-bar">
-    <a class="nav-back" href="https://the-uptake.com" aria-label="Back to main site">
-      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9,2 4,7 9,12"/>
-      </svg>
-      Back to the-uptake.com
-    </a>
-  </div>
-
   <nav class="nav">
     <div class="nav-brand">
-      <img src="_images/Environmentle_logo1.png" class="nav-logo-mark" alt="The Uptake logo">
-      <div class="nav-logo-text">
-        <span class="nav-logo-uptake">The Uptake</span>
-        <span class="nav-logo-games">GAMES</span>
-      </div>
+      <img src="_images/_logo/assets/environmentle-icon-hero.svg" class="header-logo-mark" alt="">
+      <span class="em-lockup header-lockup">
+        <span class="em-wordmark em-swoosh">Environment<span class="em-le">le</span></span>
+        <span class="em-tagline">Play. Learn. Act.</span>
+      </span>
     </div>
     <button class="nav-btn" onclick="openNameScreen()">Play now</button>
   </nav>
@@ -3184,15 +3180,15 @@
     <div class="hero-content">
       <div class="hero-eyebrow anim-1">
         <div class="hero-eyebrow-dot"></div>
-        <span class="hero-eyebrow-text">Free to play · No app needed</span>
+        <span class="hero-eyebrow-text">Free · No app needed</span>
       </div>
       <div class="hero-brand anim-2">
-        <span class="hero-brand-uptake">The Uptake</span>
-        <span class="hero-brand-games">GAMES</span>
+        <span class="em-wordmark em-swoosh hero-wordmark">Environment<span class="em-le">le</span></span>
+        <span class="em-tagline hero-tagline">Play. Learn. Act.</span>
       </div>
       <p class="hero-title anim-3">
-        Small games.<br>
-        <strong>Real climate action.</strong>
+        One step a day<br>
+        <strong>for the planet.</strong>
       </p>
     </div>
 
@@ -3200,19 +3196,19 @@
       <div class="hero-stats">
         <div class="hero-stat">
           <div class="hero-stat-num" style="font-size:16px;color:var(--green-light);">Play</div>
-          <div class="hero-stat-label">3 min per challenge</div>
+          <div class="hero-stat-label">One challenge a day, 3 minutes</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-num" style="font-size:16px;color:var(--yellow);">Learn</div>
-          <div class="hero-stat-label">Guess, have fun &amp; discover real facts</div>
+          <div class="hero-stat-label">Facts you can trust</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-num" style="font-size:16px;color:var(--orange);">Act</div>
-          <div class="hero-stat-label">Build an action-biased mindset</div>
+          <div class="hero-stat-label">Small actions, real impact</div>
         </div>
       </div>
       <button class="btn-hero" onclick="openNameScreen()">
-        Start playing — it's free
+        <span>Start <span class="btn-hero-cycle" id="heroCtaCycle">playing</span> - it's free</span>
         <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
@@ -3229,28 +3225,28 @@
         <div class="step-number">1</div>
         <div class="step-content">
           <div class="step-title">Play</div>
-          <div class="step-desc">Start with today's daily challenge. A quiz, sorting game, or carbon calculator. Easy, fun, under 3 minutes.</div>
+          <div class="step-desc">Pick today's daily challenge. Simple, fun, and no more than 3 minutes.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-number">2</div>
         <div class="step-content">
           <div class="step-title">Learn</div>
-          <div class="step-desc">Pick things up through the game itself, or dip into our curated micro-learnings whenever you want a bit more depth.</div>
+          <div class="step-desc">Watch a short story, search our knowledge base, or ask our AI companion to go deeper.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-number">3</div>
         <div class="step-content">
           <div class="step-title">Act</div>
-          <div class="step-desc">Find one small action you can take this week, tailored to what came up in your game. Action is the best antidote.</div>
+          <div class="step-desc">Take one small action. Choose one of ours, or create your own.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-number">4</div>
         <div class="step-content">
-          <div class="step-title">Go further</div>
-          <div class="step-desc">Want to dig deeper? Our AI companion is ready for any question on climate, sustainability, or how to take it further.</div>
+          <div class="step-title">Collect Points</div>
+          <div class="step-desc">Earn points for everything you do, then put them toward real climate projects we partner with.</div>
         </div>
       </div>
     </div>
@@ -3260,24 +3256,29 @@
   <section class="why-section">
     <p class="why-label">Why it matters</p>
     <h2 class="why-title">The gap between<br><em>knowing and doing</em></h2>
-    <p class="why-intro">Extensive research in Behavioural Change, Climate Communication, Gaming and Marketing tells us that people want a <strong>Simple · Hopeful · Fun</strong> way to access factual information.</p>
+    <p class="why-intro">Most people are worried about climate change and want to do something about it. As a community, we can make a real difference. The UN estimates individual and community action could contribute up to 37% of the emissions cuts needed to tackle climate change. But there's a gap between wanting to act and knowing how.</p>
 
-    <div class="stat-cards">
-      <div class="stat-card">
-        <div class="stat-card-num">80<span class="unit">%</span></div>
-        <div class="stat-card-desc">of Irish people are <strong>willing to make changes</strong> but most don't know where to start.</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-num">52<span class="unit">%</span></div>
-        <div class="stat-card-desc">feel <strong>powerless</strong> to make a difference, yet the IPCC tells us <strong>individual action has a huge part to play</strong>.</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-num">45<span class="unit">%</span></div>
-        <div class="stat-card-desc">say it is <strong>almost impossible to find information</strong> about climate action that they can easily understand.</div>
+    <div class="why-gap">
+      <p class="why-gap-label" style="color:var(--yellow);">Knowledge gap</p>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-card-num">45<span class="unit">%</span></div>
+          <div class="stat-card-desc">say it's <strong>almost impossible to find</strong> climate information they can easily understand. Most people are also unclear on what actually drives greenhouse gas emissions.</div>
+        </div>
       </div>
     </div>
 
-    <p class="why-close">That's the <em>gap</em> we're trying to fill.</p>
+    <div class="why-gap">
+      <p class="why-gap-label" style="color:var(--orange);">Action gap</p>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-card-num" style="font-size:32px;">2 in 3</div>
+          <div class="stat-card-desc">Irish people believe it's <strong>important to reduce their carbon footprint</strong>, yet only 16% think they personally should be doing more. Anxiety, feeling powerless, feeling like it's someone else's problem, or just feeling lectured all play a part.</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="why-close">Extensive research in behavioural change, climate communication, gaming, and marketing tells us people want a <strong>Simple · Hopeful · Fun</strong> way to access factual information and take action.</p>
   </section>
 
   <!-- Footer CTA -->
@@ -3285,20 +3286,17 @@
     <h2 class="footer-cta-title">Ready to play<br><em>your part?</em></h2>
     <p class="footer-cta-sub">Join thousands of people learning something new about sustainability every day.</p>
     <button class="btn-hero" onclick="openNameScreen()" style="max-width:360px;margin:0 auto;display:flex;">
-      Start playing — it's free
+      <span>Start <span class="btn-hero-cycle" id="footerCtaCycle">playing</span> - it's free</span>
       <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </button>
 
     <div class="footer-brand">
-      <div class="footer-brand-logo">
-        <div class="footer-brand-text">
-          <span class="footer-brand-uptake">The Uptake</span>
-          <span class="footer-brand-games">GAMES</span>
-        </div>
-      </div>
-      <p class="footer-byline">games.the-uptake.com · A UCD Innovation Academy project</p>
+      <img src="_images/_logo/assets/environmentle-mark-hero-navy.svg" class="footer-logo-tile" alt="Environmentle logo">
+      <span class="em-lockup footer-lockup">
+        <span class="em-wordmark em-swoosh em-on-light">Environment<span class="em-le">le</span></span>
+      </span>
     </div>
 
   </section>
@@ -3318,6 +3316,7 @@
   </button>
 
   <div class="name-top">
+    <envie-mascot class="name-envie anim-1" pose="wave" hat="hat" says="Hi, I'm Envie. I'll tag along."></envie-mascot>
     <p class="name-welcome-label anim-1">Welcome</p>
     <h2 class="name-title anim-2">What do<br>we call <em>you?</em></h2>
     <p class="name-subtitle anim-3">No account needed. Just your name so we can make it feel a bit more personal.</p>
@@ -3357,12 +3356,12 @@
 
   <!-- Sticky top bar -->
   <div class="app-topbar">
-    <a class="hub-header-brand" href="https://the-uptake.com">
-      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
-      <div class="hub-brand-text">
-        <span class="hub-brand-uptake">The Uptake</span>
-        <span class="hub-logo-games">GAMES</span>
-      </div>
+    <a class="hub-header-brand" href="#" onclick="switchTab('home'); return false;">
+      <img src="_images/_logo/assets/environmentle-icon-hero.svg" class="header-logo-mark" alt="">
+      <span class="em-lockup header-lockup">
+        <span class="em-wordmark em-swoosh">Environment<span class="em-le">le</span></span>
+        <span class="em-tagline">Play. Learn. Act.</span>
+      </span>
     </a>
     <button class="profile-icon-btn" onclick="openProfile()" aria-label="Profile">
       <span class="material-symbols-outlined">person</span>
@@ -3371,6 +3370,7 @@
 
   <!-- Hub header — navy, with greeting + streak chips -->
   <div class="hub-header">
+    <envie-mascot class="hub-envie bob" id="hub-envie" pose="wave" hat="hat"></envie-mascot>
     <p class="hub-greeting" id="hub-greeting">Good to see you,</p>
     <h2 class="hub-title" id="hub-title">Pick your <em>challenge</em></h2>
     <div class="hub-streak-row">
@@ -3491,12 +3491,12 @@
 
   <!-- Same sticky topbar as home screen -->
   <div class="app-topbar">
-    <a class="hub-header-brand" href="https://the-uptake.com">
-      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
-      <div class="hub-brand-text">
-        <span class="hub-brand-uptake">The Uptake</span>
-        <span class="hub-logo-games">GAMES</span>
-      </div>
+    <a class="hub-header-brand" href="#" onclick="switchTab('home'); return false;">
+      <img src="_images/_logo/assets/environmentle-icon-hero.svg" class="header-logo-mark" alt="">
+      <span class="em-lockup header-lockup">
+        <span class="em-wordmark em-swoosh">Environment<span class="em-le">le</span></span>
+        <span class="em-tagline">Play. Learn. Act.</span>
+      </span>
     </a>
     <button class="profile-icon-btn" onclick="openProfile()" aria-label="Profile">
       <span class="material-symbols-outlined">person</span>
@@ -3518,6 +3518,7 @@
       <div class="games-lib-title">GAMES</div>
       <p class="games-lib-subtitle">Small games. Real climate action. Pick one and go.</p>
     </div>
+    <envie-mascot class="tab-envie" pose="point" hat="cap"></envie-mascot>
   </div>
 
   <div class="games-library-body">
@@ -3616,12 +3617,12 @@
 
   <!-- Same sticky topbar -->
   <div class="app-topbar">
-    <a class="hub-header-brand" href="https://the-uptake.com">
-      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
-      <div class="hub-brand-text">
-        <span class="hub-brand-uptake">The Uptake</span>
-        <span class="hub-logo-games">GAMES</span>
-      </div>
+    <a class="hub-header-brand" href="#" onclick="switchTab('home'); return false;">
+      <img src="_images/_logo/assets/environmentle-icon-hero.svg" class="header-logo-mark" alt="">
+      <span class="em-lockup header-lockup">
+        <span class="em-wordmark em-swoosh">Environment<span class="em-le">le</span></span>
+        <span class="em-tagline">Play. Learn. Act.</span>
+      </span>
     </a>
     <button class="profile-icon-btn" onclick="openProfile()" aria-label="Profile">
       <span class="material-symbols-outlined">person</span>
@@ -3643,6 +3644,7 @@
       <div class="learn-hero-title">STORIES</div>
       <p class="learn-hero-subtitle">Short, visual stories on climate and sustainability. No jargon, no overwhelm.</p>
     </div>
+    <envie-mascot class="tab-envie" pose="spyglass" hat="cap" tee="science"></envie-mascot>
   </div>
 
   <!-- Content -->
@@ -3694,7 +3696,7 @@
         <div class="ml-card-content">
           <div class="ml-card-meta">Finance</div>
           <div class="ml-card-title">Climate &amp; Finance</div>
-          <div class="ml-card-desc">Banks, green bonds, ESG investing, and your own account. How money flows determines whether the climate transition happens — and how fast.</div>
+          <div class="ml-card-desc">Banks, green bonds, ESG investing, and your own account. How money flows determines whether the climate transition happens, and how fast.</div>
         </div>
       </div>
       <div class="ml-card-footer">
@@ -3712,7 +3714,7 @@
         <div class="ml-card-content">
           <div class="ml-card-meta">Brands &amp; Activism</div>
           <div class="ml-card-title">The Ben &amp; Jerry's Story</div>
-          <div class="ml-card-desc">From a converted petrol station to a global brand that never stopped picking fights. How values-driven business really works — and where it gets complicated.</div>
+          <div class="ml-card-desc">From a converted petrol station to a global brand that never stopped picking fights. How values-driven business really works, and where it gets complicated.</div>
         </div>
       </div>
       <div class="ml-card-footer">
@@ -3750,7 +3752,7 @@
         <div class="ml-card-content">
           <div class="ml-card-meta">Food &amp; Waste</div>
           <div class="ml-card-title">Food Waste and Composting</div>
-          <div class="ml-card-desc">One third of all food produced globally is wasted. How composting closes the loop — and what you can do at home.</div>
+          <div class="ml-card-desc">One third of all food produced globally is wasted. How composting closes the loop, and what you can do at home.</div>
         </div>
       </div>
       <div class="ml-card-footer">
@@ -3767,7 +3769,7 @@
         <div class="ml-card-content">
           <div class="ml-card-meta">Society</div>
           <div class="ml-card-title">Talking about Climate Change</div>
-          <div class="ml-card-desc">Why climate conversations so often go wrong — and how to have them in a way that actually moves people.</div>
+          <div class="ml-card-desc">Why climate conversations so often go wrong, and how to have them in a way that actually moves people.</div>
         </div>
       </div>
       <div class="ml-card-footer">
@@ -3800,7 +3802,7 @@
   <div class="profile-body">
     <div class="profile-hero">
       <div class="profile-avatar">
-        <span class="material-symbols-outlined">person</span>
+        <envie-mascot class="profile-envie" pose="peek" hat="hat"></envie-mascot>
         <span class="profile-avatar-badge">
           <span class="material-symbols-outlined">eco</span>
         </span>
@@ -3892,7 +3894,7 @@
   <!-- Points toast (shown on first completion) -->
   <div id="cp-points-toast" class="cp-points-toast">
     <div class="cp-toast-inner">
-      <div class="cp-toast-emoji">🎉</div>
+      <envie-mascot class="cp-toast-envie" pose="celebrate" hat="hat"></envie-mascot>
       <div class="cp-toast-label">Story complete!</div>
       <div class="cp-toast-pts" id="cp-toast-pts">+75 pts</div>
       <div class="cp-toast-sub">Added to your score</div>
@@ -3966,7 +3968,7 @@
         <div class="faq-answer-inner">
           <p>This app is not trying to capture your attention or keep you scrolling. We are aware of the pressure that comes from constant digital noise, and from the weight of negative climate narratives. That is not what we want to add to your day.</p>
           <p>Our research shows that people want simple, trustworthy ways to stay informed, and that short, playful challenges are a good way to do that without feeling overwhelmed.</p>
-          <p>With that in mind, The Uptake Games is built around very short, casual challenges. You can take 2 to 3 challenges a day, for a maximum of 3 to 5 minutes. That is intentional. We want you to get something useful out of it, and then get on with your day.</p>
+          <p>With that in mind, Environmentle is built around very short, casual challenges. You can take 2 to 3 challenges a day, for a maximum of 3 to 5 minutes. That is intentional. We want you to get something useful out of it, and then get on with your day.</p>
         </div>
       </div>
     </div>
@@ -3999,6 +4001,25 @@
 
 
 <script>
+// ════════════════════════════════════
+// CTA buttons — cycling "playing / learning / acting" label
+// ════════════════════════════════════
+(function ctaCycle() {
+  const els = ['heroCtaCycle', 'footerCtaCycle']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  if (!els.length) return;
+  const words = ['playing', 'learning', 'acting'];
+  let i = 0;
+  setInterval(() => {
+    els.forEach(el => el.classList.add('is-swiping'));
+    setTimeout(() => {
+      i = (i + 1) % words.length;
+      els.forEach(el => { el.textContent = words[i]; el.classList.remove('is-swiping'); });
+    }, 250);
+  }, 2200);
+})();
+
 // ════════════════════════════════════
 // STATE
 // ════════════════════════════════════
@@ -4210,6 +4231,10 @@ async function openHub() {
   const bonusText = bonus ? ` · ${bonus}` : '';
   streakChip.textContent = `🔥 ${streakCount}-day streak${bonusText}`;
   streakChip.style.display = 'flex';
+
+  // Envie in the hub header: celebrates a streak, otherwise waves hello
+  const hubEnvie = document.getElementById('hub-envie');
+  if (hubEnvie) hubEnvie.setAttribute('pose', streakCount >= 3 ? 'celebrate' : streakCount >= 1 ? 'flag' : 'wave');
 
   // Streak stat in progress card
   document.getElementById('progress-streak').textContent = `🔥 ${streakCount}`;
@@ -5276,7 +5301,7 @@ function _renderCompletionSlide() {
         <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:#7dbf7c;line-height:1;letter-spacing:-0.02em;">+${STORY_POINTS}</div>
         <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:6px;font-family:'Montserrat',sans-serif;">pts added to your score</div>
       </div>` : `
-      <div style="font-size:13px;color:rgba(255,255,255,0.45);font-family:'Montserrat',sans-serif;margin-bottom:8px;">You've read this one before — no new points.</div>`}
+      <div style="font-size:13px;color:rgba(255,255,255,0.45);font-family:'Montserrat',sans-serif;margin-bottom:8px;">You've read this one before, no new points.</div>`}
   `;
   const overlay = document.getElementById('cp-completion');
   overlay.style.display = 'flex';
