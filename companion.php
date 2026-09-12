@@ -1618,7 +1618,12 @@ function appendAssistant(text, sourceType, sources, furtherLinks, oneLine) {
   thread.appendChild(row);
   const input = document.getElementById('user-input');
   if (input) input.placeholder = 'Ask a follow-up…';
-  scrollBottom();
+  // Read from the top: park the answer's first line at the top of the scroller
+  const scroller = document.getElementById('chat-scroll');
+  requestAnimationFrame(() => {
+    const top = row.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
+    scroller.scrollTop = Math.max(0, top - 12);
+  });
 }
 
 // ── APPEND ERROR ──
@@ -1925,14 +1930,21 @@ function ccBulletsHTML(text) {
          '<div class="cc-bullets">' + items.map(x => '<p>' + ccFormat(x) + '</p>').join('') + '</div>';
 }
 
+// Tapping a card lands on Envie and the line to say. The longer explanation
+// ("Why it sounds right" / "What's actually true") is one tap behind it.
 function ccOpen(id) {
+  ccRenderDetail(id);
+  ccSay(id);
+}
+
+function ccRenderDetail(id) {
   const c = _claims.find(x => x.id === id);
   if (!c) return;
   const srcLine = (c.sources || []).map(sr =>
     '<a href="' + escapeHtml(sr.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(sr.label) + '</a>'
   ).join(' · ');
   document.getElementById('cc-detail').innerHTML =
-    '<button type="button" class="cc-back" onclick="ccCloseDetail()">' + EA.icon('arrow-left', { size: 19 }) + 'All claims</button>' +
+    '<button type="button" class="cc-back" onclick="ccShowSay()">' + EA.icon('arrow-left', { size: 19 }) + 'Back to the line</button>' +
     ccVerdictHTML(c.verdict) +
     '<div class="cc-detail-claim">' + escapeHtml(c.claim) + '</div>' +
     '<div class="cc-block">' +
@@ -1944,14 +1956,21 @@ function ccOpen(id) {
       ccBulletsHTML(c.truth) +
     '</div>' +
     (srcLine ? '<p class="cc-srcline">' + EA.icon('info', { size: 13 }) + '<span>' + srcLine + '</span></p>' : '') +
-    '<button type="button" class="cta" onclick="ccSay(' + JSON.stringify(c.id).replace(/"/g, '&quot;') + ')">' +
-      EA.icon('message-square', { size: 18 }) + 'Get the line to say</button>';
+    '<button type="button" class="cta" onclick="ccShowSay()">' +
+      EA.icon('message-square', { size: 18 }) + 'Back to the line to say</button>';
   const view = document.getElementById('counter-view');
   // Remember where the list was so Back returns you to the same card.
   if (!document.body.classList.contains('cc-detail')) _ccListScroll = view.scrollTop;
   document.body.classList.add('cc-detail');
+}
+
+function ccShowDetail() {
   document.body.classList.remove('cc-say');
-  view.scrollTop = 0;
+  document.getElementById('counter-view').scrollTop = 0;
+}
+function ccShowSay() {
+  document.body.classList.add('cc-say');
+  document.getElementById('counter-view').scrollTop = 0;
 }
 
 function ccSay(id) {
@@ -1962,7 +1981,8 @@ function ccSay(id) {
     '<a href="' + escapeHtml(sr.url) + '" target="_blank" rel="noopener noreferrer">' + EA.icon('book-open', { size: 14 }) + escapeHtml(sr.label) + '</a>'
   ).join('');
   document.getElementById('cc-say').innerHTML =
-    '<button type="button" class="cc-back" onclick="ccCloseSay()">' + EA.icon('arrow-left', { size: 19 }) + 'Back to the claim</button>' +
+    '<button type="button" class="cc-back" onclick="ccCloseDetail()">' + EA.icon('arrow-left', { size: 19 }) + 'All claims</button>' +
+    '<div class="cc-say-head">' + ccVerdictHTML(c.verdict) + '<p class="cc-say-claim">' + escapeHtml(c.claim) + '</p></div>' +
     '<p class="cc-say-eyebrow">Next time it comes up</p>' +
     '<h2 class="cc-say-title">Say this</h2>' +
     '<div class="cc-say-bubble" id="cc-say-text">' + paras +
@@ -1974,13 +1994,9 @@ function ccSay(id) {
       '<button type="button" class="cta" onclick="ccCopy(this)">' + EA.icon('copy', { size: 18 }) + 'Copy</button>' +
       '<button type="button" class="cc-share" onclick="ccShare()" aria-label="Share">' + EA.icon('share', { size: 20 }) + '</button>' +
     '</div>' +
+    '<button type="button" class="cta ghost cc-more" onclick="ccShowDetail()">' + EA.icon('lightbulb', { size: 18 }) + "Why it sounds right, and what's true</button>" +
     '<button type="button" class="cc-ask" onclick="ccAskCompanion(' + JSON.stringify(c.claim).replace(/"/g, '&quot;') + ')">Ask the Companion about this</button>';
-  document.body.classList.add('cc-say');
-  document.getElementById('counter-view').scrollTop = 0;
-}
-
-function ccCloseSay() {
-  document.body.classList.remove('cc-say');
+  document.body.classList.add('cc-detail', 'cc-say');
   document.getElementById('counter-view').scrollTop = 0;
 }
 
