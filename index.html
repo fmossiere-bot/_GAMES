@@ -27,9 +27,10 @@
 <meta name="apple-mobile-web-app-title" content="Environmentle">
 <meta name="theme-color" content="#0a293b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Plus+Jakarta+Sans:wght@700&family=Rubik:wght@500&family=Caveat:wght@700&family=Mulish:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Plus+Jakarta+Sans:wght@700&family=Rubik:wght@500&family=Caveat:wght@700&family=Mulish:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 <script src="envie.js" defer></script>
+<script src="app.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -3149,6 +3150,7 @@
   .faq-answer-inner p { margin: 0 0 10px; }
   .faq-answer-inner p:last-child { margin-bottom: 0; }
 </style>
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
 
@@ -3307,7 +3309,7 @@
 <!-- ════════════════════════════════════════════════════
      SCREEN: NAME ENTRY
 ════════════════════════════════════════════════════ -->
-<div id="screen-name" class="screen">
+<div id="screen-name" class="screen" data-space="stars">
   <button class="name-back" onclick="closeName()">
     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
       <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -3352,7 +3354,7 @@
 <!-- ════════════════════════════════════════════════════
      SCREEN: GAME HUB
 ════════════════════════════════════════════════════ -->
-<div id="screen-hub" class="screen">
+<div id="screen-hub" class="screen" data-space="stars orbit">
 
   <!-- Sticky top bar -->
   <div class="app-topbar">
@@ -3370,7 +3372,6 @@
 
   <!-- Hub header — navy, with greeting + streak chips -->
   <div class="hub-header">
-    <envie-mascot class="hub-envie bob" id="hub-envie" pose="wave" hat="hat"></envie-mascot>
     <p class="hub-greeting" id="hub-greeting">Good to see you,</p>
     <h2 class="hub-title" id="hub-title">Pick your <em>challenge</em></h2>
     <div class="hub-streak-row">
@@ -3438,22 +3439,28 @@
   <div class="hub-body">
 
     <!-- Daily challenge hero (full width) -->
-    <div class="daily-hero" id="today-banner">
-      <div class="daily-hero-content">
-        <div class="daily-hero-top">
-          <span class="daily-theme-badge" id="today-label">Today's theme</span>
-          <span class="daily-hero-date" id="today-challenge-sub">Daily Challenge · 3 questions</span>
-        </div>
-        <span class="today-icon" id="today-icon">🌱</span>
-        <h3 class="daily-hero-title" id="today-challenge-title">Loading...</h3>
-        <div class="daily-hero-action">
-          <div class="daily-play-btn" id="today-arrow">PLAY NOW →</div>
+    <div class="daily-wrap">
+      <envie-mascot pose="peek" hat="hat"></envie-mascot>
+      <div class="daily-hero" id="today-banner">
+        <div class="daily-hero-content">
+          <div class="daily-hero-top">
+            <span class="daily-theme-badge" id="today-label">Today's theme</span>
+            <span class="daily-hero-date" id="today-challenge-sub">Daily Challenge · 3 questions</span>
+          </div>
+          <div class="daily-hero-main">
+            <span class="today-icon" id="today-icon"><i data-icon="globe" data-size="26"></i></span>
+            <h3 class="daily-hero-title" id="today-challenge-title">Loading...</h3>
+          </div>
+          <div class="daily-hero-action">
+            <div class="daily-play-btn" id="today-arrow">PLAY NOW →</div>
+            <span class="daily-hero-unlock" id="today-unlock"></span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Progress card (returning users only) -->
-    <div class="hub-progress-card" id="hub-progress" style="display:none;">
+    <div class="hub-progress-card" id="hub-progress">
       <div class="progress-stat">
         <div class="progress-stat-num" id="progress-total-score">0</div>
         <div class="progress-stat-label">Total score</div>
@@ -3467,7 +3474,7 @@
         <div class="progress-stat-label">Actions pledged</div>
       </div>
       <div class="progress-stat">
-        <div class="progress-stat-num" id="progress-streak">🔥 0</div>
+        <div class="progress-stat-num streak" id="progress-streak">0</div>
         <div class="progress-stat-label" id="progress-streak-label">Day streak</div>
       </div>
     </div>
@@ -3487,7 +3494,8 @@
 <!-- ════════════════════════════════════════════════════
      SCREEN: GAMES TAB
 ════════════════════════════════════════════════════ -->
-<div id="screen-games" class="screen tab-screen">
+<div id="screen-games" class="screen tab-screen" data-space="stars">
+  <envie-mascot class="bg-envie" pose="spyglass" hat="cap"></envie-mascot>
 
   <!-- Same sticky topbar as home screen -->
   <div class="app-topbar">
@@ -3518,102 +3526,56 @@
       <div class="games-lib-title">GAMES</div>
       <p class="games-lib-subtitle">Small games. Real climate action. Pick one and go.</p>
     </div>
-    <envie-mascot class="tab-envie" pose="point" hat="cap"></envie-mascot>
   </div>
 
   <div class="games-library-body">
-
-    <!-- Random Quiz -->
-    <div class="gl-card quiz" onclick="openGame('quiz','random')">
-      <div class="gl-poster">
-        <div class="gl-poster-top">
-          <div class="gl-tag-pill"><span class="material-symbols-outlined">casino</span> Quiz</div>
+    <div class="rim quiz" onclick="openGame('quiz','random')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="dices" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Quiz</p>
+          <p class="rim-title">Random challenge</p>
+          <div class="rim-chips"><span class="chip">3 questions</span><span class="chip">450 pts</span><span class="chip muted">~2 min</span></div>
         </div>
-        <div class="gl-poster-bottom">
-          <div class="gl-poster-name">Random<br>Challenge</div>
-          <div class="gl-poster-play" onclick="event.stopPropagation(); openGame('quiz','random')">▶</div>
-        </div>
-      </div>
-      <div class="gl-info">
-        <p class="gl-desc">A random quiz picked from our library of daily challenges. Three questions, real data, something new every time.</p>
-        <div class="gl-meta-row">
-          <span class="gl-chip primary">3 questions</span>
-          <span class="gl-chip primary">450 pts max</span>
-          <span class="gl-chip">~2 min</span>
-        </div>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Carbon Challenge -->
-    <div class="gl-card sort" onclick="openGame('sort')">
-      <div class="gl-poster">
-        <div class="gl-poster-top">
-          <div class="gl-tag-pill"><span class="material-symbols-outlined">co2</span> Sorting Game</div>
+    <div class="rim sort" onclick="openGame('sort')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="arrow-down-up" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Sorting game</p>
+          <p class="rim-title">Sort it out</p>
+          <div class="rim-chips"><span class="chip">6 cards</span><span class="chip">3 tries</span><span class="chip muted">~3 min</span></div>
         </div>
-        <div class="gl-poster-bottom">
-          <div class="gl-poster-name">Carbon<br>Challenge</div>
-          <div class="gl-poster-play" onclick="event.stopPropagation(); openGame('sort')">▶</div>
-        </div>
-      </div>
-      <div class="gl-info">
-        <p class="gl-desc">Six everyday items. Drag them into order by carbon footprint, lowest to highest. The results might surprise you.</p>
-        <div class="gl-meta-row">
-          <span class="gl-chip primary">6 cards</span>
-          <span class="gl-chip primary">3 tries</span>
-          <span class="gl-chip">~3 min</span>
-        </div>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Water Challenge -->
-    <div class="gl-card water" onclick="openGame('water')">
-      <div class="gl-poster">
-        <div class="gl-poster-top">
-          <div class="gl-tag-pill"><span class="material-symbols-outlined">water_drop</span> Water Game</div>
+    <div class="rim water" onclick="openGame('water')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="droplet" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Water game</p>
+          <p class="rim-title">Which one drinks more?</p>
+          <div class="rim-chips"><span class="chip">5 rounds</span><span class="chip">480 pts</span><span class="chip muted">~3 min</span></div>
         </div>
-        <div class="gl-poster-bottom">
-          <div class="gl-poster-name">Water<br>Challenge</div>
-          <div class="gl-poster-play" onclick="event.stopPropagation(); openGame('water')">▶</div>
-        </div>
-      </div>
-      <div class="gl-info">
-        <p class="gl-desc">Water is hidden in almost everything we buy and eat. Higher or lower: guess which everyday thing takes more water to make, from a cup of coffee to a pair of jeans.</p>
-        <div class="gl-meta-row">
-          <span class="gl-chip primary">5 rounds</span>
-          <span class="gl-chip primary">One life</span>
-          <span class="gl-chip">~3 min</span>
-        </div>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Greenwasher (coming soon) -->
-    <div class="gl-card swipe coming-soon">
-      <div class="gl-poster">
-        <div class="gl-poster-top">
-          <div class="gl-tag-pill"><span class="material-symbols-outlined">swipe</span> Swipe Game</div>
-          <div class="gl-coming-pill">Coming soon</div>
-        </div>
-        <div class="gl-poster-bottom">
-          <div class="gl-poster-name">Green-<br>washer</div>
-        </div>
-      </div>
-      <div class="gl-info">
-        <p class="gl-desc">Real brand claims. Real greenwashing. Swipe right if legit, left if you smell spin. How sharp is your BS detector?</p>
-        <div class="gl-meta-row">
-          <span class="gl-chip primary">Swipe to judge</span>
-          <span class="gl-chip">~4 min</span>
-        </div>
+    <div class="rim soon">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="shield" data-size="24"></i></span>
+        <div class="rim-body"><p class="rim-title">Greenwasher</p><p class="rim-meta">In the workshop</p></div>
       </div>
     </div>
-
   </div>
 </div>
-
 
 <!-- ════════════════════════════════════════════════════
      SCREEN: STATS TAB
 ════════════════════════════════════════════════════ -->
-<div id="screen-learn" class="screen tab-screen">
+<div id="screen-learn" class="screen tab-screen" data-space="stars">
+  <envie-mascot class="bg-envie" pose="spyglass" hat="cap" tee="science"></envie-mascot>
 
   <!-- Same sticky topbar -->
   <div class="app-topbar">
@@ -3644,144 +3606,81 @@
       <div class="learn-hero-title">STORIES</div>
       <p class="learn-hero-subtitle">Short, visual stories on climate and sustainability. No jargon, no overwhelm.</p>
     </div>
-    <envie-mascot class="tab-envie" pose="spyglass" hat="cap" tee="science"></envie-mascot>
   </div>
 
   <!-- Content -->
   <div class="learn-body">
-
     <p class="learn-section-label">Available now</p>
-
-    <!-- Climate Wins in 2025 — LIVE -->
-    <div class="ml-card topic-climate active" onclick="openCourse('climate-wins-2025')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">celebration</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Good News</div>
-          <div class="ml-card-title">Climate Wins in 2025</div>
-          <div class="ml-card-desc">Renewable records broken, new protected areas, policies that actually stuck. A look at what went right this year.</div>
+    <div class="rim topic-climate" data-course="climate-wins-2025" onclick="openCourse('climate-wins-2025')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="sparkles" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Good news</p>
+          <p class="rim-title">Climate wins in 2025</p>
+          <div class="rim-chips"><span class="chip">10 slides</span><span class="chip muted">5 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">10 slides</span>
-        <span class="ml-chip">5 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Data Centres in Ireland — LIVE -->
-    <div class="ml-card topic-data active" onclick="openCourse('data-centres-ireland')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">dns</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Tech &amp; Energy</div>
-          <div class="ml-card-title">Data Centres in Ireland</div>
-          <div class="ml-card-desc">Ireland hosts a quarter of Europe's data centres. What does that mean for the grid, our renewable targets, and who pays the price?</div>
+    <div class="rim topic-data" data-course="data-centres-ireland" onclick="openCourse('data-centres-ireland')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="server" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Tech &amp; energy</p>
+          <p class="rim-title">Data centres in Ireland</p>
+          <div class="rim-chips"><span class="chip">11 slides</span><span class="chip muted">5 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">11 slides</span>
-        <span class="ml-chip">5 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Climate & Finance — LIVE -->
-    <div class="ml-card topic-finance active" onclick="openCourse('climate-and-finance')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">account_balance</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Finance</div>
-          <div class="ml-card-title">Climate &amp; Finance</div>
-          <div class="ml-card-desc">Banks, green bonds, ESG investing, and your own account. How money flows determines whether the climate transition happens, and how fast.</div>
+    <div class="rim topic-finance" data-course="climate-and-finance" onclick="openCourse('climate-and-finance')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="landmark" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Finance</p>
+          <p class="rim-title">Climate &amp; finance</p>
+          <div class="rim-chips"><span class="chip">10 slides</span><span class="chip muted">6 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">10 slides</span>
-        <span class="ml-chip">6 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- The Ben & Jerry's Story — LIVE -->
-    <div class="ml-card topic-activism active" onclick="openCourse('ben-and-jerrys')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">icecream</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Brands &amp; Activism</div>
-          <div class="ml-card-title">The Ben &amp; Jerry's Story</div>
-          <div class="ml-card-desc">From a converted petrol station to a global brand that never stopped picking fights. How values-driven business really works, and where it gets complicated.</div>
+    <div class="rim topic-activism" data-course="ben-and-jerrys" onclick="openCourse('ben-and-jerrys')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="ice-cream" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Brands &amp; activism</p>
+          <p class="rim-title">The Ben &amp; Jerry's story</p>
+          <div class="rim-chips"><span class="chip">14 slides</span><span class="chip muted">7 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">14 slides</span>
-        <span class="ml-chip">7 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Ireland's Forestry Problem — LIVE -->
-    <div class="ml-card topic-forestry active" onclick="openCourse('ireland-forestry')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">forest</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Land &amp; Nature</div>
-          <div class="ml-card-title">Ireland's Forestry Problem</div>
-          <div class="ml-card-desc">Ireland is one of the least forested countries in Europe, and much of what it has planted is a single, contested conifer. What happened, and what comes next.</div>
+    <div class="rim topic-forestry" data-course="ireland-forestry" onclick="openCourse('ireland-forestry')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="tree-pine" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Land &amp; nature</p>
+          <p class="rim-title">Ireland's forestry problem</p>
+          <div class="rim-chips"><span class="chip">19 slides</span><span class="chip muted">8 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">19 slides</span>
-        <span class="ml-chip">8 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <p class="learn-section-label" style="margin-top:16px;">Coming soon</p>
-
-    <!-- Food Waste & Composting -->
-    <div class="ml-card topic-food coming-soon">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">compost</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Food &amp; Waste</div>
-          <div class="ml-card-title">Food Waste and Composting</div>
-          <div class="ml-card-desc">One third of all food produced globally is wasted. How composting closes the loop, and what you can do at home.</div>
-        </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">4 min read</span>
-        <span class="ml-coming-chip">Coming soon</span>
+    <p class="learn-section-label">Coming soon</p>
+    <div class="rim soon">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="sprout" data-size="24"></i></span>
+        <div class="rim-body"><p class="rim-title">Food waste and composting</p><p class="rim-meta">Food &amp; waste · 4 min read</p></div>
       </div>
     </div>
-
-    <!-- Talking about Climate Change -->
-    <div class="ml-card topic-society coming-soon">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">forum</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Society</div>
-          <div class="ml-card-title">Talking about Climate Change</div>
-          <div class="ml-card-desc">Why climate conversations so often go wrong, and how to have them in a way that actually moves people.</div>
-        </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">6 min read</span>
-        <span class="ml-coming-chip">Coming soon</span>
+    <div class="rim soon">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="message-circle" data-size="24"></i></span>
+        <div class="rim-body"><p class="rim-title">Talking about climate change</p><p class="rim-meta">Society · 6 min read</p></div>
       </div>
     </div>
-
-
   </div>
 </div>
-
 
 <!-- ════════════════════════════════════════════════════
      SCREEN: PROFILE TAB
@@ -3826,7 +3725,7 @@
         <div class="progress-stat-label">Actions pledged</div>
       </div>
       <div class="progress-stat">
-        <div class="progress-stat-num" id="profile-streak">🔥 0</div>
+        <div class="progress-stat-num streak" id="profile-streak">0</div>
         <div class="progress-stat-label">Day streak</div>
       </div>
     </div>
@@ -3886,9 +3785,8 @@
   <div class="cp-tap-next" id="cp-tap-next" onclick="cpNext()"></div>
 
   <!-- Completion overlay — shown instead of a slide, above everything -->
-  <div id="cp-completion" style="display:none;position:absolute;inset:0;z-index:50;background:linear-gradient(160deg,#061d2e 0%,#0d3a52 60%,#0a2840 100%);flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:80px 32px;">
-    <div id="cp-completion-inner"></div>
-    <button onclick="closeCourse()" style="margin-top:8px;background:white;color:#0a293b;border:none;border-radius:100px;padding:16px 52px;font-family:'Comfortaa',cursive;font-size:17px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">Done</button>
+  <div id="cp-completion" class="cp-complete">
+    <div id="cp-completion-inner" style="display:contents"></div>
   </div>
 
   <!-- Points toast (shown on first completion) -->
@@ -4099,7 +3997,7 @@ function openProfile() {
   document.getElementById('profile-total-score').textContent = totalScore.toLocaleString();
   document.getElementById('profile-sessions').textContent    = sessionsPlayed;
   document.getElementById('profile-actions').textContent     = actionsPledged;
-  document.getElementById('profile-streak').textContent      = '🔥 ' + streakCount;
+  document.getElementById('profile-streak').innerHTML        = EA.icon('flame', { size: 15 }) + streakCount;
 
   renderActionHistory(nk);
   showScreen('screen-profile');
@@ -4209,7 +4107,7 @@ function getCategoryIcon(cat) {
 async function openHub() {
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-  document.getElementById('hub-greeting').textContent = `${greeting}, ${playerName} 👋`;
+  document.getElementById('hub-greeting').textContent = `${greeting}, ${playerName}`;
   document.getElementById('hub-title').innerHTML = `Pick your <em>challenge</em>`;
 
   const nk = playerName.toLowerCase().replace(/\s+/g, '_');
@@ -4237,7 +4135,7 @@ async function openHub() {
   if (hubEnvie) hubEnvie.setAttribute('pose', streakCount >= 3 ? 'celebrate' : streakCount >= 1 ? 'flag' : 'wave');
 
   // Streak stat in progress card
-  document.getElementById('progress-streak').textContent = `🔥 ${streakCount}`;
+  document.getElementById('progress-streak').innerHTML = EA.icon('flame', { size: 15 }) + streakCount;
   document.getElementById('progress-streak-label').textContent = streakCount >= 5
     ? 'Day streak · +250 pts'
     : streakCount >= 3
@@ -4305,32 +4203,33 @@ async function openHub() {
   // Populate today-banner
   if (featuredChallenge) {
     document.getElementById('today-label').textContent           = bannerLabel;
-    document.getElementById('today-icon').textContent            = getCategoryIcon(featuredChallenge.category_badge);
+    document.getElementById('today-icon').innerHTML              = EA.icon('globe', { size: 26 });
     document.getElementById('today-challenge-title').textContent = featuredChallenge.title_line1 + ' ' + featuredChallenge.title_line2;
     document.getElementById('today-challenge-sub').textContent   = featuredChallenge.category_badge + ' · 3 questions';
   } else {
     document.getElementById('today-label').textContent           = "Today's theme";
-    document.getElementById('today-icon').textContent            = '☕';
+    document.getElementById('today-icon').innerHTML              = EA.icon('coffee', { size: 26 });
     document.getElementById('today-challenge-title').textContent = 'Irish Coffee Day';
     document.getElementById('today-challenge-sub').textContent   = 'Food & Water · 3 questions';
   }
 
   // Reset states
   const banner   = document.getElementById('today-banner');
-  const quizCard  = document.querySelector('.game-card.quiz');
-  const sortCard  = document.querySelector('.game-card.sort');
-  const waterCard = document.querySelector('.game-card.water');
+  const quizCard  = document.querySelector('.row.quiz');
+  const sortCard  = document.querySelector('.row.sort');
+  const waterCard = document.querySelector('.row.water');
 
   if (banner) {
     banner.classList.remove('played-today');
     const badge = banner.querySelector('.played-badge');
     if (badge) badge.outerHTML = '<div class="daily-play-btn" id="today-arrow">PLAY NOW →</div>';
+    const unl0 = document.getElementById('today-unlock'); if (unl0) unl0.textContent = '';
   }
   if (quizCard) {
     quizCard.classList.remove('played-today');
     quizCard.onclick = () => openGame('quiz', 'random');
     const badge = quizCard.querySelector('.played-badge');
-    if (badge) badge.outerHTML = '<div class="game-card-arrow">→</div>';
+    if (badge) badge.outerHTML = EA.icon('chevron-right', { size: 18, cls: 'row-chev' });
   }
 
   // Quiz played today? Disable both CTAs
@@ -4345,7 +4244,7 @@ async function openHub() {
     if (quizCard) {
       quizCard.classList.add('played-today');
       quizCard.onclick = null;
-      const arrow = quizCard.querySelector('.game-card-arrow');
+      const arrow = quizCard.querySelector('.row-chev');
       if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
     }
   } else {
@@ -4356,6 +4255,8 @@ async function openHub() {
         banner.onclick = null;
         const arrow = document.getElementById('today-arrow');
         if (arrow) arrow.outerHTML = '<span class="coming-badge">Coming soon</span>';
+        const unl = document.getElementById('today-unlock');
+        if (unl && featuredChallenge.date) unl.textContent = 'Unlocks ' + _unlockLabel(featuredChallenge.date);
       } else {
         banner.onclick = () => openGame('quiz', 'daily');
       }
@@ -4367,11 +4268,11 @@ async function openHub() {
     const sortPlayed = localStorage.getItem('sio_last_played_' + nk) === today;
     sortCard.classList.remove('played-today');
     const sortBadge = sortCard.querySelector('.played-badge');
-    if (sortBadge) sortBadge.outerHTML = '<div class="game-card-arrow">→</div>';
+    if (sortBadge) sortBadge.outerHTML = EA.icon('chevron-right', { size: 18, cls: 'row-chev' });
     if (sortPlayed) {
       sortCard.classList.add('played-today');
       sortCard.onclick = null;
-      const arrow = sortCard.querySelector('.game-card-arrow');
+      const arrow = sortCard.querySelector('.row-chev');
       if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
     } else {
       sortCard.onclick = () => openGame('sort');
@@ -4389,11 +4290,11 @@ async function openHub() {
     const waterLocked   = waterPlayed && !(waterFirstOut && !waterRetried);
     waterCard.classList.remove('played-today');
     const waterBadge = waterCard.querySelector('.played-badge');
-    if (waterBadge) waterBadge.outerHTML = '<div class="game-card-arrow">→</div>';
+    if (waterBadge) waterBadge.outerHTML = EA.icon('chevron-right', { size: 18, cls: 'row-chev' });
     if (waterLocked) {
       waterCard.classList.add('played-today');
       waterCard.onclick = null;
-      const arrow = waterCard.querySelector('.game-card-arrow');
+      const arrow = waterCard.querySelector('.row-chev');
       if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
     } else {
       waterCard.onclick = () => openGame('water');
@@ -4462,35 +4363,23 @@ function refreshHubProgress(nk, progress) {
   const hasActivity = p && ((p.totalScore || 0) > 0 || (p.sessionsPlayed || 0) > 0);
   const el = document.getElementById('hub-progress');
   if (!el) return;
-  if (hasActivity) {
-    document.getElementById('progress-total-score').textContent = (p.totalScore || 0).toLocaleString();
-    document.getElementById('progress-sessions').textContent    = p.sessionsPlayed || 0;
-    document.getElementById('progress-actions').textContent     = p.actionsPledged || 0;
-    el.style.display = 'flex';
-  } else {
-    el.style.display = 'none';
-  }
+  const q = p || {};
+  document.getElementById('progress-total-score').textContent = (q.totalScore || 0).toLocaleString();
+  document.getElementById('progress-sessions').textContent    = q.sessionsPlayed || 0;
+  document.getElementById('progress-actions').textContent     = q.actionsPledged || 0;
+  el.style.display = 'flex';
 }
 
 function _updateStoriesTabReadState(nk) {
   const completed = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
   // Find all ml-cards in the stories tab and grey out completed ones
-  document.querySelectorAll('#screen-learn .ml-card.active').forEach(card => {
-    const onclick = card.getAttribute('onclick') || '';
-    const match   = onclick.match(/openCourse\('([^']+)'\)/);
-    if (match && completed.includes(match[1])) {
-      card.classList.add('story-read');
-      // Update footer chips
-      const footer = card.querySelector('.ml-card-footer');
-      if (footer) {
-        const readNow = footer.querySelector('[style]');
-        if (readNow) readNow.textContent = '✓ Read · Read again';
-      }
-    } else if (match) {
-      card.classList.remove('story-read');
-    }
+  document.querySelectorAll('#screen-learn .rim[data-course]').forEach(card => {
+    card.classList.toggle('done', completed.includes(card.dataset.course));
   });
 }
+
+const STORY_ICON = { 'topic-finance': 'landmark', 'topic-data': 'server', 'topic-climate': 'sparkles', 'topic-activism': 'ice-cream', 'topic-forestry': 'tree-pine', 'topic-food': 'sprout', 'topic-society': 'message-circle' };
+const STORY_TONE = { 'topic-finance': 'amber', 'topic-data': 'aqua', 'topic-climate': 'sky', 'topic-activism': 'rose', 'topic-forestry': 'moss', 'topic-food': 'sky', 'topic-society': 'amber' };
 
 function renderHomeStories(nk) {
   const section = document.getElementById('recent-stories-section');
@@ -4511,17 +4400,13 @@ function renderHomeStories(nk) {
   list.innerHTML = sorted.map(s => {
     const isRead = completed.includes(s.id);
     return `
-    <div class="story-card-home ${s.topic}${isRead ? ' story-read' : ''}" onclick="openCourse('${s.id}')">
-      <div class="story-card-home-accent"></div>
-      <div class="story-card-home-body">
-        <div class="story-card-home-icon">${s.icon}</div>
-        <div class="story-card-home-info">
-          <div class="story-card-home-tag">${s.tag}</div>
-          <div class="story-card-home-title">${s.title}</div>
-          <div class="story-card-home-meta">${isRead ? '✓ Read · no new points' : s.meta}</div>
-        </div>
+    <div class="row story ${s.topic}${isRead ? ' done' : ''}" onclick="openCourse('${s.id}')">
+      <span class="tile sm ${STORY_TONE[s.topic] || ''}">${EA.icon(STORY_ICON[s.topic] || 'book-open', { size: 21 })}</span>
+      <div class="row-body">
+        <p class="row-title">${s.title}</p>
+        <p class="row-meta">${isRead ? 'Read · no new points' : s.tag + ' · ' + s.meta}</p>
       </div>
-      <div class="story-card-home-arrow">${isRead ? '↺' : '→'}</div>
+      ${EA.icon('chevron-right', { size: 18, cls: 'row-chev' })}
     </div>`;
   }).join('');
 }
@@ -4551,24 +4436,24 @@ function markStoryComplete(id) {
 const GAME_DEFS = {
   'quiz:random': {
     type: 'quiz', mode: 'random',
-    cls: 'quiz', icon: 'casino', tag: 'Quiz',
-    name: 'Random Challenge',
+    cls: 'quiz', icon: 'casino', lucide: 'dices', tone: 'aqua', tag: 'Quiz',
+    name: 'Random challenge',
     desc: 'A random quiz from our library of daily challenges. Three questions, real data.',
     meta: ['3 questions', '450 pts max'],
     onclick: "openGame('quiz','random')"
   },
   'sort': {
     type: 'sort', mode: null,
-    cls: 'sort', icon: 'co2', tag: 'Sorting Game',
-    name: 'Carbon Challenge',
+    cls: 'sort', icon: 'co2', lucide: 'arrow-down-up', tone: 'amber', tag: 'Sorting game',
+    name: 'Carbon challenge',
     desc: '6 everyday items. Drag them into order by carbon footprint, lowest to highest. 3 tries.',
     meta: ['6 cards', '3 tries'],
     onclick: "openGame('sort')"
   },
   'water': {
     type: 'water', mode: null,
-    cls: 'water', icon: 'water_drop', tag: 'Water Game',
-    name: 'Water Challenge',
+    cls: 'water', icon: 'water_drop', lucide: 'droplet', tone: 'sky', tag: 'Water game',
+    name: 'Water challenge',
     desc: 'Higher or lower, water edition. Guess which everyday thing takes more water to make. Five rounds, one wrong answer ends the run.',
     meta: ['5 rounds', '480 pts max'],
     onclick: "openGame('water')"
@@ -4597,32 +4482,25 @@ function timeAgo(ts) {
 function gameCardHTML(key, animClass, lastPlayedTs) {
   const g = GAME_DEFS[key];
   if (!g) return '';
-  const metaHTML = g.meta.map(m =>
-    `<div class="game-card-meta-item"><div class="game-card-meta-dot"></div> ${m}</div>`
-  ).join('');
-  const ago = lastPlayedTs ? timeAgo(lastPlayedTs) : null;
-  const playedRow = ago
-    ? `<div class="game-card-last-played"><span class="material-symbols-outlined" style="font-size:13px;vertical-align:-2px;margin-right:3px;color:var(--green)">schedule</span>Last played: ${ago}</div>`
-    : '';
+  const ago  = lastPlayedTs ? timeAgo(lastPlayedTs) : null;
+  const meta = g.meta.join(' · ') + (ago ? ' · played ' + ago : '');
   return `
-    <div class="game-card ${g.cls} ${animClass}" onclick="${g.onclick}">
-      <div class="game-card-banner"></div>
-      <div class="game-card-body">
-        <div class="game-card-icon-wrap ${g.cls}">
-          <span class="material-symbols-outlined">${g.icon}</span>
-        </div>
-        <div class="game-card-info">
-          <div class="game-card-tag">${g.tag}</div>
-          <div class="game-card-name">${g.name}</div>
-          <div class="game-card-desc">${g.desc}</div>
-          ${playedRow}
-        </div>
+    <div class="row ${g.cls} ${animClass}" onclick="${g.onclick}">
+      <span class="tile sm ${g.tone}">${EA.icon(g.lucide, { size: 21 })}</span>
+      <div class="row-body">
+        <p class="row-title">${g.name}</p>
+        <p class="row-meta">${meta}</p>
       </div>
-      <div class="game-card-footer">
-        <div class="game-card-meta">${metaHTML}</div>
-        <div class="game-card-arrow">→</div>
-      </div>
+      ${EA.icon('chevron-right', { size: 18, cls: 'row-chev' })}
     </div>`;
+}
+
+// "Unlocks tomorrow" / "Unlocks 14 Sep" for the coming-up card
+function _unlockLabel(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const t = new Date(); t.setDate(t.getDate() + 1);
+  if (d.toDateString() === t.toDateString()) return 'tomorrow';
+  return d.toLocaleDateString('en-IE', { day: 'numeric', month: 'short' });
 }
 
 function renderRecentGames(nk) {
@@ -5042,7 +4920,7 @@ async function openCourse(id) {
   // Restore tap zones and hide completion overlay from any previous session
   document.getElementById('cp-tap-prev').style.pointerEvents = '';
   document.getElementById('cp-tap-next').style.pointerEvents = '';
-  document.getElementById('cp-completion').style.display = 'none';
+  document.getElementById('cp-completion').classList.remove('open');
 
   document.getElementById('course-player').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -5101,6 +4979,17 @@ function _boldify(text, bold) {
   return text.replace(bold, `<span class="cp-highlight">${bold}</span>`);
 }
 
+const _CP_MARK = `<svg class="cp-mark" viewBox="0 0 200 200" aria-hidden="true"><defs><mask id="cp-mk"><rect x="-60" y="-60" width="320" height="320" fill="#fff"></rect><path d="M76 96 C60 96 50 106 50 118 C50 130 60 140 76 140 C87 140 93 134 100 134 C107 134 113 140 124 140 C140 140 150 130 150 118 C150 106 140 96 124 96 C113 96 107 102 100 102 C93 102 87 96 76 96 Z" fill="#000" stroke="#000" stroke-width="15" stroke-linejoin="round"></path><ellipse cx="100" cy="118" rx="56" ry="27" fill="#000"></ellipse></mask></defs><circle cx="100" cy="100" r="68" fill="none" stroke="currentColor" stroke-width="8" mask="url(#cp-mk)"></circle><ellipse cx="100" cy="100" rx="94" ry="27" fill="none" stroke="currentColor" stroke-width="8" transform="rotate(-18 100 100)" mask="url(#cp-mk)"></ellipse><path d="M76 96 C60 96 50 106 50 118 C50 130 60 140 76 140 C87 140 93 134 100 134 C107 134 113 140 124 140 C140 140 150 130 150 118 C150 106 140 96 124 96 C113 96 107 102 100 102 C93 102 87 96 76 96 Z" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round"></path><path d="M76 105 L88 119 L81.5 119 L81.5 130 L70.5 130 L70.5 119 L64 119 Z" fill="currentColor"></path><circle cx="124" cy="112" r="5" fill="currentColor"></circle><circle cx="124" cy="126" r="5" fill="currentColor"></circle></svg>`;
+const _CP_SPARKS = `<svg class="sparks" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="#e67e22" stroke-width="5" stroke-linecap="round"><path d="M30 62l-11-11M44 38l-5-14M156 38l5-14M170 62l11-11M22 112l-14 2M178 112l14 2"/></g><circle cx="62" cy="18" r="4" fill="#85d083"/><circle cx="148" cy="16" r="4" fill="#6ec6f0"/><circle cx="14" cy="80" r="3" fill="#f0a060"/></svg>`;
+function _cpSpace(rev) {
+  return `<div class="cp-space" aria-hidden="true">${EA.ORBIT(!!rev)}<span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div>`;
+}
+// Envie sits bottom-right of a slide; a `envie` string on the slide gives him a line
+function _cpEnvie(slide, pose) {
+  const line = slide.envie ? EA.bubble({ head: slide.envie, r: 3, tail: 'right' }) : '';
+  return `<div class="cp-envie" aria-hidden="true">${line}<envie-mascot pose="${pose}" hat="cap"></envie-mascot></div>`;
+}
+
 function _slideHTML(slide) {
   const th = `theme-${slide.theme || 'dark'}`;
   const texture = (slide.theme !== 'light') ? '<div class="cp-texture"></div>' : '';
@@ -5136,8 +5025,9 @@ function _slideHTML(slide) {
         }).join('')}</ul>` : '';
     const footerHtml = slide.footer
       ? `<p class="cp-bullet-footer">${_boldify(slide.footer, slide.bold)}</p>` : '';
-    return `<div class="cp-slide ${th}">
-      ${texture}
+    const lightT = slide.theme === 'light';
+    return `<div class="cp-slide ${th}" style="overflow:hidden;">
+      ${texture}${lightT ? '' : _cpSpace(false) + _CP_MARK}
       <div class="cp-text-body" style="position:relative;z-index:1;display:flex;flex-direction:column;gap:20px;">
         ${slide.calloutTop ? calloutHtml : ''}
         ${slide.text ? `<p class="cp-text">${html}</p>` : ''}
@@ -5145,6 +5035,7 @@ function _slideHTML(slide) {
         ${bulletsHtml}
         ${footerHtml}
       </div>
+      ${slide.envie && !lightT ? _cpEnvie(slide, 'point') : ''}
     </div>`;
   }
 
@@ -5155,16 +5046,19 @@ function _slideHTML(slide) {
       ? `<div style="font-family:'Montserrat',sans-serif;font-size:12px;color:rgba(255,255,255,0.3);font-style:italic;margin-top:4px;">${slide.source}</div>` : '';
     const noteHtml = slide.note
       ? `<div style="font-family:'Montserrat',sans-serif;font-size:clamp(13px,3.8vw,15px);color:rgba(255,255,255,0.55);line-height:1.45;margin-top:8px;border-left:2px solid rgba(255,255,255,0.15);padding-left:12px;">${slide.note}</div>` : '';
+    const lightS = slide.theme === 'light';
     return `<div class="cp-slide ${th}" style="overflow:hidden;">
-      ${texture}
-      <div style="position:absolute;bottom:-20px;right:-10px;font-family:'Comfortaa',cursive;font-size:clamp(120px,38vw,200px);font-weight:700;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none;z-index:0;letter-spacing:-0.04em;">${ghost}</div>
+      ${texture}${lightS ? '' : _cpSpace(false)}
+      <span class="cp-ghost" aria-hidden="true">${ghost}</span>
       <div class="cp-stat-body" style="position:relative;z-index:1;">
+        ${slide.tag ? `<span class="pill aqua cp-stat-tag">${slide.tag}</span>` : ''}
         <div class="cp-stat-number">${slide.stat}</div>
         <div class="cp-stat-caption">${captionHtml}</div>
         ${noteHtml}
         ${sourceHtml}
         ${slide.footer ? `<p class="cp-bullet-footer" style="margin-top:12px;">${slide.footer}</p>` : ''}
       </div>
+      ${lightS ? '' : _cpEnvie(slide, 'spyglass')}
     </div>`;
   }
 
@@ -5172,7 +5066,7 @@ function _slideHTML(slide) {
     const badRows  = (slide.bad  || []).map(t => `<div class="cp-compare-row"><div class="cp-compare-dot cp-compare-dot-bad"></div><div>${t}</div></div>`).join('');
     const goodRows = (slide.good || []).map(t => `<div class="cp-compare-row"><div class="cp-compare-dot cp-compare-dot-good"></div><div>${t}</div></div>`).join('');
     return `<div class="cp-slide ${th}" style="overflow:hidden;">
-      ${texture}
+      ${texture}${slide.theme === 'light' ? '' : _cpSpace(false) + _CP_MARK}
       <div class="cp-compare-body">
         ${slide.title ? `<div class="cp-compare-title">${slide.title}</div>` : ''}
         <div class="cp-compare-col cp-compare-bad">
@@ -5189,8 +5083,8 @@ function _slideHTML(slide) {
 
   if (slide.type === 'visual') {
     const html = _boldify(slide.text, slide.bold);
-    return `<div class="cp-slide ${th}">
-      ${texture}
+    return `<div class="cp-slide ${th}" style="overflow:hidden;">
+      ${texture}${slide.theme === 'light' ? '' : _cpSpace(false) + _CP_MARK}
       <div class="cp-visual-body" style="position:relative;z-index:1;">
         ${slide.emoji  ? `<div class="cp-visual-emoji">${slide.emoji}</div>`          : ''}
         ${slide.image  ? `<img src="${slide.image}" style="width:100%;border-radius:12px;max-height:220px;object-fit:cover;">` : ''}
@@ -5293,18 +5187,27 @@ function _renderCompletionSlide() {
 
   // Populate and show the dedicated completion overlay (z-index:50, above tap zones)
   const inner = document.getElementById('cp-completion-inner');
+  const nk    = playerName ? playerName.toLowerCase().replace(/\s+/g, '_') : '';
+  const done  = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
+  const meta  = (ALL_STORIES.find(st => st.id === _course.id) || {}).meta || '';
+  const mins  = (meta.split('·')[1] || '').trim();
+  const next  = ALL_STORIES.find(st => st.id !== _course.id && !done.includes(st.id)) || null;
   inner.innerHTML = `
-    <div style="font-size:64px;line-height:1;margin-bottom:8px;">🎉</div>
-    <div style="font-family:'Comfortaa',cursive;font-size:22px;font-weight:700;color:white;margin-bottom:12px;">Story complete!</div>
+    ${_cpSpace(true)}
+    <div class="hero-envie"><envie-mascot pose="celebrate" hat="hat"></envie-mascot>${_CP_SPARKS}</div>
+    <h2>Story complete</h2>
     ${isFirst ? `
-      <div style="background:rgba(125,204,138,0.15);border:1.5px solid rgba(125,204,138,0.35);border-radius:16px;padding:16px 28px;margin-bottom:8px;">
-        <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:#7dbf7c;line-height:1;letter-spacing:-0.02em;">+${STORY_POINTS}</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:6px;font-family:'Montserrat',sans-serif;">pts added to your score</div>
-      </div>` : `
-      <div style="font-size:13px;color:rgba(255,255,255,0.45);font-family:'Montserrat',sans-serif;margin-bottom:8px;">You've read this one before, no new points.</div>`}
+      <div class="rim"><div class="rim-in">
+        <p class="pts">+${STORY_POINTS}</p>
+        <p class="pts-sub">pts added to your score</p>
+      </div></div>` : `
+      <p class="pts-sub">You've read this one before, no new points.</p>`}
+    <div class="chips"><span class="chip">${_course.slides.length} slides read</span>${mins ? `<span class="chip">${mins}</span>` : ''}</div>
+    <button class="cta white" onclick="closeCourse()">Done</button>
+    ${next ? `<button class="next" onclick="closeCourse(); openCourse('${next.id}')">Next story: ${next.title} →</button>` : ''}
   `;
   const overlay = document.getElementById('cp-completion');
-  overlay.style.display = 'flex';
+  overlay.classList.add('open');
 
   // Update counter
   document.getElementById('cp-counter').textContent = `${total} / ${total}`;

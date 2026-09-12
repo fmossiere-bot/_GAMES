@@ -20,7 +20,8 @@
       "stat": "10%",
       "caption": "Just over 10% of Ireland's land is forest. The EU average is 39.8%, nearly four times higher.",
       "bold": "over 10%",
-      "source": "Teagasc / Ireland Climate Action Plan"
+      "source": "Teagasc / Ireland Climate Action Plan",
+      "envie": "Look up on your next walk. Not many trees, are there?"
     },
     {
       "type": "text",
@@ -112,9 +113,17 @@
       "theme": "dark",
       "title": "In 2026, a children's book sent to Irish primary schools told a very different message.",
       "badLabel": "What the book claimed",
-      "bad": ["Plantations shown as thriving, wildlife-rich forests", "Framed as reliable long-term carbon storage", "Distributed to classrooms as environmental education"],
+      "bad": [
+        "Plantations shown as thriving, wildlife-rich forests",
+        "Framed as reliable long-term carbon storage",
+        "Distributed to classrooms as environmental education"
+      ],
       "goodLabel": "What foresters and ecologists point out",
-      "good": ["Sitka blocks support very little wildlife", "Carbon claims break down on drained bog", "Funded by the timber industry, not vetted by the Department of Education"]
+      "good": [
+        "Sitka blocks support very little wildlife",
+        "Carbon claims break down on drained bog",
+        "Funded by the timber industry, not vetted by the Department of Education"
+      ]
     },
     {
       "type": "text",
@@ -129,7 +138,8 @@
       "stat": "3 in 4",
       "caption": "The appetite is there. A 2022 survey of 1,000 adults found three in four people in Ireland want to see more forests, not fewer.",
       "source": "Behaviour &amp; Attitudes, 2022",
-      "footer": "The question isn't whether people want more forest. It's what kind."
+      "footer": "The question isn't whether people want more forest. It's what kind.",
+      "envie": "The appetite is there. Now the trees."
     },
     {
       "type": "text",

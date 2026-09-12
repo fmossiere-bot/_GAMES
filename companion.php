@@ -12,8 +12,9 @@
 <meta name="apple-mobile-web-app-title" content="AI Companion">
 <meta name="theme-color" content="#0a293b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Rubik:wght@500&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Rubik:wght@500&family=Caveat:wght@700&family=Mulish:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <script src="envie.js" defer></script>
+<script src="app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1230,8 +1231,9 @@
   }
   .cc-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
+<link rel="stylesheet" href="app.css">
 </head>
-<body class="chat-blank">
+<body class="chat-blank companion">
 
 <!-- TOP BAR -->
 <header class="top-bar">
@@ -1250,13 +1252,13 @@
 <!-- MODE SWITCH — Ask (chat) / Counter (rebuttal cards) / Wiki (browse the source) -->
 <div class="cc-modebar">
   <button type="button" class="cc-mode-btn active" id="cc-mode-ask" onclick="setMode('ask')">
-    <span class="material-symbols-outlined">forum</span>Ask
+    <i data-icon="message-square" data-size="15"></i>Ask
   </button>
   <button type="button" class="cc-mode-btn" id="cc-mode-wiki" onclick="setMode('wiki')">
-    <span class="material-symbols-outlined">menu_book</span>Browse Wiki
+    <i data-icon="book-open" data-size="15"></i>Wiki
   </button>
   <button type="button" class="cc-mode-btn" id="cc-mode-counter" onclick="setMode('counter')">
-    <span class="material-symbols-outlined">shield</span>Counter Claims
+    <i data-icon="shield" data-size="15"></i>Claims
   </button>
 </div>
 
@@ -1322,18 +1324,24 @@
       ></textarea>
     </div>
     <button class="send-btn" id="send-btn" onclick="sendMessage()" disabled aria-label="Send">
-      <span class="material-symbols-outlined">send</span>
+      <i data-icon="send" data-size="22"></i>
     </button>
   </div>
 
   <div class="chat-empty" id="chat-empty">
-    <envie-mascot pose="spyglass" hat="cap" tee="science" style="width:104px;color:#fff;margin-bottom:6px"></envie-mascot>
-    <div class="chat-empty-title">Ask me anything</div>
-    <p class="chat-empty-sub">Climate action, sustainability, net zero, renewables, I'm here to help.</p>
+    <div class="erow">
+      <envie-mascot pose="stand" hat="hat" tee="science"></envie-mascot>
+      <div class="bb r4 tail-low">
+        <p class="bh">Ask me anything.</p>
+        <p class="bs">Climate action, net zero, renewables, and I'll show you where the answer came from.</p>
+        <svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg>
+      </div>
+    </div>
+    <p class="eyebrow">Try one of these</p>
     <div class="chat-empty-suggestions">
-      <button class="suggestion-chip" onclick="sendSuggestion(this)">What is carbon neutrality and how is it different from net zero?</button>
-      <button class="suggestion-chip" onclick="sendSuggestion(this)">What are the most effective actions individuals can take on climate?</button>
-      <button class="suggestion-chip" onclick="sendSuggestion(this)">How does climate change affect biodiversity?</button>
+      <button class="suggestion-chip" onclick="sendSuggestion(this)"><span class="sc-text">What is carbon neutrality, and how is it different from net zero?</span><i data-icon="chevron-right" data-size="17" class="row-chev"></i></button>
+      <button class="suggestion-chip" onclick="sendSuggestion(this)"><span class="sc-text">Which actions actually move the needle for one person?</span><i data-icon="chevron-right" data-size="17" class="row-chev"></i></button>
+      <button class="suggestion-chip" onclick="sendSuggestion(this)"><span class="sc-text">Someone told me electric cars are worse. True?</span><span class="pill amber">Claim</span></button>
     </div>
   </div>
 
@@ -1394,7 +1402,7 @@ function handleKey(e) {
 
 // ── SUGGESTION CHIPS ──
 function sendSuggestion(btn) {
-  const text = btn.textContent.trim();
+  const text = (btn.querySelector('.sc-text') || btn).textContent.trim();
   document.getElementById('user-input').value = text;
   autoResize(document.getElementById('user-input'));
   sendMessage();

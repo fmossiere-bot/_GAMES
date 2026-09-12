@@ -55,9 +55,17 @@
       "theme": "dark",
       "title": "Most brands market their values. Ben &amp; Jerry's spent decades acting on them.",
       "badLabel": "A marketing campaign",
-      "bad": ["Adopts a cause when it's convenient", "Drops it when it gets costly", "Builds loyalty through advertising"],
+      "bad": [
+        "Adopts a cause when it's convenient",
+        "Drops it when it gets costly",
+        "Builds loyalty through advertising"
+      ],
       "goodLabel": "Ben &amp; Jerry's, in practice",
-      "good": ["Criticized the Iraq War and backed Occupy Wall Street, all while under corporate ownership", "Called to 'dismantle white supremacy' after George Floyd's murder", "Built loyalty on shared values, not ad spend"]
+      "good": [
+        "Criticized the Iraq War and backed Occupy Wall Street, all while under corporate ownership",
+        "Called to 'dismantle white supremacy' after George Floyd's murder",
+        "Built loyalty on shared values, not ad spend"
+      ]
     },
     {
       "type": "stat",
@@ -65,7 +73,8 @@
       "stat": "$326M",
       "caption": "In 2000, Unilever bought Ben &amp; Jerry's for $326 million, on one condition: an independent board with legal authority over the brand's social mission, in perpetuity.",
       "note": "Business schools cited the structure for years as a model for preserving purpose after acquisition.",
-      "source": "The Guardian, 2026"
+      "source": "The Guardian, 2026",
+      "envie": "One condition, and it mattered."
     },
     {
       "type": "text",

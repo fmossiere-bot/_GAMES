@@ -44,7 +44,8 @@
       "stat": "€1,000",
       "caption": "€1,000 held in a carbon-intensive bank generates the same yearly emissions as a return flight from New York to Seattle. For most people, banking choices produce more indirect emissions than their flights.",
       "bold": "flight from New York to Seattle",
-      "source": "Project Drawdown"
+      "source": "Project Drawdown",
+      "envie": "Your money works while you sleep. The question is for whom."
     },
     {
       "type": "stat",
@@ -77,7 +78,8 @@
       "stat": "76%",
       "caption": "By switching to a climate-responsible bank, you could reduce the climate impact of your personal banking by 76%. One decision. No cost. No change to your daily life.",
       "note": "Bigger impact than years of diet changes.",
-      "source": "Project Drawdown"
+      "source": "Project Drawdown",
+      "envie": "Same account, much smaller footprint."
     },
     {
       "type": "photo",

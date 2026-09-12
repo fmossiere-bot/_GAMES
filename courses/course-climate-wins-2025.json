@@ -16,7 +16,8 @@
       "theme": "green",
       "icon": "⚡",
       "stat": "41%",
-      "caption": "of global electricity came from zero-emissions sources in 2025. A new record — and it happened in April, not at year-end."
+      "caption": "of global electricity came from zero-emissions sources in 2025. A new record — and it happened in April, not at year-end.",
+      "envie": "Records are nicer when they go this way."
     },
     {
       "type": "visual",
@@ -36,7 +37,8 @@
       "theme": "green",
       "icon": "🚗",
       "stat": "1 in 4",
-      "caption": "cars sold worldwide in 2025 was electric. In Norway, that number was 99 in 100."
+      "caption": "cars sold worldwide in 2025 was electric. In Norway, that number was 99 in 100.",
+      "envie": "Norway didn't wait for anyone."
     },
     {
       "type": "visual",
@@ -50,7 +52,8 @@
       "theme": "blue",
       "icon": "🌊",
       "stat": "61%",
-      "caption": "of our oceans gained new protection when the High Seas Treaty entered into force in September 2025."
+      "caption": "of our oceans gained new protection when the High Seas Treaty entered into force in September 2025.",
+      "envie": "Half the planet is ocean. About time."
     },
     {
       "type": "visual",
