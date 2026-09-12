@@ -566,3 +566,25 @@
 .skin.g-sort .result-message { font-family: var(--font-body); font-weight: 700; color: rgba(255,255,255,.75); }
 .skin.g-sort .result-message.correct-msg { color: var(--sky); }
 .skin.g-sort .result-message.wrong-msg { color: var(--amber); }
+
+/* ── Envie vertically centred on his bubble (game intros) ── */
+.skin .erow.mid { align-items: center; }
+.skin .erow.mid .bb { margin-bottom: 0; }
+.skin .erow.mid .bb .tail { top: 50%; bottom: auto; margin-top: -22px; }
+body.skin { background: var(--ground-base); }
+
+/* ── Profile ── */
+.skin #screen-profile { background: var(--ground-games) var(--ground-base); }
+.skin .profile-body { padding: 24px 20px 110px; }
+.skin .profile-back, .skin .profile-signout, .skin .profile-topbar-title { font-family: var(--font-body); }
+.skin .profile-name { font-family: var(--font-display); }
+.skin .profile-tag { font-family: var(--font-body); color: var(--sky); }
+.skin .profile-section-label { font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45); margin: 22px 0 10px; }
+.skin .settings-list { gap: 10px; }
+.skin .settings-item { background: rgba(255,255,255,.07); border: 0; border-radius: 18px; padding: 13px 15px; font-family: var(--font-body); }
+.skin .settings-item:active { background: rgba(255,255,255,.11); }
+.skin .settings-item .settings-item-icon { color: var(--sky); }
+.skin .settings-item-label { font-size: 14px; font-weight: 600; }
+.skin .actions-history-empty { background: rgba(255,255,255,.07); border-radius: 18px; padding: 16px; font-family: var(--font-body); font-size: 13px; line-height: 1.55; color: rgba(255,255,255,.6); }
+.skin .action-history-item { background: rgba(255,255,255,.07); border: 0; border-radius: 18px; }
+.skin .name-back[hidden] { display: none !important; }
