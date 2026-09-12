@@ -1265,12 +1265,16 @@
 <!-- COUNTER MODE -->
 <div id="counter-view">
   <div class="cc-list-view">
+    <div class="erow">
+      <envie-mascot pose="stand" hat="hat" tee="science"></envie-mascot>
+      <div class="bb tail-low"><p class="bh">Heard one down the pub? I've got the fact for it.</p><svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg></div>
+    </div>
     <div class="cc-search-wrap">
-      <span class="material-symbols-outlined">search</span>
+      <i data-icon="search" data-size="17"></i>
       <input id="cc-search" type="search" autocomplete="off" autocorrect="off" spellcheck="false"
              placeholder="Someone told me…" aria-label="Search claims" oninput="ccFilter()">
       <button type="button" class="cc-search-clear" id="cc-search-clear" onclick="ccClearSearch()" aria-label="Clear search">
-        <span class="material-symbols-outlined">close</span>
+        <i data-icon="x" data-size="16"></i>
       </button>
     </div>
     <div class="cc-cats" id="cc-cats"></div>
@@ -1278,17 +1282,18 @@
     <div id="cc-results"></div>
   </div>
   <div class="cc-detail-view" id="cc-detail"></div>
+  <div class="cc-say-view" id="cc-say"></div>
 </div>
 
 <!-- WIKI MODE — browsable view of the same knowledge base the Companion reads -->
 <div id="wiki-view">
   <div class="wk-list-view">
     <div class="cc-search-wrap">
-      <span class="material-symbols-outlined">search</span>
+      <i data-icon="search" data-size="17"></i>
       <input id="wk-search" type="search" autocomplete="off" autocorrect="off" spellcheck="false"
              placeholder="Search the wiki…" aria-label="Search the wiki" oninput="wkFilter()">
       <button type="button" class="cc-search-clear" id="wk-search-clear" onclick="wkClearSearch()" aria-label="Clear search">
-        <span class="material-symbols-outlined">close</span>
+        <i data-icon="x" data-size="16"></i>
       </button>
     </div>
     <div class="cc-cats" id="wk-cats"></div>
@@ -1379,7 +1384,7 @@ function loadCache() {
     _messages = data.messages.slice();
     for (const m of _messages) {
       if (m.role === 'user')          appendUser(m.text);
-      else if (m.role === 'assistant') appendAssistant(m.text, m.sourceType, m.sources, m.furtherLinks);
+      else if (m.role === 'assistant') appendAssistant(m.text, m.sourceType, m.sources, m.furtherLinks, m.oneLine);
     }
     if (_messages.length) showResetRow();
   } catch (e) { /* malformed cache — ignore */ }
@@ -1504,7 +1509,8 @@ function removeThinking() {
 // Handles ###headings, **bold**, *italic*, `code`, [links](url),
 // bullet lists, numbered lists, mixed lists, and paragraphs.
 function renderMarkdown(text) {
-  const blocks = text.replace(/\r\n/g, '\n').split(/\n{2,}/);
+  // Headings and list starts open their own block even without a blank line before them
+  const blocks = text.replace(/\r\n/g, '\n').replace(/^(#{2,3}\s.*)$/gm, '\n$1\n').replace(/\n(?=[\*\-\+]\s)(?!\n)/g, (m, off, str) => (/[\*\-\+]\s/.test(str.slice(Math.max(0, off - 80), off).split('\n').pop() || '') ? m : '\n\n')).split(/\n{2,}/);
   let html = '';
   for (const block of blocks) {
     const lines = block.trim().split('\n');
@@ -1559,38 +1565,42 @@ function inlineMarkdown(text) {
 }
 
 // ── APPEND AI ANSWER ──
-function appendAssistant(text, sourceType, sources, furtherLinks) {
+function appendAssistant(text, sourceType, sources, furtherLinks, oneLine) {
+  const thread  = document.getElementById('chat-thread');
+  const isFirst = !thread.querySelector('.msg-row.assistant');
   const row = document.createElement('div');
   row.className = 'msg-row assistant';
 
-  const bubble = document.createElement('div');
-  bubble.className = 'msg-bubble';
-  bubble.innerHTML = renderMarkdown(text);
-  row.appendChild(bubble);
+  // Envie fronts the first answer of a thread with the one line worth repeating
+  if (isFirst && oneLine) {
+    row.innerHTML = '<div class="erow"><envie-mascot pose="point" hat="hat"></envie-mascot>' +
+      EA.bubble({ head: escapeHtml(oneLine), r: 3, tail: 'top' }) + '</div>';
+  }
 
-  // Source badges
+  const panel = document.createElement('div');
+  panel.className = 'ans-panel';
+  panel.innerHTML = '<p class="ans-eyebrow">The longer answer</p>' +
+    ((!isFirst && oneLine) ? '<p class="ans-lead">' + escapeHtml(oneLine) + '</p>' : '') +
+    renderMarkdown(text);
+  row.appendChild(panel);
+
+  // Source chips
   const badgesRow = document.createElement('div');
   badgesRow.className = 'msg-sources';
-
+  const chip = (cls, icon, label) => {
+    const b = document.createElement('span');
+    b.className = 'msg-source ' + cls;
+    b.innerHTML = EA.icon(icon, { size: 13 }) + escapeHtml(label);
+    return b;
+  };
   if ((sourceType === 'wiki' || sourceType === 'hybrid') && sources && sources.length) {
     sources.forEach(src => {
-      const badge = document.createElement('span');
-      badge.className = 'msg-source wiki';
       const label = src.label.length > 40 ? src.label.substring(0, 38) + '…' : src.label;
-      badge.innerHTML = '<span class="material-symbols-outlined">menu_book</span> ' + escapeHtml(label);
-      badgesRow.appendChild(badge);
+      badgesRow.appendChild(chip('wiki', 'book-open', label));
     });
-    if (sourceType === 'hybrid') {
-      const badge = document.createElement('span');
-      badge.className = 'msg-source ai-supplemented';
-      badge.innerHTML = '<span class="material-symbols-outlined">psychology</span> + AI knowledge';
-      badgesRow.appendChild(badge);
-    }
+    if (sourceType === 'hybrid') badgesRow.appendChild(chip('ai-supplemented', 'sparkles', '+ AI knowledge'));
   } else {
-    const badge = document.createElement('span');
-    badge.className = 'msg-source ai';
-    badge.innerHTML = '<span class="material-symbols-outlined">psychology</span> From AI knowledge';
-    badgesRow.appendChild(badge);
+    badgesRow.appendChild(chip('ai', 'sparkles', 'From AI knowledge'));
   }
   row.appendChild(badgesRow);
 
@@ -1601,12 +1611,13 @@ function appendAssistant(text, sourceType, sources, furtherLinks) {
     further.innerHTML = '<div class="msg-further-title">Further reading</div>' +
       furtherLinks.map(lk =>
         `<a href="${escapeHtml(lk.url)}" target="_blank" rel="noopener noreferrer">` +
-        `<span class="material-symbols-outlined">open_in_new</span>${escapeHtml(lk.text)}</a>`
+        EA.icon('external-link', { size: 13 }) + escapeHtml(lk.text) + `</a>`
       ).join('');
     row.appendChild(further);
   }
-
-  document.getElementById('chat-thread').appendChild(row);
+  thread.appendChild(row);
+  const input = document.getElementById('user-input');
+  if (input) input.placeholder = 'Ask a follow-up…';
   scrollBottom();
 }
 
@@ -1670,11 +1681,12 @@ async function sendMessage() {
       appendError(data.error || 'Something went wrong. Please try again.');
     } else {
       if (data.debug) console.log('[Companion]', data.debug);
-      appendAssistant(data.answer, data.source, data.sources, data.further_links);
+      appendAssistant(data.answer, data.source, data.sources, data.further_links, data.one_line);
       _messages.push({ role: 'user', text: question });
       _messages.push({
         role:         'assistant',
         text:         data.answer,
+        oneLine:      data.one_line || '',
         sourceType:   data.source,
         sources:      data.sources      || [],
         furtherLinks: data.further_links || [],
@@ -1787,14 +1799,17 @@ async function ccLoad() {
   }
 }
 
+// Material icon names in claims.json → Lucide
+const CC_ICON_MAP = { apps: 'layout-grid', directions_car: 'car', bolt: 'zap', recycling: 'recycle', restaurant: 'utensils', public: 'globe', flag: 'flag', label: 'shield' };
+function ccCatIcon(name) { return CC_ICON_MAP[name] || 'shield'; }
+
 function ccRenderCats() {
   const wrap = document.getElementById('cc-cats');
   const all  = '<button type="button" class="cc-cat active" data-cat="all" onclick="ccSetCat(this)">' +
-               '<span class="material-symbols-outlined">apps</span>All</button>';
+               EA.icon('layout-grid', { size: 13 }) + 'All</button>';
   wrap.innerHTML = all + _categories.map(c =>
     '<button type="button" class="cc-cat" data-cat="' + escapeHtml(c.id) + '" onclick="ccSetCat(this)">' +
-    '<span class="material-symbols-outlined">' + escapeHtml(c.icon) + '</span>' +
-    escapeHtml(c.label) + '</button>'
+    EA.icon(ccCatIcon(c.icon), { size: 13 }) + escapeHtml(c.label) + '</button>'
   ).join('');
 }
 
@@ -1848,9 +1863,11 @@ function ccFilter() {
   }
 
   const count = document.getElementById('cc-count');
-  count.textContent = matches.length
-    ? matches.length + (matches.length === 1 ? ' claim' : ' claims')
-    : '';
+  const catObj = _categories.find(x => x.id === _ccCat);
+  if (!matches.length) count.textContent = '';
+  else if (terms.length) count.textContent = matches.length + (matches.length === 1 ? ' claim' : ' claims');
+  else if (catObj) count.textContent = _claims.length + ' claims · ' + matches.length + ' in ' + catObj.label.toLowerCase();
+  else count.textContent = matches.length + ' claims';
 
   const results = document.getElementById('cc-results');
   if (!matches.length) {
@@ -1871,86 +1888,110 @@ function ccCardHTML(c) {
   const cat = _categories.find(x => x.id === c.category);
   // The quote marks around the claim are CSS pseudo-elements, so screen readers
   // need the claim spelled out on the button itself.
-  return '<button type="button" class="cc-card" aria-label="' + escapeHtml(c.claim) + '"' +
+  const v = _verdicts[c.verdict] || { color: 'orange' };
+  return '<button type="button" class="cc-card ' + (CC_VERDICT_CLASS[v.color] || 'v-orange') + '" aria-label="' + escapeHtml(c.claim) + '"' +
          ' onclick="ccOpen(\'' + escapeHtml(c.id) + '\')">' +
-           ccVerdictHTML(c.verdict) +
-           '<div class="cc-card-claim">' + escapeHtml(c.claim) + '</div>' +
-           '<div class="cc-card-foot">' +
-             '<span class="material-symbols-outlined">' + escapeHtml(cat ? cat.icon : 'label') + '</span>' +
-             escapeHtml(cat ? cat.label : c.category) +
+           '<div class="cc-card-in">' +
+             '<div class="cc-card-top">' + ccVerdictHTML(c.verdict) + EA.icon('chevron-right', { size: 17 }) + '</div>' +
+             '<div class="cc-card-claim">' + escapeHtml(c.claim) + '</div>' +
+             '<div class="cc-card-foot">' +
+               EA.icon(ccCatIcon(cat ? cat.icon : 'label'), { size: 12 }) +
+               escapeHtml(cat ? cat.label : c.category) +
+             '</div>' +
            '</div>' +
          '</button>';
+}
+
+// Claim text from the wiki export: escape, then honour **bold** and *italic*
+function ccFormat(t) { return inlineMarkdown(escapeHtml(t || '')); }
+
+// "What's actually true" as bullets. The export writes inline " - " bullets for
+// some claims; plain prose is split into two or three bullets on sentence ends.
+function ccBulletsHTML(text) {
+  const t = (text || '').trim();
+  let lead = '', items;
+  if (/(^|\s)-\s+\S/.test(t)) {
+    items = t.split(/(?:^|\s)-\s+(?=\S)/).map(x => x.trim()).filter(Boolean);
+    if (!t.startsWith('- ') && items.length > 1) lead = items.shift();
+  } else {
+    const sentences = t.split(/(?<=[.!?])\s+(?=[A-Z0-9“"(])/).map(x => x.trim()).filter(Boolean);
+    if (sentences.length <= 3) items = sentences;
+    else {
+      const per = Math.ceil(sentences.length / 3); items = [];
+      for (let i = 0; i < sentences.length; i += per) items.push(sentences.slice(i, i + per).join(' '));
+    }
+  }
+  return (lead ? '<p class="cc-lead">' + ccFormat(lead) + '</p>' : '') +
+         '<div class="cc-bullets">' + items.map(x => '<p>' + ccFormat(x) + '</p>').join('') + '</div>';
 }
 
 function ccOpen(id) {
   const c = _claims.find(x => x.id === id);
   if (!c) return;
-
-  const pushback = (c.pushback || []).map(p =>
-    '<div class="cc-push">' +
-      '<div class="cc-push-if">' + escapeHtml(p.if) + '</div>' +
-      '<div class="cc-push-reply">' + escapeHtml(p.reply) + '</div>' +
-    '</div>'
-  ).join('');
-
-  const sources = (c.sources || []).map(s =>
-    '<a href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener noreferrer">' +
-      '<span class="material-symbols-outlined">open_in_new</span>' + escapeHtml(s.label) +
-    '</a>'
-  ).join('');
-
+  const srcLine = (c.sources || []).map(sr =>
+    '<a href="' + escapeHtml(sr.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(sr.label) + '</a>'
+  ).join(' · ');
   document.getElementById('cc-detail').innerHTML =
-    '<button type="button" class="cc-back" onclick="ccCloseDetail()">' +
-      '<span class="material-symbols-outlined">arrow_back</span>All claims</button>' +
+    '<button type="button" class="cc-back" onclick="ccCloseDetail()">' + EA.icon('arrow-left', { size: 19 }) + 'All claims</button>' +
     ccVerdictHTML(c.verdict) +
     '<div class="cc-detail-claim">' + escapeHtml(c.claim) + '</div>' +
-
     '<div class="cc-block">' +
-      '<div class="cc-block-title"><span class="material-symbols-outlined">lightbulb</span>Why it sounds right</div>' +
-      '<div class="cc-block-body">' + escapeHtml(c.kernel) + '</div>' +
+      '<div class="cc-block-title">' + EA.icon('lightbulb', { size: 14 }) + 'Why it sounds right</div>' +
+      '<div class="cc-block-body">' + ccFormat(c.kernel) + '</div>' +
     '</div>' +
-
-    '<div class="cc-block">' +
-      '<div class="cc-block-title"><span class="material-symbols-outlined">fact_check</span>What is actually true</div>' +
-      '<div class="cc-block-body">' + escapeHtml(c.truth) + '</div>' +
+    '<div class="cc-block true">' +
+      '<div class="cc-block-title">' + EA.icon('square-check', { size: 14 }) + "What's actually true</div>" +
+      ccBulletsHTML(c.truth) +
     '</div>' +
-
-    '<div class="cc-say">' +
-      '<div class="cc-block-title"><span class="material-symbols-outlined">record_voice_over</span>Say this</div>' +
-      '<div class="cc-say-text" id="cc-say-text">' + escapeHtml(c.say_this) + '</div>' +
-      '<button type="button" class="cc-copy" onclick="ccCopy(this)">' +
-        '<span class="material-symbols-outlined">content_copy</span>Copy</button>' +
-    '</div>' +
-
-    (pushback
-      ? '<div class="cc-block">' +
-          '<div class="cc-block-title"><span class="material-symbols-outlined">reply</span>If they push back</div>' +
-          '<div>' + pushback + '</div>' +
-        '</div>'
-      : '') +
-
-    (sources
-      ? '<div class="cc-block">' +
-          '<div class="cc-block-title"><span class="material-symbols-outlined">menu_book</span>Sources</div>' +
-          '<div class="cc-sources">' + sources + '</div>' +
-        '</div>'
-      : '') +
-
-    // No link through to the wiki on purpose. The source links above cover
-    // "where did this come from", and Ask the Companion covers "tell me more".
-    // A third route to the same material was clutter.
-    '<button type="button" class="cc-ask" onclick="ccAskCompanion(' + JSON.stringify(c.claim).replace(/"/g, '&quot;') + ')">' +
-      '<span class="material-symbols-outlined">forum</span>Ask the Companion about this</button>';
-
+    (srcLine ? '<p class="cc-srcline">' + EA.icon('info', { size: 13 }) + '<span>' + srcLine + '</span></p>' : '') +
+    '<button type="button" class="cta" onclick="ccSay(' + JSON.stringify(c.id).replace(/"/g, '&quot;') + ')">' +
+      EA.icon('message-square', { size: 18 }) + 'Get the line to say</button>';
   const view = document.getElementById('counter-view');
   // Remember where the list was so Back returns you to the same card.
   if (!document.body.classList.contains('cc-detail')) _ccListScroll = view.scrollTop;
   document.body.classList.add('cc-detail');
+  document.body.classList.remove('cc-say');
   view.scrollTop = 0;
 }
 
+function ccSay(id) {
+  const c = _claims.find(x => x.id === id);
+  if (!c) return;
+  const paras = (c.say_this || '').split(/\n\s*\n/).map(t => '<p>' + ccFormat(t.trim()) + '</p>').join('');
+  const chips = (c.sources || []).map(sr =>
+    '<a href="' + escapeHtml(sr.url) + '" target="_blank" rel="noopener noreferrer">' + EA.icon('book-open', { size: 14 }) + escapeHtml(sr.label) + '</a>'
+  ).join('');
+  document.getElementById('cc-say').innerHTML =
+    '<button type="button" class="cc-back" onclick="ccCloseSay()">' + EA.icon('arrow-left', { size: 19 }) + 'Back to the claim</button>' +
+    '<p class="cc-say-eyebrow">Next time it comes up</p>' +
+    '<h2 class="cc-say-title">Say this</h2>' +
+    '<div class="cc-say-bubble" id="cc-say-text">' + paras +
+      '<svg class="tail-down" viewBox="0 0 44 34" aria-hidden="true"><path d="M8 6.5 C9 16 6 26 2 33 C14 26 26 16 38 6.5"></path></svg>' +
+    '</div>' +
+    '<div class="cc-say-envie"><envie-mascot pose="point" hat="hat" tee="science"></envie-mascot></div>' +
+    (chips ? '<div class="cc-say-chips">' + chips + '</div>' : '') +
+    '<div class="cc-say-actions">' +
+      '<button type="button" class="cta" onclick="ccCopy(this)">' + EA.icon('copy', { size: 18 }) + 'Copy</button>' +
+      '<button type="button" class="cc-share" onclick="ccShare()" aria-label="Share">' + EA.icon('share', { size: 20 }) + '</button>' +
+    '</div>' +
+    '<button type="button" class="cc-ask" onclick="ccAskCompanion(' + JSON.stringify(c.claim).replace(/"/g, '&quot;') + ')">Ask the Companion about this</button>';
+  document.body.classList.add('cc-say');
+  document.getElementById('counter-view').scrollTop = 0;
+}
+
+function ccCloseSay() {
+  document.body.classList.remove('cc-say');
+  document.getElementById('counter-view').scrollTop = 0;
+}
+
+function ccShare() {
+  const text = document.getElementById('cc-say-text').textContent.trim();
+  if (navigator.share) navigator.share({ text }).catch(() => {});
+  else ccCopy();
+}
+
 function ccCloseDetail() {
-  document.body.classList.remove('cc-detail');
+  document.body.classList.remove('cc-detail', 'cc-say');
   const view = document.getElementById('counter-view');
   requestAnimationFrame(() => { view.scrollTop = _ccListScroll; });
 }

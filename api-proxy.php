@@ -187,7 +187,7 @@ function llm_retrieve_pages(string $question, array $page_map, int $max_pages): 
     // Fall back to Anthropic if Infomaniak key not configured
     if (empty(INFOMANIAK_API_KEY)) return [];
 
-    $system = "You are a retriever for The Uptake Climate Companion. "
+    $system = "You are a retriever for the Environmentle Climate Companion. "
             . "Given a list of wiki pages and a user question, return a JSON array of slugs of pages whose content would help answer the question.\n\n"
             . "Guidelines:\n"
             . "- For broad synthesis questions that span multiple topics (e.g. 'most impactful individual action'), return several slugs covering different angles.\n"
@@ -560,7 +560,7 @@ if ($index_text && empty($fetched_pages)) {
 // ── STEP 5: CALL CLAUDE API ────────────────────────────────────────────────
 
 $system_prompt = <<<'SYSTEM'
-You are the Climate Companion for The Uptake, a platform helping non-experts learn about sustainability and climate action.
+You are the Climate Companion for Environmentle, a platform helping non-experts learn about sustainability and climate action.
 
 # MANDATORY OUTPUT FORMAT — NEVER DEVIATE
 Every single answer MUST start with EXACTLY ONE of these three prefixes, on its own line:
@@ -576,7 +576,11 @@ Every single answer MUST end with these markers (in this order), each on its own
   SOURCE_WIKI: slug1, slug2, slug3    (comma-separated slugs of ALL wiki pages you drew from — omit if SOURCE_AI only)
   SOURCE_AI                           (include this line whenever you used training data, even partially)
 
-These markers are non-negotiable. They are how the platform attributes your answer.
+Immediately after the prefix line, on its own line, write:
+  ONE LINE: <one plain sentence, 20 words at most, no markdown, giving the single most useful takeaway>
+Then leave a blank line and write the full answer.
+
+These markers are non-negotiable. They are how the platform attributes your answer and fronts it with the one line worth repeating.
 
 # Audience
 Curious, non-technical adults. Aim for B2-level English. Rewrite and restructure wiki content into clear, flowing prose — do not copy raw notes. If a technical term is needed, define it briefly on first use.
@@ -757,6 +761,13 @@ if (preg_match('/^From our knowledge base and AI\s*:?\s*/i', $raw_answer)) {
     $raw_answer = preg_replace('/^From AI knowledge\s*:?\s*/i', '', $raw_answer);
 }
 
+// ONE LINE marker: the single takeaway the app fronts the answer with.
+$one_line = '';
+if (preg_match('/^\s*ONE LINE\s*:\s*(.+?)\s*$/mi', $raw_answer, $ol)) {
+    $one_line   = trim($ol[1], " \t*_\"“”");
+    $raw_answer = trim(preg_replace('/^\s*ONE LINE\s*:\s*.+?\s*$/mi', '', $raw_answer, 1));
+}
+
 // Strip any LINKS marker Claude may still generate (safety net — we no longer ask for it)
 $raw_answer = trim(preg_replace('/\nLINKS\s*:\s*.+$/m', '', $raw_answer));
 
@@ -810,6 +821,15 @@ $source_label = $sources[0]['label'] ?? null;
 
 $raw_answer = trim($raw_answer);
 
+// Fallback if the model skipped the marker: first sentence of the answer, markdown stripped.
+if ($one_line === '') {
+    $plain = preg_replace('/[*_`#>\[\]]+/', '', $raw_answer);
+    $plain = preg_replace('/\([^)]*\)/', '', $plain);
+    $plain = trim(preg_replace('/\s+/', ' ', $plain));
+    if (preg_match('/^(.+?[.!?])(\s|$)/u', $plain, $fm)) $plain = $fm[1];
+    $one_line = mb_substr($plain, 0, 180);
+}
+
 // ── STEP 7: FURTHER READING ────────────────────────────────────────────────
 // Disabled for now. Future plan: articles will have a dedicated ## Further Reading
 // section with curated external links. The build script will extract those into
@@ -819,6 +839,7 @@ $raw_answer = trim($raw_answer);
 
 echo json_encode([
     'answer'        => $raw_answer,
+    'one_line'      => $one_line,
     'source'        => $source,
     'source_url'    => $source_url,
     'source_label'  => $source_label,
