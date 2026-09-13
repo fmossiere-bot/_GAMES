@@ -392,7 +392,6 @@
         ${sourceLine(a) ? `<div class="sheet-fact"><span class="k">Why now</span><span class="v">${esc(sourceLine(a))}</span></div>` : ''}
       </div>
       <div class="erow sm"><envie-mascot pose="${pledged ? 'flag' : 'point'}" hat="cap" aria-hidden="true"></envie-mascot><div class="bb r3 tail-low"><p class="bs">${esc(envie)}</p>${EA.TAIL}</div></div>
-      <a class="sheet-ask" href="companion.php?q=${encodeURIComponent('Tell me more about this action: ' + a.title)}">${EA.icon('message-square', { size: 15 })} Ask Envie about this</a>
       <div class="sheet-actions">
         ${pledged ? '' : `<button type="button" class="cta sky" id="sheet-pledge" ${left > 0 ? '' : 'disabled'}>Pledge it ${EA.icon('arrow-right', { size: 17 })}</button>`}
         <button type="button" class="cta ghost" id="sheet-skip">${pledged ? 'Close' : 'Not this one'}</button>

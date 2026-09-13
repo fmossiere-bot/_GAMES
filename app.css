@@ -926,9 +926,8 @@ body.sheet-open { overflow: hidden; }
 .skin .sheet-panel .erow { margin: 16px 0 4px; }
 .skin .sheet-panel .erow envie-mascot { width: 70px; }
 .skin .sheet-panel .erow .bb { margin-bottom: 12px; }
+.skin .sheet-panel .erow { margin-bottom: 14px; }
 .skin .sheet-panel .bb .bs { margin-top: 0; font-size: 13px; }
-.skin .sheet-ask { display: inline-flex; align-items: center; gap: 7px; margin: 4px 0 14px; font-family: var(--font-body); font-size: 12.5px; font-weight: 700; color: var(--aqua); text-decoration: none; }
-.skin .sheet-ask svg { width: 15px; height: 15px; }
 .skin .sheet-actions { display: flex; gap: 10px; }
 .skin .sheet-actions .cta { flex: 1 1 auto; width: auto; padding: 15px; font-size: 16px; border-radius: 18px; white-space: nowrap; }
 .skin .sheet-actions .cta.ghost { flex: 0 0 auto; width: auto; padding: 15px 16px; font-size: 14px; }

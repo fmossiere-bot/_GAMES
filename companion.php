@@ -2521,12 +2521,6 @@ function wkRender(md) {
   const params = new URLSearchParams(window.location.search);
   const mode = params.get('mode');
   if (mode === 'counter' || mode === 'wiki') setMode(mode);
-  // companion.php?q=... asks Envie straight away (used by the action sheet)
-  const q = (params.get('q') || '').trim();
-  if (q) {
-    const input = document.getElementById('user-input');
-    if (input) { input.value = q; setTimeout(() => sendMessage(), 300); }
-  }
 })();
 </script>
 
