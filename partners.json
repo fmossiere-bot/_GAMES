@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "note": "Placeholder partners. Names, places and costs are illustrative until real partnerships are signed. A credit is earned every CREDIT_STEP points (see engine.js).",
+    "version": 1
+  },
+  "partners": [
+    {
+      "id": "native-tree",
+      "title": "Plant a native tree",
+      "sub": "Woodland partner · Co. Wicklow",
+      "desc": "One native whip, planted this season. Oak, birch, rowan or hazel, depending on the site. Envie will show you the spot.",
+      "credits": 1,
+      "icon": "sprout",
+      "tone": "sky",
+      "featured": true
+    },
+    {
+      "id": "pollinator-meadow",
+      "title": "Pollinator meadow",
+      "sub": "10 m² of wildflower verge",
+      "desc": "Ten square metres of native wildflower verge, sown and left uncut through the summer for bees and hoverflies.",
+      "credits": 2,
+      "icon": "flower",
+      "tone": "amber"
+    },
+    {
+      "id": "seagrass",
+      "title": "Seagrass restoration",
+      "sub": "Coastal habitat · pilot site",
+      "desc": "A square metre of seagrass meadow replanted at a pilot site. Seagrass stores carbon and shelters young fish.",
+      "credits": 3,
+      "icon": "waves",
+      "tone": "aqua"
+    }
+  ]
+}

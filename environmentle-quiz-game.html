@@ -1282,46 +1282,12 @@
 </div>
 
 
-<!-- ══════════════════════════════════════════════════════
-     SCREEN 4 — ACTIONS
-══════════════════════════════════════════════════════ -->
-<div id="screen-action" class="screen">
-  <div class="action-header">
-    <p class="action-header-title">Take some action</p>
-    <p class="action-header-sub">Pick what you can commit to. Earn extra points.</p>
-  </div>
-  <div class="action-body" id="action-body">
-    <div class="erow">
-      <envie-mascot pose="point" hat="hat"></envie-mascot>
-      <div class="bb tail-low">
-        <p class="action-intro" id="action-intro">
-      Coffee production supports <strong>125 million farmers</strong> worldwide. Warmer temperatures caused by climate change are pushing coffee growing to higher altitudes, threatening the industry and those who depend on it. Here are some simple steps you can take.
-    </p>
-        <svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg>
-      </div>
-    </div>
-    <!-- action cards injected by JS -->
-  </div>
-  <div class="action-footer">
-    <button class="btn-commit" id="btn-commit" onclick="commitActions()" disabled>
-      Commit &amp; collect points
-    </button>
-    <button class="btn-action-back" onclick="goBackToScore()">
-      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
-      </svg>
-      Back to my score
-    </button>
-  </div>
-</div>
-
-
-
+<!-- The pledge step moved to the app home (Take an action). -->
 
 <!-- Score bottom — lives OUTSIDE all screens so position:fixed works correctly -->
 <div class="score-bottom" id="score-bottom" style="display:none;">
-  <button class="btn-action" id="btn-action" onclick="showActions()">Take action, earn more points</button>
-  <button class="btn-finish" onclick="finishAndGoHub()">Finish</button>
+  <button class="btn-action" onclick="finishAndGoHub()">Finish</button>
+  <button class="btn-finish" onclick="finishAndGoActions()">Take an action</button>
 </div>
 
 <!-- Bottom nav — shown on score/action screens only -->
@@ -1479,8 +1445,6 @@ let correctCount = 0;
 let timerInterval   = null;
 let timeLeft        = Q_MAX_TIME;
 let answered        = false;
-let selectedActions = new Set();
-let bonusPoints     = 0;
 let progressSaved   = false;
 let userAnswers     = []; // per-question recap: {q, choice, correct, isRight, fact, pts, timedOut?}
 
@@ -1857,132 +1821,14 @@ function showResults() {
 }
 
 // ══════════════════════════════════════════════════════
-// ACTIONS
+// FINISH — actions now live in the app (index.html?actions=1)
 // ══════════════════════════════════════════════════════
-function showActions() {
-  document.getElementById('score-bottom').style.display = 'none';
-  selectedActions.clear();
-  bonusPoints = 0;
-  document.getElementById('action-intro').innerHTML = challenge.actionIntro;
-  const body = document.getElementById('action-body');
-  Array.from(body.querySelectorAll('.action-card')).forEach(c => c.remove());
-
-  // "Nothing for now" opt-out card — always first
-  const nothingCard = document.createElement('div');
-  nothingCard.className = 'action-card action-card-nothing';
-  nothingCard.id = 'action-card-nothing';
-  nothingCard.innerHTML = `
-    <div class="action-card-top">
-      <span class="action-card-title">Nothing for now, I changed my mind</span>
-    </div>
-    <div class="action-card-meta">
-      <span class="action-pts" style="color:var(--text-soft)">+0 pts</span>
-      <div class="action-checkbox" id="check-nothing">
-        <svg width="12" height="12" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24" style="display:none" id="checkmark-nothing">
-          <path d="M20 6L9 17l-5-5"/>
-        </svg>
-      </div>
-    </div>`;
-  nothingCard.onclick = () => toggleNothingAction(nothingCard);
-  body.appendChild(nothingCard);
-
-  challenge.actions.forEach((a, i) => {
-    const card = document.createElement('div');
-    card.className   = 'action-card';
-    card.dataset.idx = i;
-    card.innerHTML   = `
-      <div class="action-card-top">
-        <span class="action-card-title">${a.title}</span>
-        <span class="action-level level-${a.level}">${a.level}</span>
-      </div>
-      <p class="action-card-desc">${a.desc}</p>
-      <div class="action-card-meta">
-        <span class="action-pts">+${a.points} pts</span>
-        <span class="action-carbon">${a.carbon}</span>
-        <div class="action-checkbox" id="check-${i}">
-          <svg width="12" height="12" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24" style="display:none" id="checkmark-${i}">
-            <path d="M20 6L9 17l-5-5"/>
-          </svg>
-        </div>
-      </div>`;
-    card.onclick = () => toggleAction(i, card, a.points);
-    body.appendChild(card);
-  });
-
-  showScreen('screen-action');
-}
-
-function toggleNothingAction(card) {
-  if (selectedActions.has(-1)) {
-    selectedActions.delete(-1);
-    card.classList.remove('selected');
-    document.getElementById('checkmark-nothing').style.display = 'none';
-  } else {
-    // Select "nothing" — clear all real action selections first
-    selectedActions.clear();
-    bonusPoints = 0;
-    document.querySelectorAll('.action-card:not(.action-card-nothing)').forEach((c, i) => {
-      c.classList.remove('selected');
-      const chk = document.getElementById(`checkmark-${i}`);
-      if (chk) chk.style.display = 'none';
-    });
-    selectedActions.add(-1);
-    card.classList.add('selected');
-    document.getElementById('checkmark-nothing').style.display = 'block';
+function finishAndGoActions() {
+  if (!progressSaved) {
+    saveProgress(score, 0);
+    progressSaved = true;
   }
-  const btn = document.getElementById('btn-commit');
-  btn.disabled    = selectedActions.size === 0;
-  btn.textContent = selectedActions.has(-1) ? 'Confirm, no actions' : 'Commit & collect points';
-}
-
-function toggleAction(idx, card, pts) {
-  // If "Nothing" was active, deselect it first
-  if (selectedActions.has(-1)) {
-    selectedActions.delete(-1);
-    const nothingCard = document.getElementById('action-card-nothing');
-    if (nothingCard) nothingCard.classList.remove('selected');
-    const nothingChk = document.getElementById('checkmark-nothing');
-    if (nothingChk) nothingChk.style.display = 'none';
-  }
-  if (selectedActions.has(idx)) {
-    selectedActions.delete(idx);
-    card.classList.remove('selected');
-    document.getElementById(`checkmark-${idx}`).style.display = 'none';
-    bonusPoints -= pts;
-  } else {
-    selectedActions.add(idx);
-    card.classList.add('selected');
-    document.getElementById(`checkmark-${idx}`).style.display = 'block';
-    bonusPoints += pts;
-  }
-  const btn = document.getElementById('btn-commit');
-  btn.disabled    = selectedActions.size === 0;
-  btn.textContent = selectedActions.size > 0
-    ? `Commit & collect +${bonusPoints} pts`
-    : 'Commit & collect points';
-}
-
-function commitActions() {
-  const actionCount = selectedActions.has(-1) ? 0 : selectedActions.size;
-  score += bonusPoints;
-  saveProgress(score, actionCount);
-  saveActionHistory();
-  progressSaved = true;
-  window.location.href = 'index.html?hub=1';
-}
-
-// Persist the titles of pledged actions so they can be listed on the profile page.
-// Capped at the 20 most recent so the Firestore doc stays bounded.
-function saveActionHistory() {
-  if (selectedActions.has(-1) || selectedActions.size === 0) return;
-  const HIST_KEY = 'actions_history_' + _nk;
-  const history  = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
-  const today    = new Date().toISOString().slice(0, 10);
-  selectedActions.forEach(idx => {
-    const a = challenge && challenge.actions && challenge.actions[idx];
-    if (a && a.title) history.push({ title: a.title, date: today });
-  });
-  localStorage.setItem(HIST_KEY, JSON.stringify(history.slice(-20)));
+  window.location.href = 'index.html?actions=1';
 }
 
 function finishAndGoHub() {
@@ -1993,10 +1839,6 @@ function finishAndGoHub() {
   window.location.href = 'index.html?hub=1';
 }
 
-function goBackToScore() {
-  document.getElementById('score-bottom').style.display = 'flex';
-  showScreen('screen-score');
-}
 
 function signOut() {
   localStorage.removeItem('env_player_name');

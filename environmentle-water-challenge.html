@@ -1466,48 +1466,15 @@
   <!-- Below the reading, not above it: the score first, then what it meant,
        then the invitation to do something about it. -->
   <div class="score-bottom">
-    <button class="btn-action" id="btn-action">Take further action</button>
+    <button class="btn-action" id="btn-finish">Finish</button>
     <button class="btn-finish" id="end-replay" hidden>Play again</button>
-    <button class="btn-finish" id="btn-finish">Finish</button>
+    <button class="btn-finish" id="btn-action">Take an action</button>
   </div>
 
 </div>
 
 
-<!-- ══════════════════════════════════════════════════════
-     SCREEN 4 — ACTIONS
-     The same pledge flow the Carbon Challenge uses, down to the class names, so
-     a water pledge lands in the same places a carbon one does.
-══════════════════════════════════════════════════════ -->
-<div id="screen-action" class="screen">
-  <div class="action-header">
-    <p class="action-header-title">Take some action</p>
-    <p class="action-header-sub" id="action-header-sub">Pick what you can commit to. Earn extra points.</p>
-  </div>
-  <div class="action-body" id="action-body">
-    <div class="erow">
-      <envie-mascot pose="point" hat="hat"></envie-mascot>
-      <div class="bb tail-low">
-        <p class="action-intro" id="action-intro-text">
-      Biggest lever first. The order matters more than the list: the food choices at
-      the top save far more water than the tap and shower habits below them.
-    </p>
-        <svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg>
-      </div>
-    </div>
-  </div>
-  <div class="action-footer">
-    <button class="btn-commit" id="btn-commit" disabled>
-      Commit &amp; go to my dashboard
-    </button>
-    <button class="btn-action-back" id="btn-action-back">
-      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
-      </svg>
-      Back to my score
-    </button>
-  </div>
-</div>
+<!-- The pledge step moved to the app home (Take an action). -->
 
 
 <!-- ══════════════════════════════════════════════════════
@@ -3100,21 +3067,12 @@
                               // zero at a round 75.
   var MAX_POINTS = ROUNDS_PER_RUN * POINTS_PER_CORRECT + PERFECT_BONUS + TIME_BONUS_MAX;
 
-  var ACTIONS_PER_RUN = 4;    // of the six in the dataset, rotated between runs
 
   var DATA = null;
   var pools = {};             // pool name -> playable cards
   var state = null;
   var els = {};
   var pairLog = [];           // every pairing this session, for verification
-
-  // Pledge screen state. Mirrors the Carbon Challenge's selectedActions set and
-  // bonusPoints counter; a plain object stands in for the Set so nothing here
-  // needs anything newer than the rest of the file uses.
-  var runActions = [];        // the actions this run offered, in dataset order
-  var selectedActions = {};   // index -> true, plus 'nothing' for the opt-out
-  var selectedCount = 0;
-  var bonusPoints = 0;
 
   var reduceMotion = window.matchMedia
     ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -3698,13 +3656,8 @@
       outcome: null,
       startedAt: Date.now(),
       points: 0,
-      saved: false,
-      pledged: false
+      saved: false
     };
-    runActions = [];
-    selectedActions = {};
-    selectedCount = 0;
-    bonusPoints = 0;
     pairLog = [];
     startChain();
     showScreen('screen-game');
@@ -3770,19 +3723,6 @@
 
   function bumpRotation() {
     storeSet(ROTATE_KEY, String((rotationIndex() + 1) % 1000000));
-  }
-
-  function actionsForRun(rot) {
-    var all = DATA.actions;
-    if (all.length <= ACTIONS_PER_RUN) return all.slice();
-    var rest = [];
-    for (var i = 1; i < all.length; i++) rest.push(i);
-    var picked = [0];                       // the biggest lever is never dropped
-    for (var k = 0; k < ACTIONS_PER_RUN - 1; k++) {
-      picked.push(rest[(rot + k) % rest.length]);
-    }
-    picked.sort(function (a, b) { return a - b; });
-    return picked.map(function (index) { return all[index]; });
   }
 
   function renderFacts(rot) {
@@ -3857,7 +3797,6 @@
     els.endLead.textContent = lead;
 
     renderFacts(rot);
-    runActions = actionsForRun(rot);
     bumpRotation();
     saveProgress();
 
@@ -3905,10 +3844,8 @@
         els.explainerList.appendChild(dt);
         els.explainerList.appendChild(dd);
       });
-    // The action list is no longer built here: it is rotated per run by
-    // the pledge cards, so that a once-a-day player is not offered the same six
-    // lines every day. The green/blue/grey explainer above stays put — the
-    // dataset holds one version of it and padding it out would be invention.
+    // The dataset's actions now live in actions.json, the app-wide repository,
+    // so the pledge step happens on the app home rather than here.
   }
 
   // ══════════════════════════════════════════════════════
@@ -3980,227 +3917,11 @@
     }
   }
 
-  // ══════════════════════════════════════════════════════
-  // PLEDGES
-  // The Carbon Challenge's flow, reproduced: pick actions on a screen of their
-  // own, each worth points, then commit. Same keys, same shapes, so a water
-  // pledge shows up wherever a carbon one does.
-  //
-  // One deliberate difference. Carbon defers writing the run to storage until
-  // Finish or Commit. This game cannot: the daily gate is stamped the moment
-  // the score screen appears, otherwise a reload would buy a second run. So the
-  // run and the pledge are two separate writes, and the pledge write only ever
-  // adds the bonus on top. The run's own ceiling stays 480.
-  // ══════════════════════════════════════════════════════
-  function actionPoints(action) {
-    // Flat per-action points, taken from the dataset. There is no size bonus
-    // here, unlike Carbon's log-scaled CO2 bonus: see the notes in the markdown
-    // for why the litres figures in this dataset cannot carry one.
-    var pts = parseInt(action.basePoints, 10);
-    return isNaN(pts) ? 0 : pts;
-  }
-
-  function renderPledgeCards() {
-    selectedActions = {};
-    selectedCount = 0;
-    bonusPoints = 0;
-
-    Array.prototype.slice.call(els.actionBody.querySelectorAll('.action-card'))
-      .forEach(function (card) { card.parentNode.removeChild(card); });
-
-    els.actionHeaderSub.textContent =
-      'Your run scored ' + state.points + '. Anything you commit to here is extra, on top.';
-
-    // The opt-out, always first, exactly as the Carbon Challenge has it.
-    var nothing = document.createElement('div');
-    nothing.className = 'action-card action-card-nothing';
-    nothing.id = 'action-card-nothing';
-    nothing.setAttribute('role', 'checkbox');
-    nothing.setAttribute('aria-checked', 'false');
-    nothing.tabIndex = 0;
-    nothing.innerHTML =
-      '<div class="action-card-top">' +
-        '<span class="action-card-title">Nothing for now, I changed my mind</span>' +
-      '</div>' +
-      '<div class="action-card-meta">' +
-        '<span class="action-pts" style="color:var(--text-soft)">+0 pts</span>' +
-        '<div class="action-checkbox" id="acheck-nothing">' +
-          '<svg width="12" height="12" fill="none" stroke="white" stroke-width="2.5" ' +
-          'viewBox="0 0 24 24" style="display:none" id="acheckmark-nothing">' +
-          '<path d="M20 6L9 17l-5-5"/></svg>' +
-        '</div>' +
-      '</div>';
-    nothing.addEventListener('click', function () { toggleNothingAction(nothing); });
-    nothing.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        toggleNothingAction(nothing);
-      }
-    });
-    els.actionBody.appendChild(nothing);
-
-    // Biggest lever first: runActions is already in dataset order, and rank 1
-    // is never dropped from it, so the ordering survives the pledge UI.
-    runActions.forEach(function (a, i) {
-      var pts = actionPoints(a);
-      var card = document.createElement('div');
-      card.className = 'action-card';
-      card.setAttribute('role', 'checkbox');
-      card.setAttribute('aria-checked', 'false');
-      card.tabIndex = 0;
-      card.innerHTML =
-        '<div class="action-card-top">' +
-          '<span class="action-card-title"></span>' +
-          '<span class="action-level level-' + a.level + '">' + a.level + '</span>' +
-        '</div>' +
-        '<p class="action-card-desc"></p>' +
-        '<div class="action-card-meta">' +
-          '<span class="action-pts">+' + pts + ' pts</span>' +
-          '<span class="action-carbon"></span>' +
-          '<div class="action-checkbox" id="acheck-' + i + '">' +
-            '<svg width="12" height="12" fill="none" stroke="white" stroke-width="2.5" ' +
-            'viewBox="0 0 24 24" style="display:none" id="acheckmark-' + i + '">' +
-            '<path d="M20 6L9 17l-5-5"/></svg>' +
-          '</div>' +
-        '</div>';
-      // Dataset strings go in as text, never as markup.
-      card.querySelector('.action-card-title').textContent = a.action;
-      // The evidence line and the framing, the same two the score screen's
-      // old passive list carried. Nothing is lost by moving them here.
-      card.querySelector('.action-card-desc').textContent = a.number + ' ' + a.framing;
-      card.querySelector('.action-carbon').textContent = a.saving;
-      card.addEventListener('click', function () { toggleAction(i, card, pts); });
-      card.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          toggleAction(i, card, pts);
-        }
-      });
-      els.actionBody.appendChild(card);
-    });
-
-    updateCommitButton();
-  }
-
-  function updateCommitButton() {
-    var nothingPicked = selectedActions['nothing'] === true;
-    els.btnCommit.disabled = selectedCount === 0 && !nothingPicked;
-    els.btnCommit.textContent = nothingPicked
-      ? 'Confirm, no actions'
-      : (selectedCount > 0
-          ? 'Commit & collect +' + bonusPoints + ' pts'
-          : 'Commit & collect points');
-  }
-
-  function setCheck(id, on) {
-    var mark = document.getElementById('acheckmark-' + id);
-    if (mark) mark.style.display = on ? 'block' : 'none';
-  }
-
-  function toggleNothingAction(card) {
-    if (selectedActions['nothing']) {
-      delete selectedActions['nothing'];
-      card.classList.remove('selected');
-      card.setAttribute('aria-checked', 'false');
-      setCheck('nothing', false);
-    } else {
-      // Picking "nothing" clears everything else, as it does in Carbon.
-      selectedActions = {};
-      selectedCount = 0;
-      bonusPoints = 0;
-      Array.prototype.slice.call(
-        els.actionBody.querySelectorAll('.action-card:not(.action-card-nothing)')
-      ).forEach(function (c, i) {
-        c.classList.remove('selected');
-        c.setAttribute('aria-checked', 'false');
-        setCheck(i, false);
-      });
-      selectedActions['nothing'] = true;
-      card.classList.add('selected');
-      card.setAttribute('aria-checked', 'true');
-      setCheck('nothing', true);
-    }
-    updateCommitButton();
-  }
-
-  function toggleAction(index, card, pts) {
-    if (selectedActions['nothing']) {
-      delete selectedActions['nothing'];
-      var nothing = document.getElementById('action-card-nothing');
-      if (nothing) {
-        nothing.classList.remove('selected');
-        nothing.setAttribute('aria-checked', 'false');
-      }
-      setCheck('nothing', false);
-    }
-    if (selectedActions[index]) {
-      delete selectedActions[index];
-      selectedCount -= 1;
-      bonusPoints -= pts;
-      card.classList.remove('selected');
-      card.setAttribute('aria-checked', 'false');
-      setCheck(index, false);
-    } else {
-      selectedActions[index] = true;
-      selectedCount += 1;
-      bonusPoints += pts;
-      card.classList.add('selected');
-      card.setAttribute('aria-checked', 'true');
-      setCheck(index, true);
-    }
-    updateCommitButton();
-  }
-
-  function showActions() {
-    renderPledgeCards();
-    showScreen('screen-action');
-    focusNoScroll(document.getElementById('action-card-nothing'));
-  }
-
-  // The titles of pledged actions, so the hub can list them. Same key, same
-  // {title, date} shape and the same cap at the 20 most recent as Carbon, so
-  // the hub's renderActionHistory() reads water pledges without changing.
-  function saveActionHistory() {
-    if (selectedActions['nothing'] || selectedCount === 0) return;
-    try {
-      var key = 'actions_history_' + _nk;
-      var history = JSON.parse(storeGet(key) || '[]');
-      if (!Array.isArray(history)) history = [];
-      var today = todayStr();
-      runActions.forEach(function (a, i) {
-        if (selectedActions[i] && a.action) {
-          history.push({ title: a.action, date: today });
-        }
-      });
-      storeSet(key, JSON.stringify(history.slice(-20)));
-    } catch (err) {
-      /* storage disabled — the pledge still counted on screen */
-    }
-  }
-
-  // Adds the pledge on top of the run that was already saved. Guarded so a
-  // double tap, or a commit after a back-and-forth, cannot collect twice.
-  function savePledge() {
-    if (state.pledged) return;
-    state.pledged = true;
-    var count = selectedActions['nothing'] ? 0 : selectedCount;
-    saveActionHistory();
-    try {
-      var progKey = 'env_progress_' + _nk;
-      var prev = JSON.parse(storeGet(progKey) || '{}');
-      storeSet(progKey, JSON.stringify({
-        totalScore:     (prev.totalScore || 0) + bonusPoints,
-        sessionsPlayed: (prev.sessionsPlayed || 0),
-        actionsPledged: (prev.actionsPledged || 0) + count
-      }));
-    } catch (err) {
-      /* storage disabled — nothing to persist */
-    }
-  }
-
-  function commitActions() {
-    savePledge();
-    window.location.href = 'index.html?hub=1';
+  // Actions: the pledge step moved to the app (index.html?actions=1). The run
+  // is already saved by the time the score screen shows, so this is a plain
+  // navigation.
+  function goToActions() {
+    window.location.href = 'index.html?actions=1';
   }
 
   function announce(text) {
@@ -4254,7 +3975,7 @@
       'scoreLabel', 'scoreMax', 'playedScore', 'playedWhen',
       'endLead', 'endFacts', 'endReplay', 'scoreMessage', 'scorePillStreak', 'scorePillBest',
       'scorePillBonus', 'explainerTitle', 'explainerIntro', 'explainerList', 'live',
-      'btnAction', 'btnFinish', 'btnCommit', 'btnActionBack', 'actionBody', 'actionHeaderSub'
+      'btnAction', 'btnFinish'
     ].forEach(function (key) {
       var id = key.replace(/[A-Z]/g, function (c) { return '-' + c.toLowerCase(); });
       els[key] = document.getElementById(id);
@@ -4292,9 +4013,7 @@
 
     els.btnStart.addEventListener('click', newGame);
     els.endReplay.addEventListener('click', newGame);
-    els.btnAction.addEventListener('click', showActions);
-    els.btnCommit.addEventListener('click', commitActions);
-    els.btnActionBack.addEventListener('click', function () { showScreen('screen-score'); });
+    els.btnAction.addEventListener('click', goToActions);
     // Finish leaves without a pledge, exactly as it does in the other games.
     els.btnFinish.addEventListener('click', function () {
       window.location.href = 'index.html?hub=1';
@@ -4328,14 +4047,7 @@
       retryAvailable: retryAvailable,
       calcScore: calcScore,
       simulatePairings: simulatePairings,
-      showActions: showActions,
-      commitActions: commitActions,
-      actionPoints: actionPoints,
-      runActions: function () { return runActions.slice(); },
-      pledge: function () {
-        return { bonus: bonusPoints, count: selectedCount,
-                 nothing: selectedActions['nothing'] === true };
-      }
+      goToActions: goToActions
     };
   }
 

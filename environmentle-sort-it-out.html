@@ -1414,43 +1414,13 @@
     </div>
   </div>
   <div class="score-bottom">
-    <button class="btn-action" id="btn-action" onclick="showActions()">Take further action</button>
-    <button class="btn-finish" onclick="finishAndGoHub()">Finish</button>
+    <button class="btn-action" onclick="finishAndGoHub()">Finish</button>
+    <button class="btn-finish" onclick="finishAndGoActions()">Take an action</button>
   </div>
 </div>
 
 
-<!-- ══════════════════════════════════════════════════════
-     SCREEN 4 — ACTIONS
-══════════════════════════════════════════════════════ -->
-<div id="screen-action" class="screen">
-  <div class="action-header">
-    <p class="action-header-title">Take some action</p>
-    <p class="action-header-sub">Pick what you can commit to. Earn extra points.</p>
-  </div>
-  <div class="action-body" id="action-body">
-    <div class="erow">
-      <envie-mascot pose="point" hat="hat"></envie-mascot>
-      <div class="bb tail-low">
-        <p class="action-intro" id="action-intro-text">
-      Now you've seen the numbers, some things have a <strong>much bigger carbon footprint than you might expect</strong>. The good news is a few changes go a long way. Here are some you can start with.
-    </p>
-        <svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg>
-      </div>
-    </div>
-  </div>
-  <div class="action-footer">
-    <button class="btn-commit" id="btn-commit" onclick="commitActions()" disabled>
-      Commit &amp; go to my dashboard
-    </button>
-    <button class="btn-action-back" onclick="showScreen('screen-score')">
-      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
-      </svg>
-      Back to my score
-    </button>
-  </div>
-</div>
+<!-- The pledge step moved to the app home (Take an action). -->
 
 
 
@@ -1554,137 +1524,7 @@ const FALLBACK_CARDS = [
 // Only cards above this CO₂ value (kg) are eligible to generate an action
 const ACTION_THRESHOLD_KG = 10;
 
-// ── PER-CARD ACTIONS ──
-// Each card title maps to a specific action the player can commit to.
-// points = base points (a CO₂ size bonus is added on top in generateActions())
-const CARD_ACTIONS = {
-  "1kg of Coffee Beans": {
-    title: "Switch to a certified sustainable coffee brand",
-    desc: "Look for Rainforest Alliance or organic certification next time you buy beans or ground coffee.",
-    level: "beginner",
-    basePoints: 50,
-    saving: "Reduces water use and land pressure per kg of beans"
-  },
-  "100km by Car": {
-    title: "Replace one car journey with public transport this week",
-    desc: "Even one return trip by bus or train instead of car saves roughly 50 kg CO₂ over the year if done weekly.",
-    level: "beginner",
-    basePoints: 75,
-    saving: "~50 kg CO₂ saved/year if done weekly"
-  },
-  "1kg Lamb": {
-    title: "Try one lamb-free week this month",
-    desc: "Lamb has one of the highest footprints of any meat. Swapping it for chicken or legumes makes a real difference.",
-    level: "beginner",
-    basePoints: 50,
-    saving: "~28 kg CO₂ saved per kg avoided"
-  },
-  "1 Pair Leather Shoes": {
-    title: "Buy your next pair of shoes second-hand or from a sustainable brand",
-    desc: "Manufacturing one pair of leather shoes produces ~30 kg CO₂. Second-hand or vegan alternatives cut that dramatically.",
-    level: "intermediate",
-    basePoints: 75,
-    saving: "Up to 30 kg CO₂ saved per pair"
-  },
-  "1kg Beef": {
-    title: "Try one beef-free week",
-    desc: "Beef is the highest-impact common food. Replacing it with chicken, fish or plant protein just once a week adds up.",
-    level: "beginner",
-    basePoints: 75,
-    saving: "~60 kg CO₂ saved per kg avoided"
-  },
-  "1 Smartphone": {
-    title: "Keep your current phone for one more year",
-    desc: "Manufacturing a new smartphone produces ~70 kg CO₂. The best phone for the planet is the one you already own.",
-    level: "beginner",
-    basePoints: 75,
-    saving: "~70 kg CO₂ saved"
-  },
-  "1 Bicycle": {
-    title: "Buy your next bike second-hand",
-    desc: "Manufacturing a new bicycle uses ~96 kg CO₂. Second-hand bikes cut that to near zero, and save money too.",
-    level: "beginner",
-    basePoints: 50,
-    saving: "Up to 96 kg CO₂ saved"
-  },
-  "Paris Olympics Visit": {
-    title: "Choose a local or low-travel event for your next big trip",
-    desc: "A single major sporting event visit can cost 125 kg CO₂. Choosing an event within driving distance makes a big difference.",
-    level: "intermediate",
-    basePoints: 75,
-    saving: "~125 kg CO₂ saved per trip avoided"
-  },
-  "1 Laptop": {
-    title: "Repair or refurbish your laptop instead of buying new",
-    desc: "A new laptop produces ~300 kg CO₂ in manufacturing alone. Most repairs cost a fraction of that, and extend its life by years.",
-    level: "intermediate",
-    basePoints: 100,
-    saving: "Up to 300 kg CO₂ saved"
-  },
-  "Dublin–Madrid Flight": {
-    title: "Replace one short-haul flight with a train or ferry",
-    desc: "A return Dublin–Madrid flight produces ~550 kg CO₂. For journeys under 5–6 hours, train is usually feasible and far lower impact.",
-    level: "intermediate",
-    basePoints: 150,
-    saving: "~550 kg CO₂ saved per trip"
-  },
-  "1 Year Digital Life": {
-    title: "Enable downloads instead of streaming this week",
-    desc: "Streaming constantly uses data centres. Downloading music or videos on Wi-Fi, then watching offline, cuts that energy use significantly.",
-    level: "beginner",
-    basePoints: 50,
-    saving: "Part of your ~636 kg/year digital footprint"
-  },
-  "1 Year Pet Dog": {
-    title: "Switch your dog to a lower-impact food brand",
-    desc: "A dog's annual footprint is ~770 kg CO₂, mostly from meat-based food. Several brands now offer lower-carbon recipes with insect or plant protein.",
-    level: "intermediate",
-    basePoints: 100,
-    saving: "Could reduce pet footprint by 20–40%"
-  },
-  "1 Ton Cement": {
-    title: "Ask about lower-carbon materials for your next home project",
-    desc: "Cement production is highly carbon-intensive. For patios, paths or small builds, alternatives like recycled aggregate or timber can be used.",
-    level: "advanced",
-    basePoints: 100,
-    saving: "~900 kg CO₂ per tonne avoided"
-  },
-  "1 Year Food Waste": {
-    title: "Plan your meals this week to reduce food waste",
-    desc: "The average household wastes enough food to produce 1,600 kg CO₂ a year. A simple weekly plan and checking your fridge before shopping can cut that by half.",
-    level: "beginner",
-    basePoints: 100,
-    saving: "Up to 800 kg CO₂ saved/year"
-  },
-  "NY–London Flight": {
-    title: "Offset your next long-haul flight, and consider flying less",
-    desc: "A return NY–London flight produces ~1,800 kg CO₂. High-quality carbon offsets through Gold Standard can neutralise that while you reduce flying long-term.",
-    level: "advanced",
-    basePoints: 150,
-    saving: "~1,800 kg CO₂ offset"
-  },
-  "$10K in a Dirty Bank": {
-    title: "Check if your bank funds fossil fuels, and consider switching",
-    desc: "€10K in a fossil-fuel-lending bank generates ~2,400 kg CO₂/year through loans. Green banks like Triodos exist and are fully regulated.",
-    level: "advanced",
-    basePoints: 200,
-    saving: "Up to 2,400 kg CO₂/year avoided"
-  },
-  "New Small Car": {
-    title: "Consider a second-hand or electric car for your next purchase",
-    desc: "Manufacturing a new small car produces ~4,000 kg CO₂. Buying second-hand avoids that entirely. EVs have a lower lifetime footprint even accounting for the battery.",
-    level: "advanced",
-    basePoints: 150,
-    saving: "~4,000 kg CO₂ saved vs. new petrol car"
-  },
-  "New Range Rover": {
-    title: "Consider a smaller, second-hand or electric vehicle next time",
-    desc: "A new Range Rover produces ~25,000 kg CO₂ in manufacturing, one of the highest of any consumer product. Even a new mid-size EV is dramatically lower.",
-    level: "advanced",
-    basePoints: 200,
-    saving: "~20,000+ kg CO₂ saved vs. new large SUV"
-  }
-};
+// Per-card actions moved to actions.json (the app-wide actions repository).
 
 // ══════════════════════════════════════════════════════
 // STATE
@@ -1702,10 +1542,7 @@ let roundScore = 0;
 let totalScore = 0;
 let roundStartTime = null;
 let correctCount = 0;
-let selectedActions = new Set();
-let bonusPoints = 0;
 let progressSaved = false;
-let _currentRoundActions = []; // hoisted so commitActions() can look up titles by index
 
 // drag state
 let draggedIdx = null;
@@ -2190,215 +2027,14 @@ function showResults() {
 }
 
 // ══════════════════════════════════════════════════════
-// ACTIONS
+// FINISH — actions now live in the app (index.html?actions=1)
 // ══════════════════════════════════════════════════════
-// Build the 2 action cards from the highest-impact eligible cards in this round
-function generateRoundActions() {
-  // Filter cards above threshold that have a matching action
-  const eligible = currentCards
-    .filter(c => c.impact >= ACTION_THRESHOLD_KG && CARD_ACTIONS[c.title])
-    .sort((a, b) => b.impact - a.impact) // highest impact first
-    .slice(0, 2); // top 2 only
-
-  return eligible.map(card => {
-    const template = CARD_ACTIONS[card.title];
-    // CO₂ bonus: scaled logarithmically so big numbers don't overwhelm small ones
-    // impact 10 → +0 bonus, impact 100 → +50, impact 1000 → +100, impact 25000 → +175
-    const co2Bonus = Math.round(Math.log10(card.impact / 10) * 50);
-    const totalPoints = template.basePoints + Math.max(0, co2Bonus);
-    return {
-      cardEmoji: card.emoji,
-      cardTitle: card.title,
-      title: template.title,
-      desc: template.desc,
-      level: template.level,
-      points: totalPoints,
-      carbon: template.saving
-    };
-  });
-}
-
-function showActions() {
-  selectedActions.clear();
-  bonusPoints = 0;
-  const body = document.getElementById('action-body');
-
-  // Remove old action cards but keep the intro paragraph
-  Array.from(body.querySelectorAll('.action-card')).forEach(c => c.remove());
-
-  _currentRoundActions = generateRoundActions();
-  const actions = _currentRoundActions;
-
-  // Update intro text to reflect what was in the round
-  const intro = body.querySelector('#action-intro-text');
-  if (actions.length > 0) {
-    const cardNames = actions.map(a => `<strong>${a.cardEmoji} ${a.cardTitle}</strong>`).join(' and ');
-    intro.innerHTML = `Based on what came up in your round, ${cardNames}, here are two things you could actually do about them.`;
-  } else {
-    intro.innerHTML = `Now you've seen the numbers, here are some steps you can take to reduce your own footprint.`;
+function finishAndGoActions() {
+  if (!progressSaved) {
+    saveProgress(roundScore, 0);
+    progressSaved = true;
   }
-
-  if (actions.length === 0) {
-    // Fallback: no eligible cards (very unlikely with 6 random cards)
-    const fallback = document.createElement('p');
-    fallback.style.cssText = 'text-align:center;color:var(--text-soft);font-size:14px;padding:20px 0;';
-    fallback.textContent = 'Every action counts, keep playing to unlock more tips!';
-    body.appendChild(fallback);
-  }
-
-  // "Nothing" opt-out card — always shown at the top
-  const nothingCard = document.createElement('div');
-  nothingCard.className = 'action-card action-card-nothing';
-  nothingCard.id = 'action-card-nothing';
-  nothingCard.innerHTML = `
-    <div class="action-card-top">
-      <span class="action-card-title">Nothing for now, I changed my mind</span>
-    </div>
-    <div class="action-card-meta">
-      <span class="action-pts" style="color:var(--text-soft)">+0 pts</span>
-      <div class="action-checkbox" id="acheck-nothing">
-        <svg width="12" height="12" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24" style="display:none" id="acheckmark-nothing">
-          <path d="M20 6L9 17l-5-5"/>
-        </svg>
-      </div>
-    </div>
-  `;
-  nothingCard.onclick = () => toggleNothingAction(nothingCard);
-  body.appendChild(nothingCard);
-
-  actions.forEach((a, i) => {
-    const card = document.createElement('div');
-    card.className = 'action-card';
-    card.innerHTML = `
-      <div class="action-card-top">
-        <span class="action-card-title">${a.title}</span>
-        <span class="action-level level-${a.level}">${a.level}</span>
-      </div>
-      <p class="action-card-desc">${a.desc}</p>
-      <div class="action-card-meta">
-        <span class="action-pts">+${a.points} pts</span>
-        <span class="action-carbon">${a.carbon}</span>
-        <div class="action-checkbox" id="acheck-${i}">
-          <svg width="12" height="12" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24" style="display:none" id="acheckmark-${i}">
-            <path d="M20 6L9 17l-5-5"/>
-          </svg>
-        </div>
-      </div>
-    `;
-    card.onclick = () => toggleAction(i, card, a.points);
-    body.appendChild(card);
-  });
-
-  showScreen('screen-action');
-}
-
-function toggleNothingAction(card) {
-  if (selectedActions.has(-1)) {
-    // Deselect nothing
-    selectedActions.delete(-1);
-    card.classList.remove('selected');
-    document.getElementById('acheckmark-nothing').style.display = 'none';
-  } else {
-    // Select nothing — clear all other selections first
-    selectedActions.clear();
-    bonusPoints = 0;
-    document.querySelectorAll('.action-card:not(.action-card-nothing)').forEach((c, i) => {
-      c.classList.remove('selected');
-      const chk = document.getElementById(`acheckmark-${i}`);
-      if (chk) chk.style.display = 'none';
-    });
-    selectedActions.add(-1);
-    card.classList.add('selected');
-    document.getElementById('acheckmark-nothing').style.display = 'block';
-  }
-  const btn = document.getElementById('btn-commit');
-  btn.disabled = selectedActions.size === 0;
-  btn.textContent = selectedActions.has(-1) ? 'Confirm, no actions' : 'Commit & collect points';
-}
-
-function toggleAction(idx, card, pts) {
-  // If "Nothing" was active, deselect it
-  if (selectedActions.has(-1)) {
-    selectedActions.delete(-1);
-    const nothingCard = document.getElementById('action-card-nothing');
-    if (nothingCard) nothingCard.classList.remove('selected');
-    const nothingChk = document.getElementById('acheckmark-nothing');
-    if (nothingChk) nothingChk.style.display = 'none';
-  }
-  if (selectedActions.has(idx)) {
-    selectedActions.delete(idx);
-    card.classList.remove('selected');
-    document.getElementById(`acheckmark-${idx}`).style.display = 'none';
-    bonusPoints -= pts;
-  } else {
-    selectedActions.add(idx);
-    card.classList.add('selected');
-    document.getElementById(`acheckmark-${idx}`).style.display = 'block';
-    bonusPoints += pts;
-  }
-  const btn = document.getElementById('btn-commit');
-  btn.disabled = selectedActions.size === 0;
-  btn.textContent = selectedActions.size > 0
-    ? `Commit & collect +${bonusPoints} pts`
-    : 'Commit & collect points';
-}
-
-// ── ONCE-A-DAY ──────────────────────────────────────────
-// Pre-load cards in the background so startGame() is instant
-loadCards();
-
-// Derive per-player storage key from URL param or localStorage
-const _playerName = new URLSearchParams(location.search).get('player') ||
-                    localStorage.getItem('env_player_name') || 'guest';
-const _nk = _playerName.toLowerCase().replace(/\s+/g, '_');
-
-const PLAYED_KEY = 'sio_last_played_' + _nk;
-const SCORE_KEY  = 'sio_last_score_' + _nk;
-
-function todayStr() {
-  return new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
-}
-
-function hasPlayedToday() {
-  return localStorage.getItem(PLAYED_KEY) === todayStr();
-}
-
-function markPlayedToday(score) {
-  localStorage.setItem(PLAYED_KEY, todayStr());
-  localStorage.setItem(SCORE_KEY, score);
-}
-
-// Check on page load — if already played, skip to played screen
-(function checkAlreadyPlayed() {
-  if (hasPlayedToday()) {
-    const score = localStorage.getItem(SCORE_KEY) || '—';
-    document.getElementById('played-score').textContent = score;
-    showScreen('screen-played');
-  }
-})();
-
-function getStreakBonus(nk) {
-  const today     = new Date().toISOString().slice(0, 10);
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-  const key  = 'streak_' + nk;
-  const data = JSON.parse(localStorage.getItem(key) || '{}');
-
-  if (data.lastDate === today) {
-    // Already counted today — return current bonus without changing streak
-  } else if (data.lastDate === yesterday) {
-    data.count = (data.count || 1) + 1;
-    data.lastDate = today;
-    localStorage.setItem(key, JSON.stringify(data));
-  } else {
-    data.count = 1;
-    data.lastDate = today;
-    localStorage.setItem(key, JSON.stringify(data));
-  }
-
-  const count = data.count || 1;
-  if (count >= 5) return 250;
-  if (count >= 3) return 100;
-  return 0;
+  window.location.href = 'index.html?actions=1';
 }
 
 function saveProgress(finalScore, actionCount) {
@@ -2420,30 +2056,6 @@ function finishAndGoHub() {
     progressSaved = true;
   }
   window.location.href = 'index.html?hub=1';
-}
-
-function commitActions() {
-  totalScore += bonusPoints;
-  roundScore += bonusPoints;
-  const actionCount = selectedActions.has(-1) ? 0 : selectedActions.size;
-  saveProgress(roundScore, actionCount);
-  saveActionHistory();
-  progressSaved = true;
-  window.location.href = 'index.html?hub=1';
-}
-
-// Persist the titles of pledged actions so they can be listed on the profile page.
-// Capped at the 20 most recent so the Firestore doc stays bounded.
-function saveActionHistory() {
-  if (selectedActions.has(-1) || selectedActions.size === 0) return;
-  const HIST_KEY = 'actions_history_' + _nk;
-  const history  = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
-  const today    = new Date().toISOString().slice(0, 10);
-  selectedActions.forEach(idx => {
-    const a = _currentRoundActions[idx];
-    if (a && a.title) history.push({ title: a.title, date: today });
-  });
-  localStorage.setItem(HIST_KEY, JSON.stringify(history.slice(-20)));
 }
 
 function signOut() {
