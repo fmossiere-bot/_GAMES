@@ -2643,6 +2643,7 @@
     gap: 20px;
   }
   .faq-item {
+    flex: none; /* the body is a flex column: never let items squash to fit the viewport */
     background: var(--surface-card);
     border: 1px solid rgba(255,255,255,0.06);
     border-radius: var(--radius-sm);
@@ -2678,7 +2679,7 @@
     overflow: hidden;
     transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .faq-item.expanded .faq-answer { max-height: 800px; }
+  .faq-item.expanded .faq-answer { max-height: 4000px; }
   .faq-answer-inner {
     padding: 0 18px 16px;
     color: rgba(255,255,255,0.75);
