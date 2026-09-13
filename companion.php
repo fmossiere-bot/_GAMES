@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>AI Companion, Environmentle</title>
-<link rel="icon" type="image/png" sizes="32x32" href="/_images/favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/_images/icon-180.png">
+<title>Ask Envie, Environmentle</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/svg+xml" href="/_images/_logo/assets/environmentle-favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/_images/_logo/assets/environmentle-favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/_images/_logo/assets/environmentle-icon-hero-180.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="AI Companion">
+<meta name="apple-mobile-web-app-title" content="Envie">
 <meta name="theme-color" content="#0a293b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Rubik:wght@500&family=Caveat:wght@700&family=Mulish:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -1254,7 +1256,7 @@
   <button type="button" class="cc-mode-btn active" id="cc-mode-ask" onclick="setMode('ask')">
     <i data-icon="message-square" data-size="15"></i>Ask
   </button>
-  <button type="button" class="cc-mode-btn" id="cc-mode-wiki" onclick="setMode('wiki')">
+  <button type="button" class="cc-mode-btn" id="cc-mode-wiki" onclick="setMode('wiki')" hidden>
     <i data-icon="book-open" data-size="15"></i>Wiki
   </button>
   <button type="button" class="cc-mode-btn" id="cc-mode-counter" onclick="setMode('counter')">
@@ -1322,7 +1324,7 @@
       <textarea
         id="user-input"
         rows="1"
-        placeholder="Ask about climate action…"
+        placeholder="Ask Envie anything…"
         aria-label="Your question"
         onkeydown="handleKey(event)"
         oninput="autoResize(this)"
@@ -1337,8 +1339,8 @@
     <div class="erow">
       <envie-mascot pose="stand" hat="hat" tee="science"></envie-mascot>
       <div class="bb r4 tail-low">
-        <p class="bh">Ask me anything.</p>
-        <p class="bs">Climate action, net zero, renewables, and I'll show you where the answer came from.</p>
+        <p class="bh">Dia duit, I'm Envie.</p>
+        <p class="bs">I'm an astronaut, believe it or not, and Ireland is where my mission starts. Ask me anything about climate and I'll show you where the answer came from.</p>
         <svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg>
       </div>
     </div>
@@ -1346,7 +1348,7 @@
     <div class="chat-empty-suggestions">
       <button class="suggestion-chip" onclick="sendSuggestion(this)"><span class="sc-text">What is carbon neutrality, and how is it different from net zero?</span><i data-icon="chevron-right" data-size="17" class="row-chev"></i></button>
       <button class="suggestion-chip" onclick="sendSuggestion(this)"><span class="sc-text">Which actions actually move the needle for one person?</span><i data-icon="chevron-right" data-size="17" class="row-chev"></i></button>
-      <button class="suggestion-chip" onclick="sendSuggestion(this)"><span class="sc-text">Someone told me electric cars are worse. True?</span><span class="pill amber">Claim</span></button>
+      <button class="suggestion-chip" onclick="openClaims('transport')"><span class="sc-text">Someone told me electric cars are worse. What do I say?</span><span class="pill amber">Claims</span></button>
     </div>
   </div>
 
@@ -1406,6 +1408,16 @@ function handleKey(e) {
 }
 
 // ── SUGGESTION CHIPS ──
+// The claim chip opens the Claims tab on the matching category instead of
+// asking the AI a question the claim cards already answer.
+async function openClaims(cat) {
+  setMode('counter');
+  await ccLoad();
+  const btn = document.querySelector('.cc-cat[data-cat="' + cat + '"]');
+  if (btn) ccSetCat(btn); else ccFilter();
+  document.getElementById('counter-view').scrollTop = 0;
+}
+
 function sendSuggestion(btn) {
   const text = (btn.querySelector('.sc-text') || btn).textContent.trim();
   document.getElementById('user-input').value = text;
@@ -1440,7 +1452,7 @@ function showResetRow() {
     row.className = 'reset-row';
     row.innerHTML = '<button type="button" class="reset-btn" onclick="newChat()">' +
                       '<span class="material-symbols-outlined">refresh</span>' +
-                      'Reset conversation' +
+                      'Start again' +
                     '</button>';
   }
   scroll.appendChild(row);
@@ -1495,6 +1507,10 @@ function appendThinking() {
     d.className = 'thinking-dot';
     bubble.appendChild(d);
   }
+  const note = document.createElement('div');
+  note.className = 'thinking-note';
+  note.textContent = 'Let me have a look…';
+  bubble.appendChild(note);
   row.appendChild(bubble);
   document.getElementById('chat-thread').appendChild(row);
   scrollBottom();
@@ -1587,16 +1603,17 @@ function appendAssistant(text, sourceType, sources, furtherLinks, oneLine) {
   // Source chips
   const badgesRow = document.createElement('div');
   badgesRow.className = 'msg-sources';
-  const chip = (cls, icon, label) => {
-    const b = document.createElement('span');
-    b.className = 'msg-source ' + cls;
+  const chip = (cls, icon, label, slug) => {
+    const b = document.createElement(slug ? 'button' : 'span');
+    if (slug) { b.type = 'button'; b.onclick = () => openArticle(slug); b.title = 'Read the article'; }
+    b.className = 'msg-source ' + cls + (slug ? ' link' : '');
     b.innerHTML = EA.icon(icon, { size: 13 }) + escapeHtml(label);
     return b;
   };
   if ((sourceType === 'wiki' || sourceType === 'hybrid') && sources && sources.length) {
     sources.forEach(src => {
       const label = src.label.length > 40 ? src.label.substring(0, 38) + '…' : src.label;
-      badgesRow.appendChild(chip('wiki', 'book-open', label));
+      badgesRow.appendChild(chip('wiki', 'book-open', label, src.slug || ''));
     });
     if (sourceType === 'hybrid') badgesRow.appendChild(chip('ai-supplemented', 'sparkles', '+ AI knowledge'));
   } else {
@@ -1635,7 +1652,7 @@ function appendError(msg) {
   bubble.style.background = 'rgba(220,60,60,0.12)';
   bubble.style.border = '1px solid rgba(220,60,60,0.25)';
   bubble.style.color = '#f08080';
-  bubble.innerHTML = '<p>⚠ ' + escapeHtml(msg) + '</p>';
+  bubble.innerHTML = '<p>' + escapeHtml(msg) + '</p>';
   row.appendChild(bubble);
   document.getElementById('chat-thread').appendChild(row);
   scrollBottom();
@@ -1678,12 +1695,13 @@ async function sendMessage() {
     try {
       data = JSON.parse(rawText);
     } catch (e) {
-      appendError('Server error (HTTP ' + resp.status + '): ' + rawText.substring(0, 400));
+      console.error('[Companion] server error', resp.status, rawText.substring(0, 400));
+      appendError('I couldn\'t reach the server. Try again in a moment.');
       return;
     }
 
     if (!resp.ok || data.error) {
-      appendError(data.error || 'Something went wrong. Please try again.');
+      appendError(data.error || 'Something went wrong on my side. Try again in a moment.');
     } else {
       if (data.debug) console.log('[Companion]', data.debug);
       appendAssistant(data.answer, data.source, data.sources, data.further_links, data.one_line);
@@ -1701,7 +1719,8 @@ async function sendMessage() {
     }
   } catch (err) {
     removeThinking();
-    appendError('Network error: ' + err.message);
+    console.error('[Companion] network error', err);
+    appendError('I can\'t get online right now. Check your connection and try again.');
   } finally {
     isLoading = false;
     input.focus();
@@ -1777,7 +1796,7 @@ function setMode(mode) {
 async function ccLoad() {
   if (_ccLoaded) return;
   const results = document.getElementById('cc-results');
-  results.innerHTML = '<div class="cc-noresults">Loading…</div>';
+  results.innerHTML = '<div class="cc-noresults">Getting the claims…</div>';
   try {
     // Cards come from the wiki now, generated from wiki/myths/ by
     // build_claims.py on every push. Nothing to upload when a myth changes.
@@ -1799,8 +1818,8 @@ async function ccLoad() {
     ccRenderCats();
     ccFilter();
   } catch (err) {
-    results.innerHTML = '<div class="cc-noresults">Could not load the claim library.<br>' +
-                        escapeHtml(err.message) + '</div>';
+    console.error('[Companion] claims', err);
+    results.innerHTML = '<div class="cc-noresults">I couldn\'t load the claims. Try again in a moment.</div>';
   }
 }
 
@@ -1877,7 +1896,7 @@ function ccFilter() {
   const results = document.getElementById('cc-results');
   if (!matches.length) {
     results.innerHTML = '<div class="cc-noresults">No claim matches that yet.<br>' +
-                        'Try the Ask tab and the Companion will take it on.</div>';
+                        'Try the Ask tab and I\'ll take it on.</div>';
     return;
   }
   results.innerHTML = matches.map(ccCardHTML).join('');
@@ -1977,25 +1996,18 @@ function ccSay(id) {
   const c = _claims.find(x => x.id === id);
   if (!c) return;
   const paras = (c.say_this || '').split(/\n\s*\n/).map(t => '<p>' + ccFormat(t.trim()) + '</p>').join('');
-  const chips = (c.sources || []).map(sr =>
-    '<a href="' + escapeHtml(sr.url) + '" target="_blank" rel="noopener noreferrer">' + EA.icon('book-open', { size: 14 }) + escapeHtml(sr.label) + '</a>'
-  ).join('');
   document.getElementById('cc-say').innerHTML =
     '<button type="button" class="cc-back" onclick="ccCloseDetail()">' + EA.icon('arrow-left', { size: 19 }) + 'All claims</button>' +
     '<div class="cc-say-head">' + ccVerdictHTML(c.verdict) + '<p class="cc-say-claim">' + escapeHtml(c.claim) + '</p></div>' +
     '<p class="cc-say-eyebrow">Next time it comes up</p>' +
     '<h2 class="cc-say-title">Say this</h2>' +
-    '<div class="cc-say-bubble" id="cc-say-text">' + paras +
-      '<svg class="tail-down" viewBox="0 0 44 34" aria-hidden="true"><path d="M8 6.5 C9 16 6 26 2 33 C14 26 26 16 38 6.5"></path></svg>' +
+    '<div class="erow top cc-say-row"><envie-mascot pose="point" hat="hat" tee="science" aria-hidden="true"></envie-mascot>' +
+      '<div class="bb r3 tail-top cc-say-bubble" id="cc-say-text">' + paras + EA.TAIL + '</div>' +
     '</div>' +
-    '<div class="cc-say-envie"><envie-mascot pose="point" hat="hat" tee="science"></envie-mascot></div>' +
-    (chips ? '<div class="cc-say-chips">' + chips + '</div>' : '') +
     '<div class="cc-say-actions">' +
-      '<button type="button" class="cta" onclick="ccCopy(this)">' + EA.icon('copy', { size: 18 }) + 'Copy</button>' +
+      '<button type="button" class="cta" onclick="ccShowDetail()">' + EA.icon('lightbulb', { size: 18 }) + "Why it sounds right, and what's true</button>" +
       '<button type="button" class="cc-share" onclick="ccShare()" aria-label="Share">' + EA.icon('share', { size: 20 }) + '</button>' +
-    '</div>' +
-    '<button type="button" class="cta ghost cc-more" onclick="ccShowDetail()">' + EA.icon('lightbulb', { size: 18 }) + "Why it sounds right, and what's true</button>" +
-    '<button type="button" class="cc-ask" onclick="ccAskCompanion(' + JSON.stringify(c.claim).replace(/"/g, '&quot;') + ')">Ask the Companion about this</button>';
+    '</div>';
   document.body.classList.add('cc-detail', 'cc-say');
   document.getElementById('counter-view').scrollTop = 0;
 }
@@ -2132,8 +2144,8 @@ async function wkLoad(force) {
         sessionStorage.setItem(WK_INDEX_KEY, JSON.stringify({ ts: Date.now(), pages: raw }));
       } catch (e) { /* quota — the in-memory copy still works */ }
     } catch (err) {
-      results.innerHTML = '<div class="cc-noresults">Could not reach the wiki.<br>' +
-                          escapeHtml(err.message) + '</div>';
+      console.error('[Companion] wiki', err);
+      results.innerHTML = '<div class="cc-noresults">I couldn\'t reach the wiki. Try again in a moment.</div>';
       return;
     }
   }
@@ -2254,7 +2266,7 @@ function wkFilter() {
   const results = document.getElementById('wk-results');
   if (!matches.length) {
     results.innerHTML = '<div class="cc-noresults">No page matches that.<br>' +
-                        'Try the Ask tab and the Companion will search it for you.</div>';
+                        'Try the Ask tab and I\'ll search it for you.</div>';
     return;
   }
   // Long lists stay responsive by capping the render; searching narrows it.
@@ -2296,7 +2308,7 @@ async function wkOpen(slug) {
   // put the chip inside .wk-title, since that is the first </div> in here.
   const header = updated =>
     '<button type="button" class="cc-back" onclick="wkCloseDetail()">' +
-      '<span class="material-symbols-outlined">arrow_back</span>All pages</button>' +
+      '<span class="material-symbols-outlined">arrow_back</span>' + (_wkFromAsk ? 'Back to the answer' : 'All pages') + '</button>' +
     '<div class="wk-title">' + escapeHtml(page.label) + '</div>' +
     '<div class="wk-meta">' +
       '<span class="wk-chip"><span class="material-symbols-outlined">' + escapeHtml(folder.icon) + '</span>' +
@@ -2322,7 +2334,7 @@ async function wkOpen(slug) {
       _wkBodyCache.set(slug, md);
     } catch (err) {
       detail.innerHTML = header('') +
-        '<div class="cc-noresults">Could not load this page.<br>' + escapeHtml(err.message) + '</div>';
+        '<div class="cc-noresults">I couldn\'t load this page. Try again in a moment.</div>';
       return;
     }
   }
@@ -2346,8 +2358,20 @@ async function wkOpen(slug) {
 
 function wkCloseDetail() {
   document.body.classList.remove('wk-detail');
+  if (_wkFromAsk) { _wkFromAsk = false; setMode('ask'); return; }
   const view = document.getElementById('wiki-view');
   requestAnimationFrame(() => { view.scrollTop = _wkListScroll; });
+}
+
+// A source chip under an answer opens the wiki article in place. Back returns
+// to the conversation, not to the wiki list: read the article, come back, no browsing.
+let _wkFromAsk = false;
+async function openArticle(slug) {
+  await wkLoad();
+  if (!_wkBySlug[slug]) return;
+  _wkFromAsk = true;
+  setMode('wiki');
+  wkOpen(slug);
 }
 
 // ── MARKDOWN ──
