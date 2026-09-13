@@ -2636,8 +2636,11 @@
     flex: 1;
   }
   .faq-body {
+    flex: 1 1 auto;
+    min-height: 0; /* lets the body scroll inside the fixed panel instead of being clipped */
     overflow-y: auto;
-    padding: 24px 20px 40px;
+    -webkit-overflow-scrolling: touch;
+    padding: 24px 20px calc(env(safe-area-inset-bottom, 0px) + 120px);
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -2679,7 +2682,7 @@
     overflow: hidden;
     transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .faq-item.expanded .faq-answer { max-height: 4000px; }
+  .faq-item.expanded .faq-answer { max-height: none; }
   .faq-answer-inner {
     padding: 0 18px 16px;
     color: rgba(255,255,255,0.75);
