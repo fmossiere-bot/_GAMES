@@ -242,6 +242,25 @@
       .map((x) => x.a);
   }
 
+  // Which game to hand the player: today's dated quiz if it is still open,
+  // otherwise the free game they have not touched for longest (and not
+  // played today). Null when every game is done for the day.
+  const GAME_NAMES = { quiz: 'Random quiz', sort: 'Carbon challenge', water: 'Water challenge' };
+  function suggestGame(nk, st, dailyGame) {
+    if (dailyGame && st.played.quiz !== st.today) {
+      return { type: 'quiz', mode: 'daily', name: dailyGame.title_line1 + ' ' + dailyGame.title_line2, meta: dailyGame.category_badge + ' · 3 questions', pts: '450 pts max', daily: true };
+    }
+    const recent = get(K.recent(nk), []);
+    const lastTs = (g) => { const r = recent.find((e) => (e.key || '').split(':')[0] === g); return r ? r.ts || 0 : 0; };
+    const open = ['water', 'sort', 'quiz'].filter((g) => st.played[g] !== st.today);
+    if (!open.length) return null;
+    open.sort((a, b) => lastTs(a) - lastTs(b));
+    const g = open[0];
+    const meta = { quiz: 'Quiz · 3 questions', sort: 'Sorting game · 6 cards', water: 'Higher or lower · 5 rounds' }[g];
+    const pts  = { quiz: '450 pts max', sort: '300 pts max', water: '480 pts max' }[g];
+    return { type: g, mode: g === 'quiz' ? 'random' : null, name: GAME_NAMES[g], meta, pts, daily: false };
+  }
+
   // ── the decision: what does home lead with today ────────
   //   lead:  'credit' | 'game' | 'story' | 'action' | 'done'
   //   showActionCard: whether the smaller "Suggested action" row appears
@@ -250,6 +269,7 @@
     const dailyGame = ctx.dailyChallenge;            // today's dated challenge or null
     const gameAvailable = !!dailyGame && !st.done.game;
     const anyGameLeft = ['quiz', 'sort', 'water'].some((g) => st.played[g] !== st.today);
+    const game = suggestGame(nk, st, dailyGame);
     const unreadStory = ctx.stories.find((s) => !st.completedStories.includes(s.id)) || null;
 
     // Actions are rationed: none pledged this week yet, and either late in
@@ -278,7 +298,7 @@
 
     return {
       lead, reason,
-      dailyGame, gameAvailable, anyGameLeft, unreadStory,
+      dailyGame, gameAvailable, anyGameLeft, unreadStory, game,
       showActionCard: actionWindow && !st.done.action && lead !== 'action' && lead !== 'credit',
       showSmallActionUnderCredit: lead === 'credit' && st.actionsLeftThisWeek > 0,
     };
@@ -351,7 +371,7 @@
   window.Engine = {
     CREDIT_STEP, FIRST_MILESTONE, ACTIONS_PER_WEEK,
     todayStr, weekStart, weekEnd, inThisWeek,
-    state, credits, decide, rankActions,
+    state, credits, decide, rankActions, suggestGame,
     loadActions, loadPartners,
     pledge, spendCredit, recordStory, stampStreak, logActivity,
     syncFields, mergeRemote,

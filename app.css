@@ -709,11 +709,14 @@ body.cc-say .cc-detail-view { display: none !important; }
 
 /* The three ways */
 .skin .ways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 0 0 16px; }
-.skin .way { position: relative; appearance: none; border: 2px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); border-radius: 20px; padding: 13px 8px 12px; text-align: center; color: #fff; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform .12s; font-family: var(--font-body); }
+.skin .way { position: relative; appearance: none; border: 2px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); border-radius: 20px; padding: 13px 7px 12px; text-align: center; color: #fff; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform .12s; font-family: var(--font-body); }
 .skin .way:active { transform: scale(.97); }
 .skin .way .tile { margin: 0 auto; width: 38px; height: 38px; border-radius: 12px; }
 .skin .way .tile svg { width: 20px; height: 20px; }
 .skin .way-label { margin: 9px 0 0; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: #fff; }
+.skin .way-name { margin: 3px 0 0; font-family: var(--font-body); font-size: 11px; line-height: 1.3; color: rgba(255,255,255,.75); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.6em; }
+.skin .way.done .way-name { color: rgba(255,255,255,.5); }
+.skin .ways-hint { grid-column: 1 / -1; margin: 2px 0 0; font-family: var(--font-body); font-size: 11.5px; line-height: 1.45; color: rgba(255,255,255,.5); text-align: center; }
 .skin .way-meta { margin: 2px 0 0; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 10.5px; color: rgba(255,255,255,.5); }
 .skin .way-meta svg { width: 12px; height: 12px; }
 .skin .way.lead.aqua  { background: rgba(110,198,240,.12); border-color: rgba(110,198,240,.5); }

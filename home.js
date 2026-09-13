@@ -35,6 +35,7 @@
       : st.anyDone ? 'One more<em>?</em>' : 'Today, pick <em>one</em>';
     document.getElementById('screen-hub').classList.toggle('credit-mode', d.lead === 'credit');
 
+    d.action = action;
     renderWays(st, d);
     renderLead(st, d, action, dailyChallenge);
     renderMore(st, d, action);
@@ -46,19 +47,30 @@
     const el = document.getElementById('hub-ways');
     if (!el) return;
     const ways = [
-      { key: 'game',   label: 'Game',   meta: '3 min', icon: 'gamepad-2', tone: 'aqua', go: () => (d.dailyGame && d.gameAvailable) ? openGame('quiz', 'daily') : switchTab('games') },
-      { key: 'story',  label: 'Story',  meta: '6 min', icon: 'book-open', tone: 'white', go: () => d.unreadStory ? openCourse(d.unreadStory.id) : switchTab('learn') },
-      { key: 'action', label: 'Action', meta: '2 min', icon: 'sprout',    tone: 'sky',  go: () => openActions() },
+      { key: 'game',   label: 'Game',   name: d.game ? d.game.name : 'All played today', meta: '3 min', icon: 'gamepad-2', tone: 'aqua',
+        go: () => d.game ? openGame(d.game.type, d.game.mode) : switchTab('games') },
+      { key: 'story',  label: 'Story',  name: d.unreadStory ? d.unreadStory.title : 'Read one again', meta: '6 min', icon: 'book-open', tone: 'white',
+        go: () => d.unreadStory ? openCourse(d.unreadStory.id) : switchTab('learn') },
+      { key: 'action', label: 'Action', name: d.action ? d.action.title : 'Browse the list', meta: '2 min', icon: 'sprout', tone: 'sky',
+        go: () => d.action ? openActions(d.action.id) : openActions() },
     ];
     const leadKey = d.lead === 'credit' ? 'action' : d.lead;
+    // A done tile names what was done, not the next suggestion
+    const GAME_NAMES = { quiz: 'Quiz', sort: 'Carbon challenge', water: 'Water challenge' };
+    const doneName = {
+      game:   st.gamesDoneToday.map((g) => GAME_NAMES[g]).join(', '),
+      story:  (ALL_STORIES.find((x) => x.id === st.completedStories[st.completedStories.length - 1]) || {}).title || 'Story read',
+      action: st.actionsToday.length ? st.actionsToday[0].title : '',
+    };
     el.innerHTML = ways.map((w) => {
       const done = st.done[w.key];
+      if (done && doneName[w.key]) w.name = doneName[w.key];
       const lead = !done && w.key === leadKey;
       const cls = ['way', w.tone, done ? 'done' : '', lead ? 'lead' : ''].filter(Boolean).join(' ');
       const badge = done ? '<span class="way-badge done">Done today</span>' : lead ? '<span class="way-badge">Suggested</span>' : '';
       const meta = done ? EA.icon('check', { size: 12 }) + ' Done' : w.meta;
-      return `<button type="button" class="${cls}" data-way="${w.key}">${badge}<span class="tile sm ${w.tone === 'white' ? '' : w.tone}">${EA.icon(w.icon, { size: 20 })}</span><p class="way-label">${w.label}</p><p class="way-meta">${meta}</p></button>`;
-    }).join('');
+      return `<button type="button" class="${cls}" data-way="${w.key}">${badge}<span class="tile sm ${w.tone === 'white' ? '' : w.tone}">${EA.icon(w.icon, { size: 20 })}</span><p class="way-label">${w.label}</p><p class="way-name">${esc(w.name)}</p><p class="way-meta">${meta}</p></button>`;
+    }).join('') + `<p class="ways-hint">Envie picked these for today. Choose your own game or story from the menu below.</p>`;
     el.querySelectorAll('.way').forEach((b) => {
       const w = ways.find((x) => x.key === b.dataset.way);
       b.onclick = () => w.go();
@@ -125,21 +137,23 @@
       return;
     }
 
-    // Default: the game. Today's dated challenge, or the free games.
+    // Default: the game Envie picked (today's quiz, or the free game you have
+    // not played for longest), or the library when everything is done.
     const played = st.done.game;
-    let top, titleTxt, sub, cta, go;
-    if (daily) {
-      top = played ? 'Done today' : "Today's game";
-      titleTxt = daily.title_line1 + ' ' + daily.title_line2;
-      sub = daily.category_badge + ' · 3 questions';
-      cta = played ? 'Play another' : 'Play';
-      go = played ? () => switchTab('games') : () => openGame('quiz', 'daily');
+    const g = d.game;
+    let top, titleTxt, sub, cta, go, pts;
+    if (g) {
+      top = g.daily ? "Today's game" : (played ? 'One more game' : (st.isWeekend ? 'Weekend game' : 'Suggested game'));
+      titleTxt = g.name; sub = g.meta; pts = g.pts;
+      cta = 'Play';
+      go = () => openGame(g.type, g.mode);
     } else {
       const upcoming = (_loadedChallenges || []).filter((c) => c.date > st.today).sort((a, b) => a.date.localeCompare(b.date))[0];
-      top = st.isWeekend ? 'Weekend games' : 'Free games';
-      titleTxt = 'No dated challenge today. The library is open.';
-      sub = upcoming ? 'Next challenge ' + unlockLabel(upcoming.date) : 'Quiz, carbon sort, water';
-      cta = 'Pick a game';
+      top = 'All played today';
+      titleTxt = 'Every game is done for today.';
+      sub = upcoming ? 'Next challenge ' + unlockLabel(upcoming.date) : 'Back tomorrow';
+      pts = '';
+      cta = 'Games';
       go = () => switchTab('games');
     }
     el.innerHTML = `
@@ -147,7 +161,7 @@
         <div class="lead-card game ${played ? 'played' : ''}">
           <div class="lead-top"><span class="pill ${played ? 'sky' : 'aqua'}">${top}</span><span class="lead-sub">${esc(sub)}</span></div>
           <div class="lead-main"><span class="tile lg aqua">${EA.icon('globe', { size: 26 })}</span><p class="lead-title">${esc(titleTxt)}</p></div>
-          <div class="lead-actions"><button type="button" class="cta amber" id="hub-lead-cta">${cta} ${EA.icon('arrow-right', { size: 17 })}</button><span class="lead-pts">${daily ? '450 pts max' : 'up to 480 pts'}</span></div>
+          <div class="lead-actions"><button type="button" class="cta amber" id="hub-lead-cta">${cta} ${EA.icon('arrow-right', { size: 17 })}</button><span class="lead-pts">${esc(pts)}</span></div>
         </div>
       </div>`;
     const card = el.querySelector('.lead-card');
