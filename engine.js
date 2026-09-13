@@ -30,16 +30,18 @@
   function yesterdayStr() {
     return new Date(Date.now() - 86400000).toISOString().slice(0, 10);
   }
-  // Monday-based ISO week start, as YYYY-MM-DD
+  // Monday-based week, as YYYY-MM-DD. All date strings in the app come from
+  // toISOString() (the games included), so the week maths stays in UTC too;
+  // mixing local midnight with ISO dates put Sunday outside its own week.
   function weekStart(d) {
-    const dt = d ? new Date(d + 'T00:00:00') : new Date();
-    const dow = (dt.getDay() + 6) % 7; // Mon=0
-    dt.setDate(dt.getDate() - dow);
+    const dt = new Date((d || todayStr()) + 'T00:00:00Z');
+    const dow = (dt.getUTCDay() + 6) % 7; // Mon=0
+    dt.setUTCDate(dt.getUTCDate() - dow);
     return dt.toISOString().slice(0, 10);
   }
   function weekEnd(d) {
-    const dt = new Date(weekStart(d) + 'T00:00:00');
-    dt.setDate(dt.getDate() + 6);
+    const dt = new Date(weekStart(d) + 'T00:00:00Z');
+    dt.setUTCDate(dt.getUTCDate() + 6);
     return dt.toISOString().slice(0, 10);
   }
   const inThisWeek = (iso) => iso && iso >= weekStart() && iso <= weekEnd();
@@ -62,6 +64,7 @@
     stories:  (nk) => 'completed_stories_' + nk,
     recent:   (nk) => 'recent_games_' + nk,
     creditSeen: (nk) => 'credit_seen_' + nk,
+    skips:    (nk) => 'action_skips_' + nk,
   };
 
   // ── streak (same algorithm the games use) ───────────────
@@ -134,8 +137,7 @@
     const played  = reconcileGames(nk);
     const history = get(K.history(nk), []);
     const log     = get(K.activity(nk), []);
-    const now     = new Date();
-    const dow     = now.getDay(); // 0 Sun .. 6 Sat
+    const dow     = new Date(today + 'T00:00:00Z').getUTCDay(); // 0 Sun .. 6 Sat, same frame as today
 
     const gamesDoneToday = Object.keys(played).filter((g) => played[g] === today);
     const storyDone      = localStorage.getItem(K.story(nk)) === today;
@@ -150,8 +152,12 @@
     };
     const doneCount = Object.values(done).filter(Boolean).length;
 
+    const skips = get(K.skips(nk), []);
     return {
       today, dow,
+      skips,
+      skippedThisWeek: new Set(skips.filter((e) => inThisWeek(e.date)).map((e) => e.id)),
+      skipCounts: skips.reduce((m, e) => { m[e.id] = (m[e.id] || 0) + 1; return m; }, {}),
       isWeekend: dow === 0 || dow === 6,
       played, gamesDoneToday,
       done, doneCount, anyDone: doneCount > 0,
@@ -226,8 +232,11 @@
     const pledged = new Set(st.history.map((a) => a.id || a.title));
     const aff = affinities(nk, st, challenges);
     const wk  = weekStart();
+    const skippedWeek = st.skippedThisWeek || new Set();
+    const skipCounts  = st.skipCounts || {};
     return all
       .filter((a) => !pledged.has(a.id) && !pledged.has(a.title))
+      .filter((a) => !skippedWeek.has(a.id) && (skipCounts[a.id] || 0) < 2)   // "not this one" sticks for the week; twice and it is gone
       .map((a) => {
         let s = 0;
         if (a.source && a.source.kind === 'challenge' && aff['cal:' + a.source.id]) s += aff['cal:' + a.source.id];
@@ -330,6 +339,14 @@
     return { ok: true, streak };
   }
 
+  // "Not this one": remembered for the week, and for good after the second time
+  function skip(nk, id) {
+    const skips = get(K.skips(nk), []);
+    if (skips.some((e) => e.id === id && e.date === todayStr())) return;
+    skips.push({ id, date: todayStr() });
+    set(K.skips(nk), skips.slice(-120));
+  }
+
   function recordStory(nk, id) {
     localStorage.setItem(K.story(nk), todayStr());
     const streak = stampStreak(nk);
@@ -343,6 +360,7 @@
       activity:      get(K.activity(nk), []).slice(-ACTIVITY_CAP),
       creditLedger:  get(K.ledger(nk), []),
       storyLastRead: localStorage.getItem(K.story(nk)) || null,
+      actionSkips:   get(K.skips(nk), []).slice(-120),
     };
   }
   function mergeRemote(nk, d) {
@@ -362,6 +380,14 @@
         .filter((e) => { const k = e.partnerId + '|' + e.date; if (seen.has(k)) return false; seen.add(k); return true; });
       set(K.ledger(nk), all);
     }
+    if (Array.isArray(d.actionSkips)) {
+      const seen = new Set();
+      const all = get(K.skips(nk), []).concat(d.actionSkips)
+        .filter((e) => e && e.id && e.date)
+        .filter((e) => { const k = e.id + '|' + e.date; if (seen.has(k)) return false; seen.add(k); return true; })
+        .sort((a, b) => a.date.localeCompare(b.date));
+      set(K.skips(nk), all.slice(-120));
+    }
     if (d.storyLastRead) {
       const local = localStorage.getItem(K.story(nk));
       if (!local || d.storyLastRead > local) localStorage.setItem(K.story(nk), d.storyLastRead);
@@ -373,7 +399,7 @@
     todayStr, weekStart, weekEnd, inThisWeek,
     state, credits, decide, rankActions, suggestGame,
     loadActions, loadPartners,
-    pledge, spendCredit, recordStory, stampStreak, logActivity,
+    pledge, skip, spendCredit, recordStory, stampStreak, logActivity,
     syncFields, mergeRemote,
     types: () => (_actions && _actions.meta && _actions.meta.types) || {},
   };

@@ -52,7 +52,7 @@
       { key: 'story',  label: 'Story',  name: d.unreadStory ? d.unreadStory.title : 'Read one again', meta: '6 min', icon: 'book-open', tone: 'white',
         go: () => d.unreadStory ? openCourse(d.unreadStory.id) : switchTab('learn') },
       { key: 'action', label: 'Action', name: d.action ? d.action.title : 'Browse the list', meta: '2 min', icon: 'sprout', tone: 'sky',
-        go: () => d.action ? openActions(d.action.id) : openActions() },
+        go: () => d.action ? openActionSheet(d.action.id) : openActions() },
     ];
     const leadKey = d.lead === 'credit' ? 'action' : d.lead;
     // A done tile names what was done, not the next suggestion
@@ -102,11 +102,12 @@
       el.innerHTML = `
         <div class="lead-wrap">
           <envie-mascot pose="point" hat="cap" aria-hidden="true"></envie-mascot>
-          <div class="lead-card action" onclick="openActions('${esc(action.id)}')">
+          <div class="lead-card action" onclick="openActionSheet('${esc(action.id)}')">
             <div class="lead-top"><span class="pill sky">Suggested action</span><span class="lead-sub">${esc(typeLabel(action.type))} · ${esc(action.level)}</span></div>
             <div class="lead-main"><span class="tile lg sky">${EA.icon(TYPE_ICON[action.type] || 'sprout', { size: 26 })}</span><p class="lead-title">${esc(action.title)}</p></div>
             <p class="lead-desc">${esc(action.desc)}</p>
-            <div class="lead-actions"><button type="button" class="cta sky" onclick="event.stopPropagation(); pledgeFromHome('${esc(action.id)}')">Pledge today ${EA.icon('arrow-right', { size: 17 })}</button><span class="lead-pts">+${action.points} pts</span></div>
+            <div class="lead-actions"><button type="button" class="cta sky" onclick="event.stopPropagation(); openActionSheet('${esc(action.id)}')">Read more ${EA.icon('arrow-right', { size: 17 })}</button><span class="lead-pts">+${action.points} pts</span></div>
+            <button type="button" class="lead-skip" onclick="event.stopPropagation(); skipAction('${esc(action.id)}')">Not this one, show me another</button>
           </div>
         </div>`;
       return;
@@ -177,7 +178,7 @@
 
     if ((d.showActionCard || d.showSmallActionUnderCredit) && action) {
       html += `<p class="eyebrow">${d.lead === 'credit' ? 'Or a smaller action today' : 'Suggested action'}</p>
-        <div class="row act-row ${d.lead === 'credit' ? '' : 'dashed'}" onclick="openActions('${esc(action.id)}')">
+        <div class="row act-row ${d.lead === 'credit' ? '' : 'dashed'}" onclick="openActionSheet('${esc(action.id)}')">
           <span class="tile sm ${d.lead === 'credit' ? 'amber' : 'sky'}">${EA.icon('check', { size: 21 })}</span>
           <div class="row-body"><p class="row-title">${esc(action.title)}</p><p class="row-meta">Pledge today · +${action.points} pts</p></div>
           ${EA.icon('chevron-right', { size: 18, cls: 'row-chev' })}
@@ -295,7 +296,8 @@
           : 'Nothing left in this list. You have pledged them all.') + '</p>' : '');
     const more = document.getElementById('actions-more');
     if (more) more.onclick = () => { _showAll = true; renderActions(); };
-    list.querySelectorAll('[data-pledge]').forEach((b) => b.onclick = () => pledgeAction(b.dataset.pledge));
+    list.querySelectorAll('[data-view]').forEach((b) => b.onclick = () => openActionSheet(b.dataset.view));
+    list.querySelectorAll('.act-card').forEach((c) => c.onclick = (e) => { if (!e.target.closest('button')) openActionSheet(c.id.replace(/^act-/, '')); });
     if (window.EA && EA.icons) EA.icons(list);
   }
 
@@ -314,7 +316,7 @@
         <div class="act-foot">
           <span class="act-pts">+${a.points} pts${a.impact ? ' · ' + esc(a.impact) : ''}</span>
           ${pledged ? '<span class="act-done">' + EA.icon('check', { size: 14 }) + ' Pledged</span>'
-                    : `<button type="button" class="act-btn" data-pledge="${esc(a.id)}" ${canPledge ? '' : 'disabled'}>Pledge</button>`}
+                    : `<button type="button" class="act-btn" data-view="${esc(a.id)}">Read more</button>`}
         </div>
       </div>`;
   }
@@ -335,6 +337,90 @@
   async function pledgeFromHome(id) {
     await pledgeAction(id);
     renderHome();
+  }
+
+  // ── ACTION SHEET: read before you pledge, or say no ─────
+  let _sheetId = null;
+  async function findAction(id) {
+    const data = await Engine.loadActions();
+    return (data.actions || []).find((x) => x.id === id) || null;
+  }
+  function sourceLine(a) {
+    const src = a.source || {};
+    if (src.kind === 'challenge') {
+      const c = (_loadedChallenges || []).find((x) => x.id === src.id);
+      const when = src.date ? new Date(src.date + 'T00:00:00').toLocaleDateString('en-IE', { weekday: 'long', day: 'numeric', month: 'short' }) : '';
+      return c ? `From the challenge "${c.title_line1} ${c.title_line2}"${when ? ' · ' + when : ''}` : 'From a daily challenge';
+    }
+    if (src.kind === 'sort') return `From the carbon sorting game · ${src.card}`;
+    if (src.kind === 'water') return 'From the water challenge';
+    return '';
+  }
+  async function openActionSheet(id) {
+    const a = await findAction(id);
+    if (!a) return;
+    _sheetId = id;
+    const nk = nkOf();
+    const st = Engine.state(nk);
+    const pledged = st.history.some((h) => (h.id || h.title) === a.id);
+    const left = st.actionsLeftThisWeek;
+    const tone = TYPE_TONE[a.type] || 'sky';
+    let sheet = document.getElementById('action-sheet');
+    if (!sheet) {
+      sheet = document.createElement('div'); sheet.id = 'action-sheet';
+      sheet.innerHTML = '<div class="sheet-scrim"></div><div class="sheet-panel" role="dialog" aria-modal="true"></div>';
+      document.body.appendChild(sheet);
+      sheet.querySelector('.sheet-scrim').onclick = closeActionSheet;
+    }
+    const envie = pledged ? 'You already pledged this one.'
+      : left <= 0 ? 'Your two for this week are in. Come back Monday for this one.'
+      : a.level === 'medium' ? 'A bit more effort than most. Worth it if it fits your week.'
+      : 'Small, specific, and done in a day. That is the kind that sticks.';
+    sheet.querySelector('.sheet-panel').innerHTML = `
+      <button type="button" class="sheet-close" aria-label="Close" onclick="closeActionSheet()">${EA.icon('x', { size: 18 })}</button>
+      <div class="sheet-head">
+        <span class="tile lg ${tone}">${EA.icon(TYPE_ICON[a.type] || 'sprout', { size: 26 })}</span>
+        <div>
+          <p class="act-tags"><span>${esc(typeLabel(a.type))}</span><span class="lvl ${a.level}">${a.level === 'easy' ? 'Easy' : 'Medium'}</span>${a.scope === 'community' && a.type !== 'community' ? '<span>Community</span>' : ''}</p>
+          <p class="sheet-title">${esc(a.title)}</p>
+        </div>
+      </div>
+      <p class="sheet-desc">${esc(a.desc)}</p>
+      <div class="sheet-facts">
+        <div class="sheet-fact"><span class="k">Worth</span><span class="v">+${a.points} pts</span></div>
+        ${a.impact ? `<div class="sheet-fact"><span class="k">Impact</span><span class="v">${esc(a.impact)}</span></div>` : ''}
+        ${sourceLine(a) ? `<div class="sheet-fact"><span class="k">Why now</span><span class="v">${esc(sourceLine(a))}</span></div>` : ''}
+      </div>
+      <div class="erow sm"><envie-mascot pose="${pledged ? 'flag' : 'point'}" hat="cap" aria-hidden="true"></envie-mascot><div class="bb r3 tail-low"><p class="bs">${esc(envie)}</p>${EA.TAIL}</div></div>
+      <a class="sheet-ask" href="companion.php?q=${encodeURIComponent('Tell me more about this action: ' + a.title)}">${EA.icon('message-square', { size: 15 })} Ask Envie about this</a>
+      <div class="sheet-actions">
+        ${pledged ? '' : `<button type="button" class="cta sky" id="sheet-pledge" ${left > 0 ? '' : 'disabled'}>Pledge it ${EA.icon('arrow-right', { size: 17 })}</button>`}
+        <button type="button" class="cta ghost" id="sheet-skip">${pledged ? 'Close' : 'Not this one'}</button>
+      </div>
+      ${pledged ? '' : '<button type="button" class="sheet-alt" id="sheet-alt">Do a game or story instead</button>'}`;
+    const p = document.getElementById('sheet-pledge');
+    if (p) p.onclick = async () => { await pledgeAction(a.id); closeActionSheet(); renderHome(); };
+    document.getElementById('sheet-skip').onclick = () => { if (pledged) closeActionSheet(); else skipAction(a.id); };
+    const alt = document.getElementById('sheet-alt');
+    if (alt) alt.onclick = () => { closeActionSheet(); closeProfile(); window.scrollTo(0, 0); };
+    requestAnimationFrame(() => sheet.classList.add('on'));
+    document.body.classList.add('sheet-open');
+  }
+  function closeActionSheet() {
+    const sheet = document.getElementById('action-sheet');
+    if (sheet) sheet.classList.remove('on');
+    document.body.classList.remove('sheet-open');
+    _sheetId = null;
+  }
+  // "Not this one": remember it, swap in the next suggestion wherever we are
+  function skipAction(id) {
+    const nk = nkOf();
+    Engine.skip(nk, id);
+    syncPlayerToFirestore(nk);
+    closeActionSheet();
+    if (document.getElementById('screen-actions').classList.contains('active')) renderActions();
+    else renderHome();
+    showToast('Noted', 'Here is another one instead.', 'think');
   }
 
   // ── CREDIT SCREEN ───────────────────────────────────────
@@ -504,6 +590,9 @@
 
   window.renderHome = renderHome;
   window.openActions = openActions;
+  window.openActionSheet = openActionSheet;
+  window.closeActionSheet = closeActionSheet;
+  window.skipAction = skipAction;
   window.pledgeFromHome = pledgeFromHome;
   window.openCredit = openCredit;
   window.openProfile = openProfile;
