@@ -2026,6 +2026,64 @@ function showResults() {
   showScreen('screen-score');
 }
 
+// ── ONCE-A-DAY ──────────────────────────────────────────
+// Pre-load cards in the background so startGame() is instant
+loadCards();
+
+// Derive per-player storage key from URL param or localStorage
+const _playerName = new URLSearchParams(location.search).get('player') ||
+                    localStorage.getItem('env_player_name') || 'guest';
+const _nk = _playerName.toLowerCase().replace(/\s+/g, '_');
+
+const PLAYED_KEY = 'sio_last_played_' + _nk;
+const SCORE_KEY  = 'sio_last_score_' + _nk;
+
+function todayStr() {
+  return new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+}
+
+function hasPlayedToday() {
+  return localStorage.getItem(PLAYED_KEY) === todayStr();
+}
+
+function markPlayedToday(score) {
+  localStorage.setItem(PLAYED_KEY, todayStr());
+  localStorage.setItem(SCORE_KEY, score);
+}
+
+// Check on page load — if already played, skip to played screen
+(function checkAlreadyPlayed() {
+  if (hasPlayedToday()) {
+    const score = localStorage.getItem(SCORE_KEY) || '—';
+    document.getElementById('played-score').textContent = score;
+    showScreen('screen-played');
+  }
+})();
+
+function getStreakBonus(nk) {
+  const today     = new Date().toISOString().slice(0, 10);
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const key  = 'streak_' + nk;
+  const data = JSON.parse(localStorage.getItem(key) || '{}');
+
+  if (data.lastDate === today) {
+    // Already counted today — return current bonus without changing streak
+  } else if (data.lastDate === yesterday) {
+    data.count = (data.count || 1) + 1;
+    data.lastDate = today;
+    localStorage.setItem(key, JSON.stringify(data));
+  } else {
+    data.count = 1;
+    data.lastDate = today;
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  const count = data.count || 1;
+  if (count >= 5) return 50;
+  if (count >= 3) return 25;
+  return 0;
+}
+
 function saveProgress(finalScore, actionCount) {
   markPlayedToday(finalScore);
   const streakBonus = getStreakBonus(_nk);
