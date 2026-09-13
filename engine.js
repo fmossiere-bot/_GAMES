@@ -20,6 +20,7 @@
   const CREDIT_STEP        = 10000; // points per impact credit
   const FIRST_MILESTONE    = 1000;  // first badge before the first credit
   const ACTIONS_PER_WEEK   = 2;     // hard cap on pledges per week
+  const CHALLENGES_PER_DAY = 2;     // one is the rhythm, two is the cap
   const SUGGEST_FROM_DOW   = 4;     // Thursday: action suggestions start
   const SUGGEST_AFTER_DAYS = 2;     // ...or once 2 challenge days are done this week
   const ACTIVITY_CAP       = 90;
@@ -287,7 +288,9 @@
       (st.dow >= SUGGEST_FROM_DOW || st.dow === 0 || st.weekDaysActive >= SUGGEST_AFTER_DAYS);
 
     let lead, reason;
-    if (st.credits.held > 0 && !st.done.action) {
+    if (st.doneCount >= CHALLENGES_PER_DAY) {
+      lead = 'done'; reason = 'Day done';
+    } else if (st.credits.held > 0 && !st.done.action) {
       lead = 'credit'; reason = 'A credit is waiting';
     } else if (actionWindow && !st.done.action && (st.isWeekend || st.done.game || st.done.story)) {
       lead = 'action'; reason = st.isWeekend ? 'Weekend: time to try something' : 'You have learnt; now act';
@@ -308,7 +311,8 @@
     return {
       lead, reason,
       dailyGame, gameAvailable, anyGameLeft, unreadStory, game,
-      showActionCard: actionWindow && !st.done.action && lead !== 'action' && lead !== 'credit',
+      dayDone: st.doneCount >= CHALLENGES_PER_DAY,
+      showActionCard: actionWindow && !st.done.action && lead !== 'action' && lead !== 'credit' && lead !== 'done',
       showSmallActionUnderCredit: lead === 'credit' && st.actionsLeftThisWeek > 0,
     };
   }
@@ -395,7 +399,7 @@
   }
 
   window.Engine = {
-    CREDIT_STEP, FIRST_MILESTONE, ACTIONS_PER_WEEK,
+    CREDIT_STEP, FIRST_MILESTONE, ACTIONS_PER_WEEK, CHALLENGES_PER_DAY,
     todayStr, weekStart, weekEnd, inThisWeek,
     state, credits, decide, rankActions, suggestGame,
     loadActions, loadPartners,

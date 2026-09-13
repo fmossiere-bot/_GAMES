@@ -30,8 +30,8 @@
 
     // Title
     const title = document.getElementById('hub-title');
-    if (title) title.innerHTML = st.doneCount >= 3
-      ? 'All three <em>done</em>'
+    if (title) title.innerHTML = d.dayDone
+      ? 'Done for <em>today</em>'
       : st.anyDone ? 'One more<em>?</em>' : 'Today, pick <em>one</em>';
     document.getElementById('screen-hub').classList.toggle('credit-mode', d.lead === 'credit');
 
@@ -65,15 +65,17 @@
     el.innerHTML = ways.map((w) => {
       const done = st.done[w.key];
       if (done && doneName[w.key]) w.name = doneName[w.key];
-      const lead = !done && w.key === leadKey;
-      const cls = ['way', w.tone, done ? 'done' : '', lead ? 'lead' : ''].filter(Boolean).join(' ');
+      const locked = !done && d.dayDone;
+      if (locked) w.name = 'Back tomorrow';
+      const lead = !done && !locked && w.key === leadKey;
+      const cls = ['way', w.tone, done ? 'done' : '', locked ? 'locked' : '', lead ? 'lead' : ''].filter(Boolean).join(' ');
       const badge = done ? '<span class="way-badge done">Done today</span>' : lead ? '<span class="way-badge">Suggested</span>' : '';
-      const meta = done ? EA.icon('check', { size: 12 }) + ' Done' : w.meta;
+      const meta = done ? EA.icon('check', { size: 12 }) + ' Done' : locked ? 'Tomorrow' : w.meta;
       return `<button type="button" class="${cls}" data-way="${w.key}">${badge}<span class="tile sm ${w.tone === 'white' ? '' : w.tone}">${EA.icon(w.icon, { size: 20 })}</span><p class="way-label">${w.label}</p><p class="way-name">${esc(w.name)}</p><p class="way-meta">${meta}</p></button>`;
-    }).join('') + `<p class="ways-hint">Envie picked these for today. Choose your own game or story from the menu below.</p>`;
+    }).join('') + `<p class="ways-hint">${d.dayDone ? 'Two challenges is the daily cap. The games and stories tabs stay open, and Envie is back tomorrow.' : 'Envie picked these for today. Choose your own game or story from the menu below.'}</p>`;
     el.querySelectorAll('.way').forEach((b) => {
       const w = ways.find((x) => x.key === b.dataset.way);
-      b.onclick = () => w.go();
+      b.onclick = () => { if (b.classList.contains('locked')) { showToast('That is two for today', 'One a day is the rhythm. Envie will have this one for you tomorrow.', 'flag'); return; } w.go(); };
     });
   }
 
@@ -130,8 +132,8 @@
           <envie-mascot pose="celebrate" hat="hat" aria-hidden="true"></envie-mascot>
           <div class="lead-card done-card">
             <div class="lead-top"><span class="pill sky">Streak kept</span></div>
-            <p class="lead-title">Game, story and action. All three today.</p>
-            <p class="lead-desc">Envie has nothing left to hand you. Come back tomorrow, or ask the companion anything.</p>
+            <p class="lead-title">${st.doneCount >= 3 ? 'Game, story and action. All three today.' : 'Two today. That is the rhythm.'}</p>
+            <p class="lead-desc">Envie keeps the rest for tomorrow. The companion is always open if you want to ask something.</p>
             <div class="lead-actions"><button type="button" class="cta ghost" onclick="switchTab('companion')">Open the companion</button></div>
           </div>
         </div>`;
