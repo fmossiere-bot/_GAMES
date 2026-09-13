@@ -1415,7 +1415,6 @@
   </div>
   <div class="score-bottom">
     <button class="btn-action" onclick="finishAndGoHub()">Finish</button>
-    <button class="btn-finish" onclick="finishAndGoActions()">Take an action</button>
   </div>
 </div>
 
@@ -2024,17 +2023,6 @@ function showResults() {
 
 
   showScreen('screen-score');
-}
-
-// ══════════════════════════════════════════════════════
-// FINISH — actions now live in the app (index.html?actions=1)
-// ══════════════════════════════════════════════════════
-function finishAndGoActions() {
-  if (!progressSaved) {
-    saveProgress(roundScore, 0);
-    progressSaved = true;
-  }
-  window.location.href = 'index.html?actions=1';
 }
 
 function saveProgress(finalScore, actionCount) {

@@ -1468,7 +1468,6 @@
   <div class="score-bottom">
     <button class="btn-action" id="btn-finish">Finish</button>
     <button class="btn-finish" id="end-replay" hidden>Play again</button>
-    <button class="btn-finish" id="btn-action">Take an action</button>
   </div>
 
 </div>
@@ -3806,7 +3805,7 @@
     if (again) els.endReplay.textContent = 'One more go';
 
     showScreen('screen-score');
-    focusNoScroll(again ? els.endReplay : els.btnAction);
+    focusNoScroll(again ? els.endReplay : els.btnFinish);
     announce('Run over. ' + state.streak + ' of ' + ROUNDS_PER_RUN + ' correct, ' +
       score.total + ' points.');
   }
@@ -3917,13 +3916,6 @@
     }
   }
 
-  // Actions: the pledge step moved to the app (index.html?actions=1). The run
-  // is already saved by the time the score screen shows, so this is a plain
-  // navigation.
-  function goToActions() {
-    window.location.href = 'index.html?actions=1';
-  }
-
   function announce(text) {
     els.live.textContent = text;
   }
@@ -3975,7 +3967,7 @@
       'scoreLabel', 'scoreMax', 'playedScore', 'playedWhen',
       'endLead', 'endFacts', 'endReplay', 'scoreMessage', 'scorePillStreak', 'scorePillBest',
       'scorePillBonus', 'explainerTitle', 'explainerIntro', 'explainerList', 'live',
-      'btnAction', 'btnFinish'
+      'btnFinish'
     ].forEach(function (key) {
       var id = key.replace(/[A-Z]/g, function (c) { return '-' + c.toLowerCase(); });
       els[key] = document.getElementById(id);
@@ -4013,7 +4005,6 @@
 
     els.btnStart.addEventListener('click', newGame);
     els.endReplay.addEventListener('click', newGame);
-    els.btnAction.addEventListener('click', goToActions);
     // Finish leaves without a pledge, exactly as it does in the other games.
     els.btnFinish.addEventListener('click', function () {
       window.location.href = 'index.html?hub=1';
@@ -4047,7 +4038,6 @@
       retryAvailable: retryAvailable,
       calcScore: calcScore,
       simulatePairings: simulatePairings,
-      goToActions: goToActions
     };
   }
 

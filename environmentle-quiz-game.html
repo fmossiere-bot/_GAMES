@@ -1287,7 +1287,6 @@
 <!-- Score bottom — lives OUTSIDE all screens so position:fixed works correctly -->
 <div class="score-bottom" id="score-bottom" style="display:none;">
   <button class="btn-action" onclick="finishAndGoHub()">Finish</button>
-  <button class="btn-finish" onclick="finishAndGoActions()">Take an action</button>
 </div>
 
 <!-- Bottom nav — shown on score/action screens only -->
@@ -1821,16 +1820,8 @@ function showResults() {
 }
 
 // ══════════════════════════════════════════════════════
-// FINISH — actions now live in the app (index.html?actions=1)
+// FINISH
 // ══════════════════════════════════════════════════════
-function finishAndGoActions() {
-  if (!progressSaved) {
-    saveProgress(score, 0);
-    progressSaved = true;
-  }
-  window.location.href = 'index.html?actions=1';
-}
-
 function finishAndGoHub() {
   if (!progressSaved) {
     saveProgress(score, 0);
