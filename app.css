@@ -231,7 +231,7 @@
 .skin #screen-hub { background: var(--ground-home) var(--ground-base); }
 .skin #screen-hub .hub-header { background: transparent; padding: 10px 20px 0; position: relative; z-index: 1; }
 .skin #screen-hub .hub-greeting { font-family: var(--font-body); font-size: 14px; font-weight: 400; color: rgba(255,255,255,.6); margin-bottom: 2px; }
-.skin #screen-hub .hub-title { font-size: 29px; margin-bottom: 0; }
+.skin #screen-hub .hub-title { font-size: 27px; margin-bottom: 0; white-space: nowrap; }
 .skin #screen-hub .hub-title em { color: var(--amber); }
 .skin #screen-hub .hub-streak-row { display: none; }
 .skin #screen-hub .hub-envie { display: none; }
@@ -772,8 +772,23 @@ body.cc-say .cc-detail-view { display: none !important; }
 .skin .bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4e8a4d, #85d083); transition: width .6s ease; }
 .skin .bar.tall { height: 14px; margin-top: 12px; }
 
-/* Stat strip under the credit bar */
-.skin .home-stats { margin-top: 14px; cursor: pointer; }
+/* Title row with the streak chip, and the community strip */
+.skin .hub-title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+.skin .hub-title-row .streak-chip { margin-bottom: 4px; }
+.skin .hub-title-row > div { min-width: 0; }
+.skin .streak-chip { flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 999px; border: 2px solid rgba(230,126,34,.55); background: rgba(230,126,34,.1); color: var(--amber); font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.skin .streak-chip b { font-family: var(--font-display); font-size: 15px; line-height: 1; color: var(--amber); }
+.skin .streak-chip svg { width: 14px; height: 14px; color: var(--colour-orange); }
+.skin .streak-chip.hot { background: rgba(230,126,34,.2); border-color: var(--colour-orange); }
+.skin .streak-chip.zero { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.05); color: rgba(255,255,255,.55); }
+.skin .streak-chip.zero b, .skin .streak-chip.zero svg { color: rgba(255,255,255,.55); }
+.skin #hub-community { margin-top: 18px; }
+.skin #hub-community .eyebrow { margin-bottom: 10px; }
+.skin #hub-community .hub-progress-card { margin-top: 0; padding: 16px 4px; }
+.skin #hub-community .progress-stat-num { font-size: 22px; }
+.skin #hub-community .progress-stat-num.amber { color: var(--amber); }
+.skin #hub-community .progress-stat-num.sky { color: var(--sky); }
+.skin #hub-community .progress-stat-label { line-height: 1.3; }
 
 /* Credit badge on the profile button */
 .skin .profile-icon-btn { position: relative; }

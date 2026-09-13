@@ -376,6 +376,7 @@
       storyLastRead: localStorage.getItem(K.story(nk)) || null,
       actionSkips:   get(K.skips(nk), []).slice(-120),
       email:         getEmail(nk) || null,
+      creditsUsed:   get(K.ledger(nk), []).reduce((n, e) => n + (e.credits || 0), 0),
     };
   }
   function mergeRemote(nk, d) {

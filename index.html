@@ -2769,8 +2769,13 @@
 
   <!-- Hub header — navy, with greeting + streak chips -->
   <div class="hub-header">
-    <p class="hub-greeting" id="hub-greeting">Good to see you,</p>
-    <h2 class="hub-title" id="hub-title">Today, pick <em>one</em></h2>
+    <div class="hub-title-row">
+      <div>
+        <p class="hub-greeting" id="hub-greeting">Good to see you,</p>
+        <h2 class="hub-title" id="hub-title">Today, pick <em>one</em></h2>
+      </div>
+      <span class="streak-chip" id="hub-streak" hidden></span>
+    </div>
 
     <!-- Notification prompt — lives inside navy header section -->
     <div class="notif-prompt" id="notif-prompt">

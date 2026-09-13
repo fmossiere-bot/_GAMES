@@ -40,6 +40,71 @@
     renderLead(st, d, action, dailyChallenge);
     renderMore(st, d, action);
     renderProfileBadge(st);
+    renderStreakChip(st);
+    renderCommunity();
+  }
+
+  function renderStreakChip(st) {
+    const el = document.getElementById('hub-streak');
+    if (!el) return;
+    el.hidden = false;
+    el.className = 'streak-chip' + (st.streak >= 3 ? ' hot' : st.streak === 0 ? ' zero' : '');
+    el.innerHTML = EA.icon('flame', { size: 16 }) + `<b>${st.streak}</b> day${st.streak === 1 ? '' : 's'}`;
+    el.onclick = () => openProfile();
+  }
+
+  // ── COMMUNITY: everyone's totals, aggregated from the players collection ──
+  const COMMUNITY_KEY = 'community_stats';
+  const COMMUNITY_TTL = 60 * 60 * 1000; // an hour is plenty for a total
+  async function loadCommunityStats() {
+    try {
+      const cached = JSON.parse(localStorage.getItem(COMMUNITY_KEY) || 'null');
+      if (cached && Date.now() - cached.at < COMMUNITY_TTL) return cached.data;
+    } catch (e) { /* ignore */ }
+    if (typeof _db === 'undefined' || !_db) return null;
+    let data = null;
+    try {
+      // Server-side aggregation: one read, no matter how many players
+      const AF = firebase.firestore.AggregateField;
+      const snap = await _db.collection('players').aggregate({
+        players: AF.count(),
+        games:   AF.sum('sessionsPlayed'),
+        actions: AF.sum('actionsPledged'),
+        credits: AF.sum('creditsUsed'),
+      }).get();
+      const r = snap.data();
+      data = { players: r.players || 0, games: r.games || 0, actions: r.actions || 0, credits: r.credits || 0 };
+    } catch (e) {
+      // Older SDK or aggregation refused: read the docs and add them up
+      try {
+        const qs = await _db.collection('players').limit(2000).get();
+        data = { players: 0, games: 0, actions: 0, credits: 0 };
+        qs.forEach((doc) => {
+          const d = doc.data() || {};
+          data.players += 1;
+          data.games   += d.sessionsPlayed || 0;
+          data.actions += d.actionsPledged || 0;
+          data.credits += d.creditsUsed != null ? d.creditsUsed : (d.creditLedger || []).reduce((n, x) => n + (x.credits || 0), 0);
+        });
+      } catch (e2) { data = null; }
+    }
+    if (data) { try { localStorage.setItem(COMMUNITY_KEY, JSON.stringify({ at: Date.now(), data })); } catch (e) { /* ignore */ } }
+    return data;
+  }
+
+  async function renderCommunity() {
+    const el = document.getElementById('hub-community');
+    if (!el) return;
+    const data = await loadCommunityStats();
+    if (!data) { el.innerHTML = ''; return; }
+    el.innerHTML = `
+      <p class="eyebrow">Together so far</p>
+      <div class="hub-progress-card community">
+        <div class="progress-stat"><div class="progress-stat-num">${fmt(data.players)}</div><div class="progress-stat-label">Players</div></div>
+        <div class="progress-stat"><div class="progress-stat-num">${fmt(data.games)}</div><div class="progress-stat-label">Games played</div></div>
+        <div class="progress-stat"><div class="progress-stat-num amber">${fmt(data.actions)}</div><div class="progress-stat-label">Actions pledged</div></div>
+        <div class="progress-stat"><div class="progress-stat-num sky">${fmt(data.credits)}</div><div class="progress-stat-label">Credits used</div></div>
+      </div>`;
   }
 
   // The three-way strip: Game · Story · Action
@@ -204,14 +269,7 @@
         <span class="tile sm sky">${EA.icon('sprout', { size: 17 })}</span>
         <div class="credit-bar-body"><p>${barTxt}</p><div class="bar"><div class="bar-fill" style="width:${Math.max(3, c.pct)}%"></div></div></div>
       </div>`;
-    const p = st.progress;
-    html += `
-      <div class="hub-progress-card home-stats">
-        <div class="progress-stat"><div class="progress-stat-num">${fmt(p.totalScore)}</div><div class="progress-stat-label">Score</div></div>
-        <div class="progress-stat"><div class="progress-stat-num">${p.sessionsPlayed || 0}</div><div class="progress-stat-label">Games</div></div>
-        <div class="progress-stat"><div class="progress-stat-num">${p.actionsPledged || 0}</div><div class="progress-stat-label">Pledged</div></div>
-        <div class="progress-stat"><div class="progress-stat-num streak">${EA.icon('flame', { size: 15 })}${st.streak}</div><div class="progress-stat-label">Streak</div></div>
-      </div>`;
+    html += '<div id="hub-community"></div>';
     el.innerHTML = html;
   }
 
