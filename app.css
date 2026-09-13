@@ -938,3 +938,40 @@ body.sheet-open { overflow: hidden; }
 .skin .sheet-actions .cta { flex: 1 1 auto; width: auto; padding: 15px; font-size: 16px; border-radius: 18px; white-space: nowrap; }
 .skin .sheet-actions .cta.ghost { flex: 0 0 auto; width: auto; padding: 15px 16px; font-size: 14px; }
 .skin .sheet-alt { display: block; width: 100%; margin-top: 14px; appearance: none; background: none; border: 0; font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,.55); cursor: pointer; }
+
+/* ── Envie's first-run tour ── */
+#tour { position: fixed; inset: 0; z-index: 800; pointer-events: none; }
+#tour .tour-scrim { position: absolute; inset: 0; background: rgba(4,18,27,.72); opacity: 0; transition: opacity .3s; }
+#tour .tour-card { position: absolute; left: 14px; right: 14px; bottom: calc(env(safe-area-inset-bottom, 0px) + 84px); background: #0d3145; border: 3px solid var(--sky); border-radius: 28px 22px 26px 24px / 22px 28px 24px 26px; padding: 18px 16px 14px; box-shadow: 6px 7px 0 rgba(4,18,27,.6); transform: translateY(24px); opacity: 0; transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .3s; }
+#tour.on { pointer-events: auto; }
+#tour.on .tour-scrim { opacity: 1; }
+#tour.on .tour-card { transform: none; opacity: 1; }
+#tour .tour-card.flip { animation: tourflip .3s ease-out; }
+@keyframes tourflip { from { opacity: .4; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.skin #tour .erow { margin-bottom: 12px; }
+.skin #tour .erow envie-mascot { width: 84px; }
+.skin #tour .erow .bb { margin-bottom: 14px; }
+.skin #tour .bb .bh { font-size: 16px; }
+.skin #tour .bb .bs { font-size: 12.5px; margin-top: 6px; }
+.skin .tour-ways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.skin .tour-ways span { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 6px; border-radius: 16px; background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.12); font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; }
+.skin .tour-ways .tile { width: 34px; height: 34px; border-radius: 11px; }
+.skin .tour-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.skin .tour-tabs span { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 9px 4px; border-radius: 14px; background: rgba(255,255,255,.06); font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.85); text-align: center; }
+.skin .tour-tabs span svg { width: 18px; height: 18px; color: var(--amber); }
+.skin .tour-tabs em { font-style: normal; text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 10.5px; color: rgba(255,255,255,.5); }
+.skin .tour-ask { display: flex; align-items: center; gap: 8px; }
+.skin .tour-ask-field { flex: 1; display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.14); font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,.8); }
+.skin .tour-ask-field svg { width: 16px; height: 16px; color: rgba(255,255,255,.5); flex: none; }
+.skin .tour-ask-send { width: 42px; height: 42px; flex: none; border-radius: 50%; background: var(--colour-orange); display: grid; place-items: center; color: #fff; }
+.skin .tour-ask-send svg { width: 15px; height: 15px; }
+.skin .tour-credit { background: rgba(255,255,255,.06); border-radius: 16px; padding: 12px 14px; }
+.skin .tour-credit p { margin: 0; font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,.7); }
+.skin .tour-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; }
+.skin .tour-skip { appearance: none; background: none; border: 0; min-width: 44px; text-align: left; font-family: var(--font-body); font-size: 13px; font-weight: 700; color: rgba(255,255,255,.55); cursor: pointer; padding: 8px 0; }
+.skin .tour-dots { display: flex; gap: 6px; }
+.skin .tour-dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.22); }
+.skin .tour-dots i.on { background: var(--amber); width: 18px; border-radius: 999px; }
+.skin .tour-next { width: auto; padding: 12px 18px; font-size: 14px; border-radius: 14px; }
+.skin .tour-next svg { width: 16px; height: 16px; }
+.skin #app-bottom-nav.tour-lift { z-index: 801; box-shadow: 0 0 0 3px var(--sky), 0 -8px 28px rgba(0,0,0,.35); }

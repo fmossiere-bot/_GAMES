@@ -3084,6 +3084,11 @@
 
     <p class="profile-section-label">Help</p>
     <div class="settings-list">
+      <button class="settings-item" type="button" onclick="closeProfile(); setTimeout(function () { startTour(true); }, 450);">
+        <span class="settings-item-icon"><i data-icon="sparkles" data-size="20"></i></span>
+        <span class="settings-item-label">How the app works, with Envie</span>
+        <i data-icon="chevron-right" data-size="18" class="settings-item-chevron"></i>
+      </button>
       <button class="settings-item" type="button" onclick="openFaq()">
         <span class="settings-item-icon"><i data-icon="info" data-size="20"></i></span>
         <span class="settings-item-label">FAQ</span>
@@ -3470,7 +3475,8 @@ async function submitName() {
   localStorage.setItem('env_player_name', playerName);
   const nk = playerName.toLowerCase().replace(/\s+/g, '_');
   await loadPlayerProfile(nk);
-  openHub();
+  await openHub();
+  startTour(); // first time only: Envie's four-step run-through
 }
 
 // ════════════════════════════════════
@@ -3921,6 +3927,7 @@ async function loadPlayerProfile(nk) {
 
     // Activity log, credit ledger, last story read
     Engine.mergeRemote(nk, d);
+    if (d.onboarded) localStorage.setItem('onboarded_' + nk, d.onboarded);
 
     // Restore preferences
     if (d.installPrompt) localStorage.setItem('install_prompt_' + nk, d.installPrompt);
@@ -3950,6 +3957,8 @@ async function syncPlayerToFirestore(nk) {
       updatedAt:      firebase.firestore.FieldValue.serverTimestamp(),
     };
     Object.assign(update, Engine.syncFields(nk));
+    const onboarded = localStorage.getItem('onboarded_' + nk);
+    if (onboarded) update.onboarded = onboarded;
     if (installPrompt) update.installPrompt = installPrompt;
     if (notifPrompt)   update.notifPrompt   = notifPrompt;
     if (appInstalled)  update.appInstalled  = true;
@@ -4512,5 +4521,6 @@ function _attachSwipe() {
 </script>
 
 <script src="home.js"></script>
+<script src="tour.js"></script>
 </body>
 </html>
