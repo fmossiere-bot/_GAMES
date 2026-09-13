@@ -187,6 +187,14 @@
         <span class="tile sm sky">${EA.icon('sprout', { size: 17 })}</span>
         <div class="credit-bar-body"><p>${barTxt}</p><div class="bar"><div class="bar-fill" style="width:${Math.max(3, c.pct)}%"></div></div></div>
       </div>`;
+    const p = st.progress;
+    html += `
+      <div class="hub-progress-card home-stats">
+        <div class="progress-stat"><div class="progress-stat-num">${fmt(p.totalScore)}</div><div class="progress-stat-label">Score</div></div>
+        <div class="progress-stat"><div class="progress-stat-num">${p.sessionsPlayed || 0}</div><div class="progress-stat-label">Games</div></div>
+        <div class="progress-stat"><div class="progress-stat-num">${p.actionsPledged || 0}</div><div class="progress-stat-label">Pledged</div></div>
+        <div class="progress-stat"><div class="progress-stat-num streak">${EA.icon('flame', { size: 15 })}${st.streak}</div><div class="progress-stat-label">Streak</div></div>
+      </div>`;
     el.innerHTML = html;
   }
 
@@ -268,7 +276,9 @@
     const pledgedIds = new Set(st.history.map((h) => h.id || h.title));
     list.innerHTML = shown.map((a) => actionCard(a, left > 0, a.id === _highlight, pledgedIds.has(a.id))).join('')
       + (items.length > shown.length ? `<button type="button" class="cta ghost" id="actions-more">Show ${items.length - shown.length} more</button>` : '')
-      + (items.length === 0 ? '<p class="actions-empty">Nothing left in this list. You have pledged them all.</p>' : '');
+      + (items.length === 0 ? '<p class="actions-empty">' + (ranked.length === 0 && !st.history.length
+          ? 'The actions list could not be loaded. Open the app through a web server, not as a file.'
+          : 'Nothing left in this list. You have pledged them all.') + '</p>' : '');
     const more = document.getElementById('actions-more');
     if (more) more.onclick = () => { _showAll = true; renderActions(); };
     list.querySelectorAll('[data-pledge]').forEach((b) => b.onclick = () => pledgeAction(b.dataset.pledge));

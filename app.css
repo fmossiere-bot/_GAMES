@@ -768,6 +768,9 @@ body.cc-say .cc-detail-view { display: none !important; }
 .skin .bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4e8a4d, #85d083); transition: width .6s ease; }
 .skin .bar.tall { height: 14px; margin-top: 12px; }
 
+/* Stat strip under the credit bar */
+.skin .home-stats { margin-top: 14px; cursor: pointer; }
+
 /* Credit badge on the profile button */
 .skin .profile-icon-btn { position: relative; }
 .skin .credit-badge { position: absolute; top: -3px; right: -3px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 999px; background: var(--sky); color: #062018; font-family: var(--font-body); font-size: 10px; font-weight: 700; display: grid; place-items: center; }
