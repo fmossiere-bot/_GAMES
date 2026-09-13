@@ -38,7 +38,7 @@
       </div>`;
     const credit = `
       <div class="tour-credit" aria-hidden="true">
-        <p>0 / 10,000 pts to your first impact credit</p>
+        <p>0 / 1,500 pts to your first impact credit</p>
         <div class="bar"><div class="bar-fill" style="width:4%"></div></div>
       </div>`;
     return [
@@ -56,7 +56,7 @@
         art: ask, lift: false },
       { pose: 'celebrate', hat: 'hat', tee: 'eco',
         head: 'Points become real things.',
-        sub: 'Games, stories and actions all earn points. Every 10,000 turns into an impact credit you can spend on a native tree or a patch of meadow with our partners. Now, pick one.',
+        sub: 'Games, stories and actions all earn points. Every 1,500 turns into an impact credit you can spend on a native tree or a patch of meadow with our partners. Now, pick one.',
         art: credit, lift: false },
     ];
   }

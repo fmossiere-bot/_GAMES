@@ -2874,6 +2874,7 @@
       </div>
       <div class="games-lib-title">GAMES</div>
       <p class="games-lib-subtitle">Small games. Real climate action. Pick one and go.</p>
+      <p class="tab-lock-note" id="games-lock-note" hidden>Two challenges done today. The games open again tomorrow.</p>
     </div>
   </div>
 
@@ -2884,7 +2885,7 @@
         <div class="rim-body">
           <p class="rim-tag">Quiz</p>
           <p class="rim-title">Random challenge</p>
-          <div class="rim-chips"><span class="chip">3 questions</span><span class="chip">450 pts</span><span class="chip muted">~2 min</span></div>
+          <div class="rim-chips"><span class="chip">3 questions</span><span class="chip">150 pts</span><span class="chip muted">~2 min</span></div>
         </div>
         <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
@@ -2906,7 +2907,7 @@
         <div class="rim-body">
           <p class="rim-tag">Water game</p>
           <p class="rim-title">Which one drinks more?</p>
-          <div class="rim-chips"><span class="chip">5 rounds</span><span class="chip">480 pts</span><span class="chip muted">~3 min</span></div>
+          <div class="rim-chips"><span class="chip">5 rounds</span><span class="chip">150 pts</span><span class="chip muted">~3 min</span></div>
         </div>
         <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
@@ -2954,6 +2955,7 @@
       </div>
       <div class="learn-hero-title">STORIES</div>
       <p class="learn-hero-subtitle">Short, visual stories on climate and sustainability. No jargon, no overwhelm.</p>
+      <p class="tab-lock-note" id="stories-lock-note" hidden>Two challenges done today. The stories open again tomorrow.</p>
     </div>
   </div>
 
@@ -3231,8 +3233,8 @@
           <p><strong>Stories</strong> are short visual reads on one climate topic, five to eight minutes each.</p>
           <p><strong>Actions</strong> are small, specific things you can do this week, drawn from what you have been playing and reading. Envie suggests one later in the week, once you have done a couple of challenges. You read it, then pledge it or say no and get another. Two pledges a week is the limit.</p>
           <p><strong>One challenge a day is the rhythm.</strong> If you want more, you can do a second one. After that, the home page tells you the day is done and Envie waits for tomorrow. The Companion is always open.</p>
-          <p><strong>Points.</strong> Games earn up to 450 or 480 points depending on how well you do, a story earns 75, and an action 50 to 100. Playing several days in a row adds a streak bonus.</p>
-          <p><strong>Impact credits.</strong> Every 10,000 points becomes an impact credit. Your score is never reduced. A credit can be spent with one of our partners on something real, like a native tree or a patch of pollinator meadow. Your profile shows how far you are from the next one.</p>
+          <p><strong>Points.</strong> A game earns up to 150 points depending on how well you do, a story earns 100, and an action 30 or 50. Actions earn the least because we take your word for them. Playing several days in a row adds a small streak bonus.</p>
+          <p><strong>Impact credits.</strong> Every 1,500 points becomes an impact credit, about a fortnight of play. Your score is never reduced. A credit can be spent with one of our partners on something real, like a native tree or a patch of pollinator meadow. Your profile shows how far you are from the next one.</p>
         </div>
       </div>
     </div>
@@ -3549,6 +3551,9 @@ async function openHub() {
 // Games tab cards: "Done today" badges and click handlers
 function refreshGameCards(nk) {
   const today = new Date().toISOString().slice(0, 10);
+  const dayDone = Engine.dayDone(nk);
+  const note = document.getElementById('games-lock-note');
+  if (note) note.hidden = !dayDone;
   const quizCard  = document.querySelector('.row.quiz');
   const sortCard  = document.querySelector('.row.sort');
   const waterCard = document.querySelector('.row.water');
@@ -3556,12 +3561,17 @@ function refreshGameCards(nk) {
   const setCard = (card, played, go) => {
     if (!card) return;
     card.classList.toggle('played-today', played);
-    const badge = card.querySelector('.played-badge');
+    card.classList.toggle('locked', !played && dayDone);
+    const badge = card.querySelector('.played-badge, .coming-badge');
     if (badge) badge.outerHTML = EA.icon('chevron-right', { size: 18, cls: 'row-chev' });
     if (played) {
       card.onclick = null;
       const arrow = card.querySelector('.row-chev');
       if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
+    } else if (dayDone) {
+      card.onclick = () => dayDoneToast();
+      const arrow = card.querySelector('.row-chev');
+      if (arrow) arrow.outerHTML = '<span class="coming-badge">Tomorrow</span>';
     } else {
       card.onclick = go;
     }
@@ -3625,7 +3635,7 @@ const ALL_STORIES = [
   // add more stories here as they go live
 ];
 
-const STORY_POINTS = 75;
+const STORY_POINTS = 100;
 
 function refreshHubProgress(nk, progress) {
   // Accept either a progress object or re-read from localStorage
@@ -3642,10 +3652,20 @@ function refreshHubProgress(nk, progress) {
 
 function _updateStoriesTabReadState(nk) {
   const completed = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
-  // Find all ml-cards in the stories tab and grey out completed ones
+  const dayDone = Engine.dayDone(nk);
+  const note = document.getElementById('stories-lock-note');
+  if (note) note.hidden = !dayDone;
+  // Grey out completed ones; lock the rest once the day's two challenges are done
   document.querySelectorAll('#screen-learn .rim[data-course]').forEach(card => {
-    card.classList.toggle('done', completed.includes(card.dataset.course));
+    const done = completed.includes(card.dataset.course);
+    card.classList.toggle('done', done);
+    card.classList.toggle('locked', !done && dayDone);
   });
+}
+
+// Two challenges a day is the cap: Envie says so instead of opening the thing
+function dayDoneToast() {
+  if (typeof showEnvieToast === 'function') showEnvieToast('That is two for today', 'One a day is the rhythm. Envie will have more for you tomorrow.', 'flag');
 }
 
 const STORY_ICON = { 'topic-finance': 'landmark', 'topic-data': 'server', 'topic-climate': 'sparkles', 'topic-activism': 'ice-cream', 'topic-forestry': 'tree-pine', 'topic-food': 'sprout', 'topic-society': 'message-circle' };
@@ -3712,7 +3732,7 @@ const GAME_DEFS = {
     cls: 'quiz', icon: 'casino', lucide: 'dices', tone: 'aqua', tag: 'Quiz',
     name: 'Random challenge',
     desc: 'A random quiz from our library of daily challenges. Three questions, real data.',
-    meta: ['3 questions', '450 pts max'],
+    meta: ['3 questions', '150 pts max'],
     onclick: "openGame('quiz','random')"
   },
   'sort': {
@@ -3728,7 +3748,7 @@ const GAME_DEFS = {
     cls: 'water', icon: 'water_drop', lucide: 'droplet', tone: 'sky', tag: 'Water game',
     name: 'Water challenge',
     desc: 'Higher or lower, water edition. Guess which everyday thing takes more water to make. Five rounds, one wrong answer ends the run.',
-    meta: ['5 rounds', '480 pts max'],
+    meta: ['5 rounds', '150 pts max'],
     onclick: "openGame('water')"
   }
 };
@@ -3833,6 +3853,7 @@ const GAME_URLS = {
 };
 
 function openGame(type, mode) {
+  if (playerName && Engine.dayDone(playerName.toLowerCase().replace(/\s+/g, '_'))) { dayDoneToast(); return; }
   recordRecentGame(type, mode);
   if (type === 'quiz') {
     const today = new Date().toISOString().slice(0, 10);
@@ -4192,6 +4213,7 @@ const SLIDE_READ_MS = 3500; // progress-bar fill duration (visual only)
 
 // ── Load & open ─────────────────────────────────────
 async function openCourse(id) {
+  if (playerName && Engine.dayDone(playerName.toLowerCase().replace(/\s+/g, '_'))) { dayDoneToast(); return; }
   try {
     const res  = await fetch(`courses/course-${id}.json`, { cache: 'no-cache' });
     _course    = await res.json();

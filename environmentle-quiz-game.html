@@ -1178,7 +1178,7 @@
     <div class="meta-row stagger-4">
       <div class="meta-item"><div class="meta-dot"></div> 3 questions</div>
       <div class="meta-item"><div class="meta-dot"></div> Under 3 minutes</div>
-      <div class="meta-item" id="meta-max-pts"><div class="meta-dot"></div> 450 pts max</div>
+      <div class="meta-item" id="meta-max-pts"><div class="meta-dot"></div> 150 pts max</div>
     </div>
     <button class="btn-play stagger-4" onclick="startQuiz()">
       Start challenge
@@ -1314,8 +1314,8 @@
 // CONSTANTS
 // ══════════════════════════════════════════════════════
 const Q_MAX_TIME    = 20;
-const Q_BASE_POINTS = [100, 150, 200]; // Q1=easy · Q2=medium · Q3=harder
-const TOTAL_MAX     = Q_BASE_POINTS.reduce((a, b) => a + b, 0); // 450 pts
+const Q_BASE_POINTS = [30, 50, 70]; // Q1=easy · Q2=medium · Q3=harder, 150 max
+const TOTAL_MAX     = Q_BASE_POINTS.reduce((a, b) => a + b, 0); // 150 pts
 
 // ══════════════════════════════════════════════════════
 // FALLBACK CHALLENGE — hardcoded "Coffee" (last resort)
@@ -1567,8 +1567,8 @@ function getStreakBonus(nk) {
   }
 
   const count = data.count || 1;
-  if (count >= 5) return 250;
-  if (count >= 3) return 100;
+  if (count >= 5) return 50;
+  if (count >= 3) return 25;
   return 0;
 }
 
@@ -1696,7 +1696,7 @@ function selectAnswer(idx) {
 
   if (idx === q.correct) {
     btns[idx].classList.add('correct');
-    const base = Q_BASE_POINTS[currentQ] || 100;
+    const base = Q_BASE_POINTS[currentQ] || 30;
     // Speed bonus: min 30% of base, scales up to 100% for instant answers
     const pts  = Math.max(Math.round(base * 0.3), Math.round(base * (timeLeft / Q_MAX_TIME)));
     score += pts;

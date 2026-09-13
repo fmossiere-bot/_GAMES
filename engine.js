@@ -17,8 +17,9 @@
 (function () {
   'use strict';
 
-  const CREDIT_STEP        = 10000; // points per impact credit
-  const FIRST_MILESTONE    = 1000;  // first badge before the first credit
+  const CREDIT_STEP        = 1500;  // points per impact credit: about 12 days of one challenge a day
+  const FIRST_MILESTONE    = 500;   // first badge before the first credit
+  const LEVEL_STEP         = 500;   // a level every 500 pts: three levels per credit
   const ACTIONS_PER_WEEK   = 2;     // hard cap on pledges per week
   const CHALLENGES_PER_DAY = 2;     // one is the rhythm, two is the cap
   const SUGGEST_FROM_DOW   = 4;     // Thursday: action suggestions start
@@ -113,6 +114,8 @@
     set(K.progress(nk), p);
     return p;
   }
+
+  function level(nk) { return Math.floor((progress(nk).totalScore || 0) / LEVEL_STEP) + 1; }
 
   function credits(nk) {
     const total  = progress(nk).totalScore || 0;
@@ -258,7 +261,7 @@
   const GAME_NAMES = { quiz: 'Random quiz', sort: 'Carbon challenge', water: 'Water challenge' };
   function suggestGame(nk, st, dailyGame) {
     if (dailyGame && st.played.quiz !== st.today) {
-      return { type: 'quiz', mode: 'daily', name: dailyGame.title_line1 + ' ' + dailyGame.title_line2, meta: dailyGame.category_badge + ' · 3 questions', pts: '450 pts max', daily: true };
+      return { type: 'quiz', mode: 'daily', name: dailyGame.title_line1 + ' ' + dailyGame.title_line2, meta: dailyGame.category_badge + ' · 3 questions', pts: '150 pts max', daily: true };
     }
     const recent = get(K.recent(nk), []);
     const lastTs = (g) => { const r = recent.find((e) => (e.key || '').split(':')[0] === g); return r ? r.ts || 0 : 0; };
@@ -267,7 +270,7 @@
     open.sort((a, b) => lastTs(a) - lastTs(b));
     const g = open[0];
     const meta = { quiz: 'Quiz · 3 questions', sort: 'Sorting game · 6 cards', water: 'Higher or lower · 5 rounds' }[g];
-    const pts  = { quiz: '450 pts max', sort: '300 pts max', water: '480 pts max' }[g];
+    const pts  = '150 pts max';
     return { type: g, mode: g === 'quiz' ? 'random' : null, name: GAME_NAMES[g], meta, pts, daily: false };
   }
 
@@ -361,6 +364,9 @@
     set(K.skips(nk), skips.slice(-120));
   }
 
+  // Two challenges a day is the cap
+  function dayDone(nk) { return state(nk).doneCount >= CHALLENGES_PER_DAY; }
+
   function recordStory(nk, id) {
     localStorage.setItem(K.story(nk), todayStr());
     const streak = stampStreak(nk);
@@ -412,9 +418,9 @@
   }
 
   window.Engine = {
-    CREDIT_STEP, FIRST_MILESTONE, ACTIONS_PER_WEEK, CHALLENGES_PER_DAY,
+    CREDIT_STEP, FIRST_MILESTONE, LEVEL_STEP, ACTIONS_PER_WEEK, CHALLENGES_PER_DAY,
     todayStr, weekStart, weekEnd, inThisWeek,
-    state, credits, decide, rankActions, suggestGame,
+    state, credits, level, decide, rankActions, suggestGame, dayDone,
     loadActions, loadPartners,
     pledge, skip, spendCredit, recordStory, stampStreak, logActivity,
     getEmail, validEmail,

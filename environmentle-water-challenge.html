@@ -1294,7 +1294,7 @@
     <div class="meta-row stagger-4">
       <div class="meta-item"><div class="meta-dot"></div> 5 rounds</div>
       <div class="meta-item"><div class="meta-dot"></div> Once a day</div>
-      <div class="meta-item"><div class="meta-dot"></div> 480 pts max</div>
+      <div class="meta-item"><div class="meta-dot"></div> 150 pts max</div>
     </div>
     <button class="btn-play stagger-4" id="btn-start">
       <span id="btn-start-label">Start guessing</span>
@@ -3056,11 +3056,11 @@
   //   5 correct * 60 + 90 (all five) + 90 (under 45s) = 480.
   // The three parts keep the shape they had: the correct answers carry most of
   // the run, and the two bonuses are equal to each other and smaller.
-  var POINTS_PER_CORRECT = 60;
-  var PERFECT_BONUS = 90;
-  var TIME_BONUS_MAX = 90;
+  var POINTS_PER_CORRECT = 20;
+  var PERFECT_BONUS = 25;
+  var TIME_BONUS_MAX = 25;
   var TIME_BONUS_FREE = 45;   // seconds before the speed bonus starts to decay
-  var TIME_BONUS_DECAY = 3;   // points lost per second after that. Scaled with
+  var TIME_BONUS_DECAY = 1;   // points lost per second after that. Scaled with
                               // the bonus it eats, so the taper keeps its old
                               // shape: it empties in 30 seconds and lands on
                               // zero at a round 75.
@@ -3888,8 +3888,8 @@
         storeSet(key, JSON.stringify(data));
       }
       var count = data.count || 1;
-      if (count >= 5) return 250;
-      if (count >= 3) return 100;
+      if (count >= 5) return 50;
+      if (count >= 3) return 25;
       return 0;
     } catch (err) {
       return 0;

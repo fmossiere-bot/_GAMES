@@ -186,7 +186,7 @@
         <div class="lead-card story" onclick="openCourse('${esc(s.id)}')">
           <div class="lead-top"><span class="pill amber">Today's story</span><span class="lead-sub">${esc(s.tag)} · ${esc(s.meta)}</span></div>
           <div class="lead-main"><span class="tile lg amber">${EA.icon('book-open', { size: 26 })}</span><p class="lead-title">${esc(s.title)}</p></div>
-          <div class="lead-actions"><button type="button" class="cta amber">Read ${EA.icon('arrow-right', { size: 17 })}</button><span class="lead-pts">+75 pts</span></div>
+          <div class="lead-actions"><button type="button" class="cta amber">Read ${EA.icon('arrow-right', { size: 17 })}</button><span class="lead-pts">+${typeof STORY_POINTS !== 'undefined' ? STORY_POINTS : 100} pts</span></div>
         </div>`;
       return;
     }
@@ -261,13 +261,11 @@
 
     const barTxt = c.held > 0
       ? `${c.held} credit${c.held > 1 ? 's' : ''} held · next at ${fmt(c.nextAt)} pts`
-      : c.earned === 0
-        ? `${fmt(c.total)} / ${fmt(c.step)} pts to your first impact credit`
-        : `${fmt(c.total)} / ${fmt(c.nextAt)} pts to your next credit`;
+      : `${fmt(c.toGo)} to your ${c.earned === 0 ? 'first' : 'next'} impact credit`;
     html += `
-      <div class="credit-bar" onclick="openProfile()">
+      <div class="credit-bar you" onclick="openProfile()">
         <span class="tile sm sky">${EA.icon('sprout', { size: 17 })}</span>
-        <div class="credit-bar-body"><p>${barTxt}</p><div class="bar"><div class="bar-fill" style="width:${Math.max(3, c.pct)}%"></div></div></div>
+        <div class="credit-bar-body"><p><strong class="you-score">${fmt(c.total)} pts</strong><span class="you-sub">${barTxt}</span></p><div class="bar"><div class="bar-fill" style="width:${Math.max(3, c.pct)}%"></div></div></div>
       </div>`;
     html += '<div id="hub-community"></div>';
     el.innerHTML = html;
@@ -568,7 +566,7 @@
     const st = Engine.state(nk);
     const c  = st.credits;
     const p  = st.progress;
-    const level = Math.floor((p.totalScore || 0) / 250) + 1;
+    const level = Engine.level(nk);
 
     setText('profile-name', playerName || 'Player');
     setText('profile-tag', 'Player · Level ' + level);
@@ -591,7 +589,7 @@
           <p class="credit-ready-desc">${fmt(c.step)} points became one real thing in the ground. Pick where it goes and we send it to the partner, you get the photo back.</p>
           <div class="lead-actions"><button type="button" class="cta sky" onclick="openCredit()">Use my credit ${EA.icon('arrow-right', { size: 17 })}</button><button type="button" class="cta ghost sm" onclick="saveCredit()">Save it</button></div>`;
       } else {
-        const gamesLeft = Math.max(1, Math.ceil(c.toGo / 450));
+        const gamesLeft = Math.max(1, Math.ceil(c.toGo / 150));
         card.className = 'credit-card';
         card.innerHTML = `
           <div class="credit-head"><div><p class="eyebrow">Impact credits</p><p class="credit-title">Turn points into planting</p></div><span class="pill">${EA.icon('clock', { size: 14 })} ${c.spent} planted</span></div>
