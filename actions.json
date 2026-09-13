@@ -1,0 +1,5669 @@
+{
+ "meta": {
+  "version": 1,
+  "generated_from": [
+   "challenges.json",
+   "environmentle-sort-it-out.html CARD_ACTIONS",
+   "environmentle-water-challenge.html DATA.actions"
+  ],
+  "types": {
+   "water": "Water",
+   "food": "Food",
+   "energy": "Energy at home",
+   "transport": "Getting around",
+   "circularity": "Circularity and waste",
+   "nature": "Nature and biodiversity",
+   "community": "Community",
+   "mindset": "Habits and learning"
+  },
+  "scopes": {
+   "individual": "Individual action",
+   "community": "Community action"
+  },
+  "levels": {
+   "easy": "Easy",
+   "medium": "Medium"
+  }
+ },
+ "actions": [
+  {
+   "title": "Pick one sustainable habit to add this week",
+   "desc": "Choose something small and specific — like bringing a bag to the shops or switching off standby devices before bed. Attach it to something you already do every day.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Depends on habit chosen",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "spring-reset",
+    "date": "2026-03-31",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "reset",
+    "spring"
+   ],
+   "id": "pick-one-sustainable-habit-to-add-this-week"
+  },
+  {
+   "title": "Do a 10-minute home energy audit",
+   "desc": "Walk around your home and note anything that uses energy unnecessarily — old bulbs, devices on standby, gaps in doors or windows. Most fixes take minutes.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Up to 100 kg CO₂/year if acted on",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "spring-reset",
+    "date": "2026-03-31",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "reset",
+    "spring"
+   ],
+   "id": "do-a-10-minute-home-energy-audit"
+  },
+  {
+   "title": "Plan one meat-free day per week for April",
+   "desc": "Commit to one full day each week without meat for the month. That alone could save around 50–100 kg CO₂ over the month.",
+   "level": "medium",
+   "points": 100,
+   "impact": "~50–100 kg CO₂ saved over April",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "spring-reset",
+    "date": "2026-03-31",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "reset",
+    "spring"
+   ],
+   "id": "plan-one-meat-free-day-per-week-for-april"
+  },
+  {
+   "title": "Check one climate 'fact' you believe and verify it",
+   "desc": "Pick something you think you know about climate and look it up on Our World in Data or the EPA Ireland site. You might be surprised.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Knowledge is the first step",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "carbon-myths",
+    "date": "2026-04-01",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "carbon",
+    "climate",
+    "myths"
+   ],
+   "id": "check-one-climate-fact-you-believe-and-verify-it"
+  },
+  {
+   "title": "Share one surprising fact with someone today",
+   "desc": "Pick the most surprising thing you learned in this quiz and mention it to one person. Research shows peer conversations are more effective than media campaigns at shifting views.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Social multiplier effect",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "carbon-myths",
+    "date": "2026-04-01",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "carbon",
+    "climate",
+    "myths"
+   ],
+   "id": "share-one-surprising-fact-with-someone-today"
+  },
+  {
+   "title": "Spend 30 minutes outside in a green space this week",
+   "desc": "It doesn't have to be wild — a local park counts. Leave the headphones behind if you can and just notice what's around you.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Good for your mental health",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "nature-wellbeing",
+    "date": "2026-04-02",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "nature",
+    "wellbeing"
+   ],
+   "id": "spend-30-minutes-outside-in-a-green-space-this-week"
+  },
+  {
+   "title": "Let a patch of your garden or windowsill go wild",
+   "desc": "Stop cutting one corner of the lawn, or plant a small pot of wildflowers on your windowsill. Even tiny wild patches support pollinators in urban areas.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports local biodiversity",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "nature-wellbeing",
+    "date": "2026-04-02",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "nature",
+    "wellbeing"
+   ],
+   "id": "let-a-patch-of-your-garden-or-windowsill-go-wild"
+  },
+  {
+   "title": "Check the sustainability rating of your fish today",
+   "desc": "The Good Fish Guide by the Marine Conservation Society rates fish by sustainability. Check goodfishguide.org before you buy fish this week.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Awareness step",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "good-friday-fish",
+    "date": "2026-04-03",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "friday",
+    "good",
+    "water"
+   ],
+   "id": "check-the-sustainability-rating-of-your-fish-today"
+  },
+  {
+   "title": "Try mackerel, mussels or sardines this week",
+   "desc": "These are among the most sustainable and nutritious seafood options in Ireland — and usually cheaper than salmon or tuna. Tinned works just as well.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Lower footprint than most fish",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "good-friday-fish",
+    "date": "2026-04-03",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "friday",
+    "good",
+    "water"
+   ],
+   "id": "try-mackerel-mussels-or-sardines-this-week"
+  },
+  {
+   "title": "Download the iNaturalist app and log one species this week",
+   "desc": "iNaturalist is free and lets you photograph plants, birds or insects and have them identified automatically. Every observation contributes to national biodiversity data.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports citizen science",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "spring-biodiversity",
+    "date": "2026-04-07",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "irish",
+    "spring"
+   ],
+   "id": "download-the-inaturalist-app-and-log-one-species-this-week"
+  },
+  {
+   "title": "Plant one native Irish wildflower this spring",
+   "desc": "Primrose, cowslip, wild garlic or ox-eye daisy are all easy to grow in pots or gardens and support native insects. Most garden centres stock them from April.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports local pollinators",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "spring-biodiversity",
+    "date": "2026-04-07",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "irish",
+    "spring"
+   ],
+   "id": "plant-one-native-irish-wildflower-this-spring"
+  },
+  {
+   "title": "Fix a dripping tap at home this week",
+   "desc": "A dripping tap wastes up to 15 litres a day — that's over 5,000 litres a year. Most fixes take 10 minutes and cost very little.",
+   "level": "easy",
+   "points": 50,
+   "impact": "5,000L water saved/year",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "hidden-water",
+    "date": "2026-04-08",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "hidden",
+    "water"
+   ],
+   "id": "fix-a-dripping-tap-at-home-this-week"
+  },
+  {
+   "title": "Eat one less portion of beef this week",
+   "desc": "Replacing one beef meal with chicken, fish or legumes saves not just carbon but a significant amount of embedded water.",
+   "level": "easy",
+   "points": 75,
+   "impact": "~15,000L water saved per kg avoided",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "hidden-water",
+    "date": "2026-04-08",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "hidden",
+    "water"
+   ],
+   "id": "eat-one-less-portion-of-beef-this-week"
+  },
+  {
+   "title": "Go for a hedgerow walk and identify 3 species",
+   "desc": "Use the free iNaturalist or PlantNet app to identify what's growing in a local hedgerow. Hawthorn, blackthorn and elder are the most common in Ireland.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Connects you to local nature",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "wild-ireland",
+    "date": "2026-04-09",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "ireland",
+    "wild"
+   ],
+   "id": "go-for-a-hedgerow-walk-and-identify-3-species"
+  },
+  {
+   "title": "Plant a native Irish hedgerow plant in your garden",
+   "desc": "Hawthorn, blackthorn or hazel are all cheap, fast-growing and excellent for wildlife. Even a single plant in a garden makes a difference for birds and insects.",
+   "level": "medium",
+   "points": 100,
+   "impact": "Long-term carbon store + habitat",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "wild-ireland",
+    "date": "2026-04-09",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "ireland",
+    "wild"
+   ],
+   "id": "plant-a-native-irish-hedgerow-plant-in-your-garden"
+  },
+  {
+   "title": "Take a 20-minute walk outside without your phone this week",
+   "desc": "Leave the podcast and headphones behind just once. Walk somewhere green if you can — a park, a canal path, a beach. Notice what you see, hear and smell.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Good for your mind",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "nature-mental-health",
+    "date": "2026-04-10",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "health",
+    "mental",
+    "nature",
+    "wellbeing"
+   ],
+   "id": "take-a-20-minute-walk-outside-without-your-phone-this-week"
+  },
+  {
+   "title": "Suggest a walking meeting at work this week",
+   "desc": "Replace one sit-down meeting with a walk-and-talk outside. It's better for creativity, better for wellbeing, and uses no energy.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Zero carbon + health benefit",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "nature-mental-health",
+    "date": "2026-04-10",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "health",
+    "mental",
+    "nature",
+    "wellbeing"
+   ],
+   "id": "suggest-a-walking-meeting-at-work-this-week"
+  },
+  {
+   "title": "If you're going to a festival this summer, plan to travel by public transport",
+   "desc": "Most major Irish festivals are served by shuttle buses or trains. Check the transport options now and book early — it's usually cheaper and takes the parking stress away.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Could save 20–50 kg CO₂ vs driving alone",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "music-festivals",
+    "date": "2026-04-13",
+    "category": "Culture & Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "culture",
+    "footprints",
+    "live",
+    "music"
+   ],
+   "id": "if-you-re-going-to-a-festival-this-summer-plan-to-travel-by-"
+  },
+  {
+   "title": "Pack a festival kit that cuts waste",
+   "desc": "Reusable cup, water bottle, solid shampoo bar, and a bag for sorting recycling. Most of this costs nothing if you already have it.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces single-use waste significantly",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "music-festivals",
+    "date": "2026-04-13",
+    "category": "Culture & Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "culture",
+    "footprints",
+    "live",
+    "music"
+   ],
+   "id": "pack-a-festival-kit-that-cuts-waste"
+  },
+  {
+   "title": "Take part in a Clean Coasts beach clean this month",
+   "desc": "Clean Coasts Ireland runs regular community beach cleans around the whole coast. Find one at cleancoasts.org — they provide bags and gloves.",
+   "level": "easy",
+   "points": 100,
+   "impact": "Direct environmental impact",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "dolphins-ocean",
+    "date": "2026-04-14",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ireland",
+    "ocean",
+    "water"
+   ],
+   "id": "take-part-in-a-clean-coasts-beach-clean-this-month"
+  },
+  {
+   "title": "Switch to a plastic-free shampoo or soap bar",
+   "desc": "Shampoo bars last 2–3x longer than bottled versions and avoid the plastic entirely. Several Irish brands now make them.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces plastic waste entering waterways",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "dolphins-ocean",
+    "date": "2026-04-14",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ireland",
+    "ocean",
+    "water"
+   ],
+   "id": "switch-to-a-plastic-free-shampoo-or-soap-bar"
+  },
+  {
+   "title": "Find one piece of art, music or writing about nature or climate this week",
+   "desc": "A poem, a documentary, an album, a painting — it doesn't matter. Notice how it makes you feel. Art reaches the parts that facts sometimes can't.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds emotional connection to the issue",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "art-climate",
+    "date": "2026-04-15",
+    "category": "Culture & Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "climate",
+    "culture"
+   ],
+   "id": "find-one-piece-of-art-music-or-writing-about-nature-or-clima"
+  },
+  {
+   "title": "Support an Irish environmental arts project",
+   "desc": "Look up Commonage, Phizzfest or similar Irish environmental arts programmes. Even sharing their work on social media helps build the audience for climate culture.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports cultural change",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "art-climate",
+    "date": "2026-04-15",
+    "category": "Culture & Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "climate",
+    "culture"
+   ],
+   "id": "support-an-irish-environmental-arts-project"
+  },
+  {
+   "title": "Have one climate conversation this week — without lecturing",
+   "desc": "Start by asking someone what they think about something local — the weather, food prices, a nature story in the news. Listen first. Share one surprising fact if it feels natural.",
+   "level": "easy",
+   "points": 100,
+   "impact": "Social multiplier effect",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-voice",
+    "date": "2026-04-16",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "finding",
+    "voice",
+    "your"
+   ],
+   "id": "have-one-climate-conversation-this-week-without-lecturing"
+  },
+  {
+   "title": "Share one thing you learned today on social media or WhatsApp",
+   "desc": "Even a short message or forwarding this quiz to one person breaks the spiral of silence. You don't need to be an expert — just curious.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Builds climate conversation culture",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-voice",
+    "date": "2026-04-16",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "finding",
+    "voice",
+    "your"
+   ],
+   "id": "share-one-thing-you-learned-today-on-social-media-or-whatsap"
+  },
+  {
+   "title": "Check if your home energy provider offers a green tariff",
+   "desc": "Many Irish energy suppliers now offer tariffs where your electricity is matched to renewable generation. Switching can take less than 10 minutes online.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports renewable energy demand",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "green-innovation",
+    "date": "2026-04-21",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "energy",
+    "green",
+    "innovation",
+    "tech"
+   ],
+   "id": "check-if-your-home-energy-provider-offers-a-green-tariff"
+  },
+  {
+   "title": "Calculate your carbon footprint today",
+   "desc": "Use a free online calculator — try myclimate.org or the WWF footprint calculator. It takes 5 minutes and shows where your biggest impact areas are.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Awareness step",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "earth-day",
+    "date": "2026-04-22",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "earth",
+    "world"
+   ],
+   "id": "calculate-your-carbon-footprint-today"
+  },
+  {
+   "title": "Commit to one meat-free day per week",
+   "desc": "Switching one day per week from meat to plant-based food is one of the highest-impact individual diet changes. Try it for April first.",
+   "level": "medium",
+   "points": 100,
+   "impact": "~0.5 kg CO₂ saved per day",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "earth-day",
+    "date": "2026-04-22",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "earth",
+    "world"
+   ],
+   "id": "commit-to-one-meat-free-day-per-week"
+  },
+  {
+   "title": "Talk to 3 people about climate action this week",
+   "desc": "Share what you learned today. Research shows social norms shift when people talk openly about behaviour change — and most people are more open than you'd expect.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Social multiplier effect",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "earth-day",
+    "date": "2026-04-22",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "earth",
+    "world"
+   ],
+   "id": "talk-to-3-people-about-climate-action-this-week"
+  },
+  {
+   "title": "Add one climate or nature book to your reading list",
+   "desc": "Try 'Braiding Sweetgrass' by Robin Wall Kimmerer, 'Feral' by George Monbiot, or 'How to Avoid a Climate Disaster' by Bill Gates. Your local library will likely have at least one.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds long-term understanding",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-books",
+    "date": "2026-04-23",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "planet",
+    "reading"
+   ],
+   "id": "add-one-climate-or-nature-book-to-your-reading-list"
+  },
+  {
+   "title": "Listen to one episode of a climate or nature podcast this week",
+   "desc": "Try 'How to Save a Planet', 'Outrage + Optimism', or 'The Irish Times Climate Podcast'. Even one episode can shift how you think about the issue.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Deepens climate knowledge",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-books",
+    "date": "2026-04-23",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "planet",
+    "reading"
+   ],
+   "id": "listen-to-one-episode-of-a-climate-or-nature-podcast-this-we"
+  },
+  {
+   "title": "Plant a tree — or fund one being planted",
+   "desc": "Native Irish trees like oak, birch, hazel or rowan. If you don't have a garden, organisations like Easy Treesie or Native Woodland Trust plant on your behalf.",
+   "level": "medium",
+   "points": 100,
+   "impact": "22+ kg CO₂ absorbed per year",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "trees-ireland",
+    "date": "2026-04-24",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "forests",
+    "ireland"
+   ],
+   "id": "plant-a-tree-or-fund-one-being-planted"
+  },
+  {
+   "title": "Choose wood products with FSC certification",
+   "desc": "The Forest Stewardship Council (FSC) label means timber came from responsibly managed forests. Look for it on paper, furniture and wood products — widely available in Irish shops.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports sustainable forestry",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "trees-ireland",
+    "date": "2026-04-24",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "forests",
+    "ireland"
+   ],
+   "id": "choose-wood-products-with-fsc-certification"
+  },
+  {
+   "title": "Repair something instead of replacing it this week",
+   "desc": "A torn bag, a broken button, a cracked phone case — look up a repair tutorial before buying a replacement. Repair Cafés operate in most Irish cities and are free to attend.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Extends product life, avoids manufacturing emissions",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "circular-design",
+    "date": "2026-04-27",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "design",
+    "recycling",
+    "waste"
+   ],
+   "id": "repair-something-instead-of-replacing-it-this-week"
+  },
+  {
+   "title": "Declutter one drawer or shelf and donate or sell what you don't use",
+   "desc": "Donating to charity shops, selling on Done Deal or giving away on Buy Nothing groups keeps items in circulation and out of landfill.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces demand for new production",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "circular-design",
+    "date": "2026-04-27",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "design",
+    "recycling",
+    "waste"
+   ],
+   "id": "declutter-one-drawer-or-shelf-and-donate-or-sell-what-you-do"
+  },
+  {
+   "title": "Suggest one green initiative at your workplace this week",
+   "desc": "It could be as simple as asking about switching to a green energy tariff, starting a composting scheme, or setting up a lunchtime walking group.",
+   "level": "medium",
+   "points": 100,
+   "impact": "Systemic workplace impact",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "work-wellbeing",
+    "date": "2026-04-28",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "wellbeing",
+    "work"
+   ],
+   "id": "suggest-one-green-initiative-at-your-workplace-this-week"
+  },
+  {
+   "title": "Swap one car commute for walking, cycling or public transport",
+   "desc": "Even one day per week makes a difference. Most Irish cities now have Bike to Work schemes and Leap card subsidies through employers.",
+   "level": "easy",
+   "points": 75,
+   "impact": "~2–5 kg CO₂ saved per commute",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "work-wellbeing",
+    "date": "2026-04-28",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "wellbeing",
+    "work"
+   ],
+   "id": "swap-one-car-commute-for-walking-cycling-or-public-transport"
+  },
+  {
+   "title": "Do a fridge audit before your next food shop",
+   "desc": "Before you go shopping this week, check what's already in your fridge and cupboards. Write a list based on what you actually need. Stick to it.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Could save €700/year and significant CO₂",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-waste",
+    "date": "2026-04-29",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "stop",
+    "waste",
+    "water"
+   ],
+   "id": "do-a-fridge-audit-before-your-next-food-shop"
+  },
+  {
+   "title": "Try one 'use it up' meal this week",
+   "desc": "Cook one meal entirely from what's already in the fridge and cupboards — no new shopping. It's often surprisingly good and saves money and waste.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Direct food waste reduction",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-waste",
+    "date": "2026-04-29",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "stop",
+    "waste",
+    "water"
+   ],
+   "id": "try-one-use-it-up-meal-this-week"
+  },
+  {
+   "title": "Download the Too Good To Go app",
+   "desc": "Too Good To Go lets you buy surplus food from local restaurants, cafés and supermarkets at a fraction of the price. Available in Dublin, Cork, Galway and many other Irish towns.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Rescues food from landfill",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-waste",
+    "date": "2026-04-29",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "stop",
+    "waste",
+    "water"
+   ],
+   "id": "download-the-too-good-to-go-app"
+  },
+  {
+   "title": "Create a quiet hour at home this evening — no screens, no background noise",
+   "desc": "Turn off the TV and music for one hour. Read, cook, chat or sit outside. Notice how your body responds to the quiet.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Good for your mental health",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "hidden-pollution",
+    "date": "2026-04-30",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "hidden",
+    "pollution",
+    "wellbeing"
+   ],
+   "id": "create-a-quiet-hour-at-home-this-evening-no-screens-no-backg"
+  },
+  {
+   "title": "Walk or cycle instead of driving for one short trip this week",
+   "desc": "Every car journey replaced by walking or cycling removes noise, reduces air pollution, cuts carbon and is good for your health.",
+   "level": "easy",
+   "points": 75,
+   "impact": "~1–3 kg CO₂ saved per trip",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "hidden-pollution",
+    "date": "2026-04-30",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "hidden",
+    "pollution",
+    "wellbeing"
+   ],
+   "id": "walk-or-cycle-instead-of-driving-for-one-short-trip-this-wee"
+  },
+  {
+   "title": "Check if your employer is signed up to the Bike to Work scheme",
+   "desc": "Visit biketowork.ie — it takes 5 minutes. The scheme saves you up to 52% on a new bike through salary sacrifice.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Awareness and access step",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "cycling-irish-cities",
+    "date": "2026-05-04",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "cities",
+    "climate",
+    "cycling",
+    "irish"
+   ],
+   "id": "check-if-your-employer-is-signed-up-to-the-bike-to-work-sche"
+  },
+  {
+   "title": "Try cycling or walking for one short trip this week instead of driving",
+   "desc": "Any trip under 3km is faster by bike in most Irish towns once you factor in parking. Give it one try this week.",
+   "level": "easy",
+   "points": 75,
+   "impact": "~1–3 kg CO₂ saved per trip",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "cycling-irish-cities",
+    "date": "2026-05-04",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "cities",
+    "climate",
+    "cycling",
+    "irish"
+   ],
+   "id": "try-cycling-or-walking-for-one-short-trip-this-week-instead-"
+  },
+  {
+   "title": "Check your home's BER rating",
+   "desc": "Visit seai.ie — it is free and shows where you lose most heat and energy. A poor BER means higher bills and higher emissions.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Awareness step — improving BER can cut emissions by up to 50%",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "air-we-breathe",
+    "date": "2026-05-05",
+    "category": "Clean Energy & Health"
+   },
+   "keywords": [
+    "breathe",
+    "clean",
+    "energy",
+    "health"
+   ],
+   "id": "check-your-home-s-ber-rating"
+  },
+  {
+   "title": "Cook one traditional Irish plant-based meal this week",
+   "desc": "Colcannon, vegetable soup, or oat porridge — simple, cheap and very low carbon. The traditional Irish diet was ahead of its time.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Plant-based meals save 1–3 kg CO₂ vs meat equivalent",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-climate-irish",
+    "date": "2026-05-06",
+    "category": "Food & Culture"
+   },
+   "keywords": [
+    "agus",
+    "culture",
+    "food"
+   ],
+   "id": "cook-one-traditional-irish-plant-based-meal-this-week"
+  },
+  {
+   "title": "Buy one Irish-grown vegetable this week instead of an imported one",
+   "desc": "Check the label — Irish-grown carrots, cabbage, leeks and potatoes are widely available in all supermarkets. Supporting local reduces food miles and keeps Irish farming land productive.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces food miles and supports Irish land use",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-climate-irish",
+    "date": "2026-05-06",
+    "category": "Food & Culture"
+   },
+   "keywords": [
+    "agus",
+    "culture",
+    "food"
+   ],
+   "id": "buy-one-irish-grown-vegetable-this-week-instead-of-an-import"
+  },
+  {
+   "title": "Plan one outdoor walk this weekend using the Trails Ireland app",
+   "desc": "The Trails Ireland app is free and lists thousands of walks across the country by location, distance and difficulty. Find one near you and go.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Zero carbon + significant wellbeing benefit",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "move-outside",
+    "date": "2026-05-07",
+    "category": "Wellbeing & Nature"
+   },
+   "keywords": [
+    "move",
+    "nature",
+    "outside",
+    "wellbeing"
+   ],
+   "id": "plan-one-outdoor-walk-this-weekend-using-the-trails-ireland-"
+  },
+  {
+   "title": "Swap one gym session for an outdoor run or walk this week",
+   "desc": "Outdoor exercise has been shown to have greater mental health benefits than the same exercise indoors — and it uses no energy.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Saves gym energy use + connects you to local nature",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "move-outside",
+    "date": "2026-05-07",
+    "category": "Wellbeing & Nature"
+   },
+   "keywords": [
+    "move",
+    "nature",
+    "outside",
+    "wellbeing"
+   ],
+   "id": "swap-one-gym-session-for-an-outdoor-run-or-walk-this-week"
+  },
+  {
+   "title": "Repair something this week instead of replacing it",
+   "desc": "A torn bag, a broken button, a cracked phone case — look up a repair tutorial on YouTube before buying a replacement. Repair Cafés operate in most Irish cities and are free. Find one at repaircafe.ie.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Extends product life and avoids manufacturing emissions",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "lessons-from-past",
+    "date": "2026-05-08",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "from",
+    "lessons",
+    "past"
+   ],
+   "id": "repair-something-this-week-instead-of-replacing-it"
+  },
+  {
+   "title": "Cook one meal entirely from what is already in your fridge and cupboards",
+   "desc": "Before your next shop, cook once using only what you already have. It is usually cheaper, wastes nothing and is often surprisingly good.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Direct food waste reduction — saves ~€700/year if done regularly",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "lessons-from-past",
+    "date": "2026-05-08",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "from",
+    "lessons",
+    "past"
+   ],
+   "id": "cook-one-meal-entirely-from-what-is-already-in-your-fridge-a"
+  },
+  {
+   "title": "Download the BirdWatch Ireland app and log one bird sighting this week",
+   "desc": "The app is free and lets you identify and record birds. Every sighting contributes to national population monitoring data used by scientists and policymakers.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports citizen science and biodiversity monitoring",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "birds-on-move",
+    "date": "2026-05-11",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "birds",
+    "move"
+   ],
+   "id": "download-the-birdwatch-ireland-app-and-log-one-bird-sighting"
+  },
+  {
+   "title": "Let a patch of your garden or outdoor space grow a little wilder this month",
+   "desc": "Stop cutting one corner of the lawn, or leave a strip along a fence uncut. Even small wild patches support the insects that birds — including migrants — depend on for food.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports local insect and bird populations",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "birds-on-move",
+    "date": "2026-05-11",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "birds",
+    "move"
+   ],
+   "id": "let-a-patch-of-your-garden-or-outdoor-space-grow-a-little-wi"
+  },
+  {
+   "title": "Ask your GP about green prescribing or local nature-based wellbeing programmes",
+   "desc": "Look up local programmes at mentalhealthireland.ie or greencareireland.ie. Nature-based activities are increasingly recognised as effective treatment — not just lifestyle extras.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Nature access is a public health issue",
+   "type": "nature",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "green-health",
+    "date": "2026-05-12",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "green",
+    "health"
+   ],
+   "id": "ask-your-gp-about-green-prescribing-or-local-nature-based-we"
+  },
+  {
+   "title": "Walk or cycle to your next GP or pharmacy visit if it is under 3 km",
+   "desc": "Short car trips under 3 km produce disproportionately high emissions per km because the engine never warms up fully. Walking or cycling is better for you and the air around the clinic.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Short trips saved = disproportionate emissions reduction",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "green-health",
+    "date": "2026-05-12",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "green",
+    "health"
+   ],
+   "id": "walk-or-cycle-to-your-next-gp-or-pharmacy-visit-if-it-is-und"
+  },
+  {
+   "title": "Swap one product in your weekly shop for a Fairtrade alternative",
+   "desc": "Coffee, tea, chocolate or bananas are the easiest starting points — all widely available in Irish supermarkets with the Fairtrade mark. Usually the same price or very close.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports sustainable farming in climate-vulnerable regions",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "fairtrade-climate",
+    "date": "2026-05-13",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "climate",
+    "fair",
+    "food",
+    "trade",
+    "water"
+   ],
+   "id": "swap-one-product-in-your-weekly-shop-for-a-fairtrade-alterna"
+  },
+  {
+   "title": "Check if your workplace uses Fairtrade tea and coffee",
+   "desc": "If not, suggest it — it is usually the same price and some suppliers provide free point-of-sale materials. One workplace switch multiplies the effect across many people.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Workplace switches multiply individual impact",
+   "type": "food",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "fairtrade-climate",
+    "date": "2026-05-13",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "climate",
+    "fair",
+    "food",
+    "trade",
+    "water"
+   ],
+   "id": "check-if-your-workplace-uses-fairtrade-tea-and-coffee"
+  },
+  {
+   "title": "Try one meal this week built around Irish-grown vegetables or legumes instead of meat",
+   "desc": "Legumes like lentils and beans fix nitrogen naturally, reducing the need for chemical fertiliser. They are cheap, filling and widely available. A simple dahl or bean stew works perfectly.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Plant-based meals save 2–5 kg CO₂ vs beef equivalent",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irish-farming-land",
+    "date": "2026-05-14",
+    "category": "Biodiversity & Food"
+   },
+   "keywords": [
+    "biodiversity",
+    "farming",
+    "food",
+    "irish",
+    "land"
+   ],
+   "id": "try-one-meal-this-week-built-around-irish-grown-vegetables-o"
+  },
+  {
+   "title": "Leave a corner of your outdoor space uncut this month",
+   "desc": "If you have a garden, leave one corner uncut until the end of May. Ground-nesting insects and small mammals use rough grass — and whatever flowers appear will support pollinators.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports local insect and bird populations",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irish-farming-land",
+    "date": "2026-05-14",
+    "category": "Biodiversity & Food"
+   },
+   "keywords": [
+    "biodiversity",
+    "farming",
+    "food",
+    "irish",
+    "land"
+   ],
+   "id": "leave-a-corner-of-your-outdoor-space-uncut-this-month"
+  },
+  {
+   "title": "Visit one of Ireland's national parks or nature reserves this weekend",
+   "desc": "Ireland has 6 national parks — Killarney, Glenveagh, Connemara, Ballycroy, The Burren and Wicklow Mountains. All are free to enter. Find events near you at biodiversityweek.ie.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Zero carbon + builds connection to nature",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "family-planet",
+    "date": "2026-05-15",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "family",
+    "planet",
+    "sustainability"
+   ],
+   "id": "visit-one-of-ireland-s-national-parks-or-nature-reserves-thi"
+  },
+  {
+   "title": "Calculate your household carbon footprint together",
+   "desc": "Use the free calculator at myclimate.org — it takes about 10 minutes as a family and shows clearly where your biggest impact areas are. Knowing is the first step.",
+   "level": "medium",
+   "points": 100,
+   "impact": "Identifies your biggest reduction opportunities",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "family-planet",
+    "date": "2026-05-15",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "family",
+    "planet",
+    "sustainability"
+   ],
+   "id": "calculate-your-household-carbon-footprint-together"
+  },
+  {
+   "title": "Download the free iNaturalist app and photograph one plant, bird or insect this week",
+   "desc": "iNaturalist identifies species from photos automatically and submits your record to national biodiversity databases. Every observation matters — especially outside the main cities.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Contributes to national biodiversity monitoring",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "know-your-nature",
+    "date": "2026-05-18",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "know",
+    "nature",
+    "your"
+   ],
+   "id": "download-the-free-inaturalist-app-and-photograph-one-plant-b"
+  },
+  {
+   "title": "Check what biodiversity events are happening near you this week",
+   "desc": "Visit biodiversityweek.ie — events range from rockpool tours to moth nights to wildflower walks. Most are free and run by local naturalists, conservation groups and councils.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds knowledge and local connection to nature",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "know-your-nature",
+    "date": "2026-05-18",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "know",
+    "nature",
+    "your"
+   ],
+   "id": "check-what-biodiversity-events-are-happening-near-you-this-w"
+  },
+  {
+   "title": "Try oat milk in your tea or coffee once this week",
+   "desc": "Irish brand Flahavan's now produces oat milk made from Irish-grown oats. One switch per day over a year saves roughly 50 to 100 kg CO₂. Most cafés and supermarkets stock it.",
+   "level": "easy",
+   "points": 50,
+   "impact": "~50–100 kg CO₂ saved per year if switched daily",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "milk-land-wildlife",
+    "date": "2026-05-19",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "land",
+    "milk",
+    "water",
+    "wildlife"
+   ],
+   "id": "try-oat-milk-in-your-tea-or-coffee-once-this-week"
+  },
+  {
+   "title": "If you buy dairy, look for the Origin Green or organic label",
+   "desc": "Both indicate higher environmental standards. Organic dairy farms support significantly more biodiversity than conventional farms — more wildflowers, more insects, more birds.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Organic dairy supports significantly higher on-farm biodiversity",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "milk-land-wildlife",
+    "date": "2026-05-19",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "land",
+    "milk",
+    "water",
+    "wildlife"
+   ],
+   "id": "if-you-buy-dairy-look-for-the-origin-green-or-organic-label"
+  },
+  {
+   "title": "Plant one bee-friendly plant this week",
+   "desc": "Lavender, borage, phacelia or any native wildflower — all available in Irish garden centres from May. A single lavender plant in flower can attract dozens of bee species. Even a small pot on a windowsill counts.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports local pollinator populations directly",
+   "type": "nature",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "save-our-bees",
+    "date": "2026-05-20",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "bees",
+    "biodiversity",
+    "save"
+   ],
+   "id": "plant-one-bee-friendly-plant-this-week"
+  },
+  {
+   "title": "Stop cutting one patch of grass for the rest of May",
+   "desc": "Let whatever grows there flower. Dandelions, clover and daisies are among the most important food sources for bees — and they grow themselves. No effort, big impact.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Provides immediate food source for wild bees",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "save-our-bees",
+    "date": "2026-05-20",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "bees",
+    "biodiversity",
+    "save"
+   ],
+   "id": "stop-cutting-one-patch-of-grass-for-the-rest-of-may"
+  },
+  {
+   "title": "Sign your organisation or community group up to the All-Ireland Pollinator Plan",
+   "desc": "It is free and takes 10 minutes at pollinators.ie. Every signed-up organisation commits to at least one action for pollinators — from changing mowing schedules to planting wildflowers.",
+   "level": "medium",
+   "points": 100,
+   "impact": "Systemic change at organisation level",
+   "type": "nature",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "save-our-bees",
+    "date": "2026-05-20",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "bees",
+    "biodiversity",
+    "save"
+   ],
+   "id": "sign-your-organisation-or-community-group-up-to-the-all-irel"
+  },
+  {
+   "title": "Cook one meal this week using a vegetable or grain you have never tried before",
+   "desc": "Try pearl barley, spelt, or a heritage vegetable from a local market or farm shop. Eating more variety directly supports demand for agricultural biodiversity.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports demand for agricultural diversity",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-diversity-nature",
+    "date": "2026-05-21",
+    "category": "Biodiversity & Food"
+   },
+   "keywords": [
+    "biodiversity",
+    "diversity",
+    "food",
+    "nature"
+   ],
+   "id": "cook-one-meal-this-week-using-a-vegetable-or-grain-you-have-"
+  },
+  {
+   "title": "Visit the Irish Seed Savers Association online",
+   "desc": "Visit irishseedsavers.ie — you can order heritage Irish seeds by post and grow them at home. Every garden growing heritage varieties helps preserve Ireland's food biodiversity.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Preserves genetic diversity in Irish food crops",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-diversity-nature",
+    "date": "2026-05-21",
+    "category": "Biodiversity & Food"
+   },
+   "keywords": [
+    "biodiversity",
+    "diversity",
+    "food",
+    "nature"
+   ],
+   "id": "visit-the-irish-seed-savers-association-online"
+  },
+  {
+   "title": "Share one thing you learned this week about Irish biodiversity with someone",
+   "desc": "A friend, a colleague, or a post on social media. Talking about biodiversity is one of the most effective ways to build the social momentum for change. Most people care — they just do not know the facts.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Social multiplier effect — builds climate conversation culture",
+   "type": "nature",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-nature",
+    "date": "2026-05-22",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "ireland",
+    "nature",
+    "stand",
+    "where"
+   ],
+   "id": "share-one-thing-you-learned-this-week-about-irish-biodiversi"
+  },
+  {
+   "title": "Contact your local council and ask what they are doing for the All-Ireland Pollinator Plan",
+   "desc": "Every council in Ireland has signed up to the Pollinator Plan. Ask what actions they are taking in your area — changing mowing schedules, planting wildflowers, or creating pollinator corridors. Your question matters.",
+   "level": "medium",
+   "points": 100,
+   "impact": "Local action is where biodiversity policy becomes real",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-nature",
+    "date": "2026-05-22",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "ireland",
+    "nature",
+    "stand",
+    "where"
+   ],
+   "id": "contact-your-local-council-and-ask-what-they-are-doing-for-t"
+  },
+  {
+   "title": "Attend or follow Africa Day events in Dublin or your local area",
+   "desc": "Many Africa Day events include climate and environment themes. Check africaday.ie for events near you this weekend. Understanding the human face of climate change is the first step to caring about it.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds climate justice awareness",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-justice-africa",
+    "date": "2026-05-25",
+    "category": "Climate Justice"
+   },
+   "keywords": [
+    "climate",
+    "justice",
+    "pays",
+    "price"
+   ],
+   "id": "attend-or-follow-africa-day-events-in-dublin-or-your-local-a"
+  },
+  {
+   "title": "Choose Fairtrade or direct trade coffee, tea or chocolate this week",
+   "desc": "Check where your daily coffee comes from. Fairtrade and direct trade products support farmers on the frontline of climate change — and are widely available in Irish supermarkets and cafés.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports climate-resilient farming in vulnerable regions",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-justice-africa",
+    "date": "2026-05-25",
+    "category": "Climate Justice"
+   },
+   "keywords": [
+    "climate",
+    "justice",
+    "pays",
+    "price"
+   ],
+   "id": "choose-fairtrade-or-direct-trade-coffee-tea-or-chocolate-thi"
+  },
+  {
+   "title": "Next time you are near a river or lake, stop and watch for a few minutes",
+   "desc": "Otters are most active at dawn and dusk — and are more common than most people realise, even in urban rivers. Knowing what lives in your local waterway is the first step to caring about it.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds connection to local nature",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irish-rivers-otters",
+    "date": "2026-05-26",
+    "category": "Biodiversity & Water"
+   },
+   "keywords": [
+    "biodiversity",
+    "irish",
+    "otters",
+    "rivers",
+    "tell",
+    "water",
+    "what"
+   ],
+   "id": "next-time-you-are-near-a-river-or-lake-stop-and-watch-for-a-"
+  },
+  {
+   "title": "Never pour cooking oil, medicines or cleaning products down the drain",
+   "desc": "They travel directly into waterways and affect everything living there. Cooking oil can be left to cool and disposed of in the bin. Medicines can be returned to any pharmacy in Ireland.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Prevents direct pollution of local waterways",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irish-rivers-otters",
+    "date": "2026-05-26",
+    "category": "Biodiversity & Water"
+   },
+   "keywords": [
+    "biodiversity",
+    "irish",
+    "otters",
+    "rivers",
+    "tell",
+    "water",
+    "what"
+   ],
+   "id": "never-pour-cooking-oil-medicines-or-cleaning-products-down-t"
+  },
+  {
+   "title": "Do a 10-minute litter pick on your nearest beach, riverbank or canal path",
+   "desc": "Bring a bag and pick up what you find. Clean Coasts Ireland runs regular organised beach cleans — find one near you at cleancoasts.org. They provide bags and gloves.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Direct environmental impact — prevents marine pollution",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "turtles-plastic-irish-waters",
+    "date": "2026-05-27",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "irish",
+    "ocean",
+    "plastic",
+    "turtles",
+    "water",
+    "waters"
+   ],
+   "id": "do-a-10-minute-litter-pick-on-your-nearest-beach-riverbank-o"
+  },
+  {
+   "title": "Switch from plastic bags to reusable bags permanently if you have not already",
+   "desc": "Check your freezer bags, sandwich bags and cling film too — all have reusable or compostable alternatives now available in Irish supermarkets. Single-use plastic bags are among the most common items in Irish marine surveys.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Reduces one of the most harmful forms of marine plastic",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "turtles-plastic-irish-waters",
+    "date": "2026-05-27",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "irish",
+    "ocean",
+    "plastic",
+    "turtles",
+    "water",
+    "waters"
+   ],
+   "id": "switch-from-plastic-bags-to-reusable-bags-permanently-if-you"
+  },
+  {
+   "title": "Read about the Irish Supreme Court climate case",
+   "desc": "Visit friendsoftheirishenvironment.org — it shows what citizens can achieve when they hold governments accountable. Understanding the case takes about 5 minutes and changes how you see climate policy.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Climate literacy — understanding accountability",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-human-rights",
+    "date": "2026-05-28",
+    "category": "Climate Justice"
+   },
+   "keywords": [
+    "climate",
+    "human",
+    "justice",
+    "rights"
+   ],
+   "id": "read-about-the-irish-supreme-court-climate-case"
+  },
+  {
+   "title": "Write to or email your local TD about one specific climate or nature issue",
+   "desc": "You do not need to be an expert — just a constituent. Find your TD at oireachtas.ie and write one short, specific, polite message about something you care about. TDs respond to constituent contact.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Civic engagement — direct political accountability",
+   "type": "nature",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-human-rights",
+    "date": "2026-05-28",
+    "category": "Climate Justice"
+   },
+   "keywords": [
+    "climate",
+    "human",
+    "justice",
+    "rights"
+   ],
+   "id": "write-to-or-email-your-local-td-about-one-specific-climate-o"
+  },
+  {
+   "title": "Read Trócaire's annual report on climate and conflict",
+   "desc": "Visit trocaire.org — it shows the real human stories behind the data on climate displacement and conflict. Ireland's overseas aid work is directly connected to climate resilience in the most vulnerable regions.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds understanding of climate justice and global impact",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-conflict-security",
+    "date": "2026-05-29",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "conflict",
+    "security"
+   ],
+   "id": "read-tr-caire-s-annual-report-on-climate-and-conflict"
+  },
+  {
+   "title": "Next time you see a conflict or displacement story in the news, look up whether climate is a contributing factor",
+   "desc": "Use reliefweb.int or ceobs.org to find the environmental context behind global crises. It usually is a factor — and knowing that changes how you understand the news.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Awareness — connecting climate to global events",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-conflict-security",
+    "date": "2026-05-29",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "conflict",
+    "security"
+   ],
+   "id": "next-time-you-see-a-conflict-or-displacement-story-in-the-ne"
+  },
+  {
+   "title": "Check the sustainability label on seafood before you buy it this week",
+   "desc": "Look for the Marine Stewardship Council (MSC) label on fish. It is the most widely recognised standard for sustainably caught seafood and is available in most Irish supermarkets.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports healthier ocean ecosystems",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "coral-reefs-ocean-signals",
+    "date": "2026-06-01",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ocean",
+    "signalling",
+    "water"
+   ],
+   "id": "check-the-sustainability-label-on-seafood-before-you-buy-it-"
+  },
+  {
+   "title": "Reduce one plastic item you use this week",
+   "desc": "Plastic pollution is one of the top threats to marine ecosystems. Refuse a plastic bag, straw, or coffee cup lid this week and replace it with a reusable alternative.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Reduces plastic entering Irish waterways and the ocean",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "coral-reefs-ocean-signals",
+    "date": "2026-06-01",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ocean",
+    "signalling",
+    "water"
+   ],
+   "id": "reduce-one-plastic-item-you-use-this-week"
+  },
+  {
+   "title": "Check if your electricity supplier offers a green tariff",
+   "desc": "Many Irish energy suppliers now offer tariffs where your electricity is matched to renewable generation. Switching can take less than 10 minutes online and often costs the same or less.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports renewable energy demand",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ireland-energy-renewables",
+    "date": "2026-06-02",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "changing",
+    "energy",
+    "ireland",
+    "tech"
+   ],
+   "id": "check-if-your-electricity-supplier-offers-a-green-tariff"
+  },
+  {
+   "title": "Look into the SEAI home upgrade grant scheme",
+   "desc": "Grants of up to EUR 1,800 for solar panels and up to EUR 12,500 for heat pumps are available in 2026. Even reading through the options at seai.ie is a useful first step.",
+   "level": "medium",
+   "points": 100,
+   "impact": "Home upgrades can cut heating emissions by up to 70%",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ireland-energy-renewables",
+    "date": "2026-06-02",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "changing",
+    "energy",
+    "ireland",
+    "tech"
+   ],
+   "id": "look-into-the-seai-home-upgrade-grant-scheme"
+  },
+  {
+   "title": "Try cycling or walking for one journey this week you would usually make by car",
+   "desc": "Any trip under 3km is often faster by bike once you factor in parking. Give it one try this week and notice how you feel.",
+   "level": "easy",
+   "points": 75,
+   "impact": "~1-3 kg CO2 saved per trip",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "cycling-climate-solution",
+    "date": "2026-06-03",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "bike",
+    "climate",
+    "humble"
+   ],
+   "id": "try-cycling-or-walking-for-one-journey-this-week-you-would-u"
+  },
+  {
+   "title": "Turn your heating thermostat down by one degree",
+   "desc": "Reducing your thermostat by just one degree can cut your heating costs by around 10% and reduce your home's carbon emissions noticeably over a full year.",
+   "level": "easy",
+   "points": 50,
+   "impact": "~300 kg CO2 saved per year",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "heat-energy-transition",
+    "date": "2026-06-04",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "energy",
+    "forgotten",
+    "heat",
+    "problem",
+    "tech"
+   ],
+   "id": "turn-your-heating-thermostat-down-by-one-degree"
+  },
+  {
+   "title": "Register your action on the UNEP global map",
+   "desc": "Visit worldenvironmentday.global -- it takes two minutes to register a pledge and join a global movement of people acting on climate.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Awareness and commitment step",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "world-environment-day-2026",
+    "date": "2026-06-05",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "environment",
+    "world"
+   ],
+   "id": "register-your-action-on-the-unep-global-map"
+  },
+  {
+   "title": "Share one climate fact with someone today using #NowForClimate",
+   "desc": "Pick the most surprising thing you learned from today's challenge and share it with one person, in conversation or on social media. Breaking the spiral of silence on climate is one of the most powerful things you can do.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Social multiplier effect",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "world-environment-day-2026",
+    "date": "2026-06-05",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "environment",
+    "world"
+   ],
+   "id": "share-one-climate-fact-with-someone-today-using-nowforclimat"
+  },
+  {
+   "title": "Find a Great Big Green Week event near you",
+   "desc": "Visit greatbiggreenweek.com to find a local event this week -- from beach cleans to sustainability talks. Community action on climate and nature is happening all around Ireland right now.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Direct environmental impact",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "world-oceans-day-plastic",
+    "date": "2026-06-08",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "needs",
+    "ocean",
+    "water"
+   ],
+   "id": "find-a-great-big-green-week-event-near-you"
+  },
+  {
+   "title": "Use the Re-Turn app to return your bottles and cans this week",
+   "desc": "Find your nearest return point and bring your plastic bottles and aluminium cans. You get your deposit back, and the materials stay in the circular economy and out of the ocean.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces plastic entering the environment",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "world-oceans-day-plastic",
+    "date": "2026-06-08",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "needs",
+    "ocean",
+    "water"
+   ],
+   "id": "use-the-re-turn-app-to-return-your-bottles-and-cans-this-wee"
+  },
+  {
+   "title": "Suggest a walk or outdoor lunch to a male colleague, friend, or family member this week",
+   "desc": "You do not need to make it about mental health -- just the walk. Getting outside together is one of the simplest and most effective things two people can do for each other.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Zero carbon and significant wellbeing benefit",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "nature-mens-wellbeing",
+    "date": "2026-06-09",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "good",
+    "nature",
+    "wellbeing"
+   ],
+   "id": "suggest-a-walk-or-outdoor-lunch-to-a-male-colleague-friend-o"
+  },
+  {
+   "title": "Visit a green space near you that you have never been to before",
+   "desc": "Most Irish towns and cities have parks, canal walks, or nature areas within easy reach. Find one you have never visited and go this week.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Builds connection to local nature",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "nature-mens-wellbeing",
+    "date": "2026-06-09",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "good",
+    "nature",
+    "wellbeing"
+   ],
+   "id": "visit-a-green-space-near-you-that-you-have-never-been-to-bef"
+  },
+  {
+   "title": "Find a Great Big Green Week event and sign up",
+   "desc": "Visit greatbiggreenweek.com -- events range from beach cleans to sustainability workshops and community tree planting. Most are free.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Direct community climate action",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "community-climate-action",
+    "date": "2026-06-10",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "community",
+    "works"
+   ],
+   "id": "find-a-great-big-green-week-event-and-sign-up"
+  },
+  {
+   "title": "Contact your local authority and ask what community climate support is available",
+   "desc": "Most local councils in Ireland now have a climate action officer and community grants. A simple email or phone call can open up support you did not know existed.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds local climate action network",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "community-climate-action",
+    "date": "2026-06-10",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "community",
+    "works"
+   ],
+   "id": "contact-your-local-authority-and-ask-what-community-climate-"
+  },
+  {
+   "title": "Plan a visit to one of Ireland's six national parks this summer",
+   "desc": "Killarney, Glenveagh, Connemara, Ballycroy, Wicklow Mountains, and the Burren. All are free to enter. Pick the one closest to you and put a date in the diary.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Zero carbon and significant wellbeing benefit",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "green-spaces-health",
+    "date": "2026-06-11",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "getting",
+    "medicine",
+    "outside",
+    "wellbeing"
+   ],
+   "id": "plan-a-visit-to-one-of-ireland-s-six-national-parks-this-sum"
+  },
+  {
+   "title": "Look up social prescribing services in your local area through the HSE",
+   "desc": "If you or someone you know is struggling with stress or low mood, nature-based activities are increasingly available through GPs and community health networks. Ask about it.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Nature access is a public health issue",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "green-spaces-health",
+    "date": "2026-06-11",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "getting",
+    "medicine",
+    "outside",
+    "wellbeing"
+   ],
+   "id": "look-up-social-prescribing-services-in-your-local-area-throu"
+  },
+  {
+   "title": "Share one thing you did or learned during Great Big Green Week",
+   "desc": "Tell a friend, post on social media, or bring it up at work. Talking openly about what you are doing on sustainability is one of the most effective ways to normalise it for others.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Social multiplier effect",
+   "type": "food",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "collective-action-works",
+    "date": "2026-06-12",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "actions",
+    "climate",
+    "really",
+    "small"
+   ],
+   "id": "share-one-thing-you-did-or-learned-during-great-big-green-we"
+  },
+  {
+   "title": "Sign up to the Clean Coasts network",
+   "desc": "Clean Coasts Ireland connects thousands of volunteers around Ireland's coastline. Signing up takes two minutes and keeps you connected to marine action all year round.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports ongoing marine litter action",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "collective-action-works",
+    "date": "2026-06-12",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "actions",
+    "climate",
+    "really",
+    "small"
+   ],
+   "id": "sign-up-to-the-clean-coasts-network"
+  },
+  {
+   "title": "Use the SEAI solar calculator to estimate savings at your address",
+   "desc": "The free calculator at seai.ie estimates generation, savings, and payback time for any Irish address. It takes about five minutes.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Awareness and planning step",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "solar-ireland",
+    "date": "2026-06-15",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "energy",
+    "ireland",
+    "over",
+    "shining",
+    "tech"
+   ],
+   "id": "use-the-seai-solar-calculator-to-estimate-savings-at-your-ad"
+  },
+  {
+   "title": "Refuse a plastic straw or lid the next time you buy a drink",
+   "desc": "Most cafes and takeaways will happily skip the straw or plastic lid if you ask. It takes one second and removes one piece of plastic from circulation.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces single-use plastic entering waterways",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "sea-turtles-plastic",
+    "date": "2026-06-16",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ocean",
+    "plastic",
+    "turtles",
+    "water"
+   ],
+   "id": "refuse-a-plastic-straw-or-lid-the-next-time-you-buy-a-drink"
+  },
+  {
+   "title": "Report any sea turtle sighting off the Irish coast",
+   "desc": "If you spot a sea turtle off the Irish coast, report it to the Irish Whale and Dolphin Group at iwdg.ie. Every sighting contributes to national marine monitoring.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports citizen science and marine conservation",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "sea-turtles-plastic",
+    "date": "2026-06-16",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ocean",
+    "plastic",
+    "turtles",
+    "water"
+   ],
+   "id": "report-any-sea-turtle-sighting-off-the-irish-coast"
+  },
+  {
+   "title": "Switch to peat-free compost this year",
+   "desc": "Peat-free compost is now widely available in Irish garden centres and supermarkets. It performs just as well and avoids contributing to peatland destruction.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports peatland protection",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "peatlands-soil-ireland",
+    "date": "2026-06-17",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "dirt",
+    "everything",
+    "soil"
+   ],
+   "id": "switch-to-peat-free-compost-this-year"
+  },
+  {
+   "title": "Support the Irish Peatland Conservation Council",
+   "desc": "Visit ipcc.ie to learn about bog restoration in Ireland and how to get involved. You can adopt a bog, join a guided walk, or donate to restoration work.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Peatland restoration stores and sequesters carbon",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "peatlands-soil-ireland",
+    "date": "2026-06-17",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "dirt",
+    "everything",
+    "soil"
+   ],
+   "id": "support-the-irish-peatland-conservation-council"
+  },
+  {
+   "title": "Check if your electricity supplier is sourcing wind power",
+   "desc": "Look for a green tariff if your current supplier is not using renewable sources. Switching takes about 10 minutes and supports demand for wind energy.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports renewable energy demand",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "wind-energy-ireland",
+    "date": "2026-06-18",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "asset",
+    "energy",
+    "greatest",
+    "ireland",
+    "tech",
+    "wind"
+   ],
+   "id": "check-if-your-electricity-supplier-is-sourcing-wind-power"
+  },
+  {
+   "title": "Write to your local TD about offshore wind planning in your area",
+   "desc": "Offshore wind projects are being delayed by planning and grid connection issues. A short, polite message to your TD asking about local progress takes five minutes and makes a difference.",
+   "level": "medium",
+   "points": 100,
+   "impact": "Civic engagement on clean energy",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "wind-energy-ireland",
+    "date": "2026-06-18",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "asset",
+    "energy",
+    "greatest",
+    "ireland",
+    "tech",
+    "wind"
+   ],
+   "id": "write-to-your-local-td-about-offshore-wind-planning-in-your-"
+  },
+  {
+   "title": "Check your fridge before your next food shop and plan meals around what is already there",
+   "desc": "Before you go shopping this week, open your fridge and write a list based only on what you actually need. Stick to it. It takes five minutes and saves money.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Could save EUR 700 and significant CO2 per year",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-waste-summer",
+    "date": "2026-06-19",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "summer",
+    "waste",
+    "water"
+   ],
+   "id": "check-your-fridge-before-your-next-food-shop-and-plan-meals-"
+  },
+  {
+   "title": "Freeze bread, meat, or leftovers before they go off",
+   "desc": "Most foods can be frozen before they spoil. Bread, meat, cheese, and cooked leftovers all freeze well. Freeze today rather than bin tomorrow.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Direct food waste reduction",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-waste-summer",
+    "date": "2026-06-19",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "summer",
+    "waste",
+    "water"
+   ],
+   "id": "freeze-bread-meat-or-leftovers-before-they-go-off"
+  },
+  {
+   "title": "Plan a visit to Killarney National Park or Glengarriff Woods",
+   "desc": "Both are free to enter and contain Ireland's finest surviving rainforest. Bring waterproofs and look for the layers of moss, lichen, and fern that cover every surface.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds connection to Ireland's rarest habitat",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ireland-rainforest",
+    "date": "2026-06-22",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "ireland",
+    "rainforest"
+   ],
+   "id": "plan-a-visit-to-killarney-national-park-or-glengarriff-woods"
+  },
+  {
+   "title": "Support the Wild Atlantic Rainforest Restoration Project",
+   "desc": "Visit hometree.ie to learn about rainforest restoration in Ireland and how to contribute. Every native tree planted is a step toward restoring this ancient landscape.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Native woodland restoration stores carbon and supports biodiversity",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ireland-rainforest",
+    "date": "2026-06-22",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "ireland",
+    "rainforest"
+   ],
+   "id": "support-the-wild-atlantic-rainforest-restoration-project"
+  },
+  {
+   "title": "Use the SEAI solar calculator to estimate what a system could generate at your address",
+   "desc": "The free tool at seai.ie takes about five minutes and gives you a personalised estimate of generation, savings, and grant eligibility.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Planning step toward ~1 tonne CO2 saving per year",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "solar-rooftop-homes",
+    "date": "2026-06-23",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "doing",
+    "energy",
+    "nothing",
+    "roof",
+    "tech",
+    "your"
+   ],
+   "id": "use-the-seai-solar-calculator-to-estimate-what-a-system-coul"
+  },
+  {
+   "title": "Look into a community energy project if solar is not right for your home",
+   "desc": "Not every home is suitable for rooftop solar. Community energy projects allow groups to share the benefits of renewables without individual rooftop installation. Visit communitypower.ie.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports renewable energy in your community",
+   "type": "energy",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "solar-rooftop-homes",
+    "date": "2026-06-23",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "doing",
+    "energy",
+    "nothing",
+    "roof",
+    "tech",
+    "your"
+   ],
+   "id": "look-into-a-community-energy-project-if-solar-is-not-right-f"
+  },
+  {
+   "title": "Check if there is a community energy project in your area",
+   "desc": "Visit communitypower.ie to find active projects near you or explore how to start one. Community groups, GAA clubs, and housing estates have all successfully launched projects.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Community renewables displace fossil fuel generation",
+   "type": "energy",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "community-energy",
+    "date": "2026-06-24",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "each",
+    "energy",
+    "neighbours",
+    "other",
+    "powering",
+    "tech"
+   ],
+   "id": "check-if-there-is-a-community-energy-project-in-your-area"
+  },
+  {
+   "title": "Share this challenge with a neighbour and start a conversation about community energy",
+   "desc": "Most community energy projects started with one person asking one neighbour a question. You do not need technical expertise -- just curiosity and a willingness to start.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Social catalyst for community action",
+   "type": "energy",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "community-energy",
+    "date": "2026-06-24",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "each",
+    "energy",
+    "neighbours",
+    "other",
+    "powering",
+    "tech"
+   ],
+   "id": "share-this-challenge-with-a-neighbour-and-start-a-conversati"
+  },
+  {
+   "title": "Try using public transport or a bicycle for one car journey this week",
+   "desc": "The most sustainable vehicle is the one you do not use. Even replacing one car journey per week with public transport or cycling adds up to a significant annual saving.",
+   "level": "easy",
+   "points": 50,
+   "impact": "~1-5 kg CO2 saved per trip",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "electric-vehicles-ireland",
+    "date": "2026-06-25",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "electric",
+    "progress",
+    "reality",
+    "vehicles"
+   ],
+   "id": "try-using-public-transport-or-a-bicycle-for-one-car-journey-"
+  },
+  {
+   "title": "Write down one thing you have changed or learned about sustainability in the first half of 2026",
+   "desc": "Even a single note in your phone counts. Reflecting on what you have done so far makes it more likely you will keep going. Progress, not perfection.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reflection builds long-term behaviour change",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "mid-year-check-in",
+    "date": "2026-06-26",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "check",
+    "climate",
+    "year",
+    "your"
+   ],
+   "id": "write-down-one-thing-you-have-changed-or-learned-about-susta"
+  },
+  {
+   "title": "Sign up for Plastic Free July starting next week",
+   "desc": "Visit plasticfreejuly.org and choose your level of challenge for July. The campaign has over 100 million participants and makes it much easier to cut single-use plastic when you are doing it alongside millions of others.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Reduces single-use plastic consumption throughout July",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "mid-year-check-in",
+    "date": "2026-06-26",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "check",
+    "climate",
+    "year",
+    "your"
+   ],
+   "id": "sign-up-for-plastic-free-july-starting-next-week"
+  },
+  {
+   "title": "Sign up for the official Plastic Free July challenge",
+   "desc": "Visit plasticfreejuly.org -- it is free, takes one minute, and connects you to over 100 million people doing the same thing. Choose your level: one item, the top four, or all single-use plastic.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Commits you to a month of reduced plastic use",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-free-july-starts",
+    "date": "2026-07-01",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "free",
+    "july",
+    "plastic",
+    "recycling",
+    "starts",
+    "today",
+    "waste"
+   ],
+   "id": "sign-up-for-the-official-plastic-free-july-challenge"
+  },
+  {
+   "title": "Tell one other person about Plastic Free July today",
+   "desc": "Behaviour change is easier when you do it with someone else. Tell a friend, colleague, or family member and invite them to join you.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Social multiplier effect",
+   "type": "circularity",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-free-july-starts",
+    "date": "2026-07-01",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "free",
+    "july",
+    "plastic",
+    "recycling",
+    "starts",
+    "today",
+    "waste"
+   ],
+   "id": "tell-one-other-person-about-plastic-free-july-today"
+  },
+  {
+   "title": "Return your plastic bottles and cans this week",
+   "desc": "Use the Re-Turn app or website to find your nearest return point. You get your deposit back, and the materials stay in the circular economy and out of the ocean.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces plastic entering the marine environment",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ocean-plastic-ireland",
+    "date": "2026-07-02",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ireland",
+    "ocean",
+    "plastic",
+    "story",
+    "water"
+   ],
+   "id": "return-your-plastic-bottles-and-cans-this-week"
+  },
+  {
+   "title": "Pick up three pieces of litter on your next walk near water",
+   "desc": "It takes 30 seconds and removes potential marine pollution directly. Rivers, canals, and coastal paths are where land-based plastic most often enters the sea.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Direct environmental impact",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ocean-plastic-ireland",
+    "date": "2026-07-02",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ireland",
+    "ocean",
+    "plastic",
+    "story",
+    "water"
+   ],
+   "id": "pick-up-three-pieces-of-litter-on-your-next-walk-near-water"
+  },
+  {
+   "title": "Count how many single-use plastic bags come into your home this week",
+   "desc": "Just count them. Awareness is the first step. Then aim to cut that number in half next week by keeping a reusable bag in your car, bag, or coat pocket.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds awareness of personal plastic use",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-bag-levy-world-first",
+    "date": "2026-07-03",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "changed",
+    "climate",
+    "ireland",
+    "world"
+   ],
+   "id": "count-how-many-single-use-plastic-bags-come-into-your-home-t"
+  },
+  {
+   "title": "Share Ireland's plastic bag levy story with someone outside Ireland",
+   "desc": "Most people outside Ireland do not know it started here. It is a great example of a policy that actually worked and a conversation starter about what is possible.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Social multiplier effect",
+   "type": "circularity",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-bag-levy-world-first",
+    "date": "2026-07-03",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "changed",
+    "climate",
+    "ireland",
+    "world"
+   ],
+   "id": "share-ireland-s-plastic-bag-levy-story-with-someone-outside-"
+  },
+  {
+   "title": "Choose loose fruit and vegetables instead of pre-packaged ones this week",
+   "desc": "Loose produce is almost always available in Irish supermarkets and costs the same or less. It is one of the simplest packaging reductions you can make every single week.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces plastic packaging at source",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "packaging-epr-ireland",
+    "date": "2026-07-06",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "packaging",
+    "pays",
+    "recycling",
+    "waste"
+   ],
+   "id": "choose-loose-fruit-and-vegetables-instead-of-pre-packaged-on"
+  },
+  {
+   "title": "Check mywaste.ie before putting something in the recycling bin",
+   "desc": "Not all plastic is recyclable. Black plastic trays, crisp packets, and stretchy film cannot go in the household recycling. Check before you bin.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces recycling contamination",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "packaging-epr-ireland",
+    "date": "2026-07-06",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "packaging",
+    "pays",
+    "recycling",
+    "waste"
+   ],
+   "id": "check-mywaste-ie-before-putting-something-in-the-recycling-b"
+  },
+  {
+   "title": "Share the fact that Ireland has rainforest with one person today",
+   "desc": "Most Irish people have never heard of temperate rainforest. Sharing the story builds awareness and support for conservation. You can start by sharing today's challenge.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds awareness of Ireland's rarest habitat",
+   "type": "water",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "temperate-rainforest-day",
+    "date": "2026-07-07",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "forest",
+    "here",
+    "rarest",
+    "world"
+   ],
+   "id": "share-the-fact-that-ireland-has-rainforest-with-one-person-t"
+  },
+  {
+   "title": "Wash synthetic clothing less frequently and at lower temperatures",
+   "desc": "Synthetic fibres like polyester and nylon shed microplastics with every wash. Washing at 30C less often significantly reduces the amount released into waterways.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces microplastic pollution and energy use",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "microplastics-invisible-threat",
+    "date": "2026-07-08",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "cannot",
+    "plastic",
+    "recycling",
+    "waste"
+   ],
+   "id": "wash-synthetic-clothing-less-frequently-and-at-lower-tempera"
+  },
+  {
+   "title": "Check personal care products for microbeads using the Beat the Microbead app",
+   "desc": "Download the free Beat the Microbead app (beatthemicrobead.org) to scan products and identify those containing intentionally added plastic particles.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Reduces intentional microplastic use",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "microplastics-invisible-threat",
+    "date": "2026-07-08",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "cannot",
+    "plastic",
+    "recycling",
+    "waste"
+   ],
+   "id": "check-personal-care-products-for-microbeads-using-the-beat-t"
+  },
+  {
+   "title": "Bring your reusable coffee cup every day this week",
+   "desc": "Put it next to your keys or bag tonight so you cannot leave without it tomorrow. If you forget it, skip the takeaway coffee -- that is the challenge.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Removes ~365 disposable cups per year from circulation",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-swaps-that-work",
+    "date": "2026-07-09",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "actually",
+    "recycling",
+    "simple",
+    "swaps",
+    "that",
+    "waste",
+    "work"
+   ],
+   "id": "bring-your-reusable-coffee-cup-every-day-this-week"
+  },
+  {
+   "title": "Refuse a straw, lid, or single-use cutlery you do not need this week",
+   "desc": "When ordering food or a drink, simply say you do not need the straw or plastic lid. One word saves one item of plastic every time.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces single-use plastic demand",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-swaps-that-work",
+    "date": "2026-07-09",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "actually",
+    "recycling",
+    "simple",
+    "swaps",
+    "that",
+    "waste",
+    "work"
+   ],
+   "id": "refuse-a-straw-lid-or-single-use-cutlery-you-do-not-need-thi"
+  },
+  {
+   "title": "Choose loose fruit and vegetables instead of pre-packaged options this weekend",
+   "desc": "Most Irish supermarkets stock loose produce that is the same quality and price as packaged alternatives. Making this swap every week removes a significant amount of packaging over a year.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces plastic packaging at source",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "food-packaging-eu-law",
+    "date": "2026-07-11",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "food",
+    "hides",
+    "most",
+    "packaging",
+    "plastic",
+    "recycling",
+    "waste",
+    "where"
+   ],
+   "id": "choose-loose-fruit-and-vegetables-instead-of-pre-packaged-op"
+  },
+  {
+   "title": "Bring your own container to a deli or takeaway that allows it",
+   "desc": "Many Irish delis and cafes now accept customer containers. Ask first -- most are happy to oblige and some offer a small discount.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Directly replaces single-use food packaging",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "food-packaging-eu-law",
+    "date": "2026-07-11",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "food",
+    "hides",
+    "most",
+    "packaging",
+    "plastic",
+    "recycling",
+    "waste",
+    "where"
+   ],
+   "id": "bring-your-own-container-to-a-deli-or-takeaway-that-allows-i"
+  },
+  {
+   "title": "Find your nearest zero-waste or refill shop",
+   "desc": "Search 'zero waste shop' with your town name. Many Irish towns now have them. Try buying one product -- washing-up liquid, shampoo, or oats -- without packaging this week.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Directly reduces single-use packaging",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-free-shopping-ireland",
+    "date": "2026-07-13",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "free",
+    "ireland",
+    "plastic",
+    "recycling",
+    "shopping",
+    "waste"
+   ],
+   "id": "find-your-nearest-zero-waste-or-refill-shop"
+  },
+  {
+   "title": "Try one meal this week using only ingredients without plastic packaging",
+   "desc": "Plan a meal using loose produce, glass jars, or tins. Pasta with tomatoes from a glass jar and loose onions and garlic is a good starting point.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces food packaging waste",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-free-shopping-ireland",
+    "date": "2026-07-13",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "free",
+    "ireland",
+    "plastic",
+    "recycling",
+    "shopping",
+    "waste"
+   ],
+   "id": "try-one-meal-this-week-using-only-ingredients-without-plasti"
+  },
+  {
+   "title": "Check your bathroom cabinet for products containing microbeads",
+   "desc": "Look for 'polyethylene' or 'polypropylene' in the ingredients list of scrubs, toothpaste, or face washes. If present, switch to a product without them. Use the Beat the Microbead app to scan products.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces intentional microplastic use",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "single-use-plastics-banned-eu",
+    "date": "2026-07-14",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "banned",
+    "europe",
+    "recycling",
+    "waste",
+    "what"
+   ],
+   "id": "check-your-bathroom-cabinet-for-products-containing-microbea"
+  },
+  {
+   "title": "Write to your local supermarket asking them to expand loose or refillable options",
+   "desc": "Supermarkets respond to customer feedback. A short email asking for more loose produce or refill stations takes five minutes and contributes to retail change.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Systemic packaging reduction",
+   "type": "circularity",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "single-use-plastics-banned-eu",
+    "date": "2026-07-14",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "banned",
+    "europe",
+    "recycling",
+    "waste",
+    "what"
+   ],
+   "id": "write-to-your-local-supermarket-asking-them-to-expand-loose-"
+  },
+  {
+   "title": "Carry a reusable cup today",
+   "desc": "If you are going to a coffee shop, bring your cup. If you forget it, drink in rather than taking away. One cup per day adds up to around 250 disposable cups per year.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Removes ~250 disposable cups per year from circulation",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ireland-litter-problem",
+    "date": "2026-07-15",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "better",
+    "ireland",
+    "litter",
+    "recycling",
+    "solved",
+    "waste"
+   ],
+   "id": "carry-a-reusable-cup-today"
+  },
+  {
+   "title": "Report a litter blackspot in your area",
+   "desc": "Contact your local council or use the Litter.ie reporting tool. Local authorities are required to respond to litter reports. Your report matters.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports local environmental action",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ireland-litter-problem",
+    "date": "2026-07-15",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "better",
+    "ireland",
+    "litter",
+    "recycling",
+    "solved",
+    "waste"
+   ],
+   "id": "report-a-litter-blackspot-in-your-area"
+  },
+  {
+   "title": "Before you bin something today, check mywaste.ie to make sure it belongs in recycling",
+   "desc": "One contaminated load can cause an entire truck of recycling to go to landfill. Checking takes 30 seconds and makes the recycling system work properly.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces recycling contamination",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "what-gets-recycled-ireland",
+    "date": "2026-07-16",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "actually",
+    "gets",
+    "ireland",
+    "recycled",
+    "recycling",
+    "waste",
+    "what"
+   ],
+   "id": "before-you-bin-something-today-check-mywaste-ie-to-make-sure"
+  },
+  {
+   "title": "Rinse containers before putting them in the recycling bin",
+   "desc": "Food residue contaminates other materials in the recycling stream. A quick rinse of yogurt pots, sauce jars, and tins is all that is needed.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Improves recycling quality and outcomes",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "what-gets-recycled-ireland",
+    "date": "2026-07-16",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "actually",
+    "gets",
+    "ireland",
+    "recycled",
+    "recycling",
+    "waste",
+    "what"
+   ],
+   "id": "rinse-containers-before-putting-them-in-the-recycling-bin"
+  },
+  {
+   "title": "Write down which plastic swaps you have managed to make this month",
+   "desc": "Even a note in your phone counts. Reflecting on what you have done makes it more likely you will keep going after July ends.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds long-term behaviour change",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-free-midpoint",
+    "date": "2026-07-17",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "doing",
+    "halfway",
+    "recycling",
+    "through",
+    "waste"
+   ],
+   "id": "write-down-which-plastic-swaps-you-have-managed-to-make-this"
+  },
+  {
+   "title": "Share your Plastic Free July experience with one person",
+   "desc": "Tell someone what you have changed this month. Research shows that talking about behaviour change with others is one of the most effective ways to sustain it.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Social multiplier effect",
+   "type": "circularity",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-free-midpoint",
+    "date": "2026-07-17",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "doing",
+    "halfway",
+    "recycling",
+    "through",
+    "waste"
+   ],
+   "id": "share-your-plastic-free-july-experience-with-one-person"
+  },
+  {
+   "title": "If you know a farmer, ask how agricultural plastic is managed on their farm",
+   "desc": "It starts a useful conversation and may help a farmer find options they were not aware of, such as county collection schemes or Repak take-back programmes.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Raises awareness of agricultural plastic waste",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "farm-plastic-ireland",
+    "date": "2026-07-20",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "farms",
+    "irish",
+    "plastic",
+    "recycling",
+    "waste"
+   ],
+   "id": "if-you-know-a-farmer-ask-how-agricultural-plastic-is-managed"
+  },
+  {
+   "title": "Avoid buying products that use excessive secondary plastic packaging",
+   "desc": "Secondary packaging -- shrink wrap, plastic trays holding multiple items -- is one of the least necessary forms. Choosing products without it sends a market signal to producers.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Reduces demand for unnecessary packaging",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "farm-plastic-ireland",
+    "date": "2026-07-20",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "farms",
+    "irish",
+    "plastic",
+    "recycling",
+    "waste"
+   ],
+   "id": "avoid-buying-products-that-use-excessive-secondary-plastic-p"
+  },
+  {
+   "title": "When you see 'biodegradable' on a product, ask what conditions are required",
+   "desc": "Most 'biodegradable' plastics only biodegrade in industrial composting facilities, not in home compost or the environment. If the conditions are not specified, treat the claim with scepticism.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds critical consumer awareness",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-responsibility-greenwashing",
+    "date": "2026-07-21",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "plastic",
+    "recycling",
+    "responsible",
+    "this",
+    "waste"
+   ],
+   "id": "when-you-see-biodegradable-on-a-product-ask-what-conditions-"
+  },
+  {
+   "title": "Write to one brand you buy from asking what they are doing to reduce single-use plastic",
+   "desc": "Companies track customer feedback. A short email from a customer carries more weight than you might think, especially when combined with others asking the same question.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Systemic pressure on plastic producers",
+   "type": "circularity",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "plastic-responsibility-greenwashing",
+    "date": "2026-07-21",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "plastic",
+    "recycling",
+    "responsible",
+    "this",
+    "waste"
+   ],
+   "id": "write-to-one-brand-you-buy-from-asking-what-they-are-doing-t"
+  },
+  {
+   "title": "Find your nearest refill shop and try buying one product without packaging",
+   "desc": "Search 'zero waste shop' or 'refill shop' with your town name. Many now stock washing-up liquid, shampoo, conditioner, and dry goods. Try one product this week.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Directly eliminates single-use packaging",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "refill-reuse-ireland",
+    "date": "2026-07-22",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "already",
+    "here",
+    "recycling",
+    "refill",
+    "reuse",
+    "waste"
+   ],
+   "id": "find-your-nearest-refill-shop-and-try-buying-one-product-wit"
+  },
+  {
+   "title": "Carry a refillable water bottle this week and use a public refill point",
+   "desc": "Use the Tap app to find a free water refill point near you. It is free, takes no extra time, and removes one plastic bottle per use from circulation.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Replaces single-use plastic water bottles",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "refill-reuse-ireland",
+    "date": "2026-07-22",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "already",
+    "here",
+    "recycling",
+    "refill",
+    "reuse",
+    "waste"
+   ],
+   "id": "carry-a-refillable-water-bottle-this-week-and-use-a-public-r"
+  },
+  {
+   "title": "Ask your workplace about its policy on single-use plastic",
+   "desc": "Does your canteen, office kitchen, or event catering use single-use plastic? A simple question to facilities management or the sustainability team can start a useful conversation.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Systemic workplace impact",
+   "type": "circularity",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "business-plastic-action",
+    "date": "2026-07-23",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "businesses",
+    "recycling",
+    "right",
+    "waste",
+    "what"
+   ],
+   "id": "ask-your-workplace-about-its-policy-on-single-use-plastic"
+  },
+  {
+   "title": "Choose to buy from one business this week that is making a genuine effort to reduce packaging",
+   "desc": "Vote with your wallet. Supporting businesses that have already made changes encourages others to follow. Look for reusable cup discounts, loose produce, and plastic-free shelves.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Market signal to sustainable businesses",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "business-plastic-action",
+    "date": "2026-07-23",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "businesses",
+    "recycling",
+    "right",
+    "waste",
+    "what"
+   ],
+   "id": "choose-to-buy-from-one-business-this-week-that-is-making-a-g"
+  },
+  {
+   "title": "Plan a visit to a green space, forest, beach, or national park this weekend",
+   "desc": "Leave the phone behind if you can. Walk slowly. Notice what you see, hear, and smell. Research shows that even 20 minutes makes a measurable difference to your mood.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Zero carbon and significant wellbeing benefit",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "self-care-nature-connection",
+    "date": "2026-07-24",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "nature",
+    "wellbeing",
+    "your"
+   ],
+   "id": "plan-a-visit-to-a-green-space-forest-beach-or-national-park-"
+  },
+  {
+   "title": "Invite one other person to join you outdoors",
+   "desc": "Connection in nature is doubly beneficial. Suggest an outdoor walk, cycle, or park visit to someone you care about this week.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds social connection to nature",
+   "type": "nature",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "self-care-nature-connection",
+    "date": "2026-07-24",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "nature",
+    "wellbeing",
+    "your"
+   ],
+   "id": "invite-one-other-person-to-join-you-outdoors"
+  },
+  {
+   "title": "Learn about Ireland's saltmarshes and seagrass beds",
+   "desc": "Visit npws.ie to learn about Ireland's coastal habitats. Saltmarshes are found in sheltered bays around Ireland and are some of the most carbon-dense ecosystems in the country.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds awareness of Irish blue carbon ecosystems",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "mangroves-blue-carbon",
+    "date": "2026-07-27",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "change",
+    "climate",
+    "fight",
+    "that",
+    "trees"
+   ],
+   "id": "learn-about-ireland-s-saltmarshes-and-seagrass-beds"
+  },
+  {
+   "title": "Choose only certified sustainable seafood this week",
+   "desc": "Sustainable fishing practices protect the coastal ecosystems -- including seagrass beds and mangrove-adjacent habitats -- that are critical for blue carbon storage. Look for the MSC label.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports healthy coastal ecosystems globally",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "mangroves-blue-carbon",
+    "date": "2026-07-27",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "change",
+    "climate",
+    "fight",
+    "that",
+    "trees"
+   ],
+   "id": "choose-only-certified-sustainable-seafood-this-week"
+  },
+  {
+   "title": "Support WWF's tiger conservation work",
+   "desc": "Visit wwf.ie to learn about tiger conservation and how your support reaches field protection teams. Even a small monthly donation funds habitat protection and anti-poaching work.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports habitat protection for endangered species",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "biodiversity-loss-tigers",
+    "date": "2026-07-29",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "mirror",
+    "tiger"
+   ],
+   "id": "support-wwf-s-tiger-conservation-work"
+  },
+  {
+   "title": "Reflect on what biodiversity means to you and share it with one person",
+   "desc": "Biodiversity is abstract until it is personal. Think about a wild animal, plant, or landscape you love and share why it matters to you. Personal stories are the most powerful catalyst for change.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Social multiplier effect",
+   "type": "nature",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "biodiversity-loss-tigers",
+    "date": "2026-07-29",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "mirror",
+    "tiger"
+   ],
+   "id": "reflect-on-what-biodiversity-means-to-you-and-share-it-with-"
+  },
+  {
+   "title": "Use a pocket ashtray instead of dropping the butt",
+   "desc": "If you smoke or vape, small tin or pouch ashtrays are cheap and stop butts washing into drains and rivers.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces microplastic and toxin pollution in waterways",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "cigarette-litter-ocean-harm",
+    "date": "2026-08-06",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "kills",
+    "ocean",
+    "smoking",
+    "water"
+   ],
+   "id": "use-a-pocket-ashtray-instead-of-dropping-the-butt"
+  },
+  {
+   "title": "Pick up 3 cigarette butts next time you're out for a walk",
+   "desc": "It sounds small, but every butt kept out of a drain is one less source of microplastics and chemicals in the water.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Prevents chemical leaching into local water systems",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "cigarette-litter-ocean-harm",
+    "date": "2026-08-06",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "kills",
+    "ocean",
+    "smoking",
+    "water"
+   ],
+   "id": "pick-up-3-cigarette-butts-next-time-you-re-out-for-a-walk"
+  },
+  {
+   "title": "Pick one new habit and attach it to something you already do",
+   "desc": "Like bringing a reusable cup when you get coffee, or switching off devices before bed.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Depends on habit chosen",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "small-habits-big-impact",
+    "date": "2026-08-07",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "habits",
+    "impact",
+    "small",
+    "sustainability"
+   ],
+   "id": "pick-one-new-habit-and-attach-it-to-something-you-already-do"
+  },
+  {
+   "title": "Do a 10-minute home energy check",
+   "desc": "Walk around your home and note anything using energy needlessly. Most fixes take minutes.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Up to 100 kg CO2/year if acted on",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "small-habits-big-impact",
+    "date": "2026-08-07",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "habits",
+    "impact",
+    "small",
+    "sustainability"
+   ],
+   "id": "do-a-10-minute-home-energy-check"
+  },
+  {
+   "title": "Learn to identify 3 native hedgerow species near you",
+   "desc": "Blackthorn, hawthorn and hazel are common in Irish hedges.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds awareness of local biodiversity loss",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "guardians-of-the-land",
+    "date": "2026-08-10",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "guardians",
+    "land"
+   ],
+   "id": "learn-to-identify-3-native-hedgerow-species-near-you"
+  },
+  {
+   "title": "Support a local hedgerow or tree planting scheme",
+   "desc": "One mature hedge can support hundreds of species.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Sequesters roughly 50% more carbon than a similar area of forestry",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "guardians-of-the-land",
+    "date": "2026-08-10",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "guardians",
+    "land"
+   ],
+   "id": "support-a-local-hedgerow-or-tree-planting-scheme"
+  },
+  {
+   "title": "Fix a dripping tap this week",
+   "desc": "A single dripping tap can waste over 5,000 litres of water a year.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Saves thousands of litres of treated water annually",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-hidden-water-stress",
+    "date": "2026-08-11",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "hidden",
+    "ireland",
+    "stress",
+    "water"
+   ],
+   "id": "fix-a-dripping-tap-this-week"
+  },
+  {
+   "title": "Take one minute off your shower",
+   "desc": "Small change, adds up fast across a household.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Can save over 5,000 litres per person per year",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-hidden-water-stress",
+    "date": "2026-08-11",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "hidden",
+    "ireland",
+    "stress",
+    "water"
+   ],
+   "id": "take-one-minute-off-your-shower"
+  },
+  {
+   "title": "Report white-tailed eagle sightings if you spot one",
+   "desc": "Golden Eagle Trust and NPWS track sightings to monitor the population.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports population monitoring and conservation research",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-eagles-are-back",
+    "date": "2026-08-12",
+    "category": "Wildlife"
+   },
+   "keywords": [
+    "back",
+    "eagles",
+    "wildlife"
+   ],
+   "id": "report-white-tailed-eagle-sightings-if-you-spot-one"
+  },
+  {
+   "title": "Support an elephant or raptor conservation charity",
+   "desc": "Small, regular donations fund habitat protection and anti-poaching work.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Funds habitat protection for endangered species",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-eagles-are-back",
+    "date": "2026-08-12",
+    "category": "Wildlife"
+   },
+   "keywords": [
+    "back",
+    "eagles",
+    "wildlife"
+   ],
+   "id": "support-an-elephant-or-raptor-conservation-charity"
+  },
+  {
+   "title": "Plan one Irish trip this year instead of flying",
+   "desc": "Explore a county you've never visited by train or car.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Avoids the highest-carbon part of most holidays",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "holidays-closer-to-home",
+    "date": "2026-08-13",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "closer",
+    "holidays",
+    "home",
+    "sustainability"
+   ],
+   "id": "plan-one-irish-trip-this-year-instead-of-flying"
+  },
+  {
+   "title": "If you do fly, choose direct routes",
+   "desc": "Layovers add extra take-offs and landings, the most fuel-heavy part of a flight.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Cuts unnecessary take-off and landing emissions",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "holidays-closer-to-home",
+    "date": "2026-08-13",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "closer",
+    "holidays",
+    "home",
+    "sustainability"
+   ],
+   "id": "if-you-do-fly-choose-direct-routes"
+  },
+  {
+   "title": "Check the EPA's bathing water status before you swim",
+   "desc": "Takes a minute, tells you what you're getting into.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Protects your own health and highlights pollution hotspots",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "is-it-safe-to-swim",
+    "date": "2026-08-14",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ocean",
+    "safe",
+    "swim",
+    "water"
+   ],
+   "id": "check-the-epa-s-bathing-water-status-before-you-swim"
+  },
+  {
+   "title": "Cut back on garden fertiliser this month",
+   "desc": "Excess nutrients feed the same algae blooms affecting places like Lough Neagh.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces nutrient runoff into waterways",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "is-it-safe-to-swim",
+    "date": "2026-08-14",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "ocean",
+    "safe",
+    "swim",
+    "water"
+   ],
+   "id": "cut-back-on-garden-fertiliser-this-month"
+  },
+  {
+   "title": "Learn what Bord na Móna's rehabilitation programme covers",
+   "desc": "It's restoring 33,000 hectares of former industrial peatland across 82 midland bogs, over half already done.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports Ireland's largest peatland carbon restoration programme",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-buried-carbon-store",
+    "date": "2026-08-17",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "buried",
+    "carbon",
+    "ireland",
+    "store"
+   ],
+   "id": "learn-what-bord-na-m-na-s-rehabilitation-programme-covers"
+  },
+  {
+   "title": "Visit a restored bog walk near you",
+   "desc": "Many restored midland bogs now have boardwalks and trails, a good way to see peatland recovery firsthand.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds public support for peatland restoration",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-buried-carbon-store",
+    "date": "2026-08-17",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "buried",
+    "carbon",
+    "ireland",
+    "store"
+   ],
+   "id": "visit-a-restored-bog-walk-near-you"
+  },
+  {
+   "title": "Check for a uniform swap or secondhand scheme at school",
+   "desc": "Many parent associations run informal swaps, worth asking before buying new.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Extends the useful life of school uniforms",
+   "type": "circularity",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "back-to-school-without-waste",
+    "date": "2026-08-18",
+    "category": "Circularity"
+   },
+   "keywords": [
+    "back",
+    "circularity",
+    "school",
+    "waste",
+    "without"
+   ],
+   "id": "check-for-a-uniform-swap-or-secondhand-scheme-at-school"
+  },
+  {
+   "title": "Reuse stationery and bags from last year where you can",
+   "desc": "A working schoolbag or pencil case doesn't need replacing just because it's a new year.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces demand for new school supplies",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "back-to-school-without-waste",
+    "date": "2026-08-18",
+    "category": "Circularity"
+   },
+   "keywords": [
+    "back",
+    "circularity",
+    "school",
+    "waste",
+    "without"
+   ],
+   "id": "reuse-stationery-and-bags-from-last-year-where-you-can"
+  },
+  {
+   "title": "Check what share of your electricity supplier's mix is renewable",
+   "desc": "Most Irish suppliers publish a fuel mix disclosure, worth a look.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds awareness of electricity sourcing",
+   "type": "energy",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-windiest-records",
+    "date": "2026-08-19",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "energy",
+    "ireland",
+    "records",
+    "tech",
+    "windiest"
+   ],
+   "id": "check-what-share-of-your-electricity-supplier-s-mix-is-renew"
+  },
+  {
+   "title": "Time energy-heavy tasks for windier days if you can",
+   "desc": "Ireland's grid runs cleanest when wind output is high, small timing shifts help.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Shifts demand toward cleaner grid periods",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-windiest-records",
+    "date": "2026-08-19",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "energy",
+    "ireland",
+    "records",
+    "tech",
+    "windiest"
+   ],
+   "id": "time-energy-heavy-tasks-for-windier-days-if-you-can"
+  },
+  {
+   "title": "Use your brown bin for garden and food waste this BBQ season",
+   "desc": "Grass clippings and food scraps belong there, not the general bin.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Diverts waste from landfill to composting",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "waste-behind-the-barbecue",
+    "date": "2026-08-20",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "barbecue",
+    "behind",
+    "food",
+    "waste",
+    "water"
+   ],
+   "id": "use-your-brown-bin-for-garden-and-food-waste-this-bbq-season"
+  },
+  {
+   "title": "Portion your BBQ food a little more carefully",
+   "desc": "Overcatering is one of the most common causes of summer food waste. A rough headcount plan helps.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces food waste at the source",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "waste-behind-the-barbecue",
+    "date": "2026-08-20",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "barbecue",
+    "behind",
+    "food",
+    "waste",
+    "water"
+   ],
+   "id": "portion-your-bbq-food-a-little-more-carefully"
+  },
+  {
+   "title": "Join a bat walk this month",
+   "desc": "Many local heritage or biodiversity groups run evening bat walks with bat detectors.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds appreciation and awareness of local biodiversity",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-night-shift-workers",
+    "date": "2026-08-21",
+    "category": "Wildlife"
+   },
+   "keywords": [
+    "ireland",
+    "night",
+    "shift",
+    "wildlife",
+    "workers"
+   ],
+   "id": "join-a-bat-walk-this-month"
+  },
+  {
+   "title": "Leave a corner of your garden a little wild",
+   "desc": "Long grass and native shrubs attract the insects bats feed on.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports local insect and bat populations",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-night-shift-workers",
+    "date": "2026-08-21",
+    "category": "Wildlife"
+   },
+   "keywords": [
+    "ireland",
+    "night",
+    "shift",
+    "wildlife",
+    "workers"
+   ],
+   "id": "leave-a-corner-of-your-garden-a-little-wild"
+  },
+  {
+   "title": "Let one patch of your garden or green space grow wild this month",
+   "desc": "Late summer wildflowers like ivy and heather are a vital late-season food source for bees.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports pollinator food sources before winter",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-bees-last-shift",
+    "date": "2026-08-24",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "bees",
+    "biodiversity",
+    "last",
+    "shift"
+   ],
+   "id": "let-one-patch-of-your-garden-or-green-space-grow-wild-this-m"
+  },
+  {
+   "title": "Check if your workplace or community group is on the AIPP list",
+   "desc": "Businesses, schools and community groups can sign up to take specific pollinator-friendly actions.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports coordinated pollinator conservation",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "the-bees-last-shift",
+    "date": "2026-08-24",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "bees",
+    "biodiversity",
+    "last",
+    "shift"
+   ],
+   "id": "check-if-your-workplace-or-community-group-is-on-the-aipp-li"
+  },
+  {
+   "title": "Try repairing one item before replacing it",
+   "desc": "A patch, a stitch or a cobbler visit often costs far less than buying new.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Extends the useful life of existing garments",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "true-cost-of-a-pair-of-jeans",
+    "date": "2026-08-25",
+    "category": "Circularity"
+   },
+   "keywords": [
+    "circularity",
+    "cost",
+    "jeans",
+    "pair",
+    "true"
+   ],
+   "id": "try-repairing-one-item-before-replacing-it"
+  },
+  {
+   "title": "Drop unwanted textiles at a proper collection point, not the general bin",
+   "desc": "Textile banks and charity shops keep clothing in reuse rather than landfill.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Diverts textiles from landfill into reuse",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "true-cost-of-a-pair-of-jeans",
+    "date": "2026-08-25",
+    "category": "Circularity"
+   },
+   "keywords": [
+    "circularity",
+    "cost",
+    "jeans",
+    "pair",
+    "true"
+   ],
+   "id": "drop-unwanted-textiles-at-a-proper-collection-point-not-the-"
+  },
+  {
+   "title": "Learn if your area has a local coastal or flood risk plan",
+   "desc": "Local authority websites often have flood risk maps, worth checking if you're near the coast or a river.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds awareness of local climate risk",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "the-sea-is-moving-in",
+    "date": "2026-08-26",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "moving",
+    "ocean",
+    "water"
+   ],
+   "id": "learn-if-your-area-has-a-local-coastal-or-flood-risk-plan"
+  },
+  {
+   "title": "Support dune and coastal habitat restoration where you can",
+   "desc": "Healthy dune systems act as a natural buffer against erosion and storm surges.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports natural coastal defences",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-sea-is-moving-in",
+    "date": "2026-08-26",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "moving",
+    "ocean",
+    "water"
+   ],
+   "id": "support-dune-and-coastal-habitat-restoration-where-you-can"
+  },
+  {
+   "title": "Check in on elderly or vulnerable neighbours during a heatwave",
+   "desc": "Heat-related illness is a real and growing risk, even in Ireland's traditionally mild summers.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports community heatwave resilience",
+   "type": "food",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "europes-hottest-continent-problem",
+    "date": "2026-08-27",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "continent",
+    "europe",
+    "hottest",
+    "problem"
+   ],
+   "id": "check-in-on-elderly-or-vulnerable-neighbours-during-a-heatwa"
+  },
+  {
+   "title": "Learn your area's wildfire risk if you're near forest or gorse land",
+   "desc": "Ireland has seen its own gorse and forest fires in dry spells, knowing the risk helps you act early.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds local climate risk awareness",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "europes-hottest-continent-problem",
+    "date": "2026-08-27",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "continent",
+    "europe",
+    "hottest",
+    "problem"
+   ],
+   "id": "learn-your-area-s-wildfire-risk-if-you-re-near-forest-or-gor"
+  },
+  {
+   "title": "Follow research updates from Irish biodiversity conferences",
+   "desc": "Universities and NPWS often share key findings publicly after events like this.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds informed public awareness",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "where-biodiversity-meets-business",
+    "date": "2026-08-28",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "business",
+    "meets",
+    "where"
+   ],
+   "id": "follow-research-updates-from-irish-biodiversity-conferences"
+  },
+  {
+   "title": "Share one surprising biodiversity fact with someone this week",
+   "desc": "Awareness is often the first step toward support for conservation funding and policy.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds broader public support for conservation",
+   "type": "nature",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "where-biodiversity-meets-business",
+    "date": "2026-08-28",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "business",
+    "meets",
+    "where"
+   ],
+   "id": "share-one-surprising-biodiversity-fact-with-someone-this-wee"
+  },
+  {
+   "title": "Do a wardrobe audit this weekend",
+   "desc": "Count how many items you haven't worn in a year, a good sign of what you could sell, swap or donate.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Highlights overconsumption without needing a purchase",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "true-cost-of-fast-fashion",
+    "date": "2026-08-31",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "cost",
+    "fashion",
+    "fast",
+    "sustainability",
+    "true"
+   ],
+   "id": "do-a-wardrobe-audit-this-weekend"
+  },
+  {
+   "title": "Look up your nearest clothes swap or charity shop",
+   "desc": "Ireland has a strong charity shop culture, check what's already out there before buying new.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Extends the useful life of existing garments",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "true-cost-of-fast-fashion",
+    "date": "2026-08-31",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "cost",
+    "fashion",
+    "fast",
+    "sustainability",
+    "true"
+   ],
+   "id": "look-up-your-nearest-clothes-swap-or-charity-shop"
+  },
+  {
+   "title": "Take the Second-Hand September pledge",
+   "desc": "Commit to buying nothing new this month. Try a charity shop, swap, or online secondhand marketplace first.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Avoids emissions from new garment production",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "second-hand-september",
+    "date": "2026-09-01",
+    "category": "Circularity"
+   },
+   "keywords": [
+    "circularity",
+    "month",
+    "nothing",
+    "this"
+   ],
+   "id": "take-the-second-hand-september-pledge"
+  },
+  {
+   "title": "Sell or donate 5 items you no longer wear",
+   "desc": "Someone else's secondhand find starts with your own wardrobe.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Extends the useful life of existing garments",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "second-hand-september",
+    "date": "2026-09-01",
+    "category": "Circularity"
+   },
+   "keywords": [
+    "circularity",
+    "month",
+    "nothing",
+    "this"
+   ],
+   "id": "sell-or-donate-5-items-you-no-longer-wear"
+  },
+  {
+   "title": "Try one organic swap in your weekly shop",
+   "desc": "Pick one item, maybe your fruit and veg, and go organic for a week.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports lower-pesticide farming practices",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "what-makes-food-organic",
+    "date": "2026-09-02",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "makes",
+    "organic",
+    "water",
+    "what"
+   ],
+   "id": "try-one-organic-swap-in-your-weekly-shop"
+  },
+  {
+   "title": "Look for the EU organic logo when shopping",
+   "desc": "The green leaf logo means the product meets strict EU organic farming standards.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Helps identify verified organic produce quickly",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "what-makes-food-organic",
+    "date": "2026-09-02",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "makes",
+    "organic",
+    "water",
+    "what"
+   ],
+   "id": "look-for-the-eu-organic-logo-when-shopping"
+  },
+  {
+   "title": "Walk or cycle the school run at least once this week",
+   "desc": "Even one day makes a difference to both traffic and air quality outside the school gates.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Cuts short-trip car emissions near schools",
+   "type": "transport",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "back-to-school-by-bike",
+    "date": "2026-09-03",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "back",
+    "bike",
+    "climate",
+    "school"
+   ],
+   "id": "walk-or-cycle-the-school-run-at-least-once-this-week"
+  },
+  {
+   "title": "Check if there's a Safe Routes scheme near your school",
+   "desc": "See what's planned or already built nearby, and support it if there's a local consultation.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports infrastructure for lower-carbon commuting",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "back-to-school-by-bike",
+    "date": "2026-09-03",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "back",
+    "bike",
+    "climate",
+    "school"
+   ],
+   "id": "check-if-there-s-a-safe-routes-scheme-near-your-school"
+  },
+  {
+   "title": "Check your attic and wall insulation",
+   "desc": "Poor insulation is one of the biggest reasons Irish homes waste heat. SEAI grants can cover a large share of upgrade costs.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Cuts heat loss and heating-related emissions",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-leaky-heating-problem",
+    "date": "2026-09-04",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "energy",
+    "heating",
+    "ireland",
+    "leaky",
+    "problem",
+    "tech"
+   ],
+   "id": "check-your-attic-and-wall-insulation"
+  },
+  {
+   "title": "Bleed your radiators before the cold sets in",
+   "desc": "Trapped air makes radiators work harder for less heat. A five-minute job.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Improves heating system efficiency",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "irelands-leaky-heating-problem",
+    "date": "2026-09-04",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "energy",
+    "heating",
+    "ireland",
+    "leaky",
+    "problem",
+    "tech"
+   ],
+   "id": "bleed-your-radiators-before-the-cold-sets-in"
+  },
+  {
+   "title": "Check if smoky coal or turf is legal to burn in your area",
+   "desc": "Rules have been tightening across Ireland, a quick check avoids an unknowing breach.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces particulate air pollution locally",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "air-quality-irish-towns",
+    "date": "2026-09-07",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "energy",
+    "tech"
+   ],
+   "id": "check-if-smoky-coal-or-turf-is-legal-to-burn-in-your-area"
+  },
+  {
+   "title": "Get your solid fuel stove serviced",
+   "desc": "A poorly maintained stove burns less efficiently and produces more smoke.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Improves combustion efficiency, less smoke",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "air-quality-irish-towns",
+    "date": "2026-09-07",
+    "category": "Energy & Tech"
+   },
+   "keywords": [
+    "energy",
+    "tech"
+   ],
+   "id": "get-your-solid-fuel-stove-serviced"
+  },
+  {
+   "title": "Watch for a murmuration at dusk this month",
+   "desc": "Starlings gather at reliable roost sites just before sunset. BirdWatch Ireland lists known spots.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds appreciation and awareness of local biodiversity",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "starlings-return",
+    "date": "2026-09-08",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biggest",
+    "biodiversity",
+    "flash",
+    "nature"
+   ],
+   "id": "watch-for-a-murmuration-at-dusk-this-month"
+  },
+  {
+   "title": "Record a wildlife sighting on a citizen science app",
+   "desc": "Apps like iNaturalist or BirdTrack let you log what you see, and the data genuinely helps researchers.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports species and seasonal monitoring data",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "starlings-return",
+    "date": "2026-09-08",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biggest",
+    "biodiversity",
+    "flash",
+    "nature"
+   ],
+   "id": "record-a-wildlife-sighting-on-a-citizen-science-app"
+  },
+  {
+   "title": "Add one seasonal Irish item to your shop this week",
+   "desc": "Look for Irish apples, blackberries or kale instead of imported alternatives, often cheaper too.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports lower-footprint, in-season produce",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "whats-actually-in-season",
+    "date": "2026-09-09",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "actually",
+    "food",
+    "season",
+    "water",
+    "what"
+   ],
+   "id": "add-one-seasonal-irish-item-to-your-shop-this-week"
+  },
+  {
+   "title": "Check the origin label before you buy fruit and veg",
+   "desc": "Only takes a second, and builds the habit of noticing where your food comes from.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds awareness of food sourcing",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "whats-actually-in-season",
+    "date": "2026-09-09",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "actually",
+    "food",
+    "season",
+    "water",
+    "what"
+   ],
+   "id": "check-the-origin-label-before-you-buy-fruit-and-veg"
+  },
+  {
+   "title": "Reach out to check in with someone today",
+   "desc": "A short message or call to someone you haven't spoken to in a while can matter more than you think.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Strengthens social connection",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "nature-and-your-mind",
+    "date": "2026-09-10",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "mind",
+    "nature",
+    "wellbeing",
+    "your"
+   ],
+   "id": "reach-out-to-check-in-with-someone-today"
+  },
+  {
+   "title": "Take a 15-minute walk somewhere green",
+   "desc": "Doesn't need to be long or far. A local park, riverside path, or stretch of coast all count.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports mental wellbeing",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "nature-and-your-mind",
+    "date": "2026-09-10",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "mind",
+    "nature",
+    "wellbeing",
+    "your"
+   ],
+   "id": "take-a-15-minute-walk-somewhere-green"
+  },
+  {
+   "title": "Refuse single-use cutlery or straws this week",
+   "desc": "Say no when offered, or carry a small reusable set. Adds up over hundreds of takeaways a year.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Cuts single-use plastic demand",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "europes-war-on-plastic",
+    "date": "2026-09-11",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "europe",
+    "ocean",
+    "plastic",
+    "water"
+   ],
+   "id": "refuse-single-use-cutlery-or-straws-this-week"
+  },
+  {
+   "title": "Do one plastic-free grocery shop",
+   "desc": "Choose loose fruit and veg, and packaging-free options where you can find them.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces plastic packaging waste",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "europes-war-on-plastic",
+    "date": "2026-09-11",
+    "category": "Ocean & Water"
+   },
+   "keywords": [
+    "europe",
+    "ocean",
+    "plastic",
+    "water"
+   ],
+   "id": "do-one-plastic-free-grocery-shop"
+  },
+  {
+   "title": "Look up what Ireland's carbon tax actually funds",
+   "desc": "A few minutes on gov.ie shows exactly where the ring-fenced revenue goes.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds understanding of national climate policy",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "who-pays-for-climate-change",
+    "date": "2026-09-14",
+    "category": "Climate Justice"
+   },
+   "keywords": [
+    "change",
+    "climate",
+    "justice",
+    "pays"
+   ],
+   "id": "look-up-what-ireland-s-carbon-tax-actually-funds"
+  },
+  {
+   "title": "Follow COP31 coverage as it happens",
+   "desc": "Following even a few days of real coverage builds a much clearer picture than headlines alone.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds informed public awareness",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "who-pays-for-climate-change",
+    "date": "2026-09-14",
+    "category": "Climate Justice"
+   },
+   "keywords": [
+    "change",
+    "climate",
+    "justice",
+    "pays"
+   ],
+   "id": "follow-cop31-coverage-as-it-happens"
+  },
+  {
+   "title": "Learn one action from Ireland's National Biodiversity Action Plan",
+   "desc": "A few minutes on npws.ie shows practical steps happening at national level.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds understanding of national biodiversity policy",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "triple-cop-year",
+    "date": "2026-09-15",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "triple",
+    "year"
+   ],
+   "id": "learn-one-action-from-ireland-s-national-biodiversity-action"
+  },
+  {
+   "title": "Support a local biodiversity project",
+   "desc": "From community gardens to local Tidy Towns biodiversity initiatives, small local efforts add up.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports local habitat and species protection",
+   "type": "nature",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "triple-cop-year",
+    "date": "2026-09-15",
+    "category": "Biodiversity"
+   },
+   "keywords": [
+    "biodiversity",
+    "triple",
+    "year"
+   ],
+   "id": "support-a-local-biodiversity-project"
+  },
+  {
+   "title": "Check your fridge and AC unit are properly serviced",
+   "desc": "Older units can still leak banned refrigerant gases if damaged or poorly maintained.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Prevents leaks of ozone-depleting and warming gases",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ozone-success-story",
+    "date": "2026-09-16",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "ozone",
+    "story",
+    "success"
+   ],
+   "id": "check-your-fridge-and-ac-unit-are-properly-serviced"
+  },
+  {
+   "title": "Learn one thing about an environmental success story",
+   "desc": "The ozone layer is proof that global cooperation works, a genuinely hopeful climate story to share.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds informed public awareness",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "ozone-success-story",
+    "date": "2026-09-16",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "ozone",
+    "story",
+    "success"
+   ],
+   "id": "learn-one-thing-about-an-environmental-success-story"
+  },
+  {
+   "title": "Swap one short car trip for walking or cycling this week",
+   "desc": "If it's under 5km, there's a good chance you could walk or cycle it just as easily.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Cuts short-trip car emissions",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "getting-ireland-moving",
+    "date": "2026-09-17",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "getting",
+    "ireland",
+    "moving"
+   ],
+   "id": "swap-one-short-car-trip-for-walking-or-cycling-this-week"
+  },
+  {
+   "title": "Check out Climate Carnival or a local Mobility Week event near you",
+   "desc": "Local events often include free bike checks, taster cycling sessions or public transport demos.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds engagement with local low-carbon transport options",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "getting-ireland-moving",
+    "date": "2026-09-17",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "getting",
+    "ireland",
+    "moving"
+   ],
+   "id": "check-out-climate-carnival-or-a-local-mobility-week-event-ne"
+  },
+  {
+   "title": "Try one bamboo product swap",
+   "desc": "Toothbrushes, socks and kitchen utensils are common starting points. Watch out for bamboo viscose fabric, it's heavily processed and loses much of the benefit.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports fast-renewable material demand",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-plant-thats-not-a-tree",
+    "date": "2026-09-18",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "plant",
+    "sustainability",
+    "that",
+    "tree"
+   ],
+   "id": "try-one-bamboo-product-swap"
+  },
+  {
+   "title": "Look for FSC or verified sourcing on bamboo products",
+   "desc": "Not all bamboo is grown or processed responsibly. A recognised certification is a good way to check.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Encourages responsibly sourced materials",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-plant-thats-not-a-tree",
+    "date": "2026-09-18",
+    "category": "Sustainability"
+   },
+   "keywords": [
+    "plant",
+    "sustainability",
+    "that",
+    "tree"
+   ],
+   "id": "look-for-fsc-or-verified-sourcing-on-bamboo-products"
+  },
+  {
+   "title": "Support Irish Aid or a climate justice charity",
+   "desc": "Groups like Trócaire work directly with communities facing the worst impacts.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Supports climate adaptation in vulnerable regions",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "climate-change-isnt-fair",
+    "date": "2026-09-21",
+    "category": "Climate Justice"
+   },
+   "keywords": [
+    "change",
+    "climate",
+    "fair",
+    "justice"
+   ],
+   "id": "support-irish-aid-or-a-climate-justice-charity"
+  },
+  {
+   "title": "Leave the car home for one trip today",
+   "desc": "Walk, cycle or bus one journey you'd normally drive.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Cuts one day's worth of car emissions",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "a-day-without-the-car",
+    "date": "2026-09-22",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "without"
+   ],
+   "id": "leave-the-car-home-for-one-trip-today"
+  },
+  {
+   "title": "Check your local Local Link or bus route",
+   "desc": "Many areas have more options than people realise.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds awareness of low-carbon transport options",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "a-day-without-the-car",
+    "date": "2026-09-22",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "without"
+   ],
+   "id": "check-your-local-local-link-or-bus-route"
+  },
+  {
+   "title": "Try a Leap Card or local transport app for a week",
+   "desc": "See how far a single card or app gets you across buses, trains and trams.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds familiarity with lower-carbon transport",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "getting-ireland-moving-2",
+    "date": "2026-09-23",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "ireland",
+    "rail"
+   ],
+   "id": "try-a-leap-card-or-local-transport-app-for-a-week"
+  },
+  {
+   "title": "Cycle or walk one journey you'd usually drive",
+   "desc": "Doesn't need to be your commute, even a short errand counts.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Cuts short-trip car emissions",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "getting-ireland-moving-2",
+    "date": "2026-09-23",
+    "category": "Climate & Action"
+   },
+   "keywords": [
+    "action",
+    "climate",
+    "ireland",
+    "rail"
+   ],
+   "id": "cycle-or-walk-one-journey-you-d-usually-drive"
+  },
+  {
+   "title": "Suggest a green idea at work this week",
+   "desc": "A bike rack, a recycling audit, small changes that also boost morale.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Builds sustainable workplace culture",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "challenge",
+    "id": "a-happier-greener-desk",
+    "date": "2026-09-24",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "desk",
+    "greener",
+    "happier",
+    "wellbeing"
+   ],
+   "id": "suggest-a-green-idea-at-work-this-week"
+  },
+  {
+   "title": "Try one active or public transport commute this week",
+   "desc": "Even once counts.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Cuts one day's commuting emissions",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "a-happier-greener-desk",
+    "date": "2026-09-24",
+    "category": "Wellbeing"
+   },
+   "keywords": [
+    "desk",
+    "greener",
+    "happier",
+    "wellbeing"
+   ],
+   "id": "try-one-active-or-public-transport-commute-this-week"
+  },
+  {
+   "title": "Check mywaste.ie for anything you're unsure about",
+   "desc": "Two minutes now saves a contaminated bin later.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces recycling contamination",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "what-actually-goes-in-the-bin",
+    "date": "2026-09-25",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "actually",
+    "goes",
+    "recycling",
+    "waste",
+    "what"
+   ],
+   "id": "check-mywaste-ie-for-anything-you-re-unsure-about"
+  },
+  {
+   "title": "Make sure recycling is clean, dry and loose",
+   "desc": "Food residue and bagged items are common causes of rejected batches.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Improves recycling stream quality",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "what-actually-goes-in-the-bin",
+    "date": "2026-09-25",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "actually",
+    "goes",
+    "recycling",
+    "waste",
+    "what"
+   ],
+   "id": "make-sure-recycling-is-clean-dry-and-loose"
+  },
+  {
+   "title": "Start a bottle jar at home",
+   "desc": "A few euro in deposits adds up fast, and none of it ends up as litter.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Diverts containers from landfill into the return stream",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "cash-back-on-your-bottles",
+    "date": "2026-09-28",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "back",
+    "bottles",
+    "cash",
+    "recycling",
+    "waste",
+    "your"
+   ],
+   "id": "start-a-bottle-jar-at-home"
+  },
+  {
+   "title": "Find your nearest Re-Turn point",
+   "desc": "Most supermarkets have a machine, many corner shops accept returns over the counter.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Supports higher container return rates",
+   "type": "mindset",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "cash-back-on-your-bottles",
+    "date": "2026-09-28",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "back",
+    "bottles",
+    "cash",
+    "recycling",
+    "waste",
+    "your"
+   ],
+   "id": "find-your-nearest-re-turn-point"
+  },
+  {
+   "title": "Plan your meals before you shop this week",
+   "desc": "A rough list stops food going off before you get to it.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces household food waste",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-food-we-never-eat",
+    "date": "2026-09-29",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "never",
+    "water"
+   ],
+   "id": "plan-your-meals-before-you-shop-this-week"
+  },
+  {
+   "title": "Start composting food waste if you don't already",
+   "desc": "Composting cuts food waste's climate impact by more than 90% versus landfill.",
+   "level": "easy",
+   "points": 75,
+   "impact": "Cuts methane emissions from landfilled food waste",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-food-we-never-eat",
+    "date": "2026-09-29",
+    "category": "Food & Water"
+   },
+   "keywords": [
+    "food",
+    "never",
+    "water"
+   ],
+   "id": "start-composting-food-waste-if-you-don-t-already"
+  },
+  {
+   "title": "Choose products with less packaging, not just recyclable packaging",
+   "desc": "Less packaging beats recyclable packaging every time.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Cuts packaging waste at the source",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-recycling-label-trick",
+    "date": "2026-09-30",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "label",
+    "recycling",
+    "trick",
+    "waste"
+   ],
+   "id": "choose-products-with-less-packaging-not-just-recyclable-pack"
+  },
+  {
+   "title": "Rinse and dry your recycling before it goes out",
+   "desc": "A few seconds under the tap stops a whole batch getting contaminated.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Improves recycling stream quality",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "challenge",
+    "id": "the-recycling-label-trick",
+    "date": "2026-09-30",
+    "category": "Recycling & Waste"
+   },
+   "keywords": [
+    "label",
+    "recycling",
+    "trick",
+    "waste"
+   ],
+   "id": "rinse-and-dry-your-recycling-before-it-goes-out"
+  },
+  {
+   "title": "Switch to a certified sustainable coffee brand",
+   "desc": "Look for Rainforest Alliance or organic certification next time you buy beans or ground coffee.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Reduces water use and land pressure per kg of beans",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1kg of Coffee Beans",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "coffee",
+    "beans"
+   ],
+   "id": "switch-to-a-certified-sustainable-coffee-brand"
+  },
+  {
+   "title": "Replace one car journey with public transport this week",
+   "desc": "Even one return trip by bus or train instead of car saves roughly 50 kg CO₂ over the year if done weekly.",
+   "level": "easy",
+   "points": 75,
+   "impact": "~50 kg CO₂ saved/year if done weekly",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "100km by Car",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon"
+   ],
+   "id": "replace-one-car-journey-with-public-transport-this-week"
+  },
+  {
+   "title": "Try one lamb-free week this month",
+   "desc": "Lamb has one of the highest footprints of any meat. Swapping it for chicken or legumes makes a real difference.",
+   "level": "easy",
+   "points": 50,
+   "impact": "~28 kg CO₂ saved per kg avoided",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1kg Lamb",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "lamb"
+   ],
+   "id": "try-one-lamb-free-week-this-month"
+  },
+  {
+   "title": "Buy your next pair of shoes second-hand or from a sustainable brand",
+   "desc": "Manufacturing one pair of leather shoes produces ~30 kg CO₂. Second-hand or vegan alternatives cut that dramatically.",
+   "level": "medium",
+   "points": 75,
+   "impact": "Up to 30 kg CO₂ saved per pair",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1 Pair Leather Shoes",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "pair",
+    "leather",
+    "shoes"
+   ],
+   "id": "buy-your-next-pair-of-shoes-second-hand-or-from-a-sustainabl"
+  },
+  {
+   "title": "Try one beef-free week",
+   "desc": "Beef is the highest-impact common food. Replacing it with chicken, fish or plant protein just once a week adds up.",
+   "level": "easy",
+   "points": 75,
+   "impact": "~60 kg CO₂ saved per kg avoided",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1kg Beef",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "beef"
+   ],
+   "id": "try-one-beef-free-week"
+  },
+  {
+   "title": "Keep your current phone for one more year",
+   "desc": "Manufacturing a new smartphone produces ~70 kg CO₂. The best phone for the planet is the one you already own.",
+   "level": "easy",
+   "points": 75,
+   "impact": "~70 kg CO₂ saved",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1 Smartphone",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "smartphone"
+   ],
+   "id": "keep-your-current-phone-for-one-more-year"
+  },
+  {
+   "title": "Buy your next bike second-hand",
+   "desc": "Manufacturing a new bicycle uses ~96 kg CO₂. Second-hand bikes cut that to near zero, and save money too.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Up to 96 kg CO₂ saved",
+   "type": "transport",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1 Bicycle",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "bicycle"
+   ],
+   "id": "buy-your-next-bike-second-hand"
+  },
+  {
+   "title": "Choose a local or low-travel event for your next big trip",
+   "desc": "A single major sporting event visit can cost 125 kg CO₂. Choosing an event within driving distance makes a big difference.",
+   "level": "medium",
+   "points": 75,
+   "impact": "~125 kg CO₂ saved per trip avoided",
+   "type": "community",
+   "scope": "community",
+   "source": {
+    "kind": "sort",
+    "card": "Paris Olympics Visit",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "paris",
+    "olympics",
+    "visit"
+   ],
+   "id": "choose-a-local-or-low-travel-event-for-your-next-big-trip"
+  },
+  {
+   "title": "Repair or refurbish your laptop instead of buying new",
+   "desc": "A new laptop produces ~300 kg CO₂ in manufacturing alone. Most repairs cost a fraction of that, and extend its life by years.",
+   "level": "medium",
+   "points": 100,
+   "impact": "Up to 300 kg CO₂ saved",
+   "type": "circularity",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1 Laptop",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "laptop"
+   ],
+   "id": "repair-or-refurbish-your-laptop-instead-of-buying-new"
+  },
+  {
+   "title": "Replace one short-haul flight with a train or ferry",
+   "desc": "A return Dublin–Madrid flight produces ~550 kg CO₂. For journeys under 5–6 hours, train is usually feasible and far lower impact.",
+   "level": "medium",
+   "points": 150,
+   "impact": "~550 kg CO₂ saved per trip",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "Dublin–Madrid Flight",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "dublin",
+    "madrid",
+    "flight"
+   ],
+   "id": "replace-one-short-haul-flight-with-a-train-or-ferry"
+  },
+  {
+   "title": "Enable downloads instead of streaming this week",
+   "desc": "Streaming constantly uses data centres. Downloading music or videos on Wi-Fi, then watching offline, cuts that energy use significantly.",
+   "level": "easy",
+   "points": 50,
+   "impact": "Part of your ~636 kg/year digital footprint",
+   "type": "energy",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1 Year Digital Life",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "year",
+    "digital",
+    "life"
+   ],
+   "id": "enable-downloads-instead-of-streaming-this-week"
+  },
+  {
+   "title": "Switch your dog to a lower-impact food brand",
+   "desc": "A dog's annual footprint is ~770 kg CO₂, mostly from meat-based food. Several brands now offer lower-carbon recipes with insect or plant protein.",
+   "level": "medium",
+   "points": 100,
+   "impact": "Could reduce pet footprint by 20–40%",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1 Year Pet Dog",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "year"
+   ],
+   "id": "switch-your-dog-to-a-lower-impact-food-brand"
+  },
+  {
+   "title": "Plan your meals this week to reduce food waste",
+   "desc": "The average household wastes enough food to produce 1,600 kg CO₂ a year. A simple weekly plan and checking your fridge before shopping can cut that by half.",
+   "level": "easy",
+   "points": 100,
+   "impact": "Up to 800 kg CO₂ saved/year",
+   "type": "food",
+   "scope": "individual",
+   "source": {
+    "kind": "sort",
+    "card": "1 Year Food Waste",
+    "category": "Carbon"
+   },
+   "keywords": [
+    "carbon",
+    "year",
+    "food",
+    "waste"
+   ],
+   "id": "plan-your-meals-this-week-to-reduce-food-waste"
+  },
+  {
+   "title": "Swap one beef meal a week for chicken, or for beans and lentils",
+   "desc": "A 200 g beef portion is 3,083 L; the same portion of chicken is 865 L. Biggest single lever in the whole dataset. One meal, not your whole diet.",
+   "level": "easy",
+   "points": 100,
+   "impact": "about 115,000 L a year",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "water",
+    "rank": 1,
+    "category": "Water"
+   },
+   "keywords": [
+    "water"
+   ],
+   "id": "swap-one-beef-meal-a-week-for-chicken-or-for-beans-and-lenti"
+  },
+  {
+   "title": "Eat what you buy: finish the cheese, the bread and the leftovers before they go off",
+   "desc": "A wasted 1 kg block of cheese throws away 3,178 L; a wasted 800 g loaf, 1,286 L. Food you already own is the cheapest water saving available.",
+   "level": "easy",
+   "points": 100,
+   "impact": "3,178 L per wasted kilo of cheese",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "water",
+    "rank": 2,
+    "category": "Water"
+   },
+   "keywords": [
+    "water"
+   ],
+   "id": "eat-what-you-buy-finish-the-cheese-the-bread-and-the-leftove"
+  },
+  {
+   "title": "Get one more year out of the clothes you own before replacing them",
+   "desc": "One t-shirt is 2,495 L and one pair of jeans is 8,000 L. One garment not bought beats months of shorter showers.",
+   "level": "medium",
+   "points": 100,
+   "impact": "10,495 L per replacement avoided",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "water",
+    "rank": 3,
+    "category": "Water"
+   },
+   "keywords": [
+    "water"
+   ],
+   "id": "get-one-more-year-out-of-the-clothes-you-own-before-replacin"
+  },
+  {
+   "title": "Turn the tap off while you brush",
+   "desc": "12 L becomes 1 L, twice a day. Costs nothing, and it is about three t-shirts' worth of water a year.",
+   "level": "easy",
+   "points": 100,
+   "impact": "8,030 L a year",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "water",
+    "rank": 4,
+    "category": "Water"
+   },
+   "keywords": [
+    "water"
+   ],
+   "id": "turn-the-tap-off-while-you-brush"
+  },
+  {
+   "title": "Take two minutes off your shower",
+   "desc": "A standard showerhead runs at 9 L a minute. Same order of magnitude as the toothbrush habit. Small, but it compounds daily.",
+   "level": "easy",
+   "points": 100,
+   "impact": "6,570 L a year",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "water",
+    "rank": 5,
+    "category": "Water"
+   },
+   "keywords": [
+    "water"
+   ],
+   "id": "take-two-minutes-off-your-shower"
+  },
+  {
+   "title": "Fix the tap that drips",
+   "desc": "A slow drip is about 15 L a day. A ten-minute job that runs in the background for the rest of the year.",
+   "level": "medium",
+   "points": 100,
+   "impact": "5,475 L a year",
+   "type": "water",
+   "scope": "individual",
+   "source": {
+    "kind": "water",
+    "rank": 6,
+    "category": "Water"
+   },
+   "keywords": [
+    "water"
+   ],
+   "id": "fix-the-tap-that-drips"
+  }
+ ]
+}
