@@ -199,7 +199,7 @@
             <div class="lead-top"><span class="pill sky">Streak kept</span></div>
             <p class="lead-title">${st.doneCount >= 3 ? 'Game, story and action. All three today.' : 'Two today. That is the rhythm.'}</p>
             <p class="lead-desc">Envie keeps the rest for tomorrow. The companion is always open if you want to ask something.</p>
-            <div class="lead-actions"><button type="button" class="cta ghost" onclick="switchTab('companion')">Open the companion</button></div>
+            <div class="lead-actions">${shareButton('day', 'Share today', 'cta sky')}<button type="button" class="cta ghost sm" onclick="switchTab('companion')">Companion</button></div>
           </div>
         </div>`;
       return;
@@ -526,7 +526,7 @@
         <p class="credit-note">We only use your email for this credit and for news about it. Partners are placeholders for now.</p>
       </div>` : '';
 
-    const ledger = c.ledger.length ? `<p class="eyebrow">Already planted</p>` + c.ledger.slice().reverse().map((e) =>
+    const ledger = c.ledger.length ? `<p class="eyebrow">Already planted</p>` + shareButton('credit', 'Share what you planted') + c.ledger.slice().reverse().map((e) =>
       `<div class="row done"><span class="tile sm sky">${EA.icon('check', { size: 19 })}</span><div class="row-body"><p class="row-title">${esc(e.title)}</p><p class="row-meta">${formatRelativeDate(e.date)} · ${e.credits} credit${e.credits > 1 ? 's' : ''} · ${esc(e.status)}</p></div></div>`).join('') : '';
 
     body.innerHTML = `${hero}
@@ -618,6 +618,9 @@
       }).join('');
     }
 
+    const sh = document.getElementById('profile-share');
+    if (sh) sh.innerHTML = shareButton('progress', 'Share my progress');
+
     renderActionHistory(nk, st);
     setActiveTab('');
     showScreen('screen-profile');
@@ -645,6 +648,37 @@
       </div>`).join('');
   }
 
+  // ── share: native sheet on phones, clipboard elsewhere ──
+  const APP_URL = 'https://app.environmentle.org';
+  function shareText(kind) {
+    const nk = nkOf();
+    const st = Engine.state(nk);
+    const c = st.credits;
+    const planted = c.ledger.length;
+    if (kind === 'credit') return `I just turned ${fmt(c.step)} Environmentle points into something real in the ground. Three minutes a day, one small step at a time.`;
+    if (kind === 'day') return `Two climate challenges done today on Environmentle, ${st.streak} day${st.streak === 1 ? '' : 's'} in a row. A game, a story or an action, three minutes a day.`;
+    const bits = [`${fmt(c.total)} points`];
+    if (st.streak > 1) bits.push(`a ${st.streak}-day streak`);
+    if (planted) bits.push(`${planted} real thing${planted > 1 ? 's' : ''} planted`);
+    return `I'm playing my part on Environmentle: ${bits.join(', ')}. Three minutes a day on climate, no doom.`;
+  }
+  async function share(kind) {
+    const text = shareText(kind);
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Environmentle', text, url: APP_URL }); return; }
+      catch (e) { if (e && e.name === 'AbortError') return; }
+    }
+    try {
+      await navigator.clipboard.writeText(text + ' ' + APP_URL);
+      showToast('Copied', 'Paste it wherever you like.', 'flag');
+    } catch (e) {
+      showToast('Share', text + ' ' + APP_URL, 'flag');
+    }
+  }
+  function shareButton(kind, label, cls) {
+    return `<button type="button" class="${cls || 'cta ghost'} share-btn" onclick="event.stopPropagation(); shareProgress('${kind}')">${EA.icon('share', { size: 17 })} ${label || 'Share'}</button>`;
+  }
+
   // ── toast ───────────────────────────────────────────────
   let _toastTimer = null;
   function showToast(head, sub, pose) {
@@ -667,6 +701,7 @@
   window.openCredit = openCredit;
   window.openProfile = openProfile;
   window.saveCredit = saveCredit;
+  window.shareProgress = share;
   window.renderActionHistory = renderActionHistory;
   window.showEnvieToast = showToast;
 })();
