@@ -1245,13 +1245,13 @@
 ══════════════════════════════════════════════════════ -->
 <div id="screen-played" class="screen">
   <div class="intro-top" style="justify-content:center;align-items:center;text-align:center;gap:16px;">
-    <div style="font-size:56px;margin-bottom:4px;">💧</div>
-    <p class="intro-label">You have already played today</p>
+    <envie-mascot pose="wave" hat="hat" aria-hidden="true" style="display:block;position:relative;width:120px;margin:0 auto 4px;color:#fff;"></envie-mascot>
+    <p class="intro-label">You've already played today</p>
     <h1 class="intro-title" style="font-size:clamp(28px,7vw,42px);">Come back<br><em>tomorrow</em></h1>
     <p style="font-size:14px;color:rgba(255,255,255,0.6);max-width:280px;line-height:1.6;">
-      One run a day, that is part of the fun. Your score from today:
+      One run a day, that's the rhythm. Your score from today:
     </p>
-    <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:white;" id="played-score">—</div>
+    <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:white;" id="played-score">0</div>
     <p style="font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">pts</p>
     <p style="font-size:13px;color:rgba(255,255,255,0.5);max-width:280px;line-height:1.6;" id="played-when">
       A fresh run unlocks at midnight.
@@ -1272,17 +1272,17 @@
   <div class="intro-top">
     <div class="badge-row stagger-1">
       <span class="category-badge">Water Footprint</span>
-      <span class="sub-badge">Higher or Lower</span>
+      <span class="sub-badge">Higher or lower</span>
     </div>
-    <p class="intro-label stagger-1">The Game</p>
+    <p class="intro-label stagger-1">Today's game</p>
     <h1 class="intro-title stagger-2">Which one<br><em>drinks more?</em></h1>
     <div class="erow mid stagger-3">
       <envie-mascot pose="point" hat="cap"></envie-mascot>
       <div class="bb r2 tail-low">
         <p class="dyk-text">
-        Every card shows the fresh water it takes to make <strong>one thing</strong>. Say whether the
-        new item needs <strong>more or less</strong> than the one next to it. A run is
-        <strong>five rounds</strong>. Get all five and you have a perfect run.
+        Every card shows the fresh water it takes to make <strong>one thing</strong>. Tell me if the
+        new one needs <strong>more or less</strong> than the one beside it. A run is
+        <strong>five rounds</strong>. Get all five and that's a perfect run. Some of these numbers surprised me.
       </p>
         <svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg>
       </div>
@@ -1303,8 +1303,8 @@
       </svg>
     </button>
     <p class="micro stagger-4">
-      Figures are global averages, mostly from the Water Footprint Network. Real numbers move with
-      the country, the farm and the season. Treat them as a compass, not a GPS.
+      I took the figures from the Water Footprint Network, global averages mostly. Real numbers move
+      with the country, the farm and the season. Treat them as a compass, not a GPS.
     </p>
   </div>
 </div>
@@ -1410,7 +1410,7 @@
   <div class="score-top">
     <p class="score-label" id="score-label">Your score</p>
     <div class="score-number pop-in" id="end-points">0</div>
-    <p class="score-max" id="score-max">pts this round</p>
+    <p class="score-max" id="score-max">pts today</p>
     <div class="erow center lg">
       <envie-mascot id="score-envie" pose="flag" hat="hat"></envie-mascot>
       <div class="bb r5 tail-low">
@@ -1443,17 +1443,17 @@
       <p>
         Farming uses somewhere between 70 and 87 per cent of the fresh water people consume,
         depending on whether you count what is withdrawn or what is used up. Everything you do at
-        home sits inside the small remainder. That is why the list above starts with a food choice
-        rather than a shorter shower.
+        home sits inside the small remainder. That's why swapping one beef meal does more than a
+        shorter shower.
       </p>
       <p>
-        It does not make your choices pointless. It does mean water is mostly a systems problem:
-        what gets grown, where it gets grown, and who is allowed to pump. Shorter showers will not
-        fix that on their own, and no game should pretend otherwise.
+        That doesn't make your choices pointless. It does mean water is mostly a systems problem:
+        what gets grown, where it gets grown, and who's allowed to pump. Shorter showers won't
+        fix that on their own, and I'm not going to pretend otherwise.
       </p>
       <p class="panel-intro">
         Every figure here is a global average with real uncertainty behind it. A few are disputed
-        between sources. <code>water-cards.json</code> records which ones, and why.
+        between sources. I've noted which ones, and why, in the data behind the game.
       </p>
       <p>
         <a class="wiki-link" href="https://wiki.the-uptake.com" target="_blank" rel="noopener">
@@ -1542,14 +1542,15 @@
     "units_rule": "A round only ever pairs two items that share the same basis and the same pool. Per-kg is never compared with per-unit, and never with per-litre. Every card states its unit on screen.",
     "near_tie_threshold": 0.1,
     "near_tie_rule": "If two items are within 10% of each other the pairing is dropped and another is drawn, because a near-tie is not a fair question.",
-    "field_note": "Field names follow cards.csv (the Carbon Challenge dataset): title, sub, category, emoji, impact, comment. `impact` is litres of fresh water. Unlike carbon, water figures come on three different bases, so every card also carries `basis` and `pool` and the game only ever pairs two cards from the same pool. `in_play: false` marks reference-only rows."
+    "field_note": "Field names follow cards.csv (the Carbon Challenge dataset): title, sub, category, emoji, impact, comment. `impact` is litres of fresh water. Unlike carbon, water figures come on three different bases, so every card also carries `basis` and `pool` and the game only ever pairs two cards from the same pool. `in_play: false` marks reference-only rows.",
+    "voice": "Every title, desc, comment or intro here is read by a player and is written as Envie speaking. See CLAUDE.md and _DESIGNS/envie-voice-and-text-rewrite-guide.md: plain short sentences, no em-dashes, European spelling, no emoji, facts and sources untouched."
   },
   "explainer": {
     "title": "Green, blue and grey water",
-    "intro": "A water footprint adds up three different things. They are not interchangeable.",
-    "green": "Green water is rain that a plant drinks straight out of the soil. It is free, local, and usually the biggest part of a food's footprint.",
-    "blue": "Blue water is the water we pump or divert from rivers, lakes and groundwater to irrigate crops or run factories. This is the part that can actually drain a river.",
-    "grey": "Grey water is not water used but water dirtied: the amount of clean water it would take to dilute the fertiliser and other pollution from making something back to a safe level."
+    "intro": "I learned a water footprint is really three different things added together. They are not interchangeable.",
+    "green": "Green water is the rain a plant drinks straight out of the soil. It is free, it is local, and it is usually the biggest part of a food's footprint.",
+    "blue": "Blue water is what we pump or divert from rivers, lakes and groundwater to irrigate crops or run factories. This is the part that can actually drain a river, and it's the one that worries me most.",
+    "grey": "Grey water is not water used, it is water dirtied: the amount of clean water it would take to dilute the fertiliser and other pollution from making something, back to a safe level."
   },
   "yardsticks": [
     {
@@ -1599,7 +1600,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Only about 1% is water the cow drinks; almost all of it grows the feed.",
+      "comment": "Only about 1% is water the cow actually drinks. Almost all of it grows the feed. That reframed beef for me.",
       "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
       "confidence": "high"
@@ -1617,7 +1618,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Sheep drink far less than cattle, yet lamb still ranks second-thirstiest of the common meats.",
+      "comment": "Sheep drink far less than cattle, yet lamb still comes in second thirstiest of the common meats. Wasn't the order I'd have guessed.",
       "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
       "confidence": "medium"
@@ -1635,7 +1636,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Pigs convert feed to meat faster than cattle, which cuts pork's water bill by about 60%.",
+      "comment": "Pigs convert feed to meat faster than cattle, and that cuts pork's water bill by about 60%. Efficiency you can taste, apparently.",
       "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
       "confidence": "high"
@@ -1653,7 +1654,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Chicken is the thriftiest common meat, roughly a quarter of beef's water per kilogram.",
+      "comment": "Chicken is the thriftiest common meat, roughly a quarter of beef's water per kilogram. Good news if you like it grilled.",
       "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
       "confidence": "high"
@@ -1671,7 +1672,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "A kilo of eggs costs less water than a kilo of chicken meat from the very same bird.",
+      "comment": "A kilo of eggs costs less water than a kilo of chicken meat, from that very same bird. Handy to know.",
       "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
       "confidence": "high"
@@ -1689,7 +1690,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "One egg hides about 196 litres, more than a bath and a half.",
+      "comment": "One egg hides about 196 litres, more than a bath and a half. Didn't see that coming from something so small.",
       "source": "Derived from Mekonnen & Hoekstra 2012 (3,265 L/kg x 0.06 kg)",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
       "confidence": "high",
@@ -1708,7 +1709,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "It takes roughly the milk of 18 litres to make one kilo of butter, hence the high figure.",
+      "comment": "It takes roughly 18 litres of milk to make one kilo of butter, which explains the high figure.",
       "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
       "confidence": "medium"
@@ -1726,7 +1727,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Cheese concentrates milk about tenfold, so its water footprint triples milk's per kilogram.",
+      "comment": "Cheese concentrates milk about tenfold, so its water footprint triples milk's per kilogram, kilo for kilo.",
       "note": "Sources disagree: WFN gives 3,178 L/kg; some compilations quote 5,000-5,990 L/kg depending on cheese type and milk-to-cheese ratio.",
       "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
@@ -1746,7 +1747,7 @@
       "pool": "per-litre",
       "in_play": false,
       "excluded_reason": "Sold by volume, so it sits on a per-litre basis and cannot share a round with per-kg or per-unit items. Only four items share that basis, too few for a fair pool, so the per-litre rows are reference only. The 250 ml glass of milk carries the same figure into play.",
-      "comment": "Every litre of milk in the fridge represents about a thousand litres out in the fields.",
+      "comment": "Every litre of milk in the fridge represents about a thousand litres out in the fields. Small carton, big story.",
       "source": "Mekonnen & Hoekstra 2012, WFN Report 48",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
       "confidence": "high"
@@ -1764,7 +1765,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "A single glass of milk carries more hidden water than three full baths.",
+      "comment": "A single glass of milk carries more hidden water than three full baths. I looked twice at that one.",
       "source": "Derived from Mekonnen & Hoekstra 2012 (1,020 L/L x 0.25 L)",
       "source_url": "https://link.springer.com/article/10.1007/s10021-011-9517-8",
       "confidence": "high",
@@ -1783,7 +1784,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Kilo for kilo, chocolate is thirstier than beef, cocoa trees are the reason.",
+      "comment": "Kilo for kilo, chocolate is thirstier than beef. Cocoa trees are the reason, and I wasn't ready for that.",
       "source": "Water Footprint Network Product Gallery (from Mekonnen & Hoekstra 2011)",
       "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
       "confidence": "high"
@@ -1801,7 +1802,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Cocoa has the largest water footprint of any major crop measured by the Water Footprint Network.",
+      "comment": "Cocoa has the largest water footprint of any major crop measured by the Water Footprint Network. Top of a list I wasn't expecting.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -1819,7 +1820,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Roasting drives the number up: green beans are 15,897 L/kg, roasted ones nearly 19,000.",
+      "comment": "Roasting drives the number up: green beans sit at 15,897 L/kg, roasted ones climb to nearly 19,000. All that from one bean.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (18,925 L/kg roasted; 15,897 L/kg green)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -1837,7 +1838,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "One small cup of coffee took 132 litres to reach you, about 1,000 times its own volume.",
+      "comment": "One small cup of coffee took about 132 litres to reach you, roughly 1,000 times its own volume. My cup felt heavier after that.",
       "source": "Chapagain & Hoekstra 2007, Ecological Economics; WFN",
       "source_url": "https://ayhoekstra.nl/pubs/Chapagain-Hoekstra-2007.pdf",
       "confidence": "high",
@@ -1856,7 +1857,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Tea leaves need less than half the water of coffee beans, and you use fewer grams per cup.",
+      "comment": "Tea leaves need less than half the water of coffee beans, and you use fewer grams per cup too. Tea's quietly winning this one.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -1874,7 +1875,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Swapping a coffee for a tea saves about 105 litres, roughly a bath and a bit.",
+      "comment": "Swapping a coffee for a tea saves about 105 litres, roughly a bath and a bit. Small swap, decent saving.",
       "source": "Chapagain & Hoekstra 2007, Ecological Economics; WFN",
       "source_url": "https://ayhoekstra.nl/pubs/Chapagain-Hoekstra-2007.pdf",
       "confidence": "high",
@@ -1893,7 +1894,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Rice is the single biggest user of irrigation water on Earth, ahead of wheat and cotton.",
+      "comment": "Rice is the single biggest user of irrigation water on Earth, ahead of wheat and cotton. A grain topping that list took me by surprise.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (paddy rice 1,673 L/kg)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -1911,7 +1912,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "About 70% of wheat's water is rain the plant drinks straight from the soil, not irrigation.",
+      "comment": "About 70% of wheat's water is rain the plant drinks straight from the soil, not irrigation. Mostly the sky's doing, not a pump's.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -1929,7 +1930,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "A standard 800 g loaf carries around 1,290 litres, mostly rain that fell on a wheat field.",
+      "comment": "A standard 800 g loaf carries around 1,290 litres, mostly rain that fell on a wheat field long before it was bread.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (derived wheat products)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -1947,7 +1948,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Maize is the most efficient major cereal per kilogram, beating both wheat and rice.",
+      "comment": "Maize is the most efficient major cereal per kilogram, beating both wheat and rice. Fair play to the humble cob.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -1965,7 +1966,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Potatoes are about 80% water themselves, and one of the thriftiest staples to grow.",
+      "comment": "Potatoes are about 80% water themselves, and one of the thriftiest staples you can grow. Good spud, honestly.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -1983,7 +1984,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Dry pasta costs slightly more water than the wheat it came from, because drying loses mass.",
+      "comment": "Dry pasta costs slightly more water than the wheat it came from. Drying it off loses mass, which nudges the number up.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (derived crop products)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2001,7 +2002,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Most soy never reaches a plate. It is grown to feed livestock, not people.",
+      "comment": "Most soy never reaches a plate at all. It is grown to feed livestock, not people. That one stuck with me.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2019,7 +2020,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Tofu needs roughly a sixth of beef's water for the same weight of protein-rich food.",
+      "comment": "Tofu needs roughly a sixth of beef's water for the same weight of protein-rich food. Worth remembering next time I'm shopping.",
       "source": "Water Footprint Network Product Gallery (from Mekonnen & Hoekstra 2011)",
       "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
       "confidence": "medium"
@@ -2037,7 +2038,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Lentils look thirsty per kilogram, but they are sold dry. Cooked, they roughly triple in weight.",
+      "comment": "Lentils look thirsty per kilogram, but they are sold dry. Cooked, they roughly triple in weight, so the real number per plate is far lower.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2055,7 +2056,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Shelling doubles the figure: half an almond's harvested weight is shell you throw away.",
+      "comment": "Shelling doubles the figure: half an almond's harvested weight is shell you throw straight away. That's a lot of waste for a snack.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (in-shell about 8,050 L/kg)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2073,7 +2074,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Walnuts come in at roughly half of almonds. Nuts vary far more than people expect.",
+      "comment": "Walnuts come in at roughly half of almonds. Nuts vary a lot more than I expected.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (in-shell about 4,920 L/kg)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "medium"
@@ -2091,7 +2092,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Peanuts are legumes, not nuts, and they drink about a sixth of what almonds do.",
+      "comment": "Peanuts are legumes, not nuts, and they drink about a sixth of what almonds do. Good value, all round.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "low"
@@ -2109,7 +2110,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Apple trees are perennial, so their water use is spread over decades of harvests.",
+      "comment": "Apple trees are perennial, so their water use is spread over decades of harvests. Patient plants, patient number.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2127,7 +2128,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "One apple, about 125 litres, roughly one and a half baths for a piece of fruit.",
+      "comment": "One apple comes to about 125 litres, roughly one and a half baths for a piece of fruit you can eat in five minutes.",
       "source": "Derived from Mekonnen & Hoekstra 2011 (822 L/kg x 0.15 kg)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high",
@@ -2146,7 +2147,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Bananas grow in the wet tropics, so almost all their water is rain rather than irrigation.",
+      "comment": "Bananas grow in the wet tropics, so almost all their water is rain rather than irrigation. The sky does the heavy lifting there.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2164,7 +2165,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Eating the orange beats drinking it: juice needs several fruits per glass.",
+      "comment": "Eating the orange beats drinking it: juice needs several fruits squeezed into one glass. Whole fruit wins again.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2183,7 +2184,7 @@
       "pool": "per-litre",
       "in_play": false,
       "excluded_reason": "Sold by volume, so it sits on a per-litre basis and cannot share a round with per-kg or per-unit items. Only four items share that basis, too few for a fair pool, so the per-litre rows are reference only.",
-      "comment": "A 200 ml glass of orange juice hides about 200 litres, juicing concentrates the footprint.",
+      "comment": "A 200 ml glass of orange juice hides about 200 litres. Juicing really concentrates the footprint.",
       "source": "Hoekstra 2008, 'The water footprint of food', WFN",
       "source_url": "https://www.waterfootprint.org/resources/Hoekstra-2008-WaterfootprintFood.pdf",
       "confidence": "medium"
@@ -2201,7 +2202,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Tomatoes are one of the lightest-footprint foods there is, about a bath and a half per kilo.",
+      "comment": "Tomatoes are one of the lightest footprint foods there is, about a bath and a half per kilo. Nice one, tomatoes.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2219,7 +2220,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "A whole kilo of lettuce costs less water than one egg.",
+      "comment": "A whole kilo of lettuce costs less water than a single egg. That one still surprises me.",
       "note": "Older Chapagain & Hoekstra (2004) compilations list lettuce at about 130 L/kg.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
@@ -2238,7 +2239,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Cabbage stores well for months, so almost none of its water is wasted on spoilage.",
+      "comment": "Cabbage stores well for months, so almost none of its water goes to waste through spoilage. Practical vegetable, that.",
       "note": "Older WFN compilations list cabbage at about 200 L/kg.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
@@ -2257,7 +2258,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "A cucumber is about 96% water, yet takes only around 350 litres per kilo to grow.",
+      "comment": "A cucumber is about 96% water itself, yet takes only around 350 litres per kilo to grow. Mostly water growing more water.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "medium"
@@ -2275,7 +2276,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "One 200 g avocado is about 400 litres, nearly ten times a tomato of the same weight.",
+      "comment": "One 200 g avocado runs to about 400 litres, nearly ten times a tomato of the same weight. That changed how I see brunch.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2293,7 +2294,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Olive trees survive on very little rain, but it takes about five kilos of olives per litre of oil.",
+      "comment": "Olive trees survive on very little rain, but it takes about five kilos of olives to press one litre of oil. The tree is thrifty, the oil is not.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "low"
@@ -2311,7 +2312,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Olive oil is the thirstiest common cooking oil, roughly triple palm oil per kilogram.",
+      "comment": "Olive oil is the thirstiest common cooking oil, roughly triple palm oil per kilogram. My favourite topped a chart I wasn't hoping for.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 / HESS 15:1577",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "high"
@@ -2329,7 +2330,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Oil palms yield more oil per hectare than any other crop, which keeps their water figure low.",
+      "comment": "Oil palms yield more oil per hectare than any other crop, which keeps their water figure surprisingly low.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "medium"
@@ -2347,7 +2348,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Raw cane looks cheap in water terms, but only about a tenth of it becomes sugar.",
+      "comment": "Raw cane looks cheap in water terms, but only about a tenth of it ends up as sugar. The rest is stalk and juice lost along the way.",
       "source": "Gerbens-Leenes & Hoekstra 2009, WFN Report 38 (209 m3/tonne)",
       "source_url": "https://www.waterfootprint.org/resources/Report38-WaterFootprint-sweeteners-ethanol.pdf",
       "confidence": "high"
@@ -2365,7 +2366,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Beet grows in cool, rainy places, so it needs about a third less water than cane.",
+      "comment": "Beet grows in cool, rainy places, so it needs about a third less water than cane. Location does a lot of the work.",
       "source": "Gerbens-Leenes & Hoekstra 2009, WFN Report 38 (133 m3/tonne)",
       "source_url": "https://www.waterfootprint.org/resources/Report38-WaterFootprint-sweeteners-ethanol.pdf",
       "confidence": "high"
@@ -2383,7 +2384,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "A single teaspoon of sugar carries roughly seven litres of hidden water.",
+      "comment": "A single teaspoon of sugar carries roughly seven litres of hidden water. Never looked at my tea the same way since.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (derived crop products)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "low"
@@ -2402,7 +2403,7 @@
       "pool": "per-litre",
       "in_play": false,
       "excluded_reason": "Sold by volume, so it sits on a per-litre basis and cannot share a round with per-kg or per-unit items. Only four items share that basis, too few for a fair pool, so the per-litre rows are reference only. The 250 ml glass of beer carries the same figure into play.",
-      "comment": "Over 90% of beer's footprint is the barley field, not the brewery.",
+      "comment": "Over 90% of beer's footprint is the barley field, not the brewery. The pint is the easy part.",
       "source": "Water Footprint Network (from Mekonnen & Hoekstra 2011, barley products)",
       "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
       "confidence": "high"
@@ -2420,7 +2421,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "One glass of beer equals about 300 glasses of water once you count the barley.",
+      "comment": "One glass of beer equals about 300 glasses of water once you count the barley behind it. Puts a pint in perspective.",
       "source": "Derived from WFN beer figure (298 L/L x 0.25 L)",
       "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
       "confidence": "high",
@@ -2440,7 +2441,7 @@
       "pool": "per-litre",
       "in_play": false,
       "excluded_reason": "Sold by volume, so it sits on a per-litre basis and cannot share a round with per-kg or per-unit items. Only four items share that basis, too few for a fair pool, so the per-litre rows are reference only. The 125 ml glass of wine carries the same figure into play.",
-      "comment": "Wine costs roughly three times beer per litre, because grapes give less juice per plant.",
+      "comment": "Wine costs roughly three times beer per litre, because grapes give less juice per plant. Grapes work harder for less.",
       "source": "Mekonnen & Hoekstra 2011, WFN Report 47 (wine grapes 869 m3/tonne)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
       "confidence": "medium"
@@ -2458,7 +2459,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "A small glass of wine hides more water than a full bath.",
+      "comment": "A small glass of wine hides more water than a full bath. That one made me pause mid sip.",
       "note": "Older Chapagain & Hoekstra (2004) figures put a 125 ml glass at about 120 litres.",
       "source": "Derived from WFN wine figure (869 L/L x 0.125 L)",
       "source_url": "https://hess.copernicus.org/articles/15/1577/2011/",
@@ -2478,7 +2479,7 @@
       "basis": "per-kg",
       "pool": "per-kg",
       "in_play": true,
-      "comment": "Cotton is the thirstiest non-food crop, and it grows mostly in already-dry countries.",
+      "comment": "Cotton is the thirstiest non-food crop, and it grows mostly in countries that are already dry. That combination worries me a bit.",
       "note": "Seed cotton (unginned) is roughly 3,600 L/kg; the 10,000 figure is for processed lint/fabric.",
       "source": "Chapagain, Hoekstra et al. 2006, WFN Report 18 (cotton consumption)",
       "source_url": "https://www.waterfootprint.org/resources/Report18.pdf",
@@ -2497,7 +2498,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "One t-shirt is about 2,500 litres, roughly what one person drinks in three years.",
+      "comment": "One t-shirt is about 2,500 litres, roughly what one person drinks in three years. I'll think of that next time I'm shopping.",
       "source": "Water Footprint Network / Chapagain et al. 2006",
       "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
       "confidence": "high",
@@ -2516,7 +2517,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Jeans cost about 8,000 litres, and most of it fell as rain on a cotton field.",
+      "comment": "Jeans cost about 8,000 litres, and most of it fell as rain on a cotton field long before the denim did.",
       "source": "Water Footprint Network / Chapagain et al. 2006",
       "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
       "confidence": "high",
@@ -2535,7 +2536,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Leather shoes inherit the cow's footprint. The tanning itself is a tiny share.",
+      "comment": "Leather shoes inherit the cow's whole footprint. The tanning itself is only a tiny share of the number.",
       "note": "Estimates vary widely: 8,000 L/pair is the commonly cited WFN figure, some sources quote 14,000-16,600 L/pair depending on leather weight allocated.",
       "source": "Water Footprint Network (bovine leather about 17,100 L/kg)",
       "source_url": "https://www.waterfootprint.org/resources/interactive-tools/product-gallery/",
@@ -2555,7 +2556,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Most of a sheet's water is not the mill. It is rain the tree drank while growing.",
+      "comment": "Most of a sheet's water is not the mill at all. It is rain the tree drank years before it became paper.",
       "source": "Van Oel & Hoekstra 2010, WFN Report 46 (300-2,600 m3/tonne, about 2-13 L per A4 sheet)",
       "source_url": "https://waterfootprint.org/resources/Report46-WaterFootprintPaper.pdf",
       "confidence": "medium",
@@ -2574,7 +2575,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Chip fabs rinse silicon wafers in ultra-pure water hundreds of times per device.",
+      "comment": "Chip fabs rinse silicon wafers in ultra-pure water hundreds of times per device. Never thought of a phone as thirsty before.",
       "source": "Friends of the Earth 'Mind Your Step' report; commonly quoted 12,000-13,000 L",
       "source_url": "https://www.twosides.info/wp-content/uploads/2018/05/mind-your-step-report-76803.pdf",
       "confidence": "medium",
@@ -2593,7 +2594,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Over 95% of a car's water is spent before you ever turn the key.",
+      "comment": "Over 95% of a car's water is spent before you ever turn the key. All of it gone before the first drive.",
       "note": "Older popular figures of 400,000 L per car come from different, broader virtual-water accounting and are not supported by the peer-reviewed LCA.",
       "source": "Berger et al. 2012, Environ. Sci. Technol., 'Water Footprint of European Cars'",
       "source_url": "https://pubs.acs.org/doi/10.1021/es2040043",
@@ -2614,7 +2615,7 @@
       "pool": "per-unit",
       "in_play": false,
       "excluded_reason": "A flow rate rather than a single act, and the 8-minute shower row already represents showering in the per-unit pool. Kept here because the reality checks and the actions list both use the 9 litres a minute figure.",
-      "comment": "A power shower can hit 15 litres a minute, nearly double a standard head.",
+      "comment": "A power shower can hit 15 litres a minute, nearly double a standard head. Worth knowing before you crank it up.",
       "source": "Waterwise UK (average shower 8-10 L/min)",
       "source_url": "https://waterwise.org.uk/how-to-save-water/",
       "confidence": "high",
@@ -2633,7 +2634,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Showers are the single biggest water use in a typical home, about a quarter of the total.",
+      "comment": "Showers are the single biggest water use in a typical home, about a quarter of the total. Mine included, probably.",
       "source": "Derived from Waterwise UK flow rate; Energy Saving Trust 'At Home with Water'",
       "source_url": "https://database.waterwise.org.uk/wp-content/uploads/2019/09/Energy-Saving-Trust_At-Home-With-Water.pdf",
       "confidence": "high",
@@ -2652,7 +2653,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "A bath and a long shower are surprisingly close. The loser is whichever runs longer.",
+      "comment": "A bath and a long shower are surprisingly close. Whichever one runs longer loses, simple as that.",
       "source": "Waterwise UK",
       "source_url": "https://waterwise.org.uk/how-to-save-water/",
       "confidence": "high",
@@ -2671,7 +2672,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Old cisterns sent up to 13 litres of drinking-quality water down the drain each flush.",
+      "comment": "Old cisterns sent up to 13 litres of drinking quality water down the drain with every flush. Straight down for nothing.",
       "source": "European Commission water efficiency study; USGS Water Science School",
       "source_url": "https://www.usgs.gov/water-science-school/science/water-qa-how-much-water-do-i-use-home-each-day",
       "confidence": "medium",
@@ -2690,7 +2691,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Dual-flush cisterns cut each flush by more than half without anyone noticing.",
+      "comment": "Dual flush cisterns cut each flush by more than half, and most people never even notice.",
       "source": "European Commission water efficiency standards study",
       "source_url": "https://ec.europa.eu/programmes/erasmus-plus/project-result-content/f3abca0c-bd78-42d3-8c78-c42d9dfce5ac/AQUAVET_H-P3_Background%20information%20on%20this%20topic.pdf",
       "confidence": "high",
@@ -2709,7 +2710,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "The small button uses 3 litres, about one glass of milk's worth of real water.",
+      "comment": "The small button uses 3 litres, about one glass of milk's worth of real water. A tiny button doing real work.",
       "source": "European Commission water efficiency standards study",
       "source_url": "https://ec.europa.eu/programmes/erasmus-plus/project-result-content/f3abca0c-bd78-42d3-8c78-c42d9dfce5ac/AQUAVET_H-P3_Background%20information%20on%20this%20topic.pdf",
       "confidence": "high",
@@ -2728,7 +2729,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "A full dishwasher beats hand-washing. The tap alone runs at about 6 litres a minute.",
+      "comment": "A full dishwasher beats hand washing. The tap alone runs at about 6 litres a minute if you leave it going.",
       "source": "APPLiA Europe statistical report 2022-2023",
       "source_url": "https://statreport2023.applia-europe.eu/pillar/1/average-water-consumption-of-washing-machines-and-dishwashers",
       "confidence": "high",
@@ -2747,7 +2748,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Machines have quietly cut their water use by a third since the late 1990s.",
+      "comment": "Machines have quietly cut their water use by a third since the late 1990s. Nobody throws a party for that, but they should.",
       "source": "APPLiA Europe statistical report 2022-2023 (about 46 L/cycle in 2022, down from 65 L in the late 1990s)",
       "source_url": "https://statreport2023.applia-europe.eu/pillar/1/average-water-consumption-of-washing-machines-and-dishwashers",
       "confidence": "high",
@@ -2766,7 +2767,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Two minutes of running tap is 12 litres, twice what a modern toilet flush uses.",
+      "comment": "Two minutes of running tap is 12 litres, twice what a modern toilet flush uses. I'm guilty of that one.",
       "source": "Waterwise UK / Cambridge Water (tap runs at about 6 L/min)",
       "source_url": "https://waterwise.org.uk/how-to-save-water/",
       "confidence": "high",
@@ -2785,7 +2786,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Turning the tap off while brushing cuts that step by more than 90%.",
+      "comment": "Turning the tap off while brushing cuts that step by more than 90%. Small habit, big drop.",
       "source": "Waterwise UK water-saving guidance",
       "source_url": "https://waterwise.org.uk/how-to-save-water/",
       "confidence": "medium",
@@ -2804,7 +2805,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "A single slow drip wastes over 5,000 litres a year, about 70 baths.",
+      "comment": "A single slow drip wastes over 5,000 litres a year, about 70 baths down the drain for nothing.",
       "source": "USGS drip calculator; UK water utility guidance",
       "source_url": "https://water.usgs.gov/edu/dripcalculator.html",
       "confidence": "medium",
@@ -2823,7 +2824,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Europeans use about 124 litres a day at home, less than one cup of coffee's hidden water.",
+      "comment": "Europeans use about 124 litres a day at home, less than one cup of coffee's hidden water. Puts my own day in perspective.",
       "source": "European Environment Agency / Eurostat-based estimates (range about 120-145 L)",
       "source_url": "https://www.eea.europa.eu/en/analysis/publications/water-savings-for-a-water-resilient-europe",
       "confidence": "medium",
@@ -2842,7 +2843,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Americans use roughly two and a half times as much water at home as Europeans.",
+      "comment": "Americans use roughly two and a half times as much water at home as Europeans. That gap is bigger than I expected.",
       "source": "US EPA WaterSense / USGS Water Science School",
       "source_url": "https://www.usgs.gov/water-science-school/science/water-qa-how-much-water-do-i-use-home-each-day",
       "confidence": "high",
@@ -2861,7 +2862,7 @@
       "basis": "per-unit",
       "pool": "per-unit",
       "in_play": true,
-      "comment": "Fifty litres a day covers drinking, cooking and washing, one seventh of US home use.",
+      "comment": "Fifty litres a day covers drinking, cooking and washing, about one seventh of the average US home use. That's survival, not comfort.",
       "source": "WHO, 'How much water is needed in emergencies' (50-100 L/person/day)",
       "source_url": "https://www.who.int/publications/i/item/WHO-technical-notes-for-emergencies",
       "confidence": "high",
@@ -3005,7 +3006,7 @@
       ]
     },
     {
-      "line": "A whole kilo of lettuce = 3 baths; a kilo of lamb = 130 baths.",
+      "line": "A whole kilo of lettuce = 3 baths. A kilo of lamb = 130 baths.",
       "arithmetic": "237 / 80 = 2.96 baths; 10,412 / 80 = 130.2 baths",
       "relates_to": [
         "Lettuce",
@@ -3413,8 +3414,8 @@
   }
 
   function basisSentence(pool) {
-    if (pool === 'per-kg') return 'Both figures are for one kilogram of the product.';
-    if (pool === 'per-unit') return 'Both figures are for one of the thing, as labelled on the card.';
+    if (pool === 'per-kg') return 'Both figures are for one kilogram.';
+    if (pool === 'per-unit') return 'Both figures are for one item, as labelled on the card.';
     return 'Both figures share the same basis.';
   }
 
@@ -3549,7 +3550,7 @@
     var ge = document.getElementById('game-envie');
     if (qb) {
       qb.classList.toggle('sky', right);
-      els.question.textContent = (right ? 'Spot on. ' : 'Not quite. ') + capitalise(thirsty) + ' is the thirsty one.';
+      els.question.textContent = (right ? 'Spot on. ' : 'Ah, no. ') + capitalise(thirsty) + ' is the thirsty one.';
       els.basisNote.textContent = '';
     }
     if (ge) ge.setAttribute('pose', right ? 'celebrate' : 'think');
@@ -3758,7 +3759,7 @@
 
     els.endPoints.textContent = String(score.total);
     els.scoreLabel.textContent = perfect ? 'Perfect run' : 'Your score';
-    els.scoreMax.textContent = 'pts this round';
+    els.scoreMax.textContent = 'pts today';
     els.scorePillStreak.textContent = state.streak + ' of ' + ROUNDS_PER_RUN + ' correct';
     els.scorePillBest.textContent = 'Best ' + state.best + ' of ' + ROUNDS_PER_RUN;
     els.scorePillBonus.textContent = perfect
@@ -3782,7 +3783,7 @@
 
     var lead;
     if (perfect) {
-      lead = 'Five out of five. You have a real feel for this.';
+      lead = 'Five out of five. You\'ve a real feel for this.';
     } else if (state.outcome === 'exit') {
       lead = 'You stopped after ' + state.streak + ' of ' + ROUNDS_PER_RUN +
              '. Your score is safe.';
@@ -3820,10 +3821,10 @@
 
   function showPlayedScreen() {
     var score = storeGet(SCORE_KEY);
-    els.playedScore.textContent = (score === null || score === '') ? '—' : score;
+    if (score === null || score === '') { els.playedScore.previousElementSibling.textContent = "One run a day, that's the rhythm. See you tomorrow."; els.playedScore.style.display = 'none'; els.playedScore.nextElementSibling.style.display = 'none'; } else { els.playedScore.textContent = score; }
     els.playedWhen.textContent = 'Your next run unlocks at midnight, ' + hoursToMidnight() + '.';
     showScreen('screen-played');
-    announce('You have already played today. Your score was ' +
+    announce('You\'ve already played today. Your score was ' +
       (score || 'not recorded') + ' points.');
   }
 
@@ -3997,7 +3998,7 @@
     // the day is spent and we say so warmly rather than showing a dead button.
     if (retryAvailable()) {
       els.retryNote.hidden = false;
-      els.retryNote.textContent = 'That first one caught you out, so here is one more go today.';
+      els.retryNote.textContent = 'That first one caught you out, so here\'s one more go today.';
       els.btnStartLabel.textContent = 'One more go';
     } else if (hasPlayedToday()) {
       showPlayedScreen();
@@ -4080,8 +4081,9 @@
     if (node) {
       node.innerHTML = '<p class="intro-label">Problem</p>' +
         '<h1 class="intro-title">The data<br><em>would not load</em></h1>' +
-        '<div class="did-you-know"><p class="dyk-text">' + message + '</p></div>';
+        '<div class="did-you-know"><p class="dyk-text">I couldn\'t load the cards. Check your connection and try again.</p></div>';
     }
+    if (window.console && console.error) console.error('Water challenge failed to load:', message);
   }
 
   document.addEventListener('DOMContentLoaded', function () {

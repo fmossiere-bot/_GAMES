@@ -1137,13 +1137,13 @@
 ══════════════════════════════════════════════════════ -->
 <div id="screen-played" class="screen">
   <div class="intro-top" style="justify-content:center;align-items:center;text-align:center;gap:16px;">
-    <div style="font-size:56px;margin-bottom:4px;">🌿</div>
+    <envie-mascot pose="wave" hat="hat" aria-hidden="true" style="display:block;position:relative;width:120px;margin:0 auto 4px;color:#fff;"></envie-mascot>
     <p class="intro-label">You've already played today</p>
     <h1 class="intro-title" style="font-size:clamp(28px,7vw,42px);">Come back<br><em>tomorrow</em></h1>
     <p style="font-size:14px;color:rgba(255,255,255,0.6);max-width:280px;line-height:1.6;">
-      One challenge per day, that's part of the fun. Your score from today:
+      One a day, that's the rhythm. Your score from today:
     </p>
-    <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:white;" id="played-score">—</div>
+    <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:white;" id="played-score">0</div>
     <p style="font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">pts</p>
   </div>
   <div class="intro-bottom">
@@ -1160,9 +1160,9 @@
   <div class="intro-top">
     <div class="badge-row stagger-1">
       <span class="category-badge" id="intro-category">Food & Water</span>
-      <span class="sub-badge">Daily Challenge</span>
+      <span class="sub-badge">Daily quiz</span>
     </div>
-    <p class="intro-label stagger-1">Today's Topic</p>
+    <p class="intro-label stagger-1">Today I looked at</p>
     <h1 class="intro-title stagger-2" id="intro-title">Irish<br><em>Coffee Day</em></h1>
     <div class="erow mid stagger-3">
       <envie-mascot pose="point" hat="cap"></envie-mascot>
@@ -1177,11 +1177,11 @@
   <div class="intro-bottom">
     <div class="meta-row stagger-4">
       <div class="meta-item"><div class="meta-dot"></div> 3 questions</div>
-      <div class="meta-item"><div class="meta-dot"></div> Under 3 minutes</div>
+      <div class="meta-item"><div class="meta-dot"></div> About 2 minutes</div>
       <div class="meta-item" id="meta-max-pts"><div class="meta-dot"></div> 150 pts max</div>
     </div>
     <button class="btn-play stagger-4" onclick="startQuiz()">
-      Start challenge
+      Start the quiz
       <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
@@ -1248,7 +1248,7 @@
   <div class="score-top">
     <p class="score-label">Your score</p>
     <div class="score-number pop-in" id="final-score">0</div>
-    <p class="score-max" id="score-max">out of 300</p>
+    <p class="score-max" id="score-max">out of 450</p>
     <div class="erow center lg">
       <envie-mascot id="score-envie" pose="flag" hat="hat"></envie-mascot>
       <div class="bb r5 tail-low">
@@ -1259,7 +1259,6 @@
     </div>
     <div class="score-pills">
       <span class="score-pill highlight" id="score-pill-correct">2 correct</span>
-      <span class="score-pill" id="score-pill-avg">Avg today: 140 pts</span>
     </div>
   </div>
 </div>
@@ -1501,7 +1500,7 @@ function renderResourcesHTML(raw) {
     }
     return `<li>${item}</li>`;
   }).join('');
-  return `<div class="resources-block"><h4>Useful resources</h4><ul>${lis}</ul></div>`;
+  return `<div class="resources-block"><h4>Where I looked</h4><ul>${lis}</ul></div>`;
 }
 
 async function loadChallenge() {
@@ -1682,7 +1681,7 @@ function timeUp() {
   const q = challenge.questions[currentQ];
   highlightCorrect(q.correct);
   userAnswers.push({ q: q.text, choice: null, correct: q.options[q.correct], isRight: false, fact: q.fact, pts: 0, timedOut: true });
-  showFeedback(false, "Time's up!", q.fact);
+  showFeedback(false, "Time's up.", q.fact);
 }
 
 function selectAnswer(idx) {
@@ -1702,12 +1701,12 @@ function selectAnswer(idx) {
     score += pts;
     correctCount++;
     userAnswers.push({ q: q.text, choice: q.options[idx], correct: q.options[q.correct], isRight: true,  fact: q.fact, pts });
-    showFeedback(true, `+${pts} points!`, q.fact);
+    showFeedback(true, `That's it. +${pts} pts`, q.fact);
   } else {
     btns[idx].classList.add('wrong');
     highlightCorrect(q.correct);
     userAnswers.push({ q: q.text, choice: q.options[idx], correct: q.options[q.correct], isRight: false, fact: q.fact, pts: 0 });
-    showFeedback(false, 'Not quite…', q.fact);
+    showFeedback(false, 'Ah, close but no.', q.fact);
   }
   document.getElementById('q-score-badge').textContent = `${score} pts`;
 }
@@ -1807,9 +1806,9 @@ function showResults() {
 
   const pct = score / TOTAL_MAX;
   let msg, sub, pose;
-  if (pct >= 0.85)      { msg = "Outstanding!"; sub = "You really know your stuff. Now let's turn that knowledge into action."; pose = 'celebrate'; }
-  else if (pct >= 0.55) { msg = "Good effort!"; sub = `You got ${correctCount} out of ${challenge.questions.length} right. Every game teaches something new.`; pose = 'flag'; }
-  else                  { msg = "Good start!";  sub = "Don't worry, the goal is to learn something surprising. You definitely did today."; pose = 'think'; }
+  if (pct >= 0.85)      { msg = "Maith thú!"; sub = "You know your stuff. I learned a thing or two from you today."; pose = 'celebrate'; }
+  else if (pct >= 0.55) { msg = "Not bad at all."; sub = `${correctCount} out of ${challenge.questions.length} right. I got one wrong too, first time I looked at the data.`; pose = 'flag'; }
+  else                  { msg = "Good start.";  sub = "The point is to learn something surprising, and you did today. Same as me."; pose = 'think'; }
   const scoreEnvie = document.getElementById('score-envie');
   if (scoreEnvie) scoreEnvie.setAttribute('pose', pose);
 
@@ -1860,7 +1859,8 @@ function goBack() {
 // ══════════════════════════════════════════════════════
 function boot() {
   if (hasPlayedToday()) {
-    document.getElementById('played-score').textContent = localStorage.getItem(SCORE_KEY) || '—';
+    { const sc = localStorage.getItem(SCORE_KEY), el = document.getElementById('played-score');
+      if (sc) { el.textContent = sc; } else { el.previousElementSibling.textContent = "One a day, that's the rhythm. See you tomorrow."; el.style.display = 'none'; el.nextElementSibling.style.display = 'none'; } }
     showScreen('screen-played');
   } else {
     initIntro();

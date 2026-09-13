@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Environmentle, Carbon Challenge</title>
+<title>Environmentle, Sort it out</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5S6BPNG30H"></script>
 <script>
@@ -1298,13 +1298,13 @@
 ══════════════════════════════════════════════════════ -->
 <div id="screen-played" class="screen">
   <div class="intro-top" style="justify-content:center;align-items:center;text-align:center;gap:16px;">
-    <div style="font-size:56px;margin-bottom:4px;">🌿</div>
+    <envie-mascot pose="wave" hat="hat" aria-hidden="true" style="display:block;position:relative;width:120px;margin:0 auto 4px;color:#fff;"></envie-mascot>
     <p class="intro-label">You've already played today</p>
     <h1 class="intro-title" style="font-size:clamp(28px,7vw,42px);">Come back<br><em>tomorrow</em></h1>
     <p style="font-size:14px;color:rgba(255,255,255,0.6);max-width:280px;line-height:1.6;">
-      One challenge per day, that's part of the fun. Your score from today:
+      One a day, that's the rhythm. Your score from today:
     </p>
-    <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:white;" id="played-score">—</div>
+    <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:white;" id="played-score">0</div>
     <p style="font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">pts</p>
   </div>
   <div class="intro-bottom">
@@ -1321,15 +1321,15 @@
   <div class="intro-top">
     <div class="badge-row stagger-1">
       <span class="category-badge">Carbon Footprint</span>
-      <span class="sub-badge">Sort It Out</span>
+      <span class="sub-badge">Sort it out</span>
     </div>
-    <p class="intro-label stagger-1">The Game</p>
+    <p class="intro-label stagger-1">Today's game</p>
     <h1 class="intro-title stagger-2">Sort it <em>out</em></h1>
     <div class="erow mid stagger-3">
       <envie-mascot pose="point" hat="cap"></envie-mascot>
       <div class="bb r2 tail-low">
         <p class="dyk-text">
-        You get <strong>6 cards</strong>, everyday things like a cheeseburger, a flight, an email. Drag them into order with the <strong>highest CO₂ at the top</strong>, lowest at the bottom. You have 3 tries.
+        I've picked <strong>6 cards</strong>, everyday things like a cheeseburger, a flight, an email. Drag them into order, <strong>highest CO₂ at the top</strong>, lowest at the bottom. You get 3 tries. I needed all three, first time.
       </p>
         <svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg>
       </div>
@@ -1399,7 +1399,7 @@
   <div class="score-top">
     <p class="score-label">Your score</p>
     <div class="score-number pop-in" id="final-score">0</div>
-    <p class="score-max">pts this round</p>
+    <p class="score-max">pts today</p>
     <div class="erow center lg">
       <envie-mascot id="score-envie" pose="flag" hat="hat"></envie-mascot>
       <div class="bb r5 tail-low">
@@ -1473,50 +1473,50 @@ async function loadCards() {
 
 // Full card list — used when the game is opened locally as a file
 const FALLBACK_CARDS = [
-  { title: "100 Emails",             sub: "Messaging",               category: "DIGITAL",      impact: 0.02,  emoji: "📧", comparison: "~20 kg/year if you send 10000 emails",                        comment: "Most of that footprint comes from the data centres storing and routing your messages, not your device" },
-  { title: "10 Hour Streaming",      sub: "Video streaming",         category: "DIGITAL",      impact: 0.8,   emoji: "📺", comparison: "Streaming accounts for ~80% of internet traffic",             comment: "Digital sector produces 4% of GHG projected to reach 14% by 2040" },
-  { title: "1 Banana",               sub: "Single fruit",            category: "FOOD",         impact: 0.11,  emoji: "🍌", comparison: "~20 kg/year eating one every second day",                     comment: "One of the lowest-footprint foods you can buy, bananas travel by ship not plane and need no packaging" },
-  { title: "1kg Potatoes",           sub: "Production",              category: "FOOD",         impact: 0.3,   emoji: "🥔", comparison: "~25kg/year in average per person in Ireland",                 comment: "On average, people in Ireland eat between 85 kg and 96 kg of potatoes per person every year." },
-  { title: "1 Bag of Tayto",         sub: "Single packet 25g",       category: "FOOD",         impact: 0.08,  emoji: "🥔", comparison: "~6 kg/year if you have one every day",                        comment: "Crisp production is energy-intensive; packaging adds to footprint" },
-  { title: "1 Pint of Guinness",     sub: "Draught pint",            category: "FOOD",         impact: 0.5,   emoji: "🍺", comparison: "~30 kg/year for a pint a day",                                comment: "Diageo has committed to net zero operations by 2030" },
-  { title: "1kg Irish Butter",       sub: "Production",              category: "FOOD",         impact: 8.8,   emoji: "🧈", comparison: "~33 kg/year at typical household use",                        comment: "Irish dairy has one of the lower emissions intensities in Europe but is still significant" },
-  { title: "1kg Cheddar Cheese",     sub: "Production",              category: "FOOD",         impact: 9.8,   emoji: "🧀", comparison: "Cheese requires ~10L of milk per kg",                         comment: "Dairy is Ireland's biggest agricultural emission source" },
-  { title: "1kg Chicken",            sub: "Meat production",         category: "FOOD",         impact: 6.9,   emoji: "🍗", comparison: "Chicken has ~10x lower footprint than beef; still significantly higher than plant protein", comment: "Chicken is one of the better meat choices for the climate, but lentils or beans have a 10x lower footprint again" },
-  { title: "1 Litre Oat Milk",       sub: "Production",              category: "FOOD",         impact: 0.9,   emoji: "🥛", comparison: "vs ~3.2 kg for cow's milk",                                   comment: "Oat milk uses ~80% less land and ~60% less water than dairy milk" },
-  { title: "1 Litre Cow's Milk",     sub: "Production",              category: "FOOD",         impact: 3.2,   emoji: "🥛", comparison: "~1.2 t/year for a family of 4 drinking 1L/day",               comment: "Ireland is one of Europe's largest dairy exporters" },
-  { title: "1 Washing Load",         sub: "40°C cycle",              category: "HOUSEHOLD",    impact: 0.7,   emoji: "👕", comparison: "Most emissions come from the energy to warm up the water",    comment: "Washing at 30°C instead of 40°C cuts energy use by about 40%, and modern detergents work just as well" },
-  { title: "10 Min Shower",          sub: "Hot water",               category: "HOUSEHOLD",    impact: 2.1,   emoji: "🚿", comparison: "~760 kg CO₂/year if you shower daily",                        comment: "Cutting a 10-minute shower to 4 minutes roughly halves the footprint, and saves on hot water bills too" },
-  { title: "1 Tumble Dryer Load",    sub: "Single cycle",            category: "HOUSEHOLD",    impact: 1.8,   emoji: "🌀", comparison: "~280 kg/year if used daily",                                   comment: "Air drying clothes saves the full amount; dryers are among the most energy-hungry home appliances" },
-  { title: "1 Dishwasher Cycle",     sub: "Standard cycle",          category: "HOUSEHOLD",    impact: 0.7,   emoji: "🍽️", comparison: "Similar footprint to a washing machine load at 40°C",          comment: "Roughly equivalent to a washing machine load; newer A-rated models use significantly less energy" },
-  { title: "Heating Home 1 Day",     sub: "Gas boiler average",      category: "HOUSEHOLD",    impact: 12,    emoji: "🔥", comparison: "~4400 kg/year for a typical Irish home",                      comment: "Over half of Irish homes use gas or oil for heating; heat pumps cut this by 50-70%" },
-  { title: "LED Bulb vs Halogen",    sub: "Per year of use",         category: "HOUSEHOLD",    impact: 20,    emoji: "💡", comparison: "Switching all bulbs in a home saves ~80 kg/year",              comment: "LED uses ~80% less energy; halogen bulbs are now banned for sale in the EU" },
-  { title: "1 Pizza",                sub: "Average size",            category: "FOOD",         impact: 1.5,   emoji: "🍕", comparison: "~78 kg/year if you eat one every week",                       comment: "The cheese topping accounts for nearly half the pizza's total footprint" },
-  { title: "1 Cheeseburger",         sub: "Single serving",          category: "FOOD",         impact: 3.2,   emoji: "🍔", comparison: "~166 kg/year if eaten weekly",                                comment: "The beef patty alone accounts for over 70% of the footprint, the bun and packaging are a tiny fraction" },
-  { title: "100km by Train",         sub: "Rail travel",             category: "TRANSPORT",    impact: 6,     emoji: "🚆", comparison: "About 4x less than the same trip by car",                     comment: "Irish Rail has committed to full electrification by 2030, the footprint will fall further as the grid gets greener" },
-  { title: "1kg of Coffee Beans",    sub: "Production",              category: "FOOD",         impact: 15,    emoji: "☕", comparison: "~180 kg/year at 1 kg/month",                                  comment: "Coffee production requires significant water consumption" },
-  { title: "100km by Car",           sub: "Petrol average",          category: "TRANSPORT",    impact: 25,    emoji: "🚗", comparison: "~4000 kg/year at 16000 km driven",                            comment: "Excludes manufacturing; also causes local air pollution and health impacts" },
-  { title: "1kg Lamb",               sub: "Meat production",         category: "FOOD",         impact: 28,    emoji: "🐑", comparison: "~365 kg/year for someone eating lamb once a week",            comment: "Sheep produce more methane relative to their size than cattle, which is why lamb often has a higher footprint per kg than beef" },
-  { title: "1 Pair Leather Shoes",   sub: "Production",              category: "FASHION",      impact: 30,    emoji: "👞", comparison: "Same as driving a petrol car about 120 km",                   comment: "The tanning process for leather is highly polluting; most leather is a by-product of the beef industry" },
-  { title: "1 Fast Fashion T-Shirt", sub: "Manufacturing",           category: "FASHION",      impact: 6,     emoji: "👕", comparison: "Same as leaving a phone charger plugged in for 6 months",     comment: "~96% of cotton is grown with pesticides; fast fashion creates 92M tonnes of waste per year" },
-  { title: "1 Pair of Jeans",        sub: "Manufacturing",           category: "FASHION",      impact: 33,    emoji: "👖", comparison: "Same footprint as driving ~130 km in a petrol car",           comment: "Takes ~7500 litres of water to produce one pair; equivalent to ~7 years of drinking water" },
-  { title: "1kg Beef",               sub: "Meat production",         category: "FOOD",         impact: 60,    emoji: "🥩", comparison: "~3 kg CO₂ per 100g serving, like leaving a laptop running for a week", comment: "Beef and dairy together account for roughly 65% of all agricultural greenhouse gas emissions globally" },
-  { title: "1 Smartphone",           sub: "Manufacturing",           category: "DIGITAL",      impact: 70,    emoji: "📱", comparison: "Same as charging your phone every day for 185 years",         comment: "About 80% of a phone's lifetime footprint comes from manufacturing, not from using it" },
-  { title: "1 Bicycle",              sub: "Manufacturing",           category: "TRANSPORT",    impact: 96,    emoji: "🚲", comparison: "Same as a return Dublin–Belfast train journey",               comment: "Manufacturing is the main footprint, once built a bike produces zero emissions per km" },
-  { title: "Dublin–Holyhead Ferry",   sub: "Return crossing",         category: "TRANSPORT",    impact: 38,    emoji: "⛴️", comparison: "A return flight Dublin–Manchester emits ~3x more CO₂",        comment: "Ferry + train to the UK is often competitive in time once you factor in airport check-in, and far lower carbon" },
-  { title: "1 Rasher of Bacon",      sub: "Single rasher",           category: "FOOD",         impact: 0.14,  emoji: "🥓", comparison: "~18 kg/year for one rasher per day",                          comment: "Pork has a lower footprint than beef or lamb but still 4x higher than chicken per kg" },
-  { title: "1 New Electric Car",     sub: "Manufacturing",           category: "TRANSPORT",    impact: 8000,  emoji: "⚡", comparison: "~3x lower lifetime emissions than a new petrol car",          comment: "EVs break even vs petrol cars after ~2-3 years of use; lifetime emissions still significantly lower" },
-  { title: "Paris Olympics Visit",   sub: "Per visitor",             category: "SPORT",        impact: 125,   emoji: "🏅", comparison: "1.6 Mt total for 13-16M visitors",                            comment: "Lower than Tokyo; half of London Olympics impact" },
-  { title: "1 Laptop",               sub: "Manufacturing",           category: "DIGITAL",      impact: 300,   emoji: "💻", comparison: "Same as flying Dublin to London and back",                    comment: "About 75% of a laptop's total footprint happens during manufacturing, before you even switch it on" },
-  { title: "Dublin–Madrid Flight",   sub: "Return economy",          category: "TRANSPORT",    impact: 550,   emoji: "✈️", comparison: "2.2 tonnes/year for 4 yearly trips",                          comment: "Aviation represents 2.5% of global emissions; very inequitably distributed" },
-  { title: "1 Year Digital Life",    sub: "Email streaming etc.",    category: "DIGITAL",      impact: 636,   emoji: "🌐", comparison: "1844 kg/year for a 2.9-person household",                     comment: "Digital sector produces 4% of GHG projected to reach 14% by 2040" },
-  { title: "1 Year Pet Dog",         sub: "Annual care",             category: "HOUSEHOLD",    impact: 770,   emoji: "🐕", comparison: "Similar to a return flight from Dublin to New York",          comment: "Most of a dog's footprint comes from their meat-based food, switching to a lower-carbon brand makes a real difference" },
-  { title: "1 Ton Cement",           sub: "Production",              category: "CONSTRUCTION", impact: 900,   emoji: "🏗️", comparison: "~200 kg for a 10 m² terrace (10 cm thick)",                   comment: "Cement production accounts for about 8% of global CO₂ emissions, more than all the world's trucks combined" },
-  { title: "1 Year Food Waste",      sub: "Household average",       category: "FOOD",         impact: 1600,  emoji: "🗑️", comparison: "~30% of food is wasted",                                       comment: "Waste generates methane; a major impact-reduction opportunity" },
-  { title: "NY–London Flight",       sub: "Return economy",          category: "TRANSPORT",    impact: 1800,  emoji: "🛫", comparison: "Business class is even higher",                               comment: "Aviation represents 2.5% of global emissions; very inequitably distributed" },
-  { title: "$10K in a Dirty Bank",   sub: "Yearly lending impact",   category: "FINANCE",      impact: 2400,  emoji: "🏦", comparison: "More than flying return from Dublin to Australia",            comment: "20-30% of bank lending goes to carbon-intensive industry" },
-  { title: "New Small Car",          sub: "Citroen C1 manufacturing",category: "TRANSPORT",    impact: 4000,  emoji: "🚙", comparison: "Same as an average Irish person's entire carbon footprint for 5 months", comment: "Even the smallest new car carries a large manufacturing footprint, second-hand is always the lower-carbon choice" },
-  { title: "New Range Rover",        sub: "Manufacturing",           category: "TRANSPORT",    impact: 25000, emoji: "🏎️", comparison: "Same as heating an Irish home for nearly 6 years",             comment: "One of the highest manufacturing footprints of any consumer product you can buy" },
-  { title: "1kg Asparagus",          sub: "Fresh production",        category: "FOOD",         impact: 0.4,   emoji: "🌿", comparison: "Flown from Peru it jumps to ~12 kg CO₂, 30x higher",         comment: "Asparagus is often imported out of season; shipped from Peru it rises to 0.67 kg but flown it can reach almost 12 kg" }
+  { title: "100 Emails", sub: "Messaging", category: "DIGITAL", impact: 0.02, emoji: "📧", comparison: "~20 kg/year if you send 10000 emails", comment: "Most of that comes from the data centres storing and routing your messages, not your phone. I assumed it was the phone." },
+  { title: "10 Hour Streaming", sub: "Video streaming", category: "DIGITAL", impact: 0.8, emoji: "📺", comparison: "Streaming accounts for ~80% of internet traffic", comment: "The digital sector produces 4% of global GHG right now, and that's projected to reach 14% by 2040." },
+  { title: "1 Banana", sub: "Single fruit", category: "FOOD", impact: 0.11, emoji: "🍌", comparison: "~20 kg/year eating one every second day", comment: "One of the lowest-footprint foods you can buy, bananas travel by ship not plane and need no packaging." },
+  { title: "1kg Potatoes", sub: "Production", category: "FOOD", impact: 0.3, emoji: "🥔", comparison: "~25 kg/year on average per person in Ireland", comment: "People in Ireland eat between 85 kg and 96 kg of potatoes a year. I didn't expect the humble spud to add up to that much." },
+  { title: "1 Bag of Tayto", sub: "Single packet 25g", category: "FOOD", impact: 0.08, emoji: "🥔", comparison: "~6 kg/year if you have one every day", comment: "Crisp production takes a lot of energy, and the packaging adds to the footprint too." },
+  { title: "1 Pint of Guinness", sub: "Draught pint", category: "FOOD", impact: 0.5, emoji: "🍺", comparison: "~30 kg/year for a pint a day", comment: "Diageo, the company behind Guinness, has committed to net zero operations by 2030. Fair play to them, that's one to watch." },
+  { title: "1kg Irish Butter", sub: "Production", category: "FOOD", impact: 8.8, emoji: "🧈", comparison: "~33 kg/year at typical household use", comment: "Irish dairy has one of the lower emissions intensities in Europe, but it's still significant." },
+  { title: "1kg Cheddar Cheese", sub: "Production", category: "FOOD", impact: 9.8, emoji: "🧀", comparison: "Cheese requires ~10L of milk per kg", comment: "Dairy is Ireland's biggest source of agricultural emissions. I didn't expect cheese to be the bigger story than beef here." },
+  { title: "1kg Chicken", sub: "Meat production", category: "FOOD", impact: 6.9, emoji: "🍗", comparison: "Chicken has ~10x lower footprint than beef, still significantly higher than plant protein", comment: "Chicken is one of the better meat choices for the climate, but lentils or beans have a 10x lower footprint again." },
+  { title: "1 Litre Oat Milk", sub: "Production", category: "FOOD", impact: 0.9, emoji: "🥛", comparison: "vs ~3.2 kg for cow's milk", comment: "Oat milk uses about 80% less land and 60% less water than dairy milk. Grand alternative if you ask me." },
+  { title: "1 Litre Cow's Milk", sub: "Production", category: "FOOD", impact: 3.2, emoji: "🥛", comparison: "~1.2 tonnes/year for a family of 4 drinking 1 litre a day", comment: "Ireland is one of Europe's largest dairy exporters. Makes sense once you see how much milk goes into everything here." },
+  { title: "1 Washing Load", sub: "40°C cycle", category: "HOUSEHOLD", impact: 0.7, emoji: "👕", comparison: "Most emissions come from the energy to warm up the water", comment: "Washing at 30°C instead of 40°C cuts energy use by about 40%, and modern detergents work just as well." },
+  { title: "10 Min Shower", sub: "Hot water", category: "HOUSEHOLD", impact: 2.1, emoji: "🚿", comparison: "~760 kg CO₂/year if you shower daily", comment: "Cutting a 10 minute shower to 4 minutes roughly halves the footprint, and it saves on hot water bills too." },
+  { title: "1 Tumble Dryer Load", sub: "Single cycle", category: "HOUSEHOLD", impact: 1.8, emoji: "🌀", comparison: "~280 kg/year if used daily", comment: "Air drying clothes saves the full amount. Dryers are among the most energy hungry appliances in the home." },
+  { title: "1 Dishwasher Cycle", sub: "Standard cycle", category: "HOUSEHOLD", impact: 0.7, emoji: "🍽️", comparison: "Similar footprint to a washing machine load at 40°C", comment: "Roughly equivalent to a washing machine load. Newer A-rated models use significantly less energy though." },
+  { title: "Heating Home 1 Day", sub: "Gas boiler average", category: "HOUSEHOLD", impact: 12, emoji: "🔥", comparison: "~4400 kg/year for a typical Irish home", comment: "Over half of Irish homes still heat with gas or oil. Heat pumps cut this by 50 to 70%, which is a big jump." },
+  { title: "LED Bulb vs Halogen", sub: "Per year of use", category: "HOUSEHOLD", impact: 20, emoji: "💡", comparison: "Switching all bulbs in a home saves ~80 kg/year", comment: "LED bulbs use about 80% less energy, and halogen bulbs are now banned for sale in the EU." },
+  { title: "1 Pizza", sub: "Average size", category: "FOOD", impact: 1.5, emoji: "🍕", comparison: "~78 kg/year if you eat one every week", comment: "The cheese topping accounts for nearly half the pizza's total footprint. I checked twice because that seemed high." },
+  { title: "1 Cheeseburger", sub: "Single serving", category: "FOOD", impact: 3.2, emoji: "🍔", comparison: "~166 kg/year if eaten weekly", comment: "The beef patty alone accounts for over 70% of the footprint, the bun and packaging barely register." },
+  { title: "100km by Train", sub: "Rail travel", category: "TRANSPORT", impact: 6, emoji: "🚆", comparison: "About 4x less than the same trip by car", comment: "Irish Rail has committed to full electrification by 2030, so the footprint will fall further as the grid gets greener." },
+  { title: "1kg of Coffee Beans", sub: "Production", category: "FOOD", impact: 15, emoji: "☕", comparison: "~180 kg/year at 1 kg/month", comment: "Coffee production takes a lot of water. I didn't realise my morning coffee had that kind of footprint behind it." },
+  { title: "100km by Car", sub: "Petrol average", category: "TRANSPORT", impact: 25, emoji: "🚗", comparison: "~4000 kg/year at 16000 km driven", comment: "That excludes manufacturing, and it also causes local air pollution and health impacts." },
+  { title: "1kg Lamb", sub: "Meat production", category: "FOOD", impact: 28, emoji: "🐑", comparison: "~365 kg/year for someone eating lamb once a week", comment: "Sheep produce more methane relative to their size than cattle, which is why lamb often has a higher footprint per kg than beef." },
+  { title: "1 Pair Leather Shoes", sub: "Production", category: "FASHION", impact: 30, emoji: "👞", comparison: "Same as driving a petrol car about 120 km", comment: "The tanning process for leather is highly polluting, and most leather is a by-product of the beef industry." },
+  { title: "1 Fast Fashion T-Shirt", sub: "Manufacturing", category: "FASHION", impact: 6, emoji: "👕", comparison: "Same as leaving a phone charger plugged in for 6 months", comment: "About 96% of cotton is grown with pesticides, and fast fashion creates 92 million tonnes of waste a year." },
+  { title: "1 Pair of Jeans", sub: "Manufacturing", category: "FASHION", impact: 33, emoji: "👖", comparison: "Same footprint as driving ~130 km in a petrol car", comment: "It takes about 7500 litres of water to make one pair, equivalent to about 7 years of drinking water." },
+  { title: "1kg Beef", sub: "Meat production", category: "FOOD", impact: 60, emoji: "🥩", comparison: "~3 kg CO₂ per 100g serving, like leaving a laptop running for a week", comment: "Beef and dairy together account for roughly 65% of all agricultural greenhouse gas emissions worldwide. That surprised me, I thought it would be transport." },
+  { title: "1 Smartphone", sub: "Manufacturing", category: "DIGITAL", impact: 70, emoji: "📱", comparison: "Same as charging your phone every day for 185 years", comment: "About 80% of a phone's lifetime footprint comes from manufacturing, not from using it." },
+  { title: "1 Bicycle", sub: "Manufacturing", category: "TRANSPORT", impact: 96, emoji: "🚲", comparison: "Same as a return Dublin–Belfast train journey", comment: "Manufacturing is the main footprint, once built a bike produces zero emissions per km." },
+  { title: "Dublin–Holyhead Ferry", sub: "Return crossing", category: "TRANSPORT", impact: 38, emoji: "⛴️", comparison: "A return flight Dublin–Manchester emits ~3x more CO₂", comment: "Ferry and train to the UK is often just as quick once you factor in airport check-in, and it's far lower carbon." },
+  { title: "1 Rasher of Bacon", sub: "Single rasher", category: "FOOD", impact: 0.14, emoji: "🥓", comparison: "~18 kg/year for one rasher per day", comment: "Pork has a lower footprint than beef or lamb, but it's still 4x higher than chicken per kg." },
+  { title: "1 New Electric Car", sub: "Manufacturing", category: "TRANSPORT", impact: 8000, emoji: "⚡", comparison: "~3x lower lifetime emissions than a new petrol car", comment: "EVs break even against petrol cars after about 2 to 3 years of use, and their lifetime emissions stay significantly lower." },
+  { title: "Paris Olympics Visit", sub: "Per visitor", category: "SPORT", impact: 125, emoji: "🏅", comparison: "1.6 Mt total across 13 to 16 million visitors", comment: "That's lower than Tokyo's footprint, and about half the impact of the London Olympics." },
+  { title: "1 Laptop", sub: "Manufacturing", category: "DIGITAL", impact: 300, emoji: "💻", comparison: "Same as flying Dublin to London and back", comment: "About 75% of a laptop's total footprint happens during manufacturing, before you even switch it on." },
+  { title: "Dublin–Madrid Flight", sub: "Return economy", category: "TRANSPORT", impact: 550, emoji: "✈️", comparison: "2.2 tonnes/year for 4 yearly trips", comment: "Aviation makes up 2.5% of global emissions, and it's very unevenly distributed, a small share of people fly the most." },
+  { title: "1 Year Digital Life", sub: "Email streaming etc.", category: "DIGITAL", impact: 636, emoji: "🌐", comparison: "1844 kg/year for a 2.9-person household", comment: "The digital sector's share of global GHG stands at 4% today and is projected to climb to 14% by 2040." },
+  { title: "1 Year Pet Dog", sub: "Annual care", category: "HOUSEHOLD", impact: 770, emoji: "🐕", comparison: "Similar to a return flight from Dublin to New York", comment: "Most of a dog's footprint comes from their meat-based food, switching to a lower-carbon brand makes a real difference." },
+  { title: "1 Ton Cement", sub: "Production", category: "CONSTRUCTION", impact: 900, emoji: "🏗️", comparison: "~200 kg for a 10 m² terrace (10 cm thick)", comment: "Cement production accounts for about 8% of global CO₂ emissions, more than all the world's trucks combined. That's not some small industry hiding in the background." },
+  { title: "1 Year Food Waste", sub: "Household average", category: "FOOD", impact: 1600, emoji: "🗑️", comparison: "~30% of food is wasted", comment: "Wasted food generates methane as it breaks down, so cutting it back is one of the biggest opportunities out there." },
+  { title: "NY–London Flight", sub: "Return economy", category: "TRANSPORT", impact: 1800, emoji: "🛫", comparison: "Business class is even higher", comment: "Aviation accounts for 2.5% of global emissions, and it's spread very unevenly, a small share of frequent flyers rack up most of it." },
+  { title: "$10K in a Dirty Bank", sub: "Yearly lending impact", category: "FINANCE", impact: 2400, emoji: "🏦", comparison: "More than flying return from Dublin to Australia", comment: "Between 20 and 30% of bank lending goes to carbon-intensive industry. Where your money sits matters more than I realised." },
+  { title: "New Small Car", sub: "Citroen C1 manufacturing", category: "TRANSPORT", impact: 4000, emoji: "🚙", comparison: "Same as an average Irish person's entire carbon footprint for 5 months", comment: "Even the smallest new car carries a large manufacturing footprint, second-hand is always the lower-carbon choice." },
+  { title: "New Range Rover", sub: "Manufacturing", category: "TRANSPORT", impact: 25000, emoji: "🏎️", comparison: "Same as heating an Irish home for nearly 6 years", comment: "One of the highest manufacturing footprints of any consumer product you can buy. I did not see that coming from a car." },
+  { title: "1kg Asparagus", sub: "Fresh production", category: "FOOD", impact: 0.4, emoji: "🌿", comparison: "Flown from Peru it jumps to ~12 kg CO₂, 30x higher", comment: "Asparagus is often imported out of season. Shipped from Peru it rises to 0.67 kg, but flown it can reach almost 12 kg." },
 ];
 
 // ── ACTION THRESHOLD ──
@@ -1897,12 +1897,12 @@ function submitAnswer() {
     const timeSec = Math.round((Date.now() - roundStartTime) / 1000);
     roundScore = calcScore(CARDS_PER_ROUND, triesUsed, timeSec);
     totalScore += roundScore;
-    msg.textContent = `🎉 Perfect! All 6 correct.`;
+    msg.textContent = `Perfect, all 6 in the right place.`;
     msg.className = 'result-message correct-msg';
     document.getElementById('score-badge').textContent = `${roundScore} pts`;
     setTimeout(showFinalReveal, 800);
   } else if (triesLeft > 0) {
-    msg.textContent = `${correct} of 6 correct, ${triesLeft} ${triesLeft === 1 ? 'try' : 'tries'} left. Move the wrong ones and try again.`;
+    msg.textContent = `${correct} of 6 in place, ${triesLeft} ${triesLeft === 1 ? 'try' : 'tries'} left. Move the wrong ones and try again.`;
     msg.className = 'result-message wrong-msg';
     btn.textContent = 'Try again';
     btn.className = 'btn-submit retry';
@@ -1915,7 +1915,7 @@ function submitAnswer() {
     roundScore = calcScore(correct, MAX_TRIES, timeSec);
     totalScore += roundScore;
     document.getElementById('score-badge').textContent = `${roundScore} pts`;
-    msg.textContent = `${correct} of 6 correct. See the right order below.`;
+    msg.textContent = `${correct} of 6 in place. Here's the right order.`;
     msg.className = 'result-message wrong-msg';
     setTimeout(showFinalReveal, 800);
   }
@@ -1968,7 +1968,7 @@ function showFinalReveal() {
     if (card.comment) {
       const ctaBtn = document.createElement('button');
       ctaBtn.className = 'card-info-btn';
-      ctaBtn.textContent = '🌿 Quick extra fact';
+      ctaBtn.textContent = 'One more thing';
       ctaBtn.addEventListener('touchstart', e => e.stopPropagation());
       ctaBtn.addEventListener('touchend', e => {
         e.stopPropagation(); e.preventDefault();
@@ -1992,7 +1992,7 @@ function showFinalReveal() {
   });
 
   const btn = document.getElementById('btn-submit');
-  btn.textContent = 'See my score';
+  btn.textContent = 'See my score →';
   btn.className = 'btn-submit';
   btn.onclick = showResults;
   canDrag = false;
@@ -2006,13 +2006,13 @@ function showResults() {
 
   let msg, sub, pose;
   if (correctCount === CARDS_PER_ROUND && triesUsed === 1) {
-    msg = "First try!"; sub = "You nailed it on the first attempt. Impressive."; pose = 'celebrate';
+    msg = "First try!"; sub = "All six, first go. I needed three."; pose = 'celebrate';
   } else if (correctCount === CARDS_PER_ROUND) {
-    msg = "Well done!"; sub = `You got all 6 right in ${triesUsed} ${triesUsed === 1 ? 'try' : 'tries'}.`; pose = 'celebrate';
+    msg = "Maith thú!"; sub = `All 6 right in ${triesUsed} ${triesUsed === 1 ? 'try' : 'tries'}. That's the way.`; pose = 'celebrate';
   } else if (correctCount >= 4) {
-    msg = "Almost there!"; sub = `You got ${correctCount} out of 6 right. Keep playing to sharpen your instincts.`; pose = 'flag';
+    msg = "Almost there."; sub = `${correctCount} out of 6. These numbers caught me out too, the first time.`; pose = 'flag';
   } else {
-    msg = "Good start!"; sub = "Carbon footprints are surprisingly tricky. Every game teaches you something new."; pose = 'think';
+    msg = "Good start."; sub = "Carbon footprints are tricky. I got most of them wrong when I first landed."; pose = 'think';
   }
   const scoreEnvie = document.getElementById('score-envie');
   if (scoreEnvie) scoreEnvie.setAttribute('pose', pose);
@@ -2054,8 +2054,8 @@ function markPlayedToday(score) {
 // Check on page load — if already played, skip to played screen
 (function checkAlreadyPlayed() {
   if (hasPlayedToday()) {
-    const score = localStorage.getItem(SCORE_KEY) || '—';
-    document.getElementById('played-score').textContent = score;
+    const score = localStorage.getItem(SCORE_KEY), el = document.getElementById('played-score');
+    if (score) { el.textContent = score; } else { el.previousElementSibling.textContent = "One a day, that's the rhythm. See you tomorrow."; el.style.display = 'none'; el.nextElementSibling.style.display = 'none'; }
     showScreen('screen-played');
   }
 })();

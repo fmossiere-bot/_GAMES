@@ -116,12 +116,12 @@
         go: () => d.game ? openGame(d.game.type, d.game.mode) : switchTab('games') },
       { key: 'story',  label: 'Story',  name: d.unreadStory ? d.unreadStory.title : 'Read one again', meta: '6 min', icon: 'book-open', tone: 'white',
         go: () => d.unreadStory ? openCourse(d.unreadStory.id) : switchTab('learn') },
-      { key: 'action', label: 'Action', name: d.action ? d.action.title : 'Browse the list', meta: '2 min', icon: 'sprout', tone: 'sky',
+      { key: 'action', label: 'Action', name: d.action ? d.action.title : 'Pick your own', meta: '2 min', icon: 'sprout', tone: 'sky',
         go: () => d.action ? openActionSheet(d.action.id) : openActions() },
     ];
     const leadKey = d.lead === 'credit' ? 'action' : d.lead;
     // A done tile names what was done, not the next suggestion
-    const GAME_NAMES = { quiz: 'Quiz', sort: 'Carbon challenge', water: 'Water challenge' };
+    const GAME_NAMES = { quiz: 'Quiz', sort: 'Sort it out', water: 'Water challenge' };
     const doneName = {
       game:   st.gamesDoneToday.map((g) => GAME_NAMES[g]).join(', '),
       story:  (ALL_STORIES.find((x) => x.id === st.completedStories[st.completedStories.length - 1]) || {}).title || 'Story read',
@@ -137,10 +137,10 @@
       const badge = done ? '<span class="way-badge done">Done today</span>' : lead ? '<span class="way-badge">Suggested</span>' : '';
       const meta = done ? EA.icon('check', { size: 12 }) + ' Done' : locked ? 'Tomorrow' : w.meta;
       return `<button type="button" class="${cls}" data-way="${w.key}">${badge}<span class="tile sm ${w.tone === 'white' ? '' : w.tone}">${EA.icon(w.icon, { size: 20 })}</span><p class="way-label">${w.label}</p><p class="way-name">${esc(w.name)}</p><p class="way-meta">${meta}</p></button>`;
-    }).join('') + `<p class="ways-hint">${d.dayDone ? 'Two challenges is the daily cap. The games and stories tabs stay open, and Envie is back tomorrow.' : 'Envie picked these for today. Choose your own game or story from the menu below.'}</p>`;
+    }).join('') + `<p class="ways-hint">${d.dayDone ? 'Two a day is the cap. Games and Stories stay open, and I\'ll have new picks tomorrow.' : 'I picked these three for today. Or choose your own from the tabs below.'}</p>`;
     el.querySelectorAll('.way').forEach((b) => {
       const w = ways.find((x) => x.key === b.dataset.way);
-      b.onclick = () => { if (b.classList.contains('locked')) { showToast('That is two for today', 'One a day is the rhythm. Envie will have this one for you tomorrow.', 'flag'); return; } w.go(); };
+      b.onclick = () => { if (b.classList.contains('locked')) { showToast('That\'s two for today', 'One a day is the rhythm. I\'ll keep this one for tomorrow.', 'flag'); return; } w.go(); };
     });
   }
 
@@ -158,8 +158,8 @@
           <div class="lead-card credit" onclick="openCredit()">
             <div class="lead-top"><span class="pill solid-sky">Action · ${held} credit${held > 1 ? 's' : ''} ready</span></div>
             <div class="lead-main"><span class="tile lg sky ring">${EA.icon('sprout', { size: 26 })}</span><p class="lead-title">Turn ${fmt(c.step)} points into a real tree</p></div>
-            <p class="lead-desc">Your points became something that goes in the ground. Pick where it goes and we send it to the partner.</p>
-            <div class="lead-actions"><button type="button" class="cta sky" onclick="event.stopPropagation(); openCredit()">Spend my credit ${EA.icon('arrow-right', { size: 17 })}</button><button type="button" class="cta ghost sm" onclick="event.stopPropagation(); openActions()">Others</button></div>
+            <p class="lead-desc">Your points just became something real. Pick where it goes and I'll pass it to the partner.</p>
+            <div class="lead-actions"><button type="button" class="cta sky" onclick="event.stopPropagation(); openCredit()">Use my credit ${EA.icon('arrow-right', { size: 17 })}</button><button type="button" class="cta ghost sm" onclick="event.stopPropagation(); openActions()">Other actions</button></div>
           </div>
         </div>`;
       return;
@@ -170,7 +170,7 @@
         <div class="lead-wrap">
           <envie-mascot pose="point" hat="cap" aria-hidden="true"></envie-mascot>
           <div class="lead-card action" onclick="openActionSheet('${esc(action.id)}')">
-            <div class="lead-top"><span class="pill sky">Suggested action</span><span class="lead-sub">${esc(typeLabel(action.type))} · ${esc(action.level)}</span></div>
+            <div class="lead-top"><span class="pill sky">Suggested action</span><span class="lead-sub">${esc(typeLabel(action.type))} · ${action.level === 'medium' ? 'Medium' : 'Easy'}</span></div>
             <div class="lead-main"><span class="tile lg sky">${EA.icon(TYPE_ICON[action.type] || 'sprout', { size: 26 })}</span><p class="lead-title">${esc(action.title)}</p></div>
             <p class="lead-desc">${esc(action.desc)}</p>
             <div class="lead-actions"><button type="button" class="cta sky" onclick="event.stopPropagation(); openActionSheet('${esc(action.id)}')">Read more ${EA.icon('arrow-right', { size: 17 })}</button><span class="lead-pts">+${action.points} pts</span></div>
@@ -197,8 +197,8 @@
           <envie-mascot pose="celebrate" hat="hat" aria-hidden="true"></envie-mascot>
           <div class="lead-card done-card">
             <div class="lead-top"><span class="pill sky">Streak kept</span></div>
-            <p class="lead-title">${st.doneCount >= 3 ? 'Game, story and action. All three today.' : 'Two today. That is the rhythm.'}</p>
-            <p class="lead-desc">Envie keeps the rest for tomorrow. The companion is always open if you want to ask something.</p>
+            <p class="lead-title">${st.doneCount >= 3 ? 'Game, story and action. The full set today.' : 'Two today. That\'s the rhythm.'}</p>
+            <p class="lead-desc">I'll keep the rest for tomorrow. If something's on your mind, come and ask me.</p>
             <div class="lead-actions">${shareButton('day', 'Share today', 'cta sky')}<button type="button" class="cta ghost sm" onclick="switchTab('companion')">Companion</button></div>
           </div>
         </div>`;
@@ -218,7 +218,7 @@
     } else {
       const upcoming = (_loadedChallenges || []).filter((c) => c.date > st.today).sort((a, b) => a.date.localeCompare(b.date))[0];
       top = 'All played today';
-      titleTxt = 'Every game is done for today.';
+      titleTxt = 'All three games played. Fair play.';
       sub = upcoming ? 'Next challenge ' + unlockLabel(upcoming.date) : 'Back tomorrow';
       pts = '';
       cta = 'Games';
@@ -244,7 +244,7 @@
     let html = '';
 
     if ((d.showActionCard || d.showSmallActionUnderCredit) && action) {
-      html += `<p class="eyebrow">${d.lead === 'credit' ? 'Or a smaller action today' : 'Suggested action'}</p>
+      html += `<p class="eyebrow">${d.lead === 'credit' ? 'Or a smaller action today' : 'One small action'}</p>
         <div class="row act-row ${d.lead === 'credit' ? '' : 'dashed'}" onclick="openActionSheet('${esc(action.id)}')">
           <span class="tile sm ${d.lead === 'credit' ? 'amber' : 'sky'}">${EA.icon('check', { size: 21 })}</span>
           <div class="row-body"><p class="row-title">${esc(action.title)}</p><p class="row-meta">Pledge today · +${action.points} pts</p></div>
@@ -320,9 +320,9 @@
     const bubble = document.getElementById('actions-bubble');
     if (bubble) {
       let head, sub;
-      if (left <= 0) { head = 'That is your week sorted.'; sub = `You have pledged ${Engine.ACTIONS_PER_WEEK} this week. Browse for ideas, pledge again from Monday.`; }
-      else if (st.actionsWeek.length) { head = 'One more this week, if you like.'; sub = 'Small and specific beats big and vague. Pick something you would actually do.'; }
-      else { head = 'Pick one you can actually do.'; sub = 'These come from what you have been playing and reading. Pledge it, and it counts as today.'; }
+      if (left <= 0) { head = 'That\'s your week sorted.'; sub = `${Engine.ACTIONS_PER_WEEK} pledged this week, that\'s the cap. Have a browse for ideas, and pledge again from Monday.`; }
+      else if (st.actionsWeek.length) { head = 'One more this week, if you like.'; sub = 'Small and specific beats big and vague. Pick something you\'d actually do.'; }
+      else { head = 'Pick one you can actually do.'; sub = 'These come from what you\'ve been playing and reading. Pledge one and it counts as today\'s challenge.'; }
       bubble.innerHTML = `<p class="bh">${head}</p><p class="bs">${sub}</p>` + EA.TAIL;
     }
     const cap = document.getElementById('actions-cap');
@@ -350,8 +350,8 @@
     list.innerHTML = shown.map((a) => actionCard(a, left > 0, a.id === _highlight, pledgedIds.has(a.id))).join('')
       + (items.length > shown.length ? `<button type="button" class="cta ghost" id="actions-more">Show ${items.length - shown.length} more</button>` : '')
       + (items.length === 0 ? '<p class="actions-empty">' + (ranked.length === 0 && !st.history.length
-          ? 'The actions list could not be loaded. Open the app through a web server, not as a file.'
-          : 'Nothing left in this list. You have pledged them all.') + '</p>' : '');
+          ? 'I couldn\'t load the actions list. Check your connection and try again.'
+          : 'Nothing left in this list. You\'ve pledged them all, fair play.') + '</p>' : '');
     const more = document.getElementById('actions-more');
     if (more) more.onclick = () => { _showAll = true; renderActions(); };
     list.querySelectorAll('[data-view]').forEach((b) => b.onclick = () => openActionSheet(b.dataset.view));
@@ -410,8 +410,8 @@
       const when = src.date ? new Date(src.date + 'T00:00:00').toLocaleDateString('en-IE', { weekday: 'long', day: 'numeric', month: 'short' }) : '';
       return c ? `From the challenge "${c.title_line1} ${c.title_line2}"${when ? ' · ' + when : ''}` : 'From a daily challenge';
     }
-    if (src.kind === 'sort') return `From the carbon sorting game · ${src.card}`;
-    if (src.kind === 'water') return 'From the water challenge';
+    if (src.kind === 'sort') return `From Sort it out · ${src.card}`;
+    if (src.kind === 'water') return 'From the Water challenge';
     return '';
   }
   async function openActionSheet(id) {
@@ -430,10 +430,10 @@
       document.body.appendChild(sheet);
       sheet.querySelector('.sheet-scrim').onclick = closeActionSheet;
     }
-    const envie = pledged ? 'You already pledged this one.'
+    const envie = pledged ? 'You\'ve already pledged this one.'
       : left <= 0 ? 'Your two for this week are in. Come back Monday for this one.'
       : a.level === 'medium' ? 'A bit more effort than most. Worth it if it fits your week.'
-      : 'Small, specific, and done in a day. That is the kind that sticks.';
+      : 'Small, specific, done in a day. That\'s the kind that sticks.';
     sheet.querySelector('.sheet-panel').innerHTML = `
       <button type="button" class="sheet-close" aria-label="Close" onclick="closeActionSheet()">${EA.icon('x', { size: 18 })}</button>
       <div class="sheet-head">
@@ -477,7 +477,7 @@
     closeActionSheet();
     if (document.getElementById('screen-actions').classList.contains('active')) renderActions();
     else renderHome();
-    showToast('Noted', 'Here is another one instead.', 'think');
+    showToast('Noted', 'Here\'s another one instead.', 'think');
   }
 
   // ── CREDIT SCREEN ───────────────────────────────────────
@@ -499,7 +499,7 @@
     const held = c.held;
 
     const hero = held > 0
-      ? `<div class="erow center lg"><envie-mascot pose="celebrate" hat="hat" aria-hidden="true"></envie-mascot><div class="bb r3 tail-low"><p class="bh">${held} credit${held > 1 ? 's' : ''} ready to plant.</p><p class="bs">Pick where it goes. We send it to the partner, you get the photo back.</p>${EA.TAIL}</div></div>`
+      ? `<div class="erow center lg"><envie-mascot pose="celebrate" hat="hat" aria-hidden="true"></envie-mascot><div class="bb r3 tail-low"><p class="bh">${held} credit${held > 1 ? 's' : ''} ready to plant.</p><p class="bs">Pick where it goes. I\'ll pass it to the partner, and you get the photo back.</p>${EA.TAIL}</div></div>`
       : `<div class="erow center lg"><envie-mascot pose="think" hat="hat" aria-hidden="true"></envie-mascot><div class="bb r2 tail-low"><p class="bh">No credit yet.</p><p class="bs">${fmt(c.toGo)} points to go. Every game, story and action counts.</p>${EA.TAIL}</div></div>`;
 
     const rows = partners.map((p) => {
@@ -518,16 +518,16 @@
       <div class="credit-confirm">
         <p class="credit-confirm-desc">${esc(picked.desc)}</p>
         <label class="credit-email">
-          <span>Your email, so we can validate the credit and send you the photo</span>
+          <span>Your email, so we can check the credit and send you the photo</span>
           <input type="email" id="credit-email" inputmode="email" autocomplete="email" placeholder="you@example.com" value="${esc(email)}">
         </label>
-        <p class="credit-email-err" id="credit-email-err" hidden>That does not look like an email address.</p>
+        <p class="credit-email-err" id="credit-email-err" hidden>That doesn\'t look like an email address.</p>
         <button type="button" class="cta sky" id="credit-go">Plant it · ${picked.credits} credit${picked.credits > 1 ? 's' : ''} ${EA.icon('arrow-right', { size: 17 })}</button>
         <p class="credit-note">We only use your email for this credit and for news about it. Partners are placeholders for now.</p>
       </div>` : '';
 
     const ledger = c.ledger.length ? `<p class="eyebrow">Already planted</p>` + shareButton('credit', 'Share what you planted') + c.ledger.slice().reverse().map((e) =>
-      `<div class="row done"><span class="tile sm sky">${EA.icon('check', { size: 19 })}</span><div class="row-body"><p class="row-title">${esc(e.title)}</p><p class="row-meta">${formatRelativeDate(e.date)} · ${e.credits} credit${e.credits > 1 ? 's' : ''} · ${esc(e.status)}</p></div></div>`).join('') : '';
+      `<div class="row done"><span class="tile sm sky">${EA.icon('check', { size: 19 })}</span><div class="row-body"><p class="row-title">${esc(e.title)}</p><p class="row-meta">${formatRelativeDate(e.date)} · ${e.credits} credit${e.credits > 1 ? 's' : ''} · ${e.status === 'pending' ? 'with the partner' : esc(e.status)}</p></div></div>`).join('') : '';
 
     body.innerHTML = `${hero}
       <div class="credit-list-head"><p class="eyebrow">Where it can go</p><span>${partners.length} partners</span></div>
@@ -586,8 +586,8 @@
         card.innerHTML = `
           <div class="credit-ready-head"><span class="tile lg sky ring round">${EA.icon('sprout', { size: 28 })}</span>
             <div><p class="eyebrow sky">Milestone reached</p><p class="credit-ready-title">${c.held} credit${c.held > 1 ? 's' : ''} ready to plant</p></div></div>
-          <p class="credit-ready-desc">${fmt(c.step)} points became one real thing in the ground. Pick where it goes and we send it to the partner, you get the photo back.</p>
-          <div class="lead-actions"><button type="button" class="cta sky" onclick="openCredit()">Use my credit ${EA.icon('arrow-right', { size: 17 })}</button><button type="button" class="cta ghost sm" onclick="saveCredit()">Save it</button></div>`;
+          <p class="credit-ready-desc">${fmt(c.step)} points, one real thing in the ground. Pick where it goes, I'll pass it to the partner, and you get the photo.</p>
+          <div class="lead-actions"><button type="button" class="cta sky" onclick="openCredit()">Use my credit ${EA.icon('arrow-right', { size: 17 })}</button><button type="button" class="cta ghost sm" onclick="saveCredit()">Keep it for now</button></div>`;
       } else {
         const gamesLeft = Math.max(1, Math.ceil(c.toGo / 150));
         card.className = 'credit-card';
@@ -596,7 +596,7 @@
           <div class="credit-num"><span class="big">${fmt(c.total)}</span><span class="of">/ ${fmt(c.nextAt)} pts</span></div>
           <div class="bar tall"><div class="bar-fill" style="width:${Math.max(2, c.pct)}%"></div></div>
           <div class="credit-foot"><p><strong>${fmt(c.toGo)} points</strong> to your ${c.earned === 0 ? 'first' : 'next'} credit</p><span>≈ ${gamesLeft} game${gamesLeft > 1 ? 's' : ''}</span></div>
-          <div class="credit-what"><span class="tile sm sky">${EA.icon('sprout', { size: 19 })}</span><p>1 credit funds a native tree, a metre of hedgerow or a pollinator patch with our partners.</p></div>`;
+          <div class="credit-what"><span class="tile sm sky">${EA.icon('sprout', { size: 19 })}</span><p>One credit plants a native tree, a metre of hedgerow or a patch for pollinators, through our partners.</p></div>`;
       }
     }
 
@@ -627,7 +627,7 @@
   }
 
   function saveCredit() {
-    showToast('Saved', 'Your credit stays on your profile until you use it.', 'flag');
+    showToast('Kept', 'Your credit stays here until you want it.', 'flag');
   }
 
   function renderActionHistory(nk, st) {
@@ -635,7 +635,7 @@
     if (!list) return;
     const history = (st || Engine.state(nk)).history;
     if (!history.length) {
-      list.innerHTML = '<div class="actions-history-empty">Nothing pledged yet. Envie will suggest one when the week is far enough along.</div>';
+      list.innerHTML = '<div class="actions-history-empty">Nothing pledged yet. I\'ll suggest one later in the week, once you\'ve played a bit.</div>';
       return;
     }
     list.innerHTML = history.slice().reverse().map((a) => `

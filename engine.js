@@ -258,7 +258,7 @@
   // Which game to hand the player: today's dated quiz if it is still open,
   // otherwise the free game they have not touched for longest (and not
   // played today). Null when every game is done for the day.
-  const GAME_NAMES = { quiz: 'Random quiz', sort: 'Carbon challenge', water: 'Water challenge' };
+  const GAME_NAMES = { quiz: 'Random quiz', sort: 'Sort it out', water: 'Water challenge' };
   function suggestGame(nk, st, dailyGame) {
     if (dailyGame && st.played.quiz !== st.today) {
       return { type: 'quiz', mode: 'daily', name: dailyGame.title_line1 + ' ' + dailyGame.title_line2, meta: dailyGame.category_badge + ' · 3 questions', pts: '150 pts max', daily: true };
@@ -269,7 +269,7 @@
     if (!open.length) return null;
     open.sort((a, b) => lastTs(a) - lastTs(b));
     const g = open[0];
-    const meta = { quiz: 'Quiz · 3 questions', sort: 'Sorting game · 6 cards', water: 'Higher or lower · 5 rounds' }[g];
+    const meta = { quiz: 'Quiz · 3 questions', sort: 'Carbon · 6 cards', water: 'Higher or lower · 5 rounds' }[g];
     const pts  = '150 pts max';
     return { type: g, mode: g === 'quiz' ? 'random' : null, name: GAME_NAMES[g], meta, pts, daily: false };
   }
