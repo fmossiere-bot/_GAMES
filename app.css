@@ -828,6 +828,11 @@ body.cc-say .cc-detail-view { display: none !important; }
 .skin .row.partner.locked { opacity: .5; cursor: default; }
 .skin .credit-confirm { margin-top: 12px; padding: 14px 16px 12px; border-radius: 20px; background: rgba(133,208,131,.08); border: 1.5px dashed rgba(133,208,131,.35); }
 .skin .credit-confirm-desc { margin: 0 0 12px; font-family: var(--font-body); font-size: 13px; line-height: 1.5; color: rgba(255,255,255,.8); }
+.skin .credit-email { display: block; margin: 0 0 12px; }
+.skin .credit-email span { display: block; margin-bottom: 7px; font-family: var(--font-body); font-size: 12px; line-height: 1.4; color: rgba(255,255,255,.7); }
+.skin .credit-email input { width: 100%; box-sizing: border-box; appearance: none; border: 1.5px solid rgba(255,255,255,.2); border-radius: 14px; background: rgba(255,255,255,.08); color: #fff; font-family: var(--font-body); font-size: 15px; padding: 13px 14px; outline: none; }
+.skin .credit-email input:focus { border-color: var(--sky); background: rgba(255,255,255,.1); }
+.skin .credit-email-err { margin: -6px 0 10px; font-family: var(--font-body); font-size: 12px; color: #ff8fa3; }
 .skin .credit-note { margin: 10px 0 0; font-family: var(--font-body); font-size: 11px; color: rgba(255,255,255,.45); text-align: center; }
 .skin .credit-body .eyebrow { margin-top: 20px; }
 .skin .credit-body .row.done { margin-top: 8px; cursor: default; }

@@ -457,11 +457,17 @@
     }).join('');
 
     const picked = partners.find((p) => p.id === _partnerPick);
+    const email = Engine.getEmail(nk);
     const confirm = picked ? `
       <div class="credit-confirm">
         <p class="credit-confirm-desc">${esc(picked.desc)}</p>
+        <label class="credit-email">
+          <span>Your email, so we can validate the credit and send you the photo</span>
+          <input type="email" id="credit-email" inputmode="email" autocomplete="email" placeholder="you@example.com" value="${esc(email)}">
+        </label>
+        <p class="credit-email-err" id="credit-email-err" hidden>That does not look like an email address.</p>
         <button type="button" class="cta sky" id="credit-go">Plant it · ${picked.credits} credit${picked.credits > 1 ? 's' : ''} ${EA.icon('arrow-right', { size: 17 })}</button>
-        <p class="credit-note">Placeholder partner. Nothing is sent yet, the pledge is saved to your profile.</p>
+        <p class="credit-note">We only use your email for this credit and for news about it. Partners are placeholders for now.</p>
       </div>` : '';
 
     const ledger = c.ledger.length ? `<p class="eyebrow">Already planted</p>` + c.ledger.slice().reverse().map((e) =>
@@ -479,12 +485,19 @@
     });
     const go = document.getElementById('credit-go');
     if (go) go.onclick = () => spendCredit(picked);
+    const inp = document.getElementById('credit-email');
+    if (inp) { inp.oninput = () => { document.getElementById('credit-email-err').hidden = true; }; setTimeout(() => { if (!inp.value) inp.focus(); }, 350); }
   }
 
   function spendCredit(partner) {
     const nk = nkOf();
-    const r = Engine.spendCredit(nk, partner);
-    if (!r.ok) return;
+    const inp = document.getElementById('credit-email');
+    const email = inp ? inp.value : '';
+    const r = Engine.spendCredit(nk, partner, email);
+    if (!r.ok) {
+      if (r.why === 'email') { const err = document.getElementById('credit-email-err'); if (err) err.hidden = false; if (inp) inp.focus(); }
+      return;
+    }
     syncPlayerToFirestore(nk);
     _partnerPick = null;
     showToast(partner.title, 'Sent to the partner. Counts as today\'s action.', 'celebrate');

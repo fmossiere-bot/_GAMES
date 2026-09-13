@@ -330,10 +330,20 @@
     return { ok: true, streak, points: action.points || 0 };
   }
 
-  function spendCredit(nk, partner) {
+  const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function getEmail(nk) { return localStorage.getItem('player_email_' + nk) || ''; }
+  function setEmail(nk, email) { localStorage.setItem('player_email_' + nk, email.trim()); }
+  function validEmail(email) { return EMAIL_RX.test((email || '').trim()); }
+
+  // Spending a credit is the one moment we ask for an email: it is how the
+  // pledge gets validated and passed to the partner, and how the photo
+  // comes back. Stored with the ledger entry and on the player record.
+  function spendCredit(nk, partner, email) {
     const c = credits(nk);
     if (c.held < (partner.credits || 1)) return { ok: false, why: 'insufficient' };
-    const ledger = c.ledger.concat([{ partnerId: partner.id, title: partner.title, credits: partner.credits || 1, date: todayStr(), status: 'pending' }]);
+    if (!validEmail(email)) return { ok: false, why: 'email' };
+    setEmail(nk, email);
+    const ledger = c.ledger.concat([{ partnerId: partner.id, title: partner.title, credits: partner.credits || 1, date: todayStr(), status: 'pending', email: email.trim() }]);
     set(K.ledger(nk), ledger);
     const hist = get(K.history(nk), []).concat([{ id: 'credit:' + partner.id + ':' + todayStr(), title: partner.title, date: todayStr(), type: 'credit', points: 0 }]);
     set(K.history(nk), hist.slice(-HISTORY_CAP));
@@ -365,6 +375,7 @@
       creditLedger:  get(K.ledger(nk), []),
       storyLastRead: localStorage.getItem(K.story(nk)) || null,
       actionSkips:   get(K.skips(nk), []).slice(-120),
+      email:         getEmail(nk) || null,
     };
   }
   function mergeRemote(nk, d) {
@@ -392,6 +403,7 @@
         .sort((a, b) => a.date.localeCompare(b.date));
       set(K.skips(nk), all.slice(-120));
     }
+    if (d.email && !getEmail(nk)) setEmail(nk, d.email);
     if (d.storyLastRead) {
       const local = localStorage.getItem(K.story(nk));
       if (!local || d.storyLastRead > local) localStorage.setItem(K.story(nk), d.storyLastRead);
@@ -404,6 +416,7 @@
     state, credits, decide, rankActions, suggestGame,
     loadActions, loadPartners,
     pledge, skip, spendCredit, recordStory, stampStreak, logActivity,
+    getEmail, validEmail,
     syncFields, mergeRemote,
     types: () => (_actions && _actions.meta && _actions.meta.types) || {},
   };
