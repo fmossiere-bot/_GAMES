@@ -24,11 +24,13 @@
       "envie": "That last one still annoys me."
     },
     {
-      "type": "visual",
-      "theme": "dark",
-      "image": "courses/images/ewaste-world-map-circuitboards.jpg",
-      "text": "Someone made a map of the world out of old circuit boards. I thought it was art. Then I read that broken electronics are the fastest growing pile of rubbish on the planet.",
-      "bold": "the fastest growing pile of rubbish on the planet"
+      "type": "photo",
+      "image": "tv-in-undergrowth.jpg",
+      "align": "center",
+      "tag": "E-waste",
+      "text": "Someone left a telly in the ditch.",
+      "bold": "in the ditch",
+      "footer": "Broken electronics are the fastest growing pile of rubbish on the planet."
     },
     {
       "type": "stat",
