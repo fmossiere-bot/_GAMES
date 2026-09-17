@@ -3,7 +3,7 @@
   "title": "The Right to Repair",
   "category": "Circular Economy",
   "accent": "circular",
-  "readTime": 8,
+  "readTime": 5,
   "slides": [
     {
       "type": "photo",
@@ -12,188 +12,93 @@
       "tag": "Circular Economy",
       "text": "Your washing machine breaks. The shop tells you a new one is cheaper.",
       "bold": "a new one is cheaper",
-      "footer": "Since 31 July 2026, EU law pushes back on that."
+      "footer": "For years, they were right. That has just changed."
     },
     {
       "type": "text",
       "theme": "dark",
-      "text": "That reflex, replace instead of repair, has a name and a price. It is the biggest reason e-waste is now the fastest-growing waste stream on Earth.",
-      "bold": "fastest-growing waste stream on Earth",
-      "footer": "And repair has been quietly designed out of a lot of the things we own."
-    },
-    {
-      "type": "stat",
-      "theme": "dark",
-      "stat": "53.6m",
-      "caption": "Tonnes of electrical and electronic waste thrown out worldwide in 2019. On current patterns that roughly doubles to about 120 million tonnes by 2050.",
-      "bold": "roughly doubles",
-      "source": "Global E-waste Monitor, UNITAR"
-    },
-    {
-      "type": "stat",
-      "theme": "orange",
-      "stat": "17%",
-      "caption": "Only about 17% of the world's discarded electronics is properly collected and recycled. The rest is burned, dumped, or shipped somewhere with weaker rules.",
-      "bold": "17%",
-      "source": "Global E-waste Monitor, UNITAR",
-      "footer": "Plus billions of working phones sitting in drawers, never entering any system at all."
-    },
-    {
-      "type": "text",
-      "theme": "dark",
-      "text": "None of this is one big villain. It is five ordinary things happening at once.",
-      "bullets": [
-        "More devices: most of us now own several at the same time",
-        "Shorter lives: kit gets replaced while it still works",
-        "Harder repairs: parts, manuals and tools are often out of reach",
-        "Software locks: new features stop running on older hardware",
-        "Cheap replacement: buying new is usually the path of least effort"
-      ],
-      "footer": "Repair is not losing because people do not care. It is losing because it is made awkward."
-    },
-    {
-      "type": "visual",
-      "theme": "light",
-      "emoji": "📱",
-      "text": "Whatever the brand, a typical smartphone contains around 80% of the stable elements on the periodic table. Once they are bonded together in one device, they are far harder to separate than they were as raw ore.",
-      "bold": "80% of the stable elements"
-    },
-    {
-      "type": "text",
-      "theme": "blue",
-      "text": "Behind every new device sits a mine. Demand for minerals like graphite, lithium and cobalt could rise by as much as 500% by 2050.",
-      "bold": "as much as 500%",
-      "footer": "Badly managed, that mining pollutes groundwater and displaces communities long before anything reaches a shop shelf."
-    },
-    {
-      "type": "text",
-      "theme": "dark",
-      "text": "So where does Ireland sit in all this? Better than you might think in one way, and worse in another.",
-      "footer": "Start with the bad news."
+      "text": "Here is the thing about repair. We did not stop caring about it. It was quietly made awkward.",
+      "bold": "quietly made awkward",
+      "footer": "Spare parts priced like gold. Manuals kept in-house. Software that refuses a part it did not come with."
     },
     {
       "type": "stat",
       "theme": "orange",
       "stat": "586 kg",
-      "caption": "Waste produced per person in Ireland every year. That is the sixth highest in the EU.",
-      "bold": "sixth highest in the EU",
-      "source": "CSO, via RepairMyStuff.ie"
-    },
-    {
-      "type": "text",
-      "theme": "green",
-      "text": "Now the good news. Ireland has built real collection infrastructure through WEEE Ireland, the country's largest e-waste scheme, running for 20 years.",
-      "bold": "real collection infrastructure",
-      "bullets": [
-        "Over 609,000 tonnes of electrical waste collected and recycled since 2005",
-        "More than 250 million old or broken electrical items kept out of landfill",
-        "Over 30,000 tonnes of steel, plastic and glass recovered every year"
-      ]
-    },
-    {
-      "type": "text",
-      "theme": "dark",
-      "text": "But there is a catch in how success gets measured. EU rules ask member states to collect 65% of the average weight of electrical goods sold over the previous three years. Weight is the whole test.",
-      "bold": "Weight is the whole test.",
-      "footer": "WEEE Ireland's chief executive Leo Donovan has argued this misses the point: a phone that gets repaired or refurbished counts for nothing, even though it is the better outcome."
-    },
-    {
-      "type": "text",
-      "theme": "dark",
-      "text": "Which brings us to what actually changed this summer.",
-      "footer": "The EU's Right to Repair Directive applied from 31 July 2026. Ireland's own regulations followed in August."
+      "caption": "That is how much waste each of us in Ireland throws out every year, the sixth highest in the EU. A fair slice of it still worked on the way to the bin.",
+      "bold": "still worked on the way to the bin",
+      "source": "CSO"
     },
     {
       "type": "text",
       "theme": "blue",
-      "text": "Ireland's version came in as the Common Rules Promoting the Repair of Goods Regulations 2026. It covers a set list of everyday products.",
-      "bold": "a set list of everyday products",
-      "bullets": [
-        "Washing machines, dryers, dishwashers",
-        "Fridges and vacuum cleaners",
-        "TVs, phones and tablets",
-        "Space heaters, e-bike batteries, servers"
-      ]
+      "text": "So the EU changed the default. Since last summer, if something can be fixed, the maker has to fix it when you ask.",
+      "bold": "the maker has to fix it when you ask",
+      "footer": "Free or at a fair price, and reasonably quickly. Even after your guarantee has run out."
     },
     {
       "type": "text",
       "theme": "dark",
-      "text": "The core of it is simple. If a covered product can technically be repaired, the manufacturer now has to repair it when you ask, free or at a reasonable price, and as soon as practicable.",
-      "bold": "has to repair it when you ask",
-      "footer": "It also has to publish its repair information. And this applies even after the shop's liability period has run out."
+      "text": "And it is not some obscure list. It is the stuff in your kitchen and your pocket.",
+      "bold": "your kitchen and your pocket",
+      "bullets": [
+        "Washing machines, dryers, dishwashers",
+        "Fridges and hoovers",
+        "Tellies and screens",
+        "Phones and tablets"
+      ]
     },
     {
       "type": "compare",
       "theme": "dark",
-      "title": "What changes when something breaks",
-      "badLabel": "Before the rules",
+      "title": "What actually changes when something breaks",
+      "badLabel": "How it used to go",
       "bad": [
-        "Parts priced so high repair made no sense",
-        "Software rejecting a third-party part",
-        "Quotes that moved between calls"
+        "A part that cost more than the machine",
+        "A quote that moved every time you rang",
+        "Software blocking a part that was not theirs"
       ],
-      "goodLabel": "Under the new rules",
+      "goodLabel": "How it goes now",
       "good": [
-        "Parts at prices that do not deter repair",
-        "No tricks to block a legitimate repair",
-        "A written quote that holds for 30 days"
+        "Parts priced so repair makes sense",
+        "A written quote that holds for 30 days",
+        "No blocking a repair without a real reason"
       ]
     },
     {
       "type": "text",
       "theme": "green",
-      "text": "There is one detail worth knowing about. Second-hand, compatible and even 3D-printed spare parts are allowed, as long as they meet safety standards.",
-      "bold": "3D-printed spare parts are allowed",
-      "footer": "That matters most for older models, where the original maker has stopped producing parts."
+      "text": "There is a small bonus too. Choose the repair instead of the replacement and you get an extra year of guarantee on top.",
+      "bold": "an extra year of guarantee",
+      "footer": "Doing the better thing no longer costs you your cover."
     },
     {
-      "type": "stat",
-      "theme": "green",
-      "stat": "+12",
-      "caption": "Extra months of legal guarantee if you choose repair instead of replacement while the seller is still liable. Choosing the greener option no longer costs you cover.",
-      "bold": "no longer costs you cover",
-      "source": "European Commission"
+      "type": "visual",
+      "theme": "light",
+      "emoji": "📱",
+      "text": "Now the bigger picture. Every device in your house is a tiny mine. Metals dug up, shipped, refined, and glued together so tightly they are nearly impossible to pull apart again.",
+      "bold": "a tiny mine"
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "Which is why repair is the quiet heart of the circular economy. Not recycling. Recycling is the last resort, for when everything else has failed.",
+      "bold": "the quiet heart of the circular economy",
+      "footer": "Keep it working, and nothing new has to come out of the ground at all."
     },
     {
       "type": "text",
       "theme": "blue",
-      "text": "There is also a new piece of paper: the European Repair Information Form. A repairer can hand it to you before you commit to anything.",
-      "bold": "European Repair Information Form",
-      "bullets": [
-        "It sets out the fault, the fix, the price and the timeline",
-        "It is free, unless diagnostics are needed and flagged in advance",
-        "Once given, the terms bind the repairer for 30 days"
-      ]
-    },
-    {
-      "type": "stat",
-      "theme": "dark",
-      "stat": "4.8bn",
-      "caption": "The &euro;4.8 billion in growth and investment the European Commission expects these rules to unlock, because repair is labour that mostly stays local.",
-      "bold": "labour that mostly stays local",
-      "source": "European Commission",
-      "footer": "Enterprise Minister Peter Burke made the same point about opportunities for Irish repair and refurbishment businesses."
-    },
-    {
-      "type": "text",
-      "theme": "dark",
-      "text": "And it has teeth. In Ireland the Competition and Consumer Protection Commission enforces the rules and can issue compliance notices. Serious breaches can lead to fines and criminal sanctions.",
-      "bold": "can issue compliance notices",
-      "footer": "A pan-European repair platform is expected online in 2027."
-    },
-    {
-      "type": "text",
-      "theme": "dark",
-      "text": "None of this helps if you cannot find someone to do the work. Ireland already has a free directory for exactly that.",
-      "bold": "a free directory",
-      "footer": "RepairMyStuff.ie is run by Monaghan County Council with the EPA and the Local Authority Waste Prevention Network. It is being built up into Ireland's official national repair platform, due to be fully compliant by 31 July 2027."
+      "text": "Ireland has been good at the collecting part for twenty years. It has just been counting the wrong thing: tonnes recycled, rather than things kept alive.",
+      "bold": "counting the wrong thing",
+      "footer": "Get your phone repaired and, officially, it counts for nothing. These rules start to close that gap."
     },
     {
       "type": "text",
       "theme": "green",
-      "text": "Search your county, pick your category, from phones and laptops to fridges, furniture, clothes and instruments, and see who near you can fix it.",
-      "bold": "see who near you can fix it",
-      "footer": "The law changed the defaults. The next bit is just us using it.",
+      "text": "The law changed the defaults. The rest is just us using them. So next time something packs in, look up who near you can fix it before you look up what to replace it with.",
+      "bold": "who near you can fix it",
+      "footer": "RepairMyStuff.ie is free, run by Monaghan County Council with the EPA, and it is now Ireland's official national repair platform. Search your county, pick your category, phones to fridges to furniture.",
       "link": {
         "url": "https://www.repairmystuff.ie/",
         "label": "Find a repairer near you"
