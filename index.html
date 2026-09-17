@@ -2017,6 +2017,7 @@
   .story-card-home.topic-society .story-card-home-accent { background: linear-gradient(180deg,#e27e22,#f5b060); }
   .story-card-home.topic-activism .story-card-home-accent { background: linear-gradient(180deg,#d9364f,#ff8fa3); }
   .story-card-home.topic-forestry .story-card-home-accent { background: linear-gradient(180deg,#2d5a3d,#8a6d3f); }
+  .story-card-home.topic-circular .story-card-home-accent { background: linear-gradient(180deg,#0f8a8a,#b87333); }
   .story-card-home-body {
     padding: 14px 14px 14px 16px;
     flex: 1;
@@ -2428,6 +2429,7 @@
   .ml-card.topic-climate .ml-card-accent { background: linear-gradient(90deg, #7dbf7c, #2199e6); }
   .ml-card.topic-activism .ml-card-accent { background: linear-gradient(90deg, #d9364f, #ff8fa3); }
   .ml-card.topic-forestry .ml-card-accent { background: linear-gradient(90deg, #2d5a3d, #8a6d3f); }
+  .ml-card.topic-circular .ml-card-accent { background: linear-gradient(90deg, #0f8a8a, #b87333); }
 
   .ml-card-inner {
     padding: 14px 16px 16px;
@@ -2966,6 +2968,34 @@
   }
   .cp-tap-prev { left: 0; width: 30%; }
   .cp-tap-next { right: 0; width: 70%; }
+
+  /* Slides carrying a link paint above the tap zones, but stay transparent to
+     taps everywhere except the link itself, so tap-to-advance still works. */
+  .cp-slide-haslink { z-index: 6; pointer-events: none; }
+  .cp-slide-haslink .cp-cta { pointer-events: auto; }
+  .cp-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 13px 20px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.14);
+    border: 1.5px solid rgba(255,255,255,0.32);
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(14px,4vw,16px);
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cp-cta:active { background: rgba(255,255,255,0.24); }
+  .theme-light .cp-cta {
+    background: rgba(6,29,46,0.08);
+    border-color: rgba(6,29,46,0.22);
+    color: #061d2e;
+  }
 
   /* Slide counter + hint */
   .cp-footer {
@@ -3740,6 +3770,24 @@
       </div>
     </div>
 
+    <!-- The Right to Repair — LIVE -->
+    <div class="ml-card topic-circular active" onclick="openCourse('right-to-repair')">
+      <div class="ml-card-accent"></div>
+      <div class="ml-card-inner">
+        <div class="ml-card-icon"><span class="material-symbols-outlined">handyman</span></div>
+        <div class="ml-card-content">
+          <div class="ml-card-meta">Circular Economy</div>
+          <div class="ml-card-title">The Right to Repair</div>
+          <div class="ml-card-desc">E-waste is the fastest-growing waste stream on Earth, and Ireland throws out more than almost anyone in the EU. New EU rules now make manufacturers fix your stuff.</div>
+        </div>
+      </div>
+      <div class="ml-card-footer">
+        <span class="ml-chip">22 slides</span>
+        <span class="ml-chip">8 min</span>
+        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+      </div>
+    </div>
+
     <p class="learn-section-label" style="margin-top:16px;">Coming soon</p>
 
     <!-- Food Waste & Composting -->
@@ -4425,6 +4473,14 @@ const ALL_STORIES = [
     tag:   'Land & Nature',
     title: "Ireland's Forestry Problem",
     meta:  '19 slides · 8 min',
+  },
+  {
+    id:    'right-to-repair',
+    topic: 'topic-circular',
+    icon:  '🔧',
+    tag:   'Circular Economy',
+    title: 'The Right to Repair',
+    meta:  '22 slides · 8 min',
   }
   // add more stories here as they go live
 ];
@@ -5111,7 +5167,9 @@ function _slideHTML(slide) {
         }).join('')}</ul>` : '';
     const footerHtml = slide.footer
       ? `<p class="cp-bullet-footer">${_boldify(slide.footer, slide.bold)}</p>` : '';
-    return `<div class="cp-slide ${th}">
+    const linkHtml = slide.link
+      ? `<a class="cp-cta" href="${slide.link.url}" target="_blank" rel="noopener noreferrer">${slide.link.label || 'Find out more'} <span aria-hidden="true">&rarr;</span></a>` : '';
+    return `<div class="cp-slide ${th}${slide.link ? ' cp-slide-haslink' : ''}">
       ${texture}
       <div class="cp-text-body" style="position:relative;z-index:1;display:flex;flex-direction:column;gap:20px;">
         ${slide.calloutTop ? calloutHtml : ''}
@@ -5119,6 +5177,7 @@ function _slideHTML(slide) {
         ${slide.calloutTop ? '' : calloutHtml}
         ${bulletsHtml}
         ${footerHtml}
+        ${linkHtml}
       </div>
     </div>`;
   }
