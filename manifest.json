@@ -1,19 +1,19 @@
 {
-  "name": "The Uptake Games",
-  "short_name": "Uptake Games",
-  "description": "Small games. Real climate action.",
+  "name": "Environmentle",
+  "short_name": "Environmentle",
+  "description": "One step a day for the planet, with Envie.",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#0a293b",
   "theme_color": "#0a293b",
   "icons": [
     {
-      "src": "_images/icon-192.png",
+      "src": "_images/_logo/assets/environmentle-icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "_images/icon-512.png",
+      "src": "_images/_logo/assets/environmentle-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

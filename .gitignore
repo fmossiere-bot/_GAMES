@@ -92,3 +92,7 @@ id_rsa
 # OS cruft
 .DS_Store
 Thumbs.db
+
+_DESIGNS/
+.DS_Store
+*.zip

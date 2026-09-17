@@ -1,4 +1,4 @@
-// ── The Uptake Games — Service Worker ──────────────────
+// ── Environmentle — Service Worker ──────────────────
 importScripts('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js');
 
@@ -17,12 +17,12 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage(payload => {
   const notification = payload.notification || {};
   self.registration.showNotification(
-    notification.title || 'The Uptake Games',
+    notification.title || 'Environmentle',
     {
-      body:  notification.body || 'Your daily challenge is ready 🌿',
-      icon:  '/_images/icon-180.png',
-      badge: '/_images/favicon-32.png',
-      data:  { url: payload.data?.url || 'https://games.the-uptake.com' }
+      body:  notification.body || 'Today\'s challenge is in. Envie is waiting on the home screen.',
+      icon:  '/_images/_logo/assets/environmentle-icon-hero-192.png',
+      badge: '/_images/_logo/assets/environmentle-favicon-32.png',
+      data:  { url: payload.data?.url || 'https://app.environmentle.org' }
     }
   );
 });
@@ -34,13 +34,13 @@ self.addEventListener('notificationclick', event => {
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
       // If game is already open in a tab, focus it
       for (const client of list) {
-        if (client.url.includes('games.the-uptake.com') && 'focus' in client) {
+        if (client.url.includes('app.environmentle.org') && 'focus' in client) {
           return client.focus();
         }
       }
       // Otherwise open a new tab
       return clients.openWindow(
-        event.notification.data?.url || 'https://games.the-uptake.com'
+        event.notification.data?.url || 'https://app.environmentle.org'
       );
     })
   );

@@ -1,18 +1,19 @@
 {
   "id": "ireland-forestry",
-  "title": "Ireland&rsquo;s Forestry Problem",
-  "category": "Land &amp; Nature",
+  "title": "Ireland&rsquo;s forestry problem",
+  "category": "Land &amp; nature",
   "accent": "forestry",
   "readTime": 8,
+  "voice": "Every title, desc, comment or intro here is read by a player and is written as Envie speaking. See CLAUDE.md and _DESIGNS/envie-voice-and-text-rewrite-guide.md: plain short sentences, no em-dashes, European spelling, no emoji, facts and sources untouched. The optional 'envie' line on a slide is his own aside, one short sentence.",
   "slides": [
     {
       "type": "photo",
       "image": "ireland-forest-cover-map.jpg",
       "align": "center",
-      "tag": "Land &amp; Nature",
+      "tag": "Land &amp; nature",
       "text": "Ireland is one of the least forested countries in Europe.",
       "bold": "least forested",
-      "footer": "And it's not close."
+      "footer": "I checked twice. It's not close."
     },
     {
       "type": "stat",
@@ -20,27 +21,29 @@
       "stat": "10%",
       "caption": "Just over 10% of Ireland's land is forest. The EU average is 39.8%, nearly four times higher.",
       "bold": "over 10%",
-      "source": "Teagasc / Ireland Climate Action Plan"
+      "source": "Teagasc / Ireland Climate Action Plan",
+      "envie": "Look up on your next walk. Not many trees, are there?"
     },
     {
       "type": "text",
       "theme": "dark",
-      "text": "Forests aren't just scenery. Under Ireland's climate law, they're one of the tools meant to help pull the country to net zero.",
+      "text": "Forests aren't just scenery. Under Ireland's climate law, they're one of the tools meant to pull the country to net zero.",
       "bold": "net zero",
       "footer": "Ireland's Climate Action and Low Carbon Development Act commits to a 51% emissions cut by 2030 and net-zero by 2050."
     },
     {
       "type": "text",
       "theme": "blue",
-      "text": "Growing forest cover is part of Ireland's Climate Action Plan, alongside restoring wetlands and peat bogs. That means managing existing forest and planting new ground, called afforestation.",
+      "text": "Growing forest cover is part of Ireland's Climate Action Plan, alongside restoring wetlands and bogs. That means looking after the forest that's there and planting new ground, which the plan calls afforestation.",
       "bold": "afforestation",
-      "footer": "The plan targets about 8,000 hectares of new planting a year, alongside rehabilitating roughly 77,600 hectares of peatland by 2030."
+      "footer": "The plan targets about 8,000 hectares of new planting a year, alongside rehabilitating roughly 77,600 hectares of peatland by 2030.",
+      "envie": "New word for me, that one."
     },
     {
       "type": "photo",
       "image": "forested-valley-aerial.jpg",
       "align": "center",
-      "tag": "Why It Matters",
+      "tag": "Why it matters",
       "text": "Every hectare of healthy forest is doing quiet, constant work pulling carbon out of the air.",
       "bold": "quiet, constant work",
       "footer": "Ireland's forests already hold an estimated 312 million tonnes of carbon."
@@ -48,15 +51,16 @@
     {
       "type": "text",
       "theme": "orange",
-      "text": "Right now, Ireland's forests are a net carbon sink. That's about to change. A large share of that forest is reaching maturity and being cut for commercial timber.",
+      "text": "Right now, Ireland's forests are a net carbon sink. That's about to change. A large share of that forest is reaching maturity and being cut for timber.",
       "bold": "That's about to change.",
-      "footer": "It's also a chance to replant with a more diverse mix of trees that better support wildlife, which is exactly why continued afforestation matters."
+      "footer": "It's also a chance to replant with a wider mix of trees that do more for wildlife, which is exactly why new planting matters."
     },
     {
       "type": "text",
       "theme": "dark",
       "text": "This isn't a new problem. It's the tail end of a very old one.",
-      "footer": "Ireland was once far more heavily forested."
+      "footer": "Ireland was once far more heavily forested.",
+      "envie": "I had to go back a few centuries for this bit."
     },
     {
       "type": "photo",
@@ -71,31 +75,32 @@
       "type": "stat",
       "theme": "dark",
       "stat": "1% &rarr; 10%",
-      "caption": "From a low point of roughly 1% at the start of the 1900s, forest cover has climbed back to about 10% today, still far short of where it started, and far short of the EU average.",
+      "caption": "From a low of roughly 1% at the start of the 1900s, forest cover has climbed back to about 10% today. Still far short of where it started, and far short of the EU average.",
       "bold": "climbed back to about 10%",
       "source": "Ireland Land Use &amp; Forestry"
     },
     {
       "type": "text",
       "theme": "blue",
-      "text": "Unfortunately, most of the recovery hasn't been oak or ash. It's been Sitka spruce, a fast-growing conifer planted in rows.",
+      "text": "Most of that recovery hasn't been oak or ash, though. It's been Sitka spruce, a fast-growing conifer planted in rows.",
       "bold": "Sitka spruce",
-      "footer": "Non-native, originally from the Pacific Northwest, it now dominates Ireland's commercial forestry."
+      "footer": "Not native. It comes from the Pacific Northwest, and it now dominates Ireland's commercial forestry.",
+      "envie": "I thought a forest was a forest. Turns out not."
     },
     {
       "type": "photo",
       "image": "sitka-monoculture-aerial.jpg",
       "align": "center",
-      "tag": "The Monoculture Problem",
-      "text": "Grown in tight, single-species blocks, these plantations are widely called ecological dead zones.",
+      "tag": "The monoculture problem",
+      "text": "Grown in tight single-species blocks, these plantations get called ecological dead zones.",
       "bold": "ecological dead zones",
-      "footer": "Clear-felled every 40-50 years. They crowd out native plants, support little wildlife, and can acidify nearby soil and waterways."
+      "footer": "Clear-felled every 40 to 50 years. They crowd out native plants, support little wildlife, and can acidify nearby soil and waterways."
     },
     {
       "type": "photo",
       "image": "clearfelling-ireland.jpg",
       "align": "center",
-      "tag": "Happening Now",
+      "tag": "Happening now",
       "text": "It's happening across Ireland's commercial forests right now.",
       "bold": "right now",
       "footer": "Clear-felling removes an entire plantation block in one pass, not just mature trees."
@@ -103,23 +108,31 @@
     {
       "type": "text",
       "theme": "dark",
-      "text": "There's a growing recognition that Ireland needs more than commercial conifer. Native, mixed-species forest supports far more biodiversity, and diversifying away from pure Sitka is now part of the conversation.",
+      "text": "More and more people agree Ireland needs more than commercial conifer. Native, mixed-species forest supports far more biodiversity, and moving away from pure Sitka is now part of the conversation.",
       "bold": "far more biodiversity",
       "footer": "But not everyone got that message."
     },
     {
       "type": "compare",
       "theme": "dark",
-      "title": "In 2026, a children's book sent to Irish primary schools told a very different message.",
+      "title": "In 2026, a children's book sent to Irish primary schools told a very different story.",
       "badLabel": "What the book claimed",
-      "bad": ["Plantations shown as thriving, wildlife-rich forests", "Framed as reliable long-term carbon storage", "Distributed to classrooms as environmental education"],
+      "bad": [
+        "Plantations shown as thriving, wildlife-rich forests",
+        "Framed as reliable long-term carbon storage",
+        "Distributed to classrooms as environmental education"
+      ],
       "goodLabel": "What foresters and ecologists point out",
-      "good": ["Sitka blocks support very little wildlife", "Carbon claims break down on drained bog", "Funded by the timber industry, not vetted by the Department of Education"]
+      "good": [
+        "Sitka blocks support very little wildlife",
+        "Carbon claims break down on drained bog",
+        "Funded by the timber industry, not vetted by the Department of Education"
+      ]
     },
     {
       "type": "text",
       "theme": "dark",
-      "text": "Farmers are caught in the middle. Forestry means decades of tied-up land for a payoff that only arrives at harvest, competing directly with agriculture for the same fields.",
+      "text": "Farmers are caught in the middle. Forestry means decades of tied-up land for a payoff that only arrives at harvest, on the same fields farming wants.",
       "bold": "decades of tied-up land",
       "footer": "Grant schemes have long made Sitka the fastest-paying option to plant, which is part of why it became the default."
     },
@@ -129,20 +142,21 @@
       "stat": "3 in 4",
       "caption": "The appetite is there. A 2022 survey of 1,000 adults found three in four people in Ireland want to see more forests, not fewer.",
       "source": "Behaviour &amp; Attitudes, 2022",
-      "footer": "The question isn't whether people want more forest. It's what kind."
+      "footer": "The question isn't whether people want more forest. It's what kind.",
+      "envie": "The appetite is there. Now the trees."
     },
     {
       "type": "text",
       "theme": "blue",
-      "text": "Ireland's newer schemes are trying to shift the mix: a 2023 Forestry Programme built around climate-smart forestry, and a &euro;45 million grant scheme for more sustainable, mixed-species management.",
+      "text": "Newer schemes are trying to shift the mix: a 2023 Forestry Programme built around climate-smart forestry, and a &euro;45 million grant scheme for more sustainable, mixed-species management.",
       "bold": "climate-smart",
-      "footer": "The direction is right. The scale, so far, isn't matching the 8,000 hectare-a-year target."
+      "footer": "The direction is right. The scale, so far, isn't matching the 8,000 hectare a year target."
     },
     {
       "type": "photo",
       "image": "native-woodland-floor.jpg",
       "align": "center",
-      "tag": "A Different Kind of Forest",
+      "tag": "A different kind of forest",
       "text": "Not every hectare has to look like a Sitka block. Native woodland can still take root, even now.",
       "bold": "Native woodland",
       "footer": "Mixed, native planting supports far more life than a single-species plantation ever will."
@@ -150,9 +164,10 @@
     {
       "type": "text",
       "theme": "dark",
-      "text": "Getting from 10% to anywhere near the European average means two things happening at once: planting a lot more, and planting differently.",
+      "text": "Getting from 10% to anywhere near the European average means two things at once: planting a lot more, and planting differently.",
       "bold": "a lot more, and planting differently",
-      "footer": "Native broadleaf mixed in with commercial conifer. Incentives that pay farmers for more than fast timber. A plan that treats forests as long-term infrastructure, not a line item."
+      "footer": "Native broadleaf mixed in with commercial conifer. Incentives that pay farmers for more than fast timber. A plan that treats forests as long-term infrastructure, not a line item.",
+      "envie": "Right. I'll be watching this one."
     }
   ]
 }

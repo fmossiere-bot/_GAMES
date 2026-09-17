@@ -1,48 +1,53 @@
 {
   "id": "climate-wins-2025",
-  "title": "Climate Wins in 2025",
-  "category": "Good News",
+  "title": "Climate wins in 2025",
+  "category": "Good news",
   "accent": "climate",
   "readTime": 5,
+  "voice": "Every title, desc, comment or intro here is read by a player and is written as Envie speaking. See CLAUDE.md and _DESIGNS/envie-voice-and-text-rewrite-guide.md: plain short sentences, no em-dashes, European spelling, no emoji, facts and sources untouched. The optional 'envie' line on a slide is his own aside, one short sentence.",
   "slides": [
     {
       "type": "text",
       "theme": "dark",
-      "text": "2025 was a year of political noise, rollbacks, and broken promises in some corners of the world. But underneath it all, something remarkable was happening.",
-      "bold": "something remarkable was happening"
+      "text": "2025 was a year of political noise, rollbacks and broken promises in some corners of the world. But underneath it all, something remarkable was happening.",
+      "bold": "something remarkable was happening",
+      "envie": "I went looking for the good news. There's more than you'd think."
     },
     {
       "type": "stat",
       "theme": "green",
       "icon": "⚡",
       "stat": "41%",
-      "caption": "of global electricity came from zero-emissions sources in 2025. A new record — and it happened in April, not at year-end."
+      "caption": "of global electricity came from zero-emissions sources in 2025. A new record, and it happened in April, not at year end.",
+      "envie": "Records are nicer when they go this way."
     },
     {
       "type": "visual",
       "theme": "light",
       "emoji": "🇮🇪",
-      "text": "Ireland closed its last coal plant in June — becoming the 6th European country to exit coal entirely. France ran its grid at 95% fossil-free for all of 2024.",
+      "text": "Ireland closed its last coal plant in June, becoming the 6th European country to leave coal behind entirely. France ran its grid 95% fossil-free for all of 2024.",
       "bold": "95% fossil-free"
     },
     {
       "type": "text",
       "theme": "blue",
-      "text": "For the first time ever, renewables generation surpassed coal globally. Not in a target document. In actual electricity produced — in October 2025.",
-      "bold": "actual electricity produced"
+      "text": "For the first time ever, renewables produced more electricity than coal worldwide. Not in a target document. In actual electricity produced, in October 2025.",
+      "bold": "actual electricity produced",
+      "envie": "Ireland went coal-free the same year. Grand."
     },
     {
       "type": "stat",
       "theme": "green",
       "icon": "🚗",
       "stat": "1 in 4",
-      "caption": "cars sold worldwide in 2025 was electric. In Norway, that number was 99 in 100."
+      "caption": "cars sold worldwide in 2025 was electric. In Norway, that number was 99 in 100.",
+      "envie": "Norway didn't wait for anyone."
     },
     {
       "type": "visual",
       "theme": "light",
       "emoji": "🌳",
-      "text": "Global deforestation is declining. Brazil's Amazon hit its lowest deforestation rate in a decade. China added 1 million hectares of wetlands since 2012.",
+      "text": "Global deforestation is falling. Brazil's Amazon hit its lowest deforestation rate in a decade. China has added 1 million hectares of wetlands since 2012.",
       "bold": "lowest deforestation rate in a decade"
     },
     {
@@ -50,27 +55,30 @@
       "theme": "blue",
       "icon": "🌊",
       "stat": "61%",
-      "caption": "of our oceans gained new protection when the High Seas Treaty entered into force in September 2025."
+      "caption": "of our oceans gained new protection when the High Seas Treaty entered into force in September 2025.",
+      "envie": "Half the planet is ocean. About time."
     },
     {
       "type": "visual",
       "theme": "light",
       "emoji": "🏭",
-      "text": "China's CO2 emissions were flat or falling for 18 consecutive months. Its clean energy sector grew to 10% of GDP — larger than its entire property sector.",
-      "bold": "flat or falling for 18 consecutive months"
+      "text": "China's CO2 emissions were flat or falling for 18 months in a row. Its clean energy sector grew to 10% of GDP, larger than its entire property sector.",
+      "bold": "flat or falling for 18 months in a row"
     },
     {
       "type": "stat",
       "theme": "green",
       "icon": "💼",
       "stat": "82%",
-      "caption": "of all new US energy jobs in 2024 came from clean energy — growing 3× faster than the rest of the workforce."
+      "caption": "of all new US energy jobs in 2024 came from clean energy, growing 3× faster than the rest of the workforce.",
+      "envie": "Jobs, not just targets."
     },
     {
       "type": "text",
       "theme": "dark",
-      "text": "None of this means the problem is solved. But the energy transition is no longer a plan. It is happening — faster than almost anyone predicted.",
-      "bold": "faster than almost anyone predicted"
+      "text": "None of this means the problem is solved. But the energy transition is no longer a plan. It's happening, faster than almost anyone predicted.",
+      "bold": "faster than almost anyone predicted",
+      "envie": "That's why I came down. It's moving."
     }
   ]
 }

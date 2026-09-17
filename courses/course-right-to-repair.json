@@ -1,40 +1,58 @@
 {
   "id": "right-to-repair",
-  "title": "The Right to Repair",
-  "category": "Circular Economy",
+  "title": "The right to repair",
+  "category": "Circular economy",
   "accent": "circular",
-  "readTime": 5,
+  "readTime": 6,
+  "voice": "Every title, desc, comment or intro here is read by a player and is written as Envie speaking. See CLAUDE.md and _DESIGNS/envie-voice-and-text-rewrite-guide.md: plain short sentences, no em-dashes, European spelling, no emoji, facts and sources untouched. The optional 'envie' line on a slide is his own aside, one short sentence.",
   "slides": [
     {
       "type": "photo",
-      "image": "circuit-board.jpg",
+      "image": "repair-technician-customer-kitchen.jpg",
       "align": "center",
-      "tag": "Circular Economy",
-      "text": "Your washing machine breaks. The shop tells you a new one is cheaper.",
+      "tag": "Circular economy",
+      "text": "Your washing machine breaks. The engineer says a new one is cheaper.",
       "bold": "a new one is cheaper",
-      "footer": "For years, they were right. That has just changed."
+      "footer": "I heard that sentence twice in one week here. So I went looking into why."
     },
     {
       "type": "text",
       "theme": "dark",
-      "text": "Here is the thing about repair. We did not stop caring about it. It was quietly made awkward.",
+      "text": "Here is what I found. People did not stop fixing things because they stopped caring. Fixing things was quietly made awkward.",
       "bold": "quietly made awkward",
-      "footer": "Spare parts priced like gold. Manuals kept in-house. Software that refuses a part it did not come with."
+      "footer": "Spare parts priced like gold. Manuals kept in-house. Software that refuses a part it did not come with.",
+      "envie": "That last one still annoys me."
+    },
+    {
+      "type": "visual",
+      "theme": "dark",
+      "image": "courses/images/ewaste-world-map-circuitboards.jpg",
+      "text": "Someone made a map of the world out of old circuit boards. I thought it was art. Then I read that broken electronics are the fastest growing pile of rubbish on the planet.",
+      "bold": "the fastest growing pile of rubbish on the planet"
     },
     {
       "type": "stat",
       "theme": "orange",
       "stat": "586 kg",
-      "caption": "That is how much waste each of us in Ireland throws out every year, the sixth highest in the EU. A fair slice of it still worked on the way to the bin.",
+      "caption": "That is how much waste each person in Ireland throws out in a year. Sixth highest in the EU. A fair bit of it still worked on the way to the bin.",
       "bold": "still worked on the way to the bin",
-      "source": "CSO"
+      "source": "CSO",
+      "envie": "I did not expect that from a country this green."
+    },
+    {
+      "type": "visual",
+      "theme": "dark",
+      "image": "courses/images/right-to-repair-sign.jpg",
+      "text": "So people started asking for something simple. The right to get their own things fixed.",
+      "bold": "The right to get their own things fixed."
     },
     {
       "type": "text",
       "theme": "blue",
-      "text": "So the EU changed the default. Since last summer, if something can be fixed, the maker has to fix it when you ask.",
+      "text": "Last summer they got it. New EU rules say that if a thing can be fixed, the maker has to fix it when you ask.",
       "bold": "the maker has to fix it when you ask",
-      "footer": "Free or at a fair price, and reasonably quickly. Even after your guarantee has run out."
+      "footer": "Free or at a fair price, and reasonably quickly. Even after your guarantee has run out.",
+      "envie": "Fair play to whoever pushed for that."
     },
     {
       "type": "text",
@@ -46,12 +64,13 @@
         "Fridges and hoovers",
         "Tellies and screens",
         "Phones and tablets"
-      ]
+      ],
+      "envie": "I checked for the hoover. It is on there."
     },
     {
       "type": "compare",
       "theme": "dark",
-      "title": "What actually changes when something breaks",
+      "title": "What changes when something breaks",
       "badLabel": "How it used to go",
       "bad": [
         "A part that cost more than the machine",
@@ -68,37 +87,35 @@
     {
       "type": "text",
       "theme": "green",
-      "text": "There is a small bonus too. Choose the repair instead of the replacement and you get an extra year of guarantee on top.",
+      "text": "There is a small bonus too. Pick the repair instead of the replacement and you get an extra year of guarantee on top.",
       "bold": "an extra year of guarantee",
-      "footer": "Doing the better thing no longer costs you your cover."
+      "footer": "Doing the better thing no longer costs you your cover.",
+      "envie": "Maith th&uacute; to whoever thought of that bit."
     },
     {
-      "type": "visual",
-      "theme": "light",
-      "emoji": "📱",
-      "text": "Now the bigger picture. Every device in your house is a tiny mine. Metals dug up, shipped, refined, and glued together so tightly they are nearly impossible to pull apart again.",
-      "bold": "a tiny mine"
+      "type": "photo",
+      "image": "laptop-repair-closeup.webp",
+      "align": "center",
+      "tag": "The bigger picture",
+      "text": "Every device in your house is a tiny mine. Metals dug up, shipped, refined, then glued together tight.",
+      "bold": "a tiny mine",
+      "footer": "From up there I watched the holes in the ground getting bigger. You would want to keep this stuff in use."
     },
     {
       "type": "text",
       "theme": "dark",
-      "text": "Which is why repair is the quiet heart of the circular economy. Not recycling. Recycling is the last resort, for when everything else has failed.",
+      "text": "Which is why fixing things is the quiet heart of the circular economy. Not recycling. Recycling is the last resort, for when everything else has failed.",
       "bold": "the quiet heart of the circular economy",
-      "footer": "Keep it working, and nothing new has to come out of the ground at all."
-    },
-    {
-      "type": "text",
-      "theme": "blue",
-      "text": "Ireland has been good at the collecting part for twenty years. It has just been counting the wrong thing: tonnes recycled, rather than things kept alive.",
-      "bold": "counting the wrong thing",
-      "footer": "Get your phone repaired and, officially, it counts for nothing. These rules start to close that gap."
+      "footer": "Ireland has been good at collecting broken electronics for twenty years. It has just been counting tonnes recycled, rather than things kept alive.",
+      "envie": "Odd, that. The better outcome counts for less."
     },
     {
       "type": "text",
       "theme": "green",
-      "text": "The law changed the defaults. The rest is just us using them. So next time something packs in, look up who near you can fix it before you look up what to replace it with.",
+      "text": "So next time something packs in, look up who near you can fix it before you look up what to replace it with.",
       "bold": "who near you can fix it",
       "footer": "RepairMyStuff.ie is free, run by Monaghan County Council with the EPA, and it is now Ireland's official national repair platform. Search your county, pick your category, phones to fridges to furniture.",
+      "envie": "Go on then. I will be trying it myself.",
       "link": {
         "url": "https://www.repairmystuff.ie/",
         "label": "Find a repairer near you"

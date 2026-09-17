@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>The Uptake Games — Play your part</title>
+<title>Environmentle, Play your part</title>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
@@ -18,16 +18,20 @@
   gtag('config', 'G-5S6BPNG30H');
 </script>
 <link rel="manifest" href="/manifest.json">
-<link rel="icon" type="image/png" sizes="32x32" href="/_images/favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/_images/icon-180.png">
+<link rel="icon" type="image/svg+xml" href="/_images/_logo/assets/environmentle-favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/_images/_logo/assets/environmentle-favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/_images/_logo/assets/environmentle-icon-hero-180.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Uptake Games">
+<meta name="apple-mobile-web-app-title" content="Environmentle">
 <meta name="theme-color" content="#0a293b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Plus+Jakarta+Sans:wght@700&family=Rubik:wght@500&family=Caveat:wght@700&family=Mulish:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<script src="envie.js" defer></script>
+<script src="app.js"></script>
+<script src="engine.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -94,544 +98,113 @@
   }
 
   /* ════════════════════════════════════
-     LANDING PAGE
+     ENVIE — mascot placements (envie.js)
   ════════════════════════════════════ */
-  #landing { min-height: 100vh; }
-
-  /* ── NAV ── */
-  .nav-back-bar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 101;
-    background: rgba(5, 22, 34, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    align-items: center;
-    padding: 7px 16px;
+  .name-envie {
+    width: 92px;
+    color: #fff;
+    margin-bottom: 22px;
+    margin-right: 170px; /* room for the speech bubble */
+    --envie-bubble-width: 175%;
+    align-self: flex-start;
   }
-
-  .nav {
-    position: fixed;
-    top: 32px; left: 0; right: 0;
-    z-index: 100;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(10,41,59,0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+  .hub-header { position: relative; }
+  .hub-envie {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 68px;
+    color: #fff;
+    pointer-events: none;
   }
-
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
+  .hub-envie.bob { animation: envieBob 8s ease-in-out infinite; }
+  .games-lib-hero-content, .learn-hero-content { padding-right: 96px; }
+  .tab-envie {
+    position: absolute;
+    right: 18px;
+    bottom: -6px;
+    width: 78px;
+    color: #fff;
+    z-index: 2;
+    pointer-events: none;
   }
-
-  .nav-logo-mark {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
+  .profile-avatar { overflow: hidden; }
+  .profile-avatar .profile-envie {
+    width: 62px;
+    color: #fff;
+    margin-top: 40px; /* peek: head and raised hands over the rim */
   }
+  .cp-toast-envie { width: 74px; color: #fff; margin: 0 auto 6px; }
+  @keyframes envieBob { 0%,100% { transform: translateY(0) rotate(-2deg) } 50% { transform: translateY(-6px) rotate(2deg) } }
+  @media (prefers-reduced-motion: reduce) { .hub-envie.bob { animation: none; } }
 
-  .nav-logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-  }
-
-  .nav-logo-uptake {
-    font-family: 'Comfortaa', cursive;
-    font-size: 11px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.55);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .nav-logo-games {
-    font-family: 'Comfortaa', cursive;
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.1;
-  }
-
-  .nav-back {
+  /* ── Environmentle wordmark (live text, per brand kit) ──
+     Rubik Medium name, "le" in Caveat Bold at 1.3x with the baseline dropped.
+     White + light green on navy; add .em-on-light for navy + green on light. */
+  .em-wordmark {
     display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    text-decoration: none;
-    color: rgba(255,255,255,0.38);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.01em;
-    text-transform: none;
-    transition: color 0.15s;
+    align-items: baseline;
+    position: relative;
+    font-family: 'Rubik', 'Montserrat', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: #ffffff;
     white-space: nowrap;
   }
-  .nav-back:hover { color: rgba(255,255,255,0.75); }
-  .nav-back svg { flex-shrink: 0; }
 
-  .nav-btn {
-    background: var(--orange);
-    color: white;
-    border: none;
-    border-radius: 100px;
-    padding: 10px 20px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
+  .em-wordmark .em-le {
+    font-family: 'Caveat', cursive;
     font-weight: 700;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.12s;
-    -webkit-tap-highlight-color: transparent;
-    letter-spacing: 0.01em;
-  }
-  .nav-btn:active { transform: scale(0.96); background: var(--orange-dark); }
-
-  /* ── HERO ── */
-  .hero {
-    background: var(--navy);
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  .hero-circle {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(78,138,77,0.07);
-  }
-  .hero-circle-1 { width: 420px; height: 420px; top: -100px; right: -120px; }
-  .hero-circle-2 { width: 240px; height: 240px; top: 100px; right: 50px; background: rgba(226,126,34,0.06); }
-  .hero-circle-3 { width: 180px; height: 180px; bottom: 180px; left: -60px; background: rgba(78,138,77,0.05); }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 110px 28px 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 100px;
-    padding: 6px 14px;
-    margin-bottom: 24px;
-    width: fit-content;
-  }
-
-  .hero-eyebrow-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--green-light);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .hero-eyebrow-text {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.65);
-  }
-
-  .hero-brand {
-    margin-bottom: 10px;
-  }
-
-  .hero-brand-uptake {
-    font-family: 'Comfortaa', cursive;
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.45);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  .hero-brand-games {
-    font-family: 'Comfortaa', cursive;
-    font-size: clamp(52px, 14vw, 72px);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    line-height: 0.95;
-    display: block;
-    background: linear-gradient(120deg, #7dbf7c 0%, #e27e22 80%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-title {
-    font-family: 'Comfortaa', cursive;
-    font-size: clamp(22px, 5.5vw, 30px);
-    font-weight: 400;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.35;
-    margin-bottom: 20px;
-    margin-top: 14px;
-    max-width: 320px;
-  }
-
-  .hero-title strong { color: white; font-weight: 600; }
-
-  .hero-bottom {
-    position: relative;
-    z-index: 2;
-    padding: 24px 28px 48px;
-    background: rgba(0,0,0,0.2);
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .hero-stats {
-    display: flex;
-    gap: 0;
-    margin-bottom: 24px;
-  }
-
-  .hero-stat {
-    flex: 1;
-    text-align: center;
-    padding: 0 8px;
-    border-right: 1px solid rgba(255,255,255,0.08);
-  }
-  .hero-stat:last-child { border-right: none; }
-
-  .hero-stat-num {
-    font-family: 'Comfortaa', cursive;
-    font-size: 26px;
-    font-weight: 700;
-    color: white;
+    font-size: 1.3em;
     line-height: 1;
-    margin-bottom: 4px;
+    color: #62c46a;
+    margin-left: 0.03em;
+    position: relative;
+    top: 0.2em;
   }
 
-  .hero-stat-label {
-    font-size: 10px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.3;
-  }
+  .em-wordmark.em-on-light { color: var(--navy); }
+  .em-wordmark.em-on-light .em-le { color: var(--green); }
 
-  .btn-hero {
-    width: 100%;
-    background: var(--orange);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    padding: 18px 24px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: transform 0.15s, background 0.15s;
-    -webkit-tap-highlight-color: transparent;
-    letter-spacing: 0.01em;
-  }
-  .btn-hero:active { transform: scale(0.97); background: var(--orange-dark); }
-
-  /* ── HOW IT WORKS ── */
-  .section {
-    padding: 64px 24px;
-    background: var(--white);
-  }
-
-  .section-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+  .em-tagline {
+    font-family: 'Mulish', 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--green);
-    margin-bottom: 10px;
+    color: #62c46a;
   }
 
-  .section-title {
-    font-family: 'Comfortaa', cursive;
-    font-size: clamp(26px, 6.5vw, 34px);
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.2;
-    margin-bottom: 32px;
-  }
-
-  .section-title em {
-    font-style: normal;
-    color: var(--orange);
-  }
-
-  .steps {
-    display: flex;
+  /* Stacked lockup: wordmark over tagline (headers + footer) */
+  .em-lockup {
+    display: inline-flex;
     flex-direction: column;
-    gap: 14px;
-  }
-
-  .step {
-    background: var(--bg);
-    border-radius: var(--radius);
-    padding: 20px 20px 18px;
-    display: flex;
-    gap: 16px;
     align-items: flex-start;
   }
 
-  .step-number {
+  /* Swoosh underline from the brand lockup */
+  .em-swoosh::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0.6em;
+    bottom: -0.16em;
+    height: 0.14em;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M1 8.5 Q 50 1 99 5.5' fill='none' stroke='%2362c46a' stroke-width='2.2' stroke-linecap='round'/></svg>") no-repeat center / 100% 100%;
+    pointer-events: none;
+  }
+  .em-swoosh.em-on-light::after {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M1 8.5 Q 50 1 99 5.5' fill='none' stroke='%234e8a4d' stroke-width='2.2' stroke-linecap='round'/></svg>");
+  }
+
+  .header-lockup .em-wordmark { font-size: 22px; }
+  .header-lockup .em-tagline  { font-size: 8.5px; margin-top: 8px; }
+
+  .header-logo-mark {
     width: 36px;
     height: 36px;
-    border-radius: 50%;
-    background: var(--navy);
-    color: white;
-    font-family: 'Comfortaa', cursive;
-    font-size: 17px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-shrink: 0;
-  }
-
-  .step-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-    line-height: 1.3;
-  }
-
-  .step-desc {
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-soft);
-    line-height: 1.55;
-  }
-
-  /* ── WHY IT MATTERS ── */
-  .why-section {
-    background: var(--navy);
-    padding: 64px 24px;
-  }
-
-  .why-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--green-light);
-    margin-bottom: 10px;
-  }
-
-  .why-title {
-    font-family: 'Comfortaa', cursive;
-    font-size: clamp(26px, 6.5vw, 34px);
-    font-weight: 700;
-    color: white;
-    line-height: 1.2;
-    margin-bottom: 10px;
-  }
-
-  .why-title em {
-    font-style: normal;
-    color: var(--yellow);
-  }
-
-  .why-intro {
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.6);
-    line-height: 1.65;
-    margin-bottom: 32px;
-  }
-
-  /* Closing line under the stat cards — reads as the punchline of the section */
-  .why-close {
-    font-family: 'Comfortaa', cursive;
-    font-size: 17px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.9);
-    line-height: 1.5;
-    margin-top: 8px;
-    text-align: center;
-  }
-  .why-close em {
-    font-style: normal;
-    color: var(--orange);
-  }
-
-  .stat-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 28px;
-  }
-
-  .stat-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: var(--radius);
-    padding: 20px 20px 18px;
-  }
-
-  .stat-card-num {
-    font-family: 'Comfortaa', cursive;
-    font-size: 42px;
-    font-weight: 700;
-    color: white;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .stat-card-num .unit {
-    font-size: 24px;
-    color: var(--green-light);
-  }
-
-  .stat-card-desc {
-    font-size: 13px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.6);
-    line-height: 1.55;
-  }
-
-  .stat-card-desc strong { color: white; font-weight: 600; }
-
-  .why-quote {
-    background: rgba(78,138,77,0.12);
-    border: 1px solid rgba(78,138,77,0.22);
-    border-left: 4px solid var(--green);
-    border-radius: var(--radius);
-    padding: 20px 22px;
-  }
-
-  .why-quote-text {
-    font-family: 'Comfortaa', cursive;
-    font-size: 16px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.85);
-    line-height: 1.55;
-    margin-bottom: 10px;
-  }
-
-  .why-quote-source {
-    font-size: 11px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.02em;
-  }
-
-  /* ── FOOTER CTA ── */
-  .footer-cta {
-    padding: 56px 24px 64px;
-    text-align: center;
-    background: var(--bg-dark);
-  }
-
-  .footer-cta-title {
-    font-family: 'Comfortaa', cursive;
-    font-size: clamp(26px, 6.5vw, 34px);
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.25;
-    margin-bottom: 12px;
-  }
-
-  .footer-cta-title em {
-    font-style: normal;
-    color: var(--orange);
-  }
-
-  .footer-cta-sub {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-soft);
-    line-height: 1.6;
-    margin-bottom: 28px;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .footer-brand {
-    margin-top: 44px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .footer-brand-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .footer-brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-    text-align: left;
-  }
-
-  .footer-brand-uptake {
-    font-family: 'Comfortaa', cursive;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(10,41,59,0.4);
-  }
-
-  .footer-brand-games {
-    font-family: 'Comfortaa', cursive;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .footer-byline {
-    font-size: 11px;
-    font-weight: 400;
-    color: rgba(0,0,0,0.28);
   }
 
   /* ════════════════════════════════════
@@ -813,34 +386,6 @@
     gap: 8px;
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
-  }
-
-  .hub-brand-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .hub-brand-uptake {
-    font-family: 'Comfortaa', cursive;
-    font-size: 9px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    line-height: 1.2;
-  }
-
-  .hub-logo-games {
-    font-family: 'Comfortaa', cursive;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    background: linear-gradient(120deg, #4e8a4d 0%, #e27e22 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.1;
   }
 
   .hub-greeting {
@@ -3121,13 +2666,17 @@
     flex: 1;
   }
   .faq-body {
+    flex: 1 1 auto;
+    min-height: 0; /* lets the body scroll inside the fixed panel instead of being clipped */
     overflow-y: auto;
-    padding: 24px 20px 40px;
+    -webkit-overflow-scrolling: touch;
+    padding: 24px 20px calc(env(safe-area-inset-bottom, 0px) + 120px);
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
   .faq-item {
+    flex: none; /* the body is a flex column: never let items squash to fit the viewport */
     background: var(--surface-card);
     border: 1px solid rgba(255,255,255,0.06);
     border-radius: var(--radius-sm);
@@ -3163,7 +2712,7 @@
     overflow: hidden;
     transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .faq-item.expanded .faq-answer { max-height: 800px; }
+  .faq-item.expanded .faq-answer { max-height: none; }
   .faq-answer-inner {
     padding: 0 18px 16px;
     color: rgba(255,255,255,0.75);
@@ -3174,173 +2723,21 @@
   .faq-answer-inner p { margin: 0 0 10px; }
   .faq-answer-inner p:last-child { margin-bottom: 0; }
 </style>
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
 
 <!-- ════════════════════════════════════════════════════
      LANDING PAGE
 ════════════════════════════════════════════════════ -->
-<div id="landing">
-
-  <!-- Nav -->
-  <div class="nav-back-bar">
-    <a class="nav-back" href="https://the-uptake.com" aria-label="Back to main site">
-      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9,2 4,7 9,12"/>
-      </svg>
-      Back to the-uptake.com
-    </a>
-  </div>
-
-  <nav class="nav">
-    <div class="nav-brand">
-      <img src="_images/Environmentle_logo1.png" class="nav-logo-mark" alt="The Uptake logo">
-      <div class="nav-logo-text">
-        <span class="nav-logo-uptake">The Uptake</span>
-        <span class="nav-logo-games">GAMES</span>
-      </div>
-    </div>
-    <button class="nav-btn" onclick="openNameScreen()">Play now</button>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-bg">
-      <div class="hero-circle hero-circle-1"></div>
-      <div class="hero-circle hero-circle-2"></div>
-      <div class="hero-circle hero-circle-3"></div>
-    </div>
-
-    <div class="hero-content">
-      <div class="hero-eyebrow anim-1">
-        <div class="hero-eyebrow-dot"></div>
-        <span class="hero-eyebrow-text">Free to play · No app needed</span>
-      </div>
-      <div class="hero-brand anim-2">
-        <span class="hero-brand-uptake">The Uptake</span>
-        <span class="hero-brand-games">GAMES</span>
-      </div>
-      <p class="hero-title anim-3">
-        Small games.<br>
-        <strong>Real climate action.</strong>
-      </p>
-    </div>
-
-    <div class="hero-bottom anim-4">
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-num" style="font-size:16px;color:var(--green-light);">Play</div>
-          <div class="hero-stat-label">3 min per challenge</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num" style="font-size:16px;color:var(--yellow);">Learn</div>
-          <div class="hero-stat-label">Guess, have fun &amp; discover real facts</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num" style="font-size:16px;color:var(--orange);">Act</div>
-          <div class="hero-stat-label">Build an action-biased mindset</div>
-        </div>
-      </div>
-      <button class="btn-hero" onclick="openNameScreen()">
-        Start playing — it's free
-        <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </button>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="section">
-    <p class="section-label">How it works</p>
-    <h2 class="section-title">A few short steps.<br><em>Your way.</em></h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-number">1</div>
-        <div class="step-content">
-          <div class="step-title">Play</div>
-          <div class="step-desc">Start with today's daily challenge. A quiz, sorting game, or carbon calculator. Easy, fun, under 3 minutes.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <div class="step-title">Learn</div>
-          <div class="step-desc">Pick things up through the game itself, or dip into our curated micro-learnings whenever you want a bit more depth.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <div class="step-title">Act</div>
-          <div class="step-desc">Find one small action you can take this week, tailored to what came up in your game. Action is the best antidote.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">4</div>
-        <div class="step-content">
-          <div class="step-title">Go further</div>
-          <div class="step-desc">Want to dig deeper? Our AI companion is ready for any question on climate, sustainability, or how to take it further.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why it matters -->
-  <section class="why-section">
-    <p class="why-label">Why it matters</p>
-    <h2 class="why-title">The gap between<br><em>knowing and doing</em></h2>
-    <p class="why-intro">Extensive research in Behavioural Change, Climate Communication, Gaming and Marketing tells us that people want a <strong>Simple · Hopeful · Fun</strong> way to access factual information.</p>
-
-    <div class="stat-cards">
-      <div class="stat-card">
-        <div class="stat-card-num">80<span class="unit">%</span></div>
-        <div class="stat-card-desc">of Irish people are <strong>willing to make changes</strong> but most don't know where to start.</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-num">52<span class="unit">%</span></div>
-        <div class="stat-card-desc">feel <strong>powerless</strong> to make a difference, yet the IPCC tells us <strong>individual action has a huge part to play</strong>.</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-num">45<span class="unit">%</span></div>
-        <div class="stat-card-desc">say it is <strong>almost impossible to find information</strong> about climate action that they can easily understand.</div>
-      </div>
-    </div>
-
-    <p class="why-close">That's the <em>gap</em> we're trying to fill.</p>
-  </section>
-
-  <!-- Footer CTA -->
-  <section class="footer-cta">
-    <h2 class="footer-cta-title">Ready to play<br><em>your part?</em></h2>
-    <p class="footer-cta-sub">Join thousands of people learning something new about sustainability every day.</p>
-    <button class="btn-hero" onclick="openNameScreen()" style="max-width:360px;margin:0 auto;display:flex;">
-      Start playing — it's free
-      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </button>
-
-    <div class="footer-brand">
-      <div class="footer-brand-logo">
-        <div class="footer-brand-text">
-          <span class="footer-brand-uptake">The Uptake</span>
-          <span class="footer-brand-games">GAMES</span>
-        </div>
-      </div>
-      <p class="footer-byline">games.the-uptake.com · A UCD Innovation Academy project</p>
-    </div>
-
-  </section>
-
-</div><!-- /landing -->
+<!-- The marketing splash lives at environmentle.org; the app opens straight on the name screen or the hub. -->
 
 
 <!-- ════════════════════════════════════════════════════
      SCREEN: NAME ENTRY
 ════════════════════════════════════════════════════ -->
-<div id="screen-name" class="screen">
-  <button class="name-back" onclick="closeName()">
+<div id="screen-name" class="screen" data-space="stars">
+  <button class="name-back" onclick="closeName()" hidden>
     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
       <path d="M19 12H5M12 19l-7-7 7-7"/>
     </svg>
@@ -3348,9 +2745,10 @@
   </button>
 
   <div class="name-top">
+    <envie-mascot class="name-envie anim-1" pose="wave" hat="hat" says="Dia duit, I'm Envie. And you are?"></envie-mascot>
     <p class="name-welcome-label anim-1">Welcome</p>
-    <h2 class="name-title anim-2">What do<br>we call <em>you?</em></h2>
-    <p class="name-subtitle anim-3">No account needed. Just your name so we can make it feel a bit more personal.</p>
+    <h2 class="name-title anim-2">What do<br>I call <em>you?</em></h2>
+    <p class="name-subtitle anim-3">No account, just a first name. I like to know who I'm exploring with.</p>
 
     <div class="name-input-wrap anim-4">
       <input
@@ -3383,16 +2781,16 @@
 <!-- ════════════════════════════════════════════════════
      SCREEN: GAME HUB
 ════════════════════════════════════════════════════ -->
-<div id="screen-hub" class="screen">
+<div id="screen-hub" class="screen" data-space="stars orbit">
 
   <!-- Sticky top bar -->
   <div class="app-topbar">
-    <a class="hub-header-brand" href="https://the-uptake.com">
-      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
-      <div class="hub-brand-text">
-        <span class="hub-brand-uptake">The Uptake</span>
-        <span class="hub-logo-games">GAMES</span>
-      </div>
+    <a class="hub-header-brand" href="#" onclick="switchTab('home'); return false;">
+      <img src="_images/_logo/assets/environmentle-icon-hero.svg" class="header-logo-mark" alt="">
+      <span class="em-lockup header-lockup">
+        <span class="em-wordmark em-swoosh">Environment<span class="em-le">le</span></span>
+        <span class="em-tagline">Play. Learn. Act.</span>
+      </span>
     </a>
     <button class="profile-icon-btn" onclick="openProfile()" aria-label="Profile">
       <span class="material-symbols-outlined">person</span>
@@ -3401,32 +2799,30 @@
 
   <!-- Hub header — navy, with greeting + streak chips -->
   <div class="hub-header">
-    <p class="hub-greeting" id="hub-greeting">Good to see you,</p>
-    <h2 class="hub-title" id="hub-title">Pick your <em>challenge</em></h2>
-    <div class="hub-streak-row">
-      <div class="hub-chip">
-        <div class="hub-chip-dot"></div>
-        Daily challenge available
+    <div class="hub-title-row">
+      <div>
+        <p class="hub-greeting" id="hub-greeting">Good to see you,</p>
+        <h2 class="hub-title" id="hub-title">Today, pick <em>one</em></h2>
       </div>
-      <div class="hub-chip streak" id="hub-streak-chip" style="display:none"></div>
+      <span class="streak-chip" id="hub-streak" hidden></span>
     </div>
 
     <!-- Notification prompt — lives inside navy header section -->
     <div class="notif-prompt" id="notif-prompt">
       <button class="notif-prompt-close" onclick="snoozeNotifPrompt()" aria-label="Close">✕</button>
-      <p class="notif-prompt-title">🔔 Never miss a daily challenge</p>
-      <p class="notif-prompt-desc">Get a gentle nudge each morning when your new challenge is ready. One notification a day, nothing else.</p>
+      <p class="notif-prompt-title">Want a nudge in the morning?</p>
+      <p class="notif-prompt-desc">I'll send one message a day when the new challenge is in. Nothing else, promise.</p>
       <div class="notif-prompt-btns">
         <button class="notif-btn-secondary" onclick="snoozeNotifPrompt()">Not now</button>
-        <button class="notif-btn-primary" onclick="requestNotifPermission()">Yes please!</button>
+        <button class="notif-btn-primary" onclick="requestNotifPermission()">Go on then</button>
       </div>
     </div>
 
     <!-- Install banner — lives inside navy header section -->
     <div class="install-banner" id="install-banner">
       <button class="install-banner-close" onclick="closeInstallBanner()" aria-label="Close">✕</button>
-      <p class="install-banner-title">Add us to your home screen</p>
-      <p class="install-banner-desc">No app install needed.</p>
+      <p class="install-banner-title">Keep me on your home screen</p>
+      <p class="install-banner-desc">No app store, nothing to download.</p>
       <div class="install-banner-steps">
         <div class="install-step">
           <div class="install-step-icon">
@@ -3453,7 +2849,7 @@
       <div class="install-banner-btns">
         <button class="install-banner-cta" onclick="dismissInstallBanner()">
           <span class="material-symbols-outlined">close</span>
-          Dismiss
+          Not now
         </button>
         <button class="install-banner-cta" onclick="acceptInstallBanner()">
           Done
@@ -3464,52 +2860,12 @@
 
   </div><!-- /hub-header -->
 
-  <!-- Scrollable body — grey starts here -->
+  <!-- Scrollable body: the three ways, the lead card, then the rest.
+       Everything inside is rendered by home.js from Engine.decide(). -->
   <div class="hub-body">
-
-    <!-- Daily challenge hero (full width) -->
-    <div class="daily-hero" id="today-banner">
-      <div class="daily-hero-content">
-        <div class="daily-hero-top">
-          <span class="daily-theme-badge" id="today-label">Today's theme</span>
-          <span class="daily-hero-date" id="today-challenge-sub">Daily Challenge · 3 questions</span>
-        </div>
-        <span class="today-icon" id="today-icon">🌱</span>
-        <h3 class="daily-hero-title" id="today-challenge-title">Loading...</h3>
-        <div class="daily-hero-action">
-          <div class="daily-play-btn" id="today-arrow">PLAY NOW →</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Progress card (returning users only) -->
-    <div class="hub-progress-card" id="hub-progress" style="display:none;">
-      <div class="progress-stat">
-        <div class="progress-stat-num" id="progress-total-score">0</div>
-        <div class="progress-stat-label">Total score</div>
-      </div>
-      <div class="progress-stat">
-        <div class="progress-stat-num" id="progress-sessions">0</div>
-        <div class="progress-stat-label">Games played</div>
-      </div>
-      <div class="progress-stat">
-        <div class="progress-stat-num" id="progress-actions">0</div>
-        <div class="progress-stat-label">Actions pledged</div>
-      </div>
-      <div class="progress-stat">
-        <div class="progress-stat-num" id="progress-streak">🔥 0</div>
-        <div class="progress-stat-label" id="progress-streak-label">Day streak</div>
-      </div>
-    </div>
-
-    <p class="hub-section-label" id="recent-games-label">Recently played</p>
-    <div id="recent-games-list"></div>
-
-    <div id="recent-stories-section" style="display:none;">
-      <p class="hub-section-label">Stories</p>
-      <div id="recent-stories-list"></div>
-    </div>
-
+    <div class="ways" id="hub-ways" aria-label="Today's three challenges"></div>
+    <div id="hub-lead"></div>
+    <div id="hub-more"></div>
   </div><!-- /hub-body -->
 </div><!-- /screen-hub -->
 
@@ -3517,16 +2873,17 @@
 <!-- ════════════════════════════════════════════════════
      SCREEN: GAMES TAB
 ════════════════════════════════════════════════════ -->
-<div id="screen-games" class="screen tab-screen">
+<div id="screen-games" class="screen tab-screen" data-space="stars">
+  <envie-mascot class="bg-envie" pose="spyglass" hat="cap"></envie-mascot>
 
   <!-- Same sticky topbar as home screen -->
   <div class="app-topbar">
-    <a class="hub-header-brand" href="https://the-uptake.com">
-      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
-      <div class="hub-brand-text">
-        <span class="hub-brand-uptake">The Uptake</span>
-        <span class="hub-logo-games">GAMES</span>
-      </div>
+    <a class="hub-header-brand" href="#" onclick="switchTab('home'); return false;">
+      <img src="_images/_logo/assets/environmentle-icon-hero.svg" class="header-logo-mark" alt="">
+      <span class="em-lockup header-lockup">
+        <span class="em-wordmark em-swoosh">Environment<span class="em-le">le</span></span>
+        <span class="em-tagline">Play. Learn. Act.</span>
+      </span>
     </a>
     <button class="profile-icon-btn" onclick="openProfile()" aria-label="Profile">
       <span class="material-symbols-outlined">person</span>
@@ -3543,115 +2900,71 @@
     <div class="games-lib-hero-content">
       <div class="games-lib-eyebrow">
         <div class="games-lib-eyebrow-dot"></div>
-        <span class="games-lib-eyebrow-text">4 games · Free to play</span>
+        <span class="games-lib-eyebrow-text">Three games · Free to play</span>
       </div>
       <div class="games-lib-title">GAMES</div>
-      <p class="games-lib-subtitle">Small games. Real climate action. Pick one and go.</p>
+      <p class="games-lib-subtitle">Short games, real numbers. Pick one, I'll keep score.</p>
+      <p class="tab-lock-note" id="games-lock-note" hidden>Two done today. I'll open the games again tomorrow.</p>
     </div>
   </div>
 
   <div class="games-library-body">
-
-    <!-- Random Quiz -->
-    <div class="gl-card quiz" onclick="openGame('quiz','random')">
-      <div class="gl-poster">
-        <div class="gl-poster-top">
-          <div class="gl-tag-pill"><span class="material-symbols-outlined">casino</span> Quiz</div>
+    <div class="rim quiz" onclick="openGame('quiz','random')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="dices" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Quiz</p>
+          <p class="rim-title">Random quiz</p>
+          <div class="rim-chips"><span class="chip">3 questions</span><span class="chip">150 pts</span><span class="chip muted">~2 min</span></div>
         </div>
-        <div class="gl-poster-bottom">
-          <div class="gl-poster-name">Random<br>Challenge</div>
-          <div class="gl-poster-play" onclick="event.stopPropagation(); openGame('quiz','random')">▶</div>
-        </div>
-      </div>
-      <div class="gl-info">
-        <p class="gl-desc">A random quiz picked from our library of daily challenges. Three questions, real data, something new every time.</p>
-        <div class="gl-meta-row">
-          <span class="gl-chip primary">3 questions</span>
-          <span class="gl-chip primary">450 pts max</span>
-          <span class="gl-chip">~2 min</span>
-        </div>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Carbon Challenge -->
-    <div class="gl-card sort" onclick="openGame('sort')">
-      <div class="gl-poster">
-        <div class="gl-poster-top">
-          <div class="gl-tag-pill"><span class="material-symbols-outlined">co2</span> Sorting Game</div>
+    <div class="rim sort" onclick="openGame('sort')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="arrow-down-up" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Carbon</p>
+          <p class="rim-title">Sort it out</p>
+          <div class="rim-chips"><span class="chip">6 cards</span><span class="chip">3 tries</span><span class="chip muted">~3 min</span></div>
         </div>
-        <div class="gl-poster-bottom">
-          <div class="gl-poster-name">Carbon<br>Challenge</div>
-          <div class="gl-poster-play" onclick="event.stopPropagation(); openGame('sort')">▶</div>
-        </div>
-      </div>
-      <div class="gl-info">
-        <p class="gl-desc">Six everyday items. Drag them into order by carbon footprint, lowest to highest. The results might surprise you.</p>
-        <div class="gl-meta-row">
-          <span class="gl-chip primary">6 cards</span>
-          <span class="gl-chip primary">3 tries</span>
-          <span class="gl-chip">~3 min</span>
-        </div>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Water Challenge -->
-    <div class="gl-card water" onclick="openGame('water')">
-      <div class="gl-poster">
-        <div class="gl-poster-top">
-          <div class="gl-tag-pill"><span class="material-symbols-outlined">water_drop</span> Water Game</div>
+    <div class="rim water" onclick="openGame('water')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="droplet" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Water</p>
+          <p class="rim-title">Water challenge</p>
+          <div class="rim-chips"><span class="chip">5 rounds</span><span class="chip">150 pts</span><span class="chip muted">~3 min</span></div>
         </div>
-        <div class="gl-poster-bottom">
-          <div class="gl-poster-name">Water<br>Challenge</div>
-          <div class="gl-poster-play" onclick="event.stopPropagation(); openGame('water')">▶</div>
-        </div>
-      </div>
-      <div class="gl-info">
-        <p class="gl-desc">Water is hidden in almost everything we buy and eat. Higher or lower: guess which everyday thing takes more water to make, from a cup of coffee to a pair of jeans.</p>
-        <div class="gl-meta-row">
-          <span class="gl-chip primary">5 rounds</span>
-          <span class="gl-chip primary">One life</span>
-          <span class="gl-chip">~3 min</span>
-        </div>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Greenwasher (coming soon) -->
-    <div class="gl-card swipe coming-soon">
-      <div class="gl-poster">
-        <div class="gl-poster-top">
-          <div class="gl-tag-pill"><span class="material-symbols-outlined">swipe</span> Swipe Game</div>
-          <div class="gl-coming-pill">Coming soon</div>
-        </div>
-        <div class="gl-poster-bottom">
-          <div class="gl-poster-name">Green-<br>washer</div>
-        </div>
-      </div>
-      <div class="gl-info">
-        <p class="gl-desc">Real brand claims. Real greenwashing. Swipe right if legit, left if you smell spin. How sharp is your BS detector?</p>
-        <div class="gl-meta-row">
-          <span class="gl-chip primary">Swipe to judge</span>
-          <span class="gl-chip">~4 min</span>
-        </div>
+    <div class="rim soon">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="shield" data-size="24"></i></span>
+        <div class="rim-body"><p class="rim-title">Greenwasher</p><p class="rim-meta">In the workshop</p></div>
       </div>
     </div>
-
   </div>
 </div>
-
 
 <!-- ════════════════════════════════════════════════════
      SCREEN: STATS TAB
 ════════════════════════════════════════════════════ -->
-<div id="screen-learn" class="screen tab-screen">
+<div id="screen-learn" class="screen tab-screen" data-space="stars">
+  <envie-mascot class="bg-envie" pose="wave" hat="cap"></envie-mascot>
 
   <!-- Same sticky topbar -->
   <div class="app-topbar">
-    <a class="hub-header-brand" href="https://the-uptake.com">
-      <img src="_images/Environmentle_logo1.png" width="28" height="28" alt="The Uptake logo" style="object-fit:contain;">
-      <div class="hub-brand-text">
-        <span class="hub-brand-uptake">The Uptake</span>
-        <span class="hub-logo-games">GAMES</span>
-      </div>
+    <a class="hub-header-brand" href="#" onclick="switchTab('home'); return false;">
+      <img src="_images/_logo/assets/environmentle-icon-hero.svg" class="header-logo-mark" alt="">
+      <span class="em-lockup header-lockup">
+        <span class="em-wordmark em-swoosh">Environment<span class="em-le">le</span></span>
+        <span class="em-tagline">Play. Learn. Act.</span>
+      </span>
     </a>
     <button class="profile-icon-btn" onclick="openProfile()" aria-label="Profile">
       <span class="material-symbols-outlined">person</span>
@@ -3671,245 +2984,226 @@
         <span class="learn-hero-eyebrow-text">Short stories · Free</span>
       </div>
       <div class="learn-hero-title">STORIES</div>
-      <p class="learn-hero-subtitle">Short, visual stories on climate and sustainability. No jargon, no overwhelm.</p>
+      <p class="learn-hero-subtitle">Things I've found out since I landed, written down short. Five to eight minutes each, no jargon.</p>
+      <p class="tab-lock-note" id="stories-lock-note" hidden>Two done today. I'll open the stories again tomorrow.</p>
     </div>
   </div>
 
   <!-- Content -->
   <div class="learn-body">
-
-    <p class="learn-section-label">Available now</p>
-
-    <!-- Climate Wins in 2025 — LIVE -->
-    <div class="ml-card topic-climate active" onclick="openCourse('climate-wins-2025')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">celebration</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Good News</div>
-          <div class="ml-card-title">Climate Wins in 2025</div>
-          <div class="ml-card-desc">Renewable records broken, new protected areas, policies that actually stuck. A look at what went right this year.</div>
+    <p class="learn-section-label">Ready to read</p>
+    <div class="rim topic-climate" data-course="climate-wins-2025" onclick="openCourse('climate-wins-2025')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="sparkles" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Good news</p>
+          <p class="rim-title">Climate wins in 2025</p>
+          <div class="rim-chips"><span class="chip">10 slides</span><span class="chip muted">5 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">10 slides</span>
-        <span class="ml-chip">5 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Data Centres in Ireland — LIVE -->
-    <div class="ml-card topic-data active" onclick="openCourse('data-centres-ireland')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">dns</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Tech &amp; Energy</div>
-          <div class="ml-card-title">Data Centres in Ireland</div>
-          <div class="ml-card-desc">Ireland hosts a quarter of Europe's data centres. What does that mean for the grid, our renewable targets, and who pays the price?</div>
+    <div class="rim topic-data" data-course="data-centres-ireland" onclick="openCourse('data-centres-ireland')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="server" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Tech &amp; energy</p>
+          <p class="rim-title">Data centres in Ireland</p>
+          <div class="rim-chips"><span class="chip">12 slides</span><span class="chip muted">5 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">11 slides</span>
-        <span class="ml-chip">5 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Climate & Finance — LIVE -->
-    <div class="ml-card topic-finance active" onclick="openCourse('climate-and-finance')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">account_balance</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Finance</div>
-          <div class="ml-card-title">Climate &amp; Finance</div>
-          <div class="ml-card-desc">Banks, green bonds, ESG investing, and your own account. How money flows determines whether the climate transition happens — and how fast.</div>
+    <div class="rim topic-finance" data-course="climate-and-finance" onclick="openCourse('climate-and-finance')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="landmark" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Finance</p>
+          <p class="rim-title">Climate &amp; finance</p>
+          <div class="rim-chips"><span class="chip">9 slides</span><span class="chip muted">6 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">10 slides</span>
-        <span class="ml-chip">6 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- The Ben & Jerry's Story — LIVE -->
-    <div class="ml-card topic-activism active" onclick="openCourse('ben-and-jerrys')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">icecream</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Brands &amp; Activism</div>
-          <div class="ml-card-title">The Ben &amp; Jerry's Story</div>
-          <div class="ml-card-desc">From a converted petrol station to a global brand that never stopped picking fights. How values-driven business really works — and where it gets complicated.</div>
+    <div class="rim topic-activism" data-course="ben-and-jerrys" onclick="openCourse('ben-and-jerrys')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="ice-cream" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Brands &amp; activism</p>
+          <p class="rim-title">The Ben &amp; Jerry's story</p>
+          <div class="rim-chips"><span class="chip">14 slides</span><span class="chip muted">7 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">14 slides</span>
-        <span class="ml-chip">7 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- Ireland's Forestry Problem — LIVE -->
-    <div class="ml-card topic-forestry active" onclick="openCourse('ireland-forestry')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">forest</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Land &amp; Nature</div>
-          <div class="ml-card-title">Ireland's Forestry Problem</div>
-          <div class="ml-card-desc">Ireland is one of the least forested countries in Europe, and much of what it has planted is a single, contested conifer. What happened, and what comes next.</div>
+    <div class="rim topic-forestry" data-course="ireland-forestry" onclick="openCourse('ireland-forestry')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="tree-pine" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Land &amp; nature</p>
+          <p class="rim-title">Ireland's forestry problem</p>
+          <div class="rim-chips"><span class="chip">19 slides</span><span class="chip muted">8 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">19 slides</span>
-        <span class="ml-chip">8 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <!-- The Right to Repair — LIVE -->
-    <div class="ml-card topic-circular active" onclick="openCourse('right-to-repair')">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">handyman</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Circular Economy</div>
-          <div class="ml-card-title">The Right to Repair</div>
-          <div class="ml-card-desc">E-waste is the fastest-growing waste stream on Earth, and Ireland throws out more than almost anyone in the EU. New EU rules now make manufacturers fix your stuff.</div>
+    <div class="rim topic-circular" data-course="right-to-repair" onclick="openCourse('right-to-repair')">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="wrench" data-size="26"></i></span>
+        <div class="rim-body">
+          <p class="rim-tag">Circular economy</p>
+          <p class="rim-title">The right to repair</p>
+          <div class="rim-chips"><span class="chip">12 slides</span><span class="chip muted">6 min</span></div>
         </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">11 slides</span>
-        <span class="ml-chip">5 min</span>
-        <span class="ml-chip" style="margin-left:auto;color:var(--green);border-color:rgba(125,204,138,0.3);background:rgba(78,138,77,0.12);">Read now →</span>
+        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
       </div>
     </div>
-
-    <p class="learn-section-label" style="margin-top:16px;">Coming soon</p>
-
-    <!-- Food Waste & Composting -->
-    <div class="ml-card topic-food coming-soon">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">compost</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Food &amp; Waste</div>
-          <div class="ml-card-title">Food Waste and Composting</div>
-          <div class="ml-card-desc">One third of all food produced globally is wasted. How composting closes the loop — and what you can do at home.</div>
-        </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">4 min read</span>
-        <span class="ml-coming-chip">Coming soon</span>
+    <p class="learn-section-label">Still writing</p>
+    <div class="rim soon">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="sprout" data-size="24"></i></span>
+        <div class="rim-body"><p class="rim-title">Food waste and composting</p><p class="rim-meta">Food &amp; waste · 4 min read</p></div>
       </div>
     </div>
-
-    <!-- Talking about Climate Change -->
-    <div class="ml-card topic-society coming-soon">
-      <div class="ml-card-accent"></div>
-      <div class="ml-card-inner">
-        <div class="ml-card-icon"><span class="material-symbols-outlined">forum</span></div>
-        <div class="ml-card-content">
-          <div class="ml-card-meta">Society</div>
-          <div class="ml-card-title">Talking about Climate Change</div>
-          <div class="ml-card-desc">Why climate conversations so often go wrong — and how to have them in a way that actually moves people.</div>
-        </div>
-      </div>
-      <div class="ml-card-footer">
-        <span class="ml-chip">6 min read</span>
-        <span class="ml-coming-chip">Coming soon</span>
+    <div class="rim soon">
+      <div class="rim-in">
+        <span class="tile lg"><i data-icon="message-circle" data-size="24"></i></span>
+        <div class="rim-body"><p class="rim-title">Talking about climate change</p><p class="rim-meta">Society · 6 min read</p></div>
       </div>
     </div>
-
-
   </div>
 </div>
-
 
 <!-- ════════════════════════════════════════════════════
      SCREEN: PROFILE TAB
 ════════════════════════════════════════════════════ -->
-<div id="screen-profile" class="screen tab-screen">
+<div id="screen-profile" class="screen tab-screen" data-space="stars">
   <div class="profile-topbar">
     <button class="profile-back" onclick="closeProfile()" aria-label="Back">
-      <span class="material-symbols-outlined">arrow_back</span>
+      <i data-icon="arrow-left" data-size="18"></i>
       Back
     </button>
     <span class="profile-topbar-title">Profile</span>
     <button class="profile-signout" onclick="logout()">
-      <span class="material-symbols-outlined">logout</span>
-      Sign Out
+      <i data-icon="pencil" data-size="17"></i>
+      Change name
     </button>
   </div>
 
   <div class="profile-body">
     <div class="profile-hero">
       <div class="profile-avatar">
-        <span class="material-symbols-outlined">person</span>
-        <span class="profile-avatar-badge">
-          <span class="material-symbols-outlined">eco</span>
-        </span>
+        <span class="profile-avatar-in"><envie-mascot class="profile-envie" pose="wave" hat="hat" aria-hidden="true"></envie-mascot></span>
       </div>
       <h2 class="profile-name" id="profile-name">Player</h2>
       <p class="profile-tag" id="profile-tag">Player · Level 1</p>
     </div>
 
-    <!-- Activity card — same pattern as the homepage hub-progress-card -->
     <div class="hub-progress-card">
       <div class="progress-stat">
         <div class="progress-stat-num" id="profile-total-score">0</div>
-        <div class="progress-stat-label">Total score</div>
+        <div class="progress-stat-label">Score</div>
       </div>
       <div class="progress-stat">
         <div class="progress-stat-num" id="profile-sessions">0</div>
-        <div class="progress-stat-label">Games played</div>
+        <div class="progress-stat-label">Games</div>
       </div>
       <div class="progress-stat">
         <div class="progress-stat-num" id="profile-actions">0</div>
-        <div class="progress-stat-label">Actions pledged</div>
+        <div class="progress-stat-label">Pledged</div>
       </div>
       <div class="progress-stat">
-        <div class="progress-stat-num" id="profile-streak">🔥 0</div>
-        <div class="progress-stat-label">Day streak</div>
+        <div class="progress-stat-num streak" id="profile-streak">0</div>
+        <div class="progress-stat-label">Streak</div>
       </div>
     </div>
 
-    <p class="profile-section-label">Stories</p>
+    <div class="profile-share" id="profile-share"></div>
+
+    <!-- Impact credits: progress card, or the "credit ready" card. Rendered by home.js -->
+    <div class="credit-card" id="profile-credit"></div>
+
+    <p class="profile-section-label">Your milestones</p>
+    <div class="milestones" id="profile-milestones"></div>
+
+    <div class="profile-section-row">
+      <p class="profile-section-label">Actions pledged</p>
+      <button type="button" class="profile-link" onclick="openActions()">Browse actions <i data-icon="chevron-right" data-size="14"></i></button>
+    </div>
+    <div class="actions-history-list" id="actions-history-list"></div>
+
+    <p class="profile-section-label">Help</p>
     <div class="settings-list">
+      <button class="settings-item" type="button" onclick="closeProfile(); setTimeout(function () { startTour(true); }, 450);">
+        <span class="settings-item-icon"><i data-icon="sparkles" data-size="20"></i></span>
+        <span class="settings-item-label">How the app works, with Envie</span>
+        <i data-icon="chevron-right" data-size="18" class="settings-item-chevron"></i>
+      </button>
       <button class="settings-item" type="button" onclick="openFaq()">
-        <span class="material-symbols-outlined settings-item-icon">help</span>
+        <span class="settings-item-icon"><i data-icon="info" data-size="20"></i></span>
         <span class="settings-item-label">FAQ</span>
-        <span class="material-symbols-outlined settings-item-chevron">chevron_right</span>
+        <i data-icon="chevron-right" data-size="18" class="settings-item-chevron"></i>
       </button>
     </div>
 
     <p class="profile-section-label">Settings</p>
     <div class="settings-list">
       <button class="settings-item" type="button">
-        <span class="material-symbols-outlined settings-item-icon">manage_accounts</span>
+        <span class="settings-item-icon"><i data-icon="user" data-size="20"></i></span>
         <span class="settings-item-label">Account</span>
-        <span class="material-symbols-outlined settings-item-chevron">chevron_right</span>
+        <i data-icon="chevron-right" data-size="18" class="settings-item-chevron"></i>
       </button>
       <button class="settings-item" type="button">
-        <span class="material-symbols-outlined settings-item-icon">notifications</span>
+        <span class="settings-item-icon"><i data-icon="bell" data-size="20"></i></span>
         <span class="settings-item-label">Notifications</span>
-        <span class="material-symbols-outlined settings-item-chevron">chevron_right</span>
+        <i data-icon="chevron-right" data-size="18" class="settings-item-chevron"></i>
       </button>
       <button class="settings-item" type="button">
-        <span class="material-symbols-outlined settings-item-icon">shield</span>
+        <span class="settings-item-icon"><i data-icon="shield" data-size="20"></i></span>
         <span class="settings-item-label">Privacy</span>
-        <span class="material-symbols-outlined settings-item-chevron">chevron_right</span>
+        <i data-icon="chevron-right" data-size="18" class="settings-item-chevron"></i>
       </button>
-    </div>
-
-    <p class="profile-section-label">Actions taken</p>
-    <div class="actions-history-list" id="actions-history-list">
-      <div class="actions-history-empty">Your pledged actions will show up here once you commit to one at the end of a game.</div>
     </div>
   </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: ACTIONS (the repository, opened from home or profile)
+════════════════════════════════════════════════════ -->
+<div id="screen-actions" class="screen tab-screen" data-space="stars">
+  <div class="profile-topbar">
+    <button class="profile-back" onclick="closeProfile()" aria-label="Back">
+      <i data-icon="arrow-left" data-size="18"></i>
+      Home
+    </button>
+    <span class="profile-topbar-title">Take an action</span>
+    <span class="profile-cap" id="actions-cap"></span>
+  </div>
+  <div class="actions-body">
+    <div class="erow sm">
+      <envie-mascot pose="point" hat="cap" aria-hidden="true"></envie-mascot>
+      <div class="bb r2 tail-low" id="actions-bubble"></div>
+    </div>
+    <div class="chips filters" id="actions-filters"></div>
+    <div class="actions-list" id="actions-list"></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SCREEN: IMPACT CREDIT (spend a credit with a partner)
+════════════════════════════════════════════════════ -->
+<div id="screen-credit" class="screen tab-screen" data-space="stars orbit">
+  <div class="profile-topbar">
+    <button class="profile-back" onclick="openProfile()" aria-label="Back">
+      <i data-icon="arrow-left" data-size="18"></i>
+      Profile
+    </button>
+    <span class="profile-topbar-title">Impact credit</span>
+    <span class="profile-cap"></span>
+  </div>
+  <div class="credit-body" id="credit-body"></div>
 </div>
 
 
@@ -3932,17 +3226,16 @@
   <div class="cp-tap-next" id="cp-tap-next" onclick="cpNext()"></div>
 
   <!-- Completion overlay — shown instead of a slide, above everything -->
-  <div id="cp-completion" style="display:none;position:absolute;inset:0;z-index:50;background:linear-gradient(160deg,#061d2e 0%,#0d3a52 60%,#0a2840 100%);flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:80px 32px;">
-    <div id="cp-completion-inner"></div>
-    <button onclick="closeCourse()" style="margin-top:8px;background:white;color:#0a293b;border:none;border-radius:100px;padding:16px 52px;font-family:'Comfortaa',cursive;font-size:17px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;">Done</button>
+  <div id="cp-completion" class="cp-complete">
+    <div id="cp-completion-inner" style="display:contents"></div>
   </div>
 
   <!-- Points toast (shown on first completion) -->
   <div id="cp-points-toast" class="cp-points-toast">
     <div class="cp-toast-inner">
-      <div class="cp-toast-emoji">🎉</div>
+      <envie-mascot class="cp-toast-envie" pose="celebrate" hat="hat"></envie-mascot>
       <div class="cp-toast-label">Story complete!</div>
-      <div class="cp-toast-pts" id="cp-toast-pts">+75 pts</div>
+      <div class="cp-toast-pts" id="cp-toast-pts">+100 pts</div>
       <div class="cp-toast-sub">Added to your score</div>
     </div>
   </div>
@@ -3952,7 +3245,7 @@
     <span class="cp-counter" id="cp-counter">1 / 10</span>
     <span class="cp-hint" id="cp-hint">
       <span class="material-symbols-outlined" style="font-size:13px">swipe</span>
-      swipe to navigate
+      swipe to turn the page
     </span>
   </div>
 
@@ -3973,37 +3266,56 @@
 
     <div class="faq-item">
       <button class="faq-question" onclick="toggleFaq(this)">
-        <span class="faq-question-text">What is the environmental impact of the AI used on this app, and what do we do about it?</span>
+        <span class="faq-question-text">How does Environmentle work?</span>
         <span class="material-symbols-outlined faq-chevron">chevron_right</span>
       </button>
       <div class="faq-answer">
         <div class="faq-answer-inner">
-          <p>The rapid growth of AI, and the data centres needed to support it, is a real and important issue. It can affect energy grids and local water supplies, and we take that seriously.</p>
-          <p>That said, we believe AI has a genuine role to play in making climate and sustainability information more accessible. The challenge is doing it responsibly.</p>
-          <p>Here is how we try to get that balance right:</p>
-          <p><strong>We use Infomaniak as our AI provider.</strong> Infomaniak is a Swiss-based company widely recognised as one of the most ethical cloud and AI providers in the world. They run their infrastructure on renewable energy and are transparent about their environmental commitments.</p>
-          <p><strong>We use lightweight, efficient models.</strong> Not all AI models are equal when it comes to resource use. The most energy-intensive part of AI is training large models from scratch, not running them day to day. We use Mistral and Apertvs, two models specifically built to be compact and efficient.</p>
-          <p>Apertvs is fully open-source, developed by ETH Zurich and EPFL, two of Europe's leading research universities. It is released under an open licence, which means its training, architecture, and data are publicly documented. No black box.</p>
-          <p><strong>Your data stays in a controlled environment.</strong> Because we use Infomaniak's infrastructure, your queries are processed in a closed system, not sent to large commercial cloud platforms.</p>
-          <p>We are not perfect, and the field is evolving fast. But we believe choosing the right partners and tools makes a real difference.</p>
+          <p>Every day I hand you three ways to play your part: a <strong>game</strong>, a <strong>story</strong> or an <strong>action</strong>. Pick one. That's your challenge for the day, and it keeps your streak going.</p>
+          <p><strong>Games</strong> are short quizzes and sorting games built on real data. The daily quiz changes every weekday. On weekends the library is open and I suggest a game you haven't played for a while.</p>
+          <p><strong>Stories</strong> are short visual reads on one climate topic, things I've found out since I landed, five to eight minutes each.</p>
+          <p><strong>Actions</strong> are small, specific things you can do this week, drawn from what you've been playing and reading. I suggest one later in the week, once you've done a couple of challenges. You read it, then pledge it or say no and get another. Two pledges a week is the limit.</p>
+          <p><strong>One challenge a day is the rhythm.</strong> If you want more, you can do a second one. After that, the home page tells you the day is done and I wait for tomorrow. The Companion is always open.</p>
+          <p><strong>Points.</strong> A game earns up to 150 points depending on how well you do, a story earns 100, and an action 30 or 50. Actions earn the least because I take your word for them. Playing several days in a row adds a small streak bonus.</p>
+          <p><strong>Impact credits.</strong> Every 1,500 points becomes an impact credit, about a fortnight of play. Your score never goes down. A credit can be spent with one of our partners on something real, like a native tree or a patch of pollinator meadow. Your profile shows how far you are from the next one.</p>
         </div>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-question" onclick="toggleFaq(this)">
-        <span class="faq-question-text">Where does the information in the AI Companion come from?</span>
+        <span class="faq-question-text">What about the environmental impact of the AI in this app?</span>
         <span class="material-symbols-outlined faq-chevron">chevron_right</span>
       </button>
       <div class="faq-answer">
         <div class="faq-answer-inner">
-          <p>The AI Companion draws on two sources, and it always tells you which one it is using.</p>
-          <p><strong>First: our own curated knowledge base.</strong> We have built and maintain a wiki of climate and sustainability information, sourced, reviewed, and validated by us. When you ask a question, the Companion first searches this wiki using MistralAI. If a clear answer is found there, that is what you get.</p>
-          <p><strong>Second: a fallback to broader AI knowledge.</strong> If the answer cannot be found in our wiki, the Companion falls back to Apertvs, an open-source model developed by Swiss research institutions ETH Zurich and EPFL, to provide a response based on its training data. When this happens, the answer is clearly labelled so you know it is coming from general AI knowledge rather than our curated sources.</p>
-          <p>This approach means that, as much as possible, answers are grounded in verified, local information, and you always know where they come from.</p>
+          <p>The rapid growth of AI, and the data centres behind it, is a real issue. It can put pressure on energy grids and local water supplies. I've seen it from up there, and the people who built me take it seriously.</p>
+          <p>That said, we think AI has a real part to play in making climate information easier to get at. The trick is doing it responsibly.</p>
+          <p>Here's how we try to get the balance right:</p>
+          <p><strong>We use Infomaniak as our AI provider.</strong> Infomaniak is a Swiss company widely recognised as one of the most ethical cloud and AI providers around. They run on renewable energy and are open about their environmental commitments.</p>
+          <p><strong>We use small, efficient models.</strong> Not all AI models use the same resources. The most energy-hungry part is training big models from scratch, not running them day to day. We use Mistral and Apertus, two models built to be compact and efficient.</p>
+          <p>Apertus is fully open source, developed by ETH Zurich and EPFL, two of Europe's leading research universities. It's released under an open licence, so its training, architecture and data are publicly documented. No black box.</p>
+          <p><strong>Your data stays in a controlled place.</strong> Because we use Infomaniak's infrastructure, your questions are processed in a closed system, not sent off to the big commercial cloud platforms.</p>
+          <p>We're not perfect, and the field moves fast. But choosing the right partners and tools makes a real difference.</p>
         </div>
       </div>
     </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-question-text">Where do my answers in the Companion come from?</span>
+        <span class="material-symbols-outlined faq-chevron">chevron_right</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>I draw on two sources, and I always tell you which one I'm using.</p>
+          <p><strong>First, our own checked knowledge base.</strong> The team has built and maintains a wiki of climate and sustainability information, sourced, reviewed and validated by us. When you ask a question, I search that wiki first, using MistralAI. If there's a clear answer there, that's what you get.</p>
+          <p><strong>Second, general AI knowledge as a fallback.</strong> If the wiki doesn't have the answer, I fall back on Apertus, an open source model from the Swiss research institutions ETH Zurich and EPFL, and answer from its training data. When that happens, the answer is clearly labelled, so you know it's general AI knowledge rather than our checked sources.</p>
+          <p>So as much as possible, answers are grounded in verified, local information, and you always know where they came from.</p>
+        </div>
+      </div>
+    </div>
+
 
     <div class="faq-item">
       <button class="faq-question" onclick="toggleFaq(this)">
@@ -4012,9 +3324,52 @@
       </button>
       <div class="faq-answer">
         <div class="faq-answer-inner">
-          <p>This app is not trying to capture your attention or keep you scrolling. We are aware of the pressure that comes from constant digital noise, and from the weight of negative climate narratives. That is not what we want to add to your day.</p>
-          <p>Our research shows that people want simple, trustworthy ways to stay informed, and that short, playful challenges are a good way to do that without feeling overwhelmed.</p>
-          <p>With that in mind, The Uptake Games is built around very short, casual challenges. You can take 2 to 3 challenges a day, for a maximum of 3 to 5 minutes. That is intentional. We want you to get something useful out of it, and then get on with your day.</p>
+          <p>This app isn't trying to grab your attention or keep you scrolling. We know the pressure that comes from constant digital noise, and from the weight of bad climate news. That's not what I want to add to your day.</p>
+          <p>Our research shows people want simple, trustworthy ways to stay informed, and that short, playful challenges do that without the overwhelm.</p>
+          <p>So Environmentle is built around one challenge a day, with a cap of two. A game takes about three minutes, a story about six, an action two. That's on purpose. Get something useful out of it, then get on with your day.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-question-text">What do you keep about me?</span>
+        <span class="material-symbols-outlined faq-chevron">chevron_right</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>To play, I only ask for your first name, so I know what to call you. No password, no phone number. The one time we ask for an email is when you spend a credit, more on that below.</p>
+          <p>Your points, streak, games played, stories read and actions pledged are kept in a database against that name and nothing else, so they follow you between devices. We use those figures in aggregate, to see how many games were played, how many actions were pledged and how many points were earned across everyone. They're never sold or shared.</p>
+          <p>If you turn on notifications, we store the token your browser gives us for that purpose only, and you can switch it off at any time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-question-text">What is a web app, and why not a normal app?</span>
+        <span class="material-symbols-outlined faq-chevron">chevron_right</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Environmentle is a web app. It runs in your browser, and you can add it to your home screen so it opens like any other app, but there's nothing to download from an app store.</p>
+          <p>That makes it lighter. It takes almost no space on your phone, it updates on its own, and it works on any device with a browser. No account to create, no store to go through.</p>
+          <p>For a few minutes a day, that's the right fit. A native app would add weight and friction without adding anything you'd notice.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-question-text">Why do you ask for my email when I use a credit?</span>
+        <span class="material-symbols-outlined faq-chevron">chevron_right</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Playing never needs more than your first name. Spending a credit is different: it funds a real project in the ground, so at that point we ask for an email address.</p>
+          <p>We use it to check the credit and pass it on to the partner you chose, so the tree or the meadow actually gets funded. It also lets us send you news about your impact, like the photo when it's planted.</p>
+          <p>That's the only time we ask, and the only thing we use it for.</p>
         </div>
       </div>
     </div>
@@ -4088,53 +3443,11 @@ function formatRelativeDate(iso) {
   return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
 }
 
-function renderActionHistory(nk) {
-  const list = document.getElementById('actions-history-list');
-  if (!list) return;
-  const history = JSON.parse(localStorage.getItem('actions_history_' + nk) || '[]');
-  if (!history.length) {
-    list.innerHTML = '<div class="actions-history-empty">Your pledged actions will show up here once you commit to one at the end of a game.</div>';
-    return;
-  }
-  // Most recent first
-  const ordered = history.slice().reverse();
-  list.innerHTML = ordered.map(a => `
-    <div class="actions-history-item">
-      <div class="actions-history-check"><span class="material-symbols-outlined">check</span></div>
-      <div class="actions-history-content">
-        <p class="actions-history-title">${a.title}</p>
-        <p class="actions-history-date">${formatRelativeDate(a.date)}</p>
-      </div>
-    </div>
-  `).join('');
-}
-
-// Profile screen — opened from the top-right icon, not a bottom-nav tab
-function openProfile() {
-  const nk       = playerName.toLowerCase().replace(/\s+/g, '_');
-  const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
-  const streak   = JSON.parse(localStorage.getItem('streak_'         + nk) || '{}');
-
-  const totalScore     = progress.totalScore     || 0;
-  const sessionsPlayed = progress.sessionsPlayed || 0;
-  const actionsPledged = progress.actionsPledged || 0;
-  const streakCount    = streak.count            || 0;
-  const level          = Math.floor(totalScore / 250) + 1;
-
-  document.getElementById('profile-name').textContent        = playerName || 'Player';
-  document.getElementById('profile-tag').textContent         = 'Player · Level ' + level;
-  document.getElementById('profile-total-score').textContent = totalScore.toLocaleString();
-  document.getElementById('profile-sessions').textContent    = sessionsPlayed;
-  document.getElementById('profile-actions').textContent     = actionsPledged;
-  document.getElementById('profile-streak').textContent      = '🔥 ' + streakCount;
-
-  renderActionHistory(nk);
-  showScreen('screen-profile');
-}
+// renderActionHistory() and openProfile() live in home.js
 
 function closeProfile() {
   setActiveTab('home');
-  showScreen('screen-hub');
+  if (playerName) openHub(); else showScreen('screen-hub');
 }
 
 function openFaq() {
@@ -4198,7 +3511,7 @@ async function openNameScreen() {
   setTimeout(() => document.getElementById('name-input').focus(), 500);
 }
 
-function closeName() { hideAllScreens(); }
+function closeName() { /* no landing to go back to */ }
 
 function onNameInput() {
   document.getElementById('btn-start').disabled =
@@ -4212,7 +3525,8 @@ async function submitName() {
   localStorage.setItem('env_player_name', playerName);
   const nk = playerName.toLowerCase().replace(/\s+/g, '_');
   await loadPlayerProfile(nk);
-  openHub();
+  await openHub();
+  startTour(); // first time only: Envie's four-step run-through
 }
 
 // ════════════════════════════════════
@@ -4236,62 +3550,13 @@ function getCategoryIcon(cat) {
 async function openHub() {
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-  document.getElementById('hub-greeting').textContent = `${greeting}, ${playerName} 👋`;
-  document.getElementById('hub-title').innerHTML = `Pick your <em>challenge</em>`;
+  document.getElementById('hub-greeting').textContent = `${greeting}, ${playerName}`;
 
   const nk = playerName.toLowerCase().replace(/\s+/g, '_');
-
-  // Render recent games section (must be before played-today querySelector calls below)
-  renderRecentGames(nk);
-  renderHomeStories(nk);
   _updateStoriesTabReadState(nk);
 
-  // Show returning user progress — show if they have any score OR sessions played
   const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || 'null');
-  refreshHubProgress(nk, progress);
-
-  // Show streak chip if streak >= 2
-  const streakData  = JSON.parse(localStorage.getItem('streak_' + nk) || '{}');
-  const streakCount = streakData.count || 0;
-  const streakChip  = document.getElementById('hub-streak-chip');
-  const bonus = streakCount >= 5 ? '+250 pts' : streakCount >= 3 ? '+100 pts' : '';
-  const bonusText = bonus ? ` · ${bonus}` : '';
-  streakChip.textContent = `🔥 ${streakCount}-day streak${bonusText}`;
-  streakChip.style.display = 'flex';
-
-  // Streak stat in progress card
-  document.getElementById('progress-streak').textContent = `🔥 ${streakCount}`;
-  document.getElementById('progress-streak-label').textContent = streakCount >= 5
-    ? 'Day streak · +250 pts'
-    : streakCount >= 3
-    ? 'Day streak · +100 pts'
-    : 'Day streak';
-
   const sessionsPlayed = progress ? progress.sessionsPlayed || 0 : 0;
-
-  // ── New streak card ──
-  const streakHeading = document.getElementById('streak-card-heading');
-  const streakDesc    = document.getElementById('streak-card-desc');
-  const streakProg    = document.getElementById('streak-progress');
-  if (streakHeading) streakHeading.textContent = streakCount + '-day streak';
-  if (streakDesc) streakDesc.textContent = streakCount === 0
-    ? 'Play today to start your streak!'
-    : streakCount < 3
-    ? "You're just getting started. Play tomorrow to build momentum!"
-    : streakCount < 5
-    ? streakCount + " days strong! Keep it up for a bonus!"
-    : streakCount + " days on fire! +250 pts bonus active 🔥";
-  if (streakProg) streakProg.innerHTML = [0,1,2,3,4].map(i =>
-    '<div class="streak-bar' + (i < Math.min(streakCount, 5) ? ' filled' : '') + '"></div>'
-  ).join('');
-
-  // ── New global stats ──
-  const gsScore    = document.getElementById('gs-score');
-  const gsSessions = document.getElementById('gs-sessions');
-  const gsActions  = document.getElementById('gs-actions');
-  if (gsScore)    gsScore.textContent    = progress ? (progress.totalScore    || 0).toLocaleString() : '0';
-  if (gsSessions) gsSessions.textContent = progress ? (progress.sessionsPlayed || 0) : '0';
-  if (gsActions)  gsActions.textContent  = progress ? (progress.actionsPledged || 0) : '0';
 
   // ── Show bottom nav ──
   document.getElementById('app-bottom-nav').style.display = 'flex';
@@ -4305,7 +3570,7 @@ async function openHub() {
   document.getElementById('install-banner').style.display =
     (!showNotif && shouldShowInstallBanner(nk, sessionsPlayed)) ? 'block' : 'none';
 
-  // Load challenges from JSON
+  // Load challenges from JSON (the dated calendar the home engine reads)
   try {
     const res = await fetch('challenges.json', { cache: 'no-cache' });
     const data = await res.json();
@@ -4314,119 +3579,55 @@ async function openHub() {
     _loadedChallenges = [];
   }
 
-  // Find today's featured challenge, or next upcoming
-  const today = new Date().toISOString().slice(0, 10);
-  let featuredChallenge = _loadedChallenges.find(c => c.date === today) || null;
-  let bannerLabel = "Today's theme";
-  if (!featuredChallenge) {
-    const upcoming = _loadedChallenges
-      .filter(c => c.date > today)
-      .sort((a, b) => a.date.localeCompare(b.date))[0];
-    if (upcoming) { featuredChallenge = upcoming; bannerLabel = "Coming up"; }
-  }
+  // Games tab: mark the games played today (same once-a-day gates as before)
+  refreshGameCards(nk);
 
-  // Populate today-banner
-  if (featuredChallenge) {
-    document.getElementById('today-label').textContent           = bannerLabel;
-    document.getElementById('today-icon').textContent            = getCategoryIcon(featuredChallenge.category_badge);
-    document.getElementById('today-challenge-title').textContent = featuredChallenge.title_line1 + ' ' + featuredChallenge.title_line2;
-    document.getElementById('today-challenge-sub').textContent   = featuredChallenge.category_badge + ' · 3 questions';
-  } else {
-    document.getElementById('today-label').textContent           = "Today's theme";
-    document.getElementById('today-icon').textContent            = '☕';
-    document.getElementById('today-challenge-title').textContent = 'Irish Coffee Day';
-    document.getElementById('today-challenge-sub').textContent   = 'Food & Water · 3 questions';
-  }
-
-  // Reset states
-  const banner   = document.getElementById('today-banner');
-  const quizCard  = document.querySelector('.game-card.quiz');
-  const sortCard  = document.querySelector('.game-card.sort');
-  const waterCard = document.querySelector('.game-card.water');
-
-  if (banner) {
-    banner.classList.remove('played-today');
-    const badge = banner.querySelector('.played-badge');
-    if (badge) badge.outerHTML = '<div class="daily-play-btn" id="today-arrow">PLAY NOW →</div>';
-  }
-  if (quizCard) {
-    quizCard.classList.remove('played-today');
-    quizCard.onclick = () => openGame('quiz', 'random');
-    const badge = quizCard.querySelector('.played-badge');
-    if (badge) badge.outerHTML = '<div class="game-card-arrow">→</div>';
-  }
-
-  // Quiz played today? Disable both CTAs
-  const quizPlayedToday = localStorage.getItem('quiz_last_played_' + nk) === today;
-  if (quizPlayedToday) {
-    if (banner) {
-      banner.classList.add('played-today');
-      banner.onclick = null;
-      const arrow = document.getElementById('today-arrow');
-      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
-    }
-    if (quizCard) {
-      quizCard.classList.add('played-today');
-      quizCard.onclick = null;
-      const arrow = quizCard.querySelector('.game-card-arrow');
-      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
-    }
-  } else {
-    if (banner) {
-      if (bannerLabel === 'Coming up') {
-        // Future challenge — not playable yet, show "Coming soon"
-        banner.classList.add('coming-soon');
-        banner.onclick = null;
-        const arrow = document.getElementById('today-arrow');
-        if (arrow) arrow.outerHTML = '<span class="coming-badge">Coming soon</span>';
-      } else {
-        banner.onclick = () => openGame('quiz', 'daily');
-      }
-    }
-  }
-
-  // Sort game
-  if (sortCard) {
-    const sortPlayed = localStorage.getItem('sio_last_played_' + nk) === today;
-    sortCard.classList.remove('played-today');
-    const sortBadge = sortCard.querySelector('.played-badge');
-    if (sortBadge) sortBadge.outerHTML = '<div class="game-card-arrow">→</div>';
-    if (sortPlayed) {
-      sortCard.classList.add('played-today');
-      sortCard.onclick = null;
-      const arrow = sortCard.querySelector('.game-card-arrow');
-      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
-    } else {
-      sortCard.onclick = () => openGame('sort');
-    }
-  }
-
-  // Water game — same once-a-day gate as the sort game, same key shape
-  // ('wc_last_played_<nk>' alongside 'sio_last_played_<nk>'). The water game
-  // grants one extra go if you go out on its first question, so the card only
-  // locks when that spare attempt is gone too.
-  if (waterCard) {
-    const waterPlayed   = localStorage.getItem('wc_last_played_' + nk) === today;
-    const waterFirstOut = localStorage.getItem('wc_first_loss_' + nk) === today;
-    const waterRetried  = localStorage.getItem('wc_retry_used_' + nk) === today;
-    const waterLocked   = waterPlayed && !(waterFirstOut && !waterRetried);
-    waterCard.classList.remove('played-today');
-    const waterBadge = waterCard.querySelector('.played-badge');
-    if (waterBadge) waterBadge.outerHTML = '<div class="game-card-arrow">→</div>';
-    if (waterLocked) {
-      waterCard.classList.add('played-today');
-      waterCard.onclick = null;
-      const arrow = waterCard.querySelector('.game-card-arrow');
-      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
-    } else {
-      waterCard.onclick = () => openGame('water');
-    }
-  }
+  // Home: the three ways, the lead card and the rest (home.js)
+  await renderHome();
 
   // Sync latest localStorage state up to Firestore
   syncPlayerToFirestore(nk);
 
   showScreen('screen-hub');
+}
+
+// Games tab cards: "Done today" badges and click handlers
+function refreshGameCards(nk) {
+  const today = new Date().toISOString().slice(0, 10);
+  const dayDone = Engine.dayDone(nk);
+  const note = document.getElementById('games-lock-note');
+  if (note) note.hidden = !dayDone;
+  const quizCard  = document.querySelector('.row.quiz');
+  const sortCard  = document.querySelector('.row.sort');
+  const waterCard = document.querySelector('.row.water');
+
+  const setCard = (card, played, go) => {
+    if (!card) return;
+    card.classList.toggle('played-today', played);
+    card.classList.toggle('locked', !played && dayDone);
+    const badge = card.querySelector('.played-badge, .coming-badge');
+    if (badge) badge.outerHTML = EA.icon('chevron-right', { size: 18, cls: 'row-chev' });
+    if (played) {
+      card.onclick = null;
+      const arrow = card.querySelector('.row-chev');
+      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
+    } else if (dayDone) {
+      card.onclick = () => dayDoneToast();
+      const arrow = card.querySelector('.row-chev');
+      if (arrow) arrow.outerHTML = '<span class="coming-badge">Tomorrow</span>';
+    } else {
+      card.onclick = go;
+    }
+  };
+
+  setCard(quizCard, localStorage.getItem('quiz_last_played_' + nk) === today, () => openGame('quiz', 'random'));
+  setCard(sortCard, localStorage.getItem('sio_last_played_' + nk) === today, () => openGame('sort'));
+
+  // Water game grants one extra go if you go out on its first question
+  const waterPlayed   = localStorage.getItem('wc_last_played_' + nk) === today;
+  const waterFirstOut = localStorage.getItem('wc_first_loss_' + nk) === today;
+  const waterRetried  = localStorage.getItem('wc_retry_used_' + nk) === today;
+  setCard(waterCard, waterPlayed && !(waterFirstOut && !waterRetried), () => openGame('water'));
 }
 
 // ════════════════════════════════════
@@ -4439,53 +3640,53 @@ const ALL_STORIES = [
     topic: 'topic-finance',
     icon:  '🏦',
     tag:   'Finance',
-    title: 'Climate & Finance',
-    meta:  '10 slides · 6 min',
+    title: 'Climate & finance',
+    meta:  '9 slides · 6 min',
   },
   {
     id:    'data-centres-ireland',
     topic: 'topic-data',
     icon:  '🖥️',
-    tag:   'Tech & Energy',
-    title: 'Data Centres in Ireland',
+    tag:   'Tech & energy',
+    title: 'Data centres in Ireland',
     meta:  '12 slides · 5 min',
   },
   {
     id:    'climate-wins-2025',
     topic: 'topic-climate',
     icon:  '🎉',
-    tag:   'Good News',
-    title: 'Climate Wins in 2025',
+    tag:   'Good news',
+    title: 'Climate wins in 2025',
     meta:  '10 slides · 5 min',
   },
   {
     id:    'ben-and-jerrys',
     topic: 'topic-activism',
     icon:  '🍦',
-    tag:   'Brands & Activism',
-    title: "The Ben & Jerry's Story",
+    tag:   'Brands & activism',
+    title: "The Ben & Jerry's story",
     meta:  '14 slides · 7 min',
   },
   {
     id:    'ireland-forestry',
     topic: 'topic-forestry',
     icon:  '🌲',
-    tag:   'Land & Nature',
-    title: "Ireland's Forestry Problem",
+    tag:   'Land & nature',
+    title: "Ireland's forestry problem",
     meta:  '19 slides · 8 min',
   },
   {
     id:    'right-to-repair',
     topic: 'topic-circular',
     icon:  '🔧',
-    tag:   'Circular Economy',
-    title: 'The Right to Repair',
-    meta:  '11 slides · 5 min',
+    tag:   'Circular economy',
+    title: 'The right to repair',
+    meta:  '12 slides · 6 min',
   }
   // add more stories here as they go live
 ];
 
-const STORY_POINTS = 75;
+const STORY_POINTS = 100;
 
 function refreshHubProgress(nk, progress) {
   // Accept either a progress object or re-read from localStorage
@@ -4493,35 +3694,33 @@ function refreshHubProgress(nk, progress) {
   const hasActivity = p && ((p.totalScore || 0) > 0 || (p.sessionsPlayed || 0) > 0);
   const el = document.getElementById('hub-progress');
   if (!el) return;
-  if (hasActivity) {
-    document.getElementById('progress-total-score').textContent = (p.totalScore || 0).toLocaleString();
-    document.getElementById('progress-sessions').textContent    = p.sessionsPlayed || 0;
-    document.getElementById('progress-actions').textContent     = p.actionsPledged || 0;
-    el.style.display = 'flex';
-  } else {
-    el.style.display = 'none';
-  }
+  const q = p || {};
+  document.getElementById('progress-total-score').textContent = (q.totalScore || 0).toLocaleString();
+  document.getElementById('progress-sessions').textContent    = q.sessionsPlayed || 0;
+  document.getElementById('progress-actions').textContent     = q.actionsPledged || 0;
+  el.style.display = 'flex';
 }
 
 function _updateStoriesTabReadState(nk) {
   const completed = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
-  // Find all ml-cards in the stories tab and grey out completed ones
-  document.querySelectorAll('#screen-learn .ml-card.active').forEach(card => {
-    const onclick = card.getAttribute('onclick') || '';
-    const match   = onclick.match(/openCourse\('([^']+)'\)/);
-    if (match && completed.includes(match[1])) {
-      card.classList.add('story-read');
-      // Update footer chips
-      const footer = card.querySelector('.ml-card-footer');
-      if (footer) {
-        const readNow = footer.querySelector('[style]');
-        if (readNow) readNow.textContent = '✓ Read · Read again';
-      }
-    } else if (match) {
-      card.classList.remove('story-read');
-    }
+  const dayDone = Engine.dayDone(nk);
+  const note = document.getElementById('stories-lock-note');
+  if (note) note.hidden = !dayDone;
+  // Grey out completed ones; lock the rest once the day's two challenges are done
+  document.querySelectorAll('#screen-learn .rim[data-course]').forEach(card => {
+    const done = completed.includes(card.dataset.course);
+    card.classList.toggle('done', done);
+    card.classList.toggle('locked', !done && dayDone);
   });
 }
+
+// Two challenges a day is the cap: Envie says so instead of opening the thing
+function dayDoneToast() {
+  if (typeof showEnvieToast === 'function') showEnvieToast('That\'s two for today', 'One a day is the rhythm. I\'ll have more for you tomorrow.', 'flag');
+}
+
+const STORY_ICON = { 'topic-finance': 'landmark', 'topic-data': 'server', 'topic-climate': 'sparkles', 'topic-activism': 'ice-cream', 'topic-forestry': 'tree-pine', 'topic-food': 'sprout', 'topic-society': 'message-circle', 'topic-circular': 'wrench' };
+const STORY_TONE = { 'topic-finance': 'amber', 'topic-data': 'aqua', 'topic-climate': 'sky', 'topic-activism': 'rose', 'topic-forestry': 'moss', 'topic-food': 'sky', 'topic-society': 'amber', 'topic-circular': 'aqua' };
 
 function renderHomeStories(nk) {
   const section = document.getElementById('recent-stories-section');
@@ -4542,17 +3741,13 @@ function renderHomeStories(nk) {
   list.innerHTML = sorted.map(s => {
     const isRead = completed.includes(s.id);
     return `
-    <div class="story-card-home ${s.topic}${isRead ? ' story-read' : ''}" onclick="openCourse('${s.id}')">
-      <div class="story-card-home-accent"></div>
-      <div class="story-card-home-body">
-        <div class="story-card-home-icon">${s.icon}</div>
-        <div class="story-card-home-info">
-          <div class="story-card-home-tag">${s.tag}</div>
-          <div class="story-card-home-title">${s.title}</div>
-          <div class="story-card-home-meta">${isRead ? '✓ Read · no new points' : s.meta}</div>
-        </div>
+    <div class="row story ${s.topic}${isRead ? ' done' : ''}" onclick="openCourse('${s.id}')">
+      <span class="tile sm ${STORY_TONE[s.topic] || ''}">${EA.icon(STORY_ICON[s.topic] || 'book-open', { size: 21 })}</span>
+      <div class="row-body">
+        <p class="row-title">${s.title}</p>
+        <p class="row-meta">${isRead ? 'Read · no new points' : s.tag + ' · ' + s.meta}</p>
       </div>
-      <div class="story-card-home-arrow">${isRead ? '↺' : '→'}</div>
+      ${EA.icon('chevron-right', { size: 18, cls: 'row-chev' })}
     </div>`;
   }).join('');
 }
@@ -4570,8 +3765,11 @@ function markStoryComplete(id) {
     const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
     progress.totalScore = (progress.totalScore || 0) + STORY_POINTS;
     localStorage.setItem('env_progress_' + nk, JSON.stringify(progress));
-    syncPlayerToFirestore(nk);
   }
+  // Reading a story is one of the three daily challenges: stamps the streak
+  // and marks "story done today", first read or not.
+  Engine.recordStory(nk, id);
+  syncPlayerToFirestore(nk);
   return isFirst; // caller uses this to decide whether to show the toast
 }
 
@@ -4582,26 +3780,26 @@ function markStoryComplete(id) {
 const GAME_DEFS = {
   'quiz:random': {
     type: 'quiz', mode: 'random',
-    cls: 'quiz', icon: 'casino', tag: 'Quiz',
-    name: 'Random Challenge',
+    cls: 'quiz', icon: 'casino', lucide: 'dices', tone: 'aqua', tag: 'Quiz',
+    name: 'Random quiz',
     desc: 'A random quiz from our library of daily challenges. Three questions, real data.',
-    meta: ['3 questions', '450 pts max'],
+    meta: ['3 questions', '150 pts max'],
     onclick: "openGame('quiz','random')"
   },
   'sort': {
     type: 'sort', mode: null,
-    cls: 'sort', icon: 'co2', tag: 'Sorting Game',
-    name: 'Carbon Challenge',
+    cls: 'sort', icon: 'co2', lucide: 'arrow-down-up', tone: 'amber', tag: 'Carbon',
+    name: 'Sort it out',
     desc: '6 everyday items. Drag them into order by carbon footprint, lowest to highest. 3 tries.',
     meta: ['6 cards', '3 tries'],
     onclick: "openGame('sort')"
   },
   'water': {
     type: 'water', mode: null,
-    cls: 'water', icon: 'water_drop', tag: 'Water Game',
-    name: 'Water Challenge',
+    cls: 'water', icon: 'water_drop', lucide: 'droplet', tone: 'sky', tag: 'Water game',
+    name: 'Water challenge',
     desc: 'Higher or lower, water edition. Guess which everyday thing takes more water to make. Five rounds, one wrong answer ends the run.',
-    meta: ['5 rounds', '480 pts max'],
+    meta: ['5 rounds', '150 pts max'],
     onclick: "openGame('water')"
   }
 };
@@ -4628,32 +3826,25 @@ function timeAgo(ts) {
 function gameCardHTML(key, animClass, lastPlayedTs) {
   const g = GAME_DEFS[key];
   if (!g) return '';
-  const metaHTML = g.meta.map(m =>
-    `<div class="game-card-meta-item"><div class="game-card-meta-dot"></div> ${m}</div>`
-  ).join('');
-  const ago = lastPlayedTs ? timeAgo(lastPlayedTs) : null;
-  const playedRow = ago
-    ? `<div class="game-card-last-played"><span class="material-symbols-outlined" style="font-size:13px;vertical-align:-2px;margin-right:3px;color:var(--green)">schedule</span>Last played: ${ago}</div>`
-    : '';
+  const ago  = lastPlayedTs ? timeAgo(lastPlayedTs) : null;
+  const meta = g.meta.join(' · ') + (ago ? ' · played ' + ago : '');
   return `
-    <div class="game-card ${g.cls} ${animClass}" onclick="${g.onclick}">
-      <div class="game-card-banner"></div>
-      <div class="game-card-body">
-        <div class="game-card-icon-wrap ${g.cls}">
-          <span class="material-symbols-outlined">${g.icon}</span>
-        </div>
-        <div class="game-card-info">
-          <div class="game-card-tag">${g.tag}</div>
-          <div class="game-card-name">${g.name}</div>
-          <div class="game-card-desc">${g.desc}</div>
-          ${playedRow}
-        </div>
+    <div class="row ${g.cls} ${animClass}" onclick="${g.onclick}">
+      <span class="tile sm ${g.tone}">${EA.icon(g.lucide, { size: 21 })}</span>
+      <div class="row-body">
+        <p class="row-title">${g.name}</p>
+        <p class="row-meta">${meta}</p>
       </div>
-      <div class="game-card-footer">
-        <div class="game-card-meta">${metaHTML}</div>
-        <div class="game-card-arrow">→</div>
-      </div>
+      ${EA.icon('chevron-right', { size: 18, cls: 'row-chev' })}
     </div>`;
+}
+
+// "Unlocks tomorrow" / "Unlocks 14 Sep" for the coming-up card
+function _unlockLabel(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const t = new Date(); t.setDate(t.getDate() + 1);
+  if (d.toDateString() === t.toDateString()) return 'tomorrow';
+  return d.toLocaleDateString('en-IE', { day: 'numeric', month: 'short' });
 }
 
 function renderRecentGames(nk) {
@@ -4713,6 +3904,7 @@ const GAME_URLS = {
 };
 
 function openGame(type, mode) {
+  if (playerName && Engine.dayDone(playerName.toLowerCase().replace(/\s+/g, '_'))) { dayDoneToast(); return; }
   recordRecentGame(type, mode);
   if (type === 'quiz') {
     const today = new Date().toISOString().slice(0, 10);
@@ -4757,12 +3949,15 @@ function logout() {
   localStorage.removeItem('env_player_name');
   playerName = '';
   document.getElementById('app-bottom-nav').style.display = 'none';
-  hideAllScreens();
+  document.getElementById('name-input').value = '';
+  document.getElementById('btn-start').disabled = true;
+  showScreen('screen-name');
+  setTimeout(() => document.getElementById('name-input').focus(), 500);
 }
 
 // ── FIRESTORE PLAYER SYNC ────────────────────────────────
 
-const ACTIONS_HISTORY_CAP = 20;
+const ACTIONS_HISTORY_CAP = 40;
 
 // Union-dedupe two action-history arrays by title+date, sort oldest-first, cap at 20
 function mergeActionHistory(localArr, remoteArr) {
@@ -4774,7 +3969,7 @@ function mergeActionHistory(localArr, remoteArr) {
     const key = a.title + '|' + a.date;
     if (seen.has(key)) continue;
     seen.add(key);
-    out.push({ title: a.title, date: a.date });
+    out.push(Object.assign({ title: a.title, date: a.date }, a.id ? { id: a.id } : {}, a.type ? { type: a.type } : {}, a.points ? { points: a.points } : {}));
   }
   out.sort((x, y) => (x.date || '').localeCompare(y.date || ''));
   return out.slice(-ACTIONS_HISTORY_CAP);
@@ -4807,6 +4002,10 @@ async function loadPlayerProfile(nk) {
     const merged = mergeActionHistory(localActions, d.actionsHistory);
     localStorage.setItem('actions_history_' + nk, JSON.stringify(merged));
 
+    // Activity log, credit ledger, last story read
+    Engine.mergeRemote(nk, d);
+    if (d.onboarded) localStorage.setItem('onboarded_' + nk, d.onboarded);
+
     // Restore preferences
     if (d.installPrompt) localStorage.setItem('install_prompt_' + nk, d.installPrompt);
     if (d.notifPrompt)   localStorage.setItem('notif_prompt_'   + nk, d.notifPrompt);
@@ -4834,6 +4033,9 @@ async function syncPlayerToFirestore(nk) {
       actionsHistory: actions.slice(-ACTIONS_HISTORY_CAP),
       updatedAt:      firebase.firestore.FieldValue.serverTimestamp(),
     };
+    Object.assign(update, Engine.syncFields(nk));
+    const onboarded = localStorage.getItem('onboarded_' + nk);
+    if (onboarded) update.onboarded = onboarded;
     if (installPrompt) update.installPrompt = installPrompt;
     if (notifPrompt)   update.notifPrompt   = notifPrompt;
     if (appInstalled)  update.appInstalled  = true;
@@ -5041,9 +4243,11 @@ function acceptInstallBanner() {
     const tab = params.get('tab');
     if (tab && _tabScreenMap[tab]) switchTab(tab);
     if (params.get('profile') === '1') openProfile();
+    if (params.get('actions') === '1') openActions();
+    if (params.get('credit')  === '1') openCredit();
     return;
   }
-  if (params.get('hub') === '1') openNameScreen();
+  openNameScreen();
 })();
 
 // ════════════════════════════════════════════════════
@@ -5060,11 +4264,12 @@ const SLIDE_READ_MS = 3500; // progress-bar fill duration (visual only)
 
 // ── Load & open ─────────────────────────────────────
 async function openCourse(id) {
+  if (playerName && Engine.dayDone(playerName.toLowerCase().replace(/\s+/g, '_'))) { dayDoneToast(); return; }
   try {
     const res  = await fetch(`courses/course-${id}.json`, { cache: 'no-cache' });
     _course    = await res.json();
   } catch(e) {
-    alert('Could not load this course. Please try again.');
+    alert('I couldn\'t load that story. Give it another go in a moment.');
     return;
   }
   _cpIndex = 0;
@@ -5073,7 +4278,7 @@ async function openCourse(id) {
   // Restore tap zones and hide completion overlay from any previous session
   document.getElementById('cp-tap-prev').style.pointerEvents = '';
   document.getElementById('cp-tap-next').style.pointerEvents = '';
-  document.getElementById('cp-completion').style.display = 'none';
+  document.getElementById('cp-completion').classList.remove('open');
 
   document.getElementById('course-player').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -5090,9 +4295,8 @@ function closeCourse() {
   // Refresh read states + score display
   if (playerName) {
     const nk = playerName.toLowerCase().replace(/\s+/g, '_');
-    renderHomeStories(nk);
     _updateStoriesTabReadState(nk);
-    refreshHubProgress(nk, null); // re-reads localStorage, picks up new points
+    renderHome(); // re-reads localStorage: story done today, new points
   }
 }
 
@@ -5132,6 +4336,17 @@ function _boldify(text, bold) {
   return text.replace(bold, `<span class="cp-highlight">${bold}</span>`);
 }
 
+const _CP_MARK = `<svg class="cp-mark" viewBox="0 0 200 200" aria-hidden="true"><defs><mask id="cp-mk"><rect x="-60" y="-60" width="320" height="320" fill="#fff"></rect><path d="M76 96 C60 96 50 106 50 118 C50 130 60 140 76 140 C87 140 93 134 100 134 C107 134 113 140 124 140 C140 140 150 130 150 118 C150 106 140 96 124 96 C113 96 107 102 100 102 C93 102 87 96 76 96 Z" fill="#000" stroke="#000" stroke-width="15" stroke-linejoin="round"></path><ellipse cx="100" cy="118" rx="56" ry="27" fill="#000"></ellipse></mask></defs><circle cx="100" cy="100" r="68" fill="none" stroke="currentColor" stroke-width="8" mask="url(#cp-mk)"></circle><ellipse cx="100" cy="100" rx="94" ry="27" fill="none" stroke="currentColor" stroke-width="8" transform="rotate(-18 100 100)" mask="url(#cp-mk)"></ellipse><path d="M76 96 C60 96 50 106 50 118 C50 130 60 140 76 140 C87 140 93 134 100 134 C107 134 113 140 124 140 C140 140 150 130 150 118 C150 106 140 96 124 96 C113 96 107 102 100 102 C93 102 87 96 76 96 Z" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round"></path><path d="M76 105 L88 119 L81.5 119 L81.5 130 L70.5 130 L70.5 119 L64 119 Z" fill="currentColor"></path><circle cx="124" cy="112" r="5" fill="currentColor"></circle><circle cx="124" cy="126" r="5" fill="currentColor"></circle></svg>`;
+const _CP_SPARKS = `<svg class="sparks" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="#e67e22" stroke-width="5" stroke-linecap="round"><path d="M30 62l-11-11M44 38l-5-14M156 38l5-14M170 62l11-11M22 112l-14 2M178 112l14 2"/></g><circle cx="62" cy="18" r="4" fill="#85d083"/><circle cx="148" cy="16" r="4" fill="#6ec6f0"/><circle cx="14" cy="80" r="3" fill="#f0a060"/></svg>`;
+function _cpSpace(rev) {
+  return `<div class="cp-space" aria-hidden="true">${EA.ORBIT(!!rev)}<span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div>`;
+}
+// Envie sits bottom-right of a slide; a `envie` string on the slide gives him a line
+function _cpEnvie(slide, pose) {
+  const line = slide.envie ? EA.bubble({ head: slide.envie, r: 3, tail: 'right' }) : '';
+  return `<div class="cp-envie" aria-hidden="true">${line}<envie-mascot pose="${pose}" hat="cap"></envie-mascot></div>`;
+}
+
 function _slideHTML(slide) {
   const th = `theme-${slide.theme || 'dark'}`;
   const texture = (slide.theme !== 'light') ? '<div class="cp-texture"></div>' : '';
@@ -5169,8 +4384,9 @@ function _slideHTML(slide) {
       ? `<p class="cp-bullet-footer">${_boldify(slide.footer, slide.bold)}</p>` : '';
     const linkHtml = slide.link
       ? `<a class="cp-cta" href="${slide.link.url}" target="_blank" rel="noopener noreferrer">${slide.link.label || 'Find out more'} <span aria-hidden="true">&rarr;</span></a>` : '';
-    return `<div class="cp-slide ${th}${slide.link ? ' cp-slide-haslink' : ''}">
-      ${texture}
+    const lightT = slide.theme === 'light';
+    return `<div class="cp-slide ${th}${slide.link ? ' cp-slide-haslink' : ''}" style="overflow:hidden;">
+      ${texture}${lightT ? '' : _cpSpace(false) + _CP_MARK}
       <div class="cp-text-body" style="position:relative;z-index:1;display:flex;flex-direction:column;gap:20px;">
         ${slide.calloutTop ? calloutHtml : ''}
         ${slide.text ? `<p class="cp-text">${html}</p>` : ''}
@@ -5179,6 +4395,7 @@ function _slideHTML(slide) {
         ${footerHtml}
         ${linkHtml}
       </div>
+      ${slide.envie && !lightT ? _cpEnvie(slide, 'point') : ''}
     </div>`;
   }
 
@@ -5189,16 +4406,19 @@ function _slideHTML(slide) {
       ? `<div style="font-family:'Montserrat',sans-serif;font-size:12px;color:rgba(255,255,255,0.3);font-style:italic;margin-top:4px;">${slide.source}</div>` : '';
     const noteHtml = slide.note
       ? `<div style="font-family:'Montserrat',sans-serif;font-size:clamp(13px,3.8vw,15px);color:rgba(255,255,255,0.55);line-height:1.45;margin-top:8px;border-left:2px solid rgba(255,255,255,0.15);padding-left:12px;">${slide.note}</div>` : '';
+    const lightS = slide.theme === 'light';
     return `<div class="cp-slide ${th}" style="overflow:hidden;">
-      ${texture}
-      <div style="position:absolute;bottom:-20px;right:-10px;font-family:'Comfortaa',cursive;font-size:clamp(120px,38vw,200px);font-weight:700;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none;z-index:0;letter-spacing:-0.04em;">${ghost}</div>
+      ${texture}${lightS ? '' : _cpSpace(false)}
+      <span class="cp-ghost" aria-hidden="true">${ghost}</span>
       <div class="cp-stat-body" style="position:relative;z-index:1;">
+        ${slide.tag ? `<span class="pill aqua cp-stat-tag">${slide.tag}</span>` : ''}
         <div class="cp-stat-number">${slide.stat}</div>
         <div class="cp-stat-caption">${captionHtml}</div>
         ${noteHtml}
         ${sourceHtml}
         ${slide.footer ? `<p class="cp-bullet-footer" style="margin-top:12px;">${slide.footer}</p>` : ''}
       </div>
+      ${lightS ? '' : _cpEnvie(slide, 'spyglass')}
     </div>`;
   }
 
@@ -5206,7 +4426,7 @@ function _slideHTML(slide) {
     const badRows  = (slide.bad  || []).map(t => `<div class="cp-compare-row"><div class="cp-compare-dot cp-compare-dot-bad"></div><div>${t}</div></div>`).join('');
     const goodRows = (slide.good || []).map(t => `<div class="cp-compare-row"><div class="cp-compare-dot cp-compare-dot-good"></div><div>${t}</div></div>`).join('');
     return `<div class="cp-slide ${th}" style="overflow:hidden;">
-      ${texture}
+      ${texture}${slide.theme === 'light' ? '' : _cpSpace(false) + _CP_MARK}
       <div class="cp-compare-body">
         ${slide.title ? `<div class="cp-compare-title">${slide.title}</div>` : ''}
         <div class="cp-compare-col cp-compare-bad">
@@ -5223,8 +4443,8 @@ function _slideHTML(slide) {
 
   if (slide.type === 'visual') {
     const html = _boldify(slide.text, slide.bold);
-    return `<div class="cp-slide ${th}">
-      ${texture}
+    return `<div class="cp-slide ${th}" style="overflow:hidden;">
+      ${texture}${slide.theme === 'light' ? '' : _cpSpace(false) + _CP_MARK}
       <div class="cp-visual-body" style="position:relative;z-index:1;">
         ${slide.emoji  ? `<div class="cp-visual-emoji">${slide.emoji}</div>`          : ''}
         ${slide.image  ? `<img src="${slide.image}" style="width:100%;border-radius:12px;max-height:220px;object-fit:cover;">` : ''}
@@ -5327,18 +4547,27 @@ function _renderCompletionSlide() {
 
   // Populate and show the dedicated completion overlay (z-index:50, above tap zones)
   const inner = document.getElementById('cp-completion-inner');
+  const nk    = playerName ? playerName.toLowerCase().replace(/\s+/g, '_') : '';
+  const done  = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
+  const meta  = (ALL_STORIES.find(st => st.id === _course.id) || {}).meta || '';
+  const mins  = (meta.split('·')[1] || '').trim();
+  const next  = ALL_STORIES.find(st => st.id !== _course.id && !done.includes(st.id)) || null;
   inner.innerHTML = `
-    <div style="font-size:64px;line-height:1;margin-bottom:8px;">🎉</div>
-    <div style="font-family:'Comfortaa',cursive;font-size:22px;font-weight:700;color:white;margin-bottom:12px;">Story complete!</div>
+    ${_cpSpace(true)}
+    <div class="hero-envie"><envie-mascot pose="celebrate" hat="hat"></envie-mascot>${_CP_SPARKS}</div>
+    <h2>Story complete</h2>
     ${isFirst ? `
-      <div style="background:rgba(125,204,138,0.15);border:1.5px solid rgba(125,204,138,0.35);border-radius:16px;padding:16px 28px;margin-bottom:8px;">
-        <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:#7dbf7c;line-height:1;letter-spacing:-0.02em;">+${STORY_POINTS}</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:6px;font-family:'Montserrat',sans-serif;">pts added to your score</div>
-      </div>` : `
-      <div style="font-size:13px;color:rgba(255,255,255,0.45);font-family:'Montserrat',sans-serif;margin-bottom:8px;">You've read this one before — no new points.</div>`}
+      <div class="rim"><div class="rim-in">
+        <p class="pts">+${STORY_POINTS}</p>
+        <p class="pts-sub">pts added to your score</p>
+      </div></div>` : `
+      <p class="pts-sub">You've read this one before. No new points, still a good read.</p>`}
+    <div class="chips"><span class="chip">${_course.slides.length} slides read</span>${mins ? `<span class="chip">${mins}</span>` : ''}</div>
+    <button class="cta white" onclick="closeCourse()">Done</button>
+    ${next ? `<button class="next" onclick="closeCourse(); openCourse('${next.id}')">Next story: ${next.title} →</button>` : ''}
   `;
   const overlay = document.getElementById('cp-completion');
-  overlay.style.display = 'flex';
+  overlay.classList.add('open');
 
   // Update counter
   document.getElementById('cp-counter').textContent = `${total} / ${total}`;
@@ -5372,5 +4601,7 @@ function _attachSwipe() {
 }
 </script>
 
+<script src="home.js"></script>
+<script src="tour.js"></script>
 </body>
 </html>

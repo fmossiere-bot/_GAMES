@@ -43,11 +43,11 @@ exports.sendDailyChallenge = onSchedule(
         },
         webpush: {
           notification: {
-            icon:  'https://games.the-uptake.com/_images/icon-180.png',
-            badge: 'https://games.the-uptake.com/_images/favicon-32.png',
+            icon:  'https://app.environmentle.org/_images/_logo/assets/environmentle-icon-hero-192.png',
+            badge: 'https://app.environmentle.org/_images/_logo/assets/environmentle-favicon-32.png',
           },
           fcmOptions: {
-            link: 'https://games.the-uptake.com',
+            link: 'https://app.environmentle.org',
           },
         },
       });
