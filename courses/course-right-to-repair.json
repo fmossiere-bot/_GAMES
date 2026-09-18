@@ -28,8 +28,8 @@
       "image": "tv-in-undergrowth.jpg",
       "align": "center",
       "tag": "E-waste",
-      "text": "Someone left a telly in the ditch.",
-      "bold": "in the ditch",
+      "text": "Someone left a telly in&nbsp;the&nbsp;ditch.",
+      "bold": "in&nbsp;the&nbsp;ditch",
       "footer": "Broken electronics are the fastest growing pile of rubbish on the planet."
     },
     {
@@ -90,7 +90,7 @@
       "type": "text",
       "theme": "green",
       "text": "There is a small bonus too. Pick the repair instead of the replacement and you get an extra year of guarantee on top.",
-      "bold": "an extra year of guarantee",
+      "bold": "extra year of guarantee",
       "footer": "Doing the better thing no longer costs you your cover.",
       "envie": "Maith th&uacute; to whoever thought of that bit."
     },
