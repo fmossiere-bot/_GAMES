@@ -1,14 +1,43 @@
 {
   "_note": "The story library index. This is the single source: the Stories tab, the home lead card and the 'up next' card all read it. Adding a story means one entry here plus its courses/course-<id>.json. Keep id, slides and minutes matching the course file.",
-
   "categories": [
-    { "id": "nature",  "label": "Nature",  "icon": "tree-pine",      "tone": "sky"   },
-    { "id": "energy",  "label": "Energy",  "icon": "zap",            "tone": "amber" },
-    { "id": "money",   "label": "Money",   "icon": "landmark",       "tone": "aqua"  },
-    { "id": "society", "label": "Society", "icon": "message-circle", "tone": "rose"  }
+    {
+      "id": "nature",
+      "label": "Nature",
+      "icon": "tree-pine",
+      "tone": "sky"
+    },
+    {
+      "id": "energy",
+      "label": "Energy",
+      "icon": "zap",
+      "tone": "amber"
+    },
+    {
+      "id": "money",
+      "label": "Money",
+      "icon": "landmark",
+      "tone": "aqua"
+    },
+    {
+      "id": "society",
+      "label": "Society",
+      "icon": "message-circle",
+      "tone": "rose"
+    }
   ],
-
   "stories": [
+    {
+      "id": "patagonia",
+      "title": "The Patagonia story",
+      "tag": "Brands & activism",
+      "category": "money",
+      "topic": "topic-activism",
+      "cover": "courses/images/patagonia-cover.jpg",
+      "slides": 16,
+      "minutes": 6,
+      "published": "2026-09-18"
+    },
     {
       "id": "right-to-repair",
       "title": "The right to repair",
@@ -38,7 +67,7 @@
       "category": "money",
       "topic": "topic-activism",
       "cover": "courses/images/vermont-ice-cream-van.jpg",
-      "slides": 14,
+      "slides": 15,
       "minutes": 7,
       "published": "2026-09-13"
     },
@@ -76,9 +105,18 @@
       "published": "2026-09-13"
     }
   ],
-
   "soon": [
-    { "title": "Food waste and composting",   "tag": "Food & waste", "category": "nature",  "topic": "topic-food"    },
-    { "title": "Talking about climate change", "tag": "Society",     "category": "society", "topic": "topic-society" }
+    {
+      "title": "Food waste and composting",
+      "tag": "Food & waste",
+      "category": "nature",
+      "topic": "topic-food"
+    },
+    {
+      "title": "Talking about climate change",
+      "tag": "Society",
+      "category": "society",
+      "topic": "topic-society"
+    }
   ]
 }
