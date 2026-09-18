@@ -3,7 +3,7 @@
   "title": "The Patagonia story",
   "category": "Brands &amp; activism",
   "accent": "activism",
-  "readTime": 8,
+  "readTime": 6,
   "voice": "Every title, desc, comment or intro here is read by a player and is written as Envie speaking. See CLAUDE.md and _DESIGNS/envie-voice-and-text-rewrite-guide.md: plain short sentences, no em-dashes, European spelling, no emoji, facts and sources untouched. The optional 'envie' line on a slide is his own aside, one short sentence.",
   "slides": [
     {
@@ -30,15 +30,7 @@
       "tag": "Yvon Chouinard",
       "text": "This is the man who started it. He never wanted a business at all.",
       "bold": "never wanted a business",
-      "footer": "He wanted to climb. Everything else happened by accident, and then on purpose."
-    },
-    {
-      "type": "text",
-      "theme": "dark",
-      "text": "Born in Maine in 1938 to a Franco-Canadian family. A poor student, out of place everywhere except outdoors. At 14 he joined a falconry club with his mates.",
-      "bold": "out of place everywhere except outdoors",
-      "footer": "Climbing down cliffs to reach the nests turned into a lifelong thing about mountains.",
-      "envie": "I know that feeling. Some people are only right outside."
+      "footer": "Born in Maine in 1938, a poor student, happy nowhere except outdoors. At 14 a falconry club got him climbing cliffs, and that was that."
     },
     {
       "type": "stat",
@@ -93,32 +85,16 @@
     {
       "type": "text",
       "theme": "dark",
-      "text": "The start was rough. Bad products from outsourced factories, partners walking away, banks saying no to loans. It survived anyway, and grew from 20 to 100 million dollars in five years.",
-      "bold": "banks saying no to loans",
-      "footer": "Which is the point where most founders buy a bigger house. He did something else with it.",
-      "envie": "That is a lot of nos before it worked."
-    },
-    {
-      "type": "stat",
-      "theme": "orange",
-      "stat": "2 to 8%",
-      "caption": "That is the share of the world's greenhouse gases that gets put on the clothing industry. I went looking for one clean number and found a pile of different ones, from about 2% up to 10%.",
-      "bold": "found a pile of different ones",
-      "note": "The gap is the story. Nobody can measure it properly, because nobody has to.",
-      "source": "UNEP and published industry studies",
-      "envie": "When a number is that vague, somebody is benefiting from the fog."
-    },
-    {
-      "type": "text",
-      "theme": "dark",
-      "text": "Two numbers did stick, though. Between 2000 and 2015 the world roughly doubled the amount of clothing it makes. Over the same years each item got worn about a third less before it was binned.",
-      "bold": "doubled the amount of clothing it makes",
+      "callout": "2 to 8%",
+      "calloutTop": true,
+      "text": "That is the clothing industry's share of the world's greenhouse gases. I looked for one clean number and found a pile of them, which tells you something on its own.",
+      "bold": "found a pile of them",
       "bullets": [
-        "Under 1%: the share of old clothing that comes back as new clothing",
-        "Most of what we wear now: polyester, which is plastic, which is oil",
-        "Every second: about a truckload of textiles burned or buried"
+        "2000 to 2015: the world doubled the clothing it makes, and wore each item a third less",
+        "Under 1%: old clothing that comes back as new clothing",
+        "Every second: a truckload of textiles burned or buried"
       ],
-      "footer": "Ellen MacArthur Foundation, 2017.",
+      "footer": "UNEP, and the Ellen MacArthur Foundation.",
       "envie": "Twice as much made, worn half as long. That is a system, not an accident."
     },
     {
@@ -181,18 +157,10 @@
     },
     {
       "type": "text",
-      "theme": "dark",
-      "text": "I am not going to sell you a saint. Patagonia still makes clothes and still ships them round the world, a lot of them made in low cost countries like Vietnam and Sri Lanka. Plenty of people call the whole thing very well dressed greenwashing.",
-      "bold": "I am not going to sell you a saint",
-      "footer": "Fair enough. And it has still done more than nearly anyone else in an industry that is one of the planet's biggest polluters.",
-      "envie": "Both of those can be true at once."
-    },
-    {
-      "type": "text",
       "theme": "green",
-      "text": "Here is what I took from a man who sold climbing gear out of a car boot. It is not the most powerful people who change things. It is the most stubborn ones.",
-      "bold": "the most stubborn ones",
-      "footer": "And the greenest jacket is the one already in your wardrobe. Wear it out, get it patched, buy the next one second hand. Then go back out and look at those hills.",
+      "text": "I am not going to sell you a saint. Patagonia still makes clothes and ships them round the world, plenty of them from low cost countries, and some people call the whole thing very well dressed greenwashing. Fair enough. It has still done more than nearly anyone else in one of the planet's dirtiest industries.",
+      "bold": "I am not going to sell you a saint",
+      "footer": "What I took from it is simpler. It is not the most powerful people who change things, it is the most stubborn ones. And the greenest jacket is the one already in your wardrobe. Wear it out, get it patched, buy the next one second hand.",
       "envie": "Go on. I will see you out there."
     }
   ]
