@@ -17,11 +17,19 @@
     },
     {
       "type": "text",
+      "theme": "blue",
+      "text": "Before I go on, I should explain myself. I love ice cream. And Ireland does it properly, Teddy's up in Dún Laoghaire since 1950, Murphy's down in Dingle with milk from Kerry cows. So why am I banging on about an American brand?",
+      "bold": "I love ice cream",
+      "footer": "Because of what its two founders did with the shop once they had one. That is the bit that stopped me.",
+      "envie": "I know. Stay with me a second."
+    },
+    {
+      "type": "text",
       "theme": "dark",
       "text": "In 1978, childhood friends Ben Cohen and Jerry Greenfield opened an ice cream shop with a $12,000 investment, nearly half of it borrowed. A decade later, President Reagan named them US Small Business Persons of the Year.",
       "bold": "$12,000",
       "footer": "But the real story isn't the ice cream. It's what they did with the platform it gave them.",
-      "envie": "Ice cream. I had to look into ice cream."
+      "envie": "Nearly half of it borrowed. Brave."
     },
     {
       "type": "photo",
