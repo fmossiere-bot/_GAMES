@@ -1,0 +1,84 @@
+{
+  "_note": "The story library index. This is the single source: the Stories tab, the home lead card and the 'up next' card all read it. Adding a story means one entry here plus its courses/course-<id>.json. Keep id, slides and minutes matching the course file.",
+
+  "categories": [
+    { "id": "nature",  "label": "Nature",  "icon": "tree-pine",      "tone": "sky"   },
+    { "id": "energy",  "label": "Energy",  "icon": "zap",            "tone": "amber" },
+    { "id": "money",   "label": "Money",   "icon": "landmark",       "tone": "aqua"  },
+    { "id": "society", "label": "Society", "icon": "message-circle", "tone": "rose"  }
+  ],
+
+  "stories": [
+    {
+      "id": "right-to-repair",
+      "title": "The right to repair",
+      "tag": "Circular economy",
+      "category": "energy",
+      "topic": "topic-circular",
+      "cover": "courses/images/repair-technician-customer-kitchen.jpg",
+      "slides": 13,
+      "minutes": 6,
+      "published": "2026-09-18"
+    },
+    {
+      "id": "ireland-forestry",
+      "title": "Ireland's forestry problem",
+      "tag": "Land & nature",
+      "category": "nature",
+      "topic": "topic-forestry",
+      "cover": "courses/images/forested-valley-aerial.jpg",
+      "slides": 19,
+      "minutes": 8,
+      "published": "2026-09-13"
+    },
+    {
+      "id": "ben-and-jerrys",
+      "title": "The Ben & Jerry's story",
+      "tag": "Brands & activism",
+      "category": "money",
+      "topic": "topic-activism",
+      "cover": "courses/images/vermont-ice-cream-van.jpg",
+      "slides": 14,
+      "minutes": 7,
+      "published": "2026-09-13"
+    },
+    {
+      "id": "data-centres-ireland",
+      "title": "Data centres in Ireland",
+      "tag": "Tech & energy",
+      "category": "energy",
+      "topic": "topic-data",
+      "cover": "courses/images/ireland-night.jpg",
+      "slides": 12,
+      "minutes": 5,
+      "published": "2026-09-13"
+    },
+    {
+      "id": "climate-and-finance",
+      "title": "Climate & finance",
+      "tag": "Finance",
+      "category": "money",
+      "topic": "topic-finance",
+      "cover": "courses/images/Finance-District.jpg",
+      "slides": 9,
+      "minutes": 6,
+      "published": "2026-09-13"
+    },
+    {
+      "id": "climate-wins-2025",
+      "title": "Climate wins in 2025",
+      "tag": "Good news",
+      "category": "society",
+      "topic": "topic-climate",
+      "cover": null,
+      "slides": 10,
+      "minutes": 5,
+      "published": "2026-09-13"
+    }
+  ],
+
+  "soon": [
+    { "title": "Food waste and composting",   "tag": "Food & waste", "category": "nature",  "topic": "topic-food"    },
+    { "title": "Talking about climate change", "tag": "Society",     "category": "society", "topic": "topic-society" }
+  ]
+}

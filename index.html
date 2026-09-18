@@ -2971,107 +2971,34 @@
     </button>
   </div>
 
-  <!-- Hero -->
-  <div class="learn-hero">
-    <div class="learn-hero-bg">
-      <div class="learn-orb learn-orb-1"></div>
-      <div class="learn-orb learn-orb-2"></div>
-      <div class="learn-orb learn-orb-3"></div>
+  <!-- Library header: category name (or "Stories"), count + sort summary -->
+  <div class="lib-head">
+    <div class="lib-head-top">
+      <h2 class="lib-title" id="lib-title">Stories</h2>
+      <button class="lib-clear" id="lib-clear" onclick="clearStoryCategory()" hidden>
+        <i data-icon="x" data-size="14"></i>Clear
+      </button>
     </div>
-    <div class="learn-hero-content">
-      <div class="learn-hero-eyebrow">
-        <div class="learn-hero-eyebrow-dot"></div>
-        <span class="learn-hero-eyebrow-text">Short stories · Free</span>
-      </div>
-      <div class="learn-hero-title">STORIES</div>
-      <p class="learn-hero-subtitle">Things I've found out since I landed, written down short. Five to eight minutes each, no jargon.</p>
-      <p class="tab-lock-note" id="stories-lock-note" hidden>Two done today. I'll open the stories again tomorrow.</p>
+    <p class="lib-count" id="lib-count"></p>
+    <p class="tab-lock-note" id="stories-lock-note" hidden>Two done today. I'll open the stories again tomorrow.</p>
+  </div>
+
+  <!-- Filter by category + sort -->
+  <div class="lib-panel">
+    <p class="lib-panel-label">Filter by category</p>
+    <div class="lib-cats" id="lib-cats"></div>
+    <div class="lib-sort">
+      <span class="lib-sort-label">Sort</span>
+      <button type="button" class="lib-sort-btn on" data-sort="recent"   onclick="setStorySort('recent')">Most recent</button>
+      <button type="button" class="lib-sort-btn"    data-sort="shortest" onclick="setStorySort('shortest')">Shortest</button>
     </div>
   </div>
 
-  <!-- Content -->
-  <div class="learn-body">
-    <p class="learn-section-label">Ready to read</p>
-    <div class="rim topic-climate" data-course="climate-wins-2025" onclick="openCourse('climate-wins-2025')">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="sparkles" data-size="26"></i></span>
-        <div class="rim-body">
-          <p class="rim-tag">Good news</p>
-          <p class="rim-title">Climate wins in 2025</p>
-          <div class="rim-chips"><span class="chip">10 slides</span><span class="chip muted">5 min</span></div>
-        </div>
-        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
-      </div>
-    </div>
-    <div class="rim topic-data" data-course="data-centres-ireland" onclick="openCourse('data-centres-ireland')">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="server" data-size="26"></i></span>
-        <div class="rim-body">
-          <p class="rim-tag">Tech &amp; energy</p>
-          <p class="rim-title">Data centres in Ireland</p>
-          <div class="rim-chips"><span class="chip">12 slides</span><span class="chip muted">5 min</span></div>
-        </div>
-        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
-      </div>
-    </div>
-    <div class="rim topic-finance" data-course="climate-and-finance" onclick="openCourse('climate-and-finance')">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="landmark" data-size="26"></i></span>
-        <div class="rim-body">
-          <p class="rim-tag">Finance</p>
-          <p class="rim-title">Climate &amp; finance</p>
-          <div class="rim-chips"><span class="chip">9 slides</span><span class="chip muted">6 min</span></div>
-        </div>
-        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
-      </div>
-    </div>
-    <div class="rim topic-activism" data-course="ben-and-jerrys" onclick="openCourse('ben-and-jerrys')">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="ice-cream" data-size="26"></i></span>
-        <div class="rim-body">
-          <p class="rim-tag">Brands &amp; activism</p>
-          <p class="rim-title">The Ben &amp; Jerry's story</p>
-          <div class="rim-chips"><span class="chip">14 slides</span><span class="chip muted">7 min</span></div>
-        </div>
-        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
-      </div>
-    </div>
-    <div class="rim topic-forestry" data-course="ireland-forestry" onclick="openCourse('ireland-forestry')">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="tree-pine" data-size="26"></i></span>
-        <div class="rim-body">
-          <p class="rim-tag">Land &amp; nature</p>
-          <p class="rim-title">Ireland's forestry problem</p>
-          <div class="rim-chips"><span class="chip">19 slides</span><span class="chip muted">8 min</span></div>
-        </div>
-        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
-      </div>
-    </div>
-    <div class="rim topic-circular" data-course="right-to-repair" onclick="openCourse('right-to-repair')">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="wrench" data-size="26"></i></span>
-        <div class="rim-body">
-          <p class="rim-tag">Circular economy</p>
-          <p class="rim-title">The right to repair</p>
-          <div class="rim-chips"><span class="chip">13 slides</span><span class="chip muted">6 min</span></div>
-        </div>
-        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
-      </div>
-    </div>
-    <p class="learn-section-label">Still writing</p>
-    <div class="rim soon">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="sprout" data-size="24"></i></span>
-        <div class="rim-body"><p class="rim-title">Food waste and composting</p><p class="rim-meta">Food &amp; waste · 4 min read</p></div>
-      </div>
-    </div>
-    <div class="rim soon">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="message-circle" data-size="24"></i></span>
-        <div class="rim-body"><p class="rim-title">Talking about climate change</p><p class="rim-meta">Society · 6 min read</p></div>
-      </div>
-    </div>
-  </div>
+  <!-- The library -->
+  <div class="lib-grid" id="lib-grid"></div>
+
+  <div class="lib-soon" id="lib-soon"></div>
+  <div class="lib-foot"></div>
 </div>
 
 <!-- ════════════════════════════════════════════════════
@@ -3548,6 +3475,7 @@ function getCategoryIcon(cat) {
 // HUB
 // ════════════════════════════════════
 async function openHub() {
+  await loadStories();          // the library index, before anything renders from it
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
   document.getElementById('hub-greeting').textContent = `${greeting}, ${playerName}`;
@@ -3634,57 +3562,33 @@ function refreshGameCards(nk) {
 // STORIES (home section)
 // ════════════════════════════════════
 
-const ALL_STORIES = [
-  {
-    id:    'climate-and-finance',
-    topic: 'topic-finance',
-    icon:  '🏦',
-    tag:   'Finance',
-    title: 'Climate & finance',
-    meta:  '9 slides · 6 min',
-  },
-  {
-    id:    'data-centres-ireland',
-    topic: 'topic-data',
-    icon:  '🖥️',
-    tag:   'Tech & energy',
-    title: 'Data centres in Ireland',
-    meta:  '12 slides · 5 min',
-  },
-  {
-    id:    'climate-wins-2025',
-    topic: 'topic-climate',
-    icon:  '🎉',
-    tag:   'Good news',
-    title: 'Climate wins in 2025',
-    meta:  '10 slides · 5 min',
-  },
-  {
-    id:    'ben-and-jerrys',
-    topic: 'topic-activism',
-    icon:  '🍦',
-    tag:   'Brands & activism',
-    title: "The Ben & Jerry's story",
-    meta:  '14 slides · 7 min',
-  },
-  {
-    id:    'ireland-forestry',
-    topic: 'topic-forestry',
-    icon:  '🌲',
-    tag:   'Land & nature',
-    title: "Ireland's forestry problem",
-    meta:  '19 slides · 8 min',
-  },
-  {
-    id:    'right-to-repair',
-    topic: 'topic-circular',
-    icon:  '🔧',
-    tag:   'Circular economy',
-    title: 'The right to repair',
-    meta:  '13 slides · 6 min',
+// The library index lives in stories.json. ALL_STORIES keeps its name and
+// shape (id, topic, tag, title, meta) because home.js and engine.js read it.
+let ALL_STORIES   = [];
+let STORY_CATS    = [];
+let STORY_SOON    = [];
+let _libCategory  = 'all';      // active category id, or 'all'
+let _libSort      = 'recent';   // 'recent' | 'shortest'
+
+const esc = (s) => String(s == null ? '' : s)
+  .replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+async function loadStories() {
+  if (ALL_STORIES.length) return;
+  try {
+    const res  = await fetch('stories.json', { cache: 'no-cache' });
+    const data = await res.json();
+    STORY_CATS = data.categories || [];
+    STORY_SOON = data.soon || [];
+    ALL_STORIES = (data.stories || []).map((s) => ({
+      ...s,
+      meta: `${s.slides} slides · ${s.minutes} min`,
+    }));
+  } catch (e) {
+    console.warn('stories.json failed to load:', e);
+    ALL_STORIES = [];
   }
-  // add more stories here as they go live
-];
+}
 
 const STORY_POINTS = 100;
 
@@ -3701,55 +3605,178 @@ function refreshHubProgress(nk, progress) {
   el.style.display = 'flex';
 }
 
-function _updateStoriesTabReadState(nk) {
-  const completed = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
-  const dayDone = Engine.dayDone(nk);
-  const note = document.getElementById('stories-lock-note');
-  if (note) note.hidden = !dayDone;
-  // Grey out completed ones; lock the rest once the day's two challenges are done
-  document.querySelectorAll('#screen-learn .rim[data-course]').forEach(card => {
-    const done = completed.includes(card.dataset.course);
-    card.classList.toggle('done', done);
-    card.classList.toggle('locked', !done && dayDone);
-  });
-}
-
 // Two challenges a day is the cap: Envie says so instead of opening the thing
 function dayDoneToast() {
   if (typeof showEnvieToast === 'function') showEnvieToast('That\'s two for today', 'One a day is the rhythm. I\'ll have more for you tomorrow.', 'flag');
 }
 
+// Topic to Lucide icon and tone, used for the fallback plate when a story has
+// no cover image yet. The plate follows the story's own topic, not the broader
+// filter category, so "Good news" stays green rather than taking Society's rose.
 const STORY_ICON = { 'topic-finance': 'landmark', 'topic-data': 'server', 'topic-climate': 'sparkles', 'topic-activism': 'ice-cream', 'topic-forestry': 'tree-pine', 'topic-food': 'sprout', 'topic-society': 'message-circle', 'topic-circular': 'wrench' };
-const STORY_TONE = { 'topic-finance': 'amber', 'topic-data': 'aqua', 'topic-climate': 'sky', 'topic-activism': 'rose', 'topic-forestry': 'moss', 'topic-food': 'sky', 'topic-society': 'amber', 'topic-circular': 'aqua' };
+const STORY_TONE = { 'topic-finance': 'amber', 'topic-data': 'aqua', 'topic-climate': 'sky', 'topic-activism': 'rose', 'topic-forestry': 'sky', 'topic-food': 'sky', 'topic-society': 'amber', 'topic-circular': 'aqua' };
 
-function renderHomeStories(nk) {
-  const section = document.getElementById('recent-stories-section');
-  const list    = document.getElementById('recent-stories-list');
-  if (!section || !list) return;
+// ── Read progress: how far into each story the player got ────
+// The course player used to forget the slide on close. It now saves the
+// furthest slide reached, which is what draws the bar on a library card
+// and where the story reopens.
+function _storyProgress(nk) {
+  return JSON.parse(localStorage.getItem('story_progress_' + nk) || '{}');
+}
+function saveStoryProgress(nk, id, idx, total) {
+  if (!nk || !id) return;
+  const all = _storyProgress(nk);
+  if ((all[id] || 0) >= idx) return;          // never go backwards
+  all[id] = Math.min(idx, total);
+  localStorage.setItem('story_progress_' + nk, JSON.stringify(all));
+}
 
-  if (ALL_STORIES.length === 0) { section.style.display = 'none'; return; }
+// "today" / "yesterday" / "5 days ago" / "3 weeks ago"
+function _sinceLabel(iso) {
+  if (!iso) return '';
+  const then = new Date(iso + 'T00:00:00');
+  if (isNaN(then)) return '';
+  const now  = new Date();
+  const days = Math.floor((new Date(now.getFullYear(), now.getMonth(), now.getDate()) - then) / 86400000);
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 7)  return days + ' days ago';
+  if (days < 14) return 'last week';
+  if (days < 31) return Math.floor(days / 7) + ' weeks ago';
+  const months = Math.floor(days / 30);
+  return months <= 1 ? 'last month' : months + ' months ago';
+}
+const STORY_NEW_DAYS = 10;  // how long the latest story wears the "New" label
+// Only the newest publish date wears it, so the label stays worth something
+// however many stories land in the same week.
+function _isNewStory(s) {
+  if (!s.published) return false;
+  const latest = ALL_STORIES.reduce((m, x) => (x.published > m ? x.published : m), '');
+  if (s.published !== latest) return false;
+  const then = new Date(s.published + 'T00:00:00');
+  if (isNaN(then)) return false;
+  return (Date.now() - then) / 86400000 < STORY_NEW_DAYS;
+}
 
-  const completed = JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]');
+const CAT_TONE = {
+  sky:   { ink: '#85d083', tint: 'rgba(133,208,131,.2)',  plate: 'linear-gradient(160deg,#14503c,#0b2c22)' },
+  amber: { ink: '#f0a060', tint: 'rgba(230,126,34,.2)',   plate: 'linear-gradient(160deg,#3a2410,#20140a)' },
+  aqua:  { ink: '#6ec6f0', tint: 'rgba(110,198,240,.18)', plate: 'linear-gradient(160deg,#123f5c,#0b2c40)' },
+  rose:  { ink: '#ff8fa3', tint: 'rgba(255,143,163,.18)', plate: 'linear-gradient(160deg,#3a1520,#22101a)' },
+};
+const catOf  = (id) => STORY_CATS.find((c) => c.id === id) || null;
+const toneOf = (id) => CAT_TONE[(catOf(id) || {}).tone] || CAT_TONE.aqua;
 
-  section.style.display = 'block';
-  // Unread first, then completed (greyed)
-  const sorted = [
-    ...ALL_STORIES.filter(s => !completed.includes(s.id)),
-    ...ALL_STORIES.filter(s =>  completed.includes(s.id))
-  ];
+function setStoryCategory(id) {
+  _libCategory = (_libCategory === id) ? 'all' : id;
+  renderStoriesLibrary();
+}
+function clearStoryCategory() {
+  _libCategory = 'all';
+  renderStoriesLibrary();
+}
+function setStorySort(key) {
+  _libSort = key;
+  renderStoriesLibrary();
+}
 
-  list.innerHTML = sorted.map(s => {
-    const isRead = completed.includes(s.id);
-    return `
-    <div class="row story ${s.topic}${isRead ? ' done' : ''}" onclick="openCourse('${s.id}')">
-      <span class="tile sm ${STORY_TONE[s.topic] || ''}">${EA.icon(STORY_ICON[s.topic] || 'book-open', { size: 21 })}</span>
-      <div class="row-body">
-        <p class="row-title">${s.title}</p>
-        <p class="row-meta">${isRead ? 'Read · no new points' : s.tag + ' · ' + s.meta}</p>
-      </div>
-      ${EA.icon('chevron-right', { size: 18, cls: 'row-chev' })}
-    </div>`;
-  }).join('');
+function renderStoriesLibrary() {
+  const grid = document.getElementById('lib-grid');
+  if (!grid) return;
+  const nk = playerName ? playerName.toLowerCase().replace(/\s+/g, '_') : '';
+  const completed = nk ? JSON.parse(localStorage.getItem('completed_stories_' + nk) || '[]') : [];
+  const progress  = nk ? _storyProgress(nk) : {};
+  const dayDone   = nk ? Engine.dayDone(nk) : false;
+
+  const note = document.getElementById('stories-lock-note');
+  if (note) note.hidden = !dayDone;
+
+  // ── Category buttons, with real counts ──
+  const cats = document.getElementById('lib-cats');
+  if (cats) {
+    cats.innerHTML = STORY_CATS.map((c) => {
+      const n = ALL_STORIES.filter((s) => s.category === c.id).length;
+      const t = CAT_TONE[c.tone] || CAT_TONE.aqua;
+      const on = _libCategory === c.id;
+      return `<button type="button" class="lib-cat${on ? ' on' : ''}${n ? '' : ' empty'}"
+        style="--cat-ink:${t.ink};--cat-tint:${t.tint}"
+        ${n ? `onclick="setStoryCategory('${c.id}')"` : 'disabled'}>
+        ${EA.icon(c.icon, { size: 16 })}
+        <span class="lib-cat-name">${esc(c.label)}</span>
+        <span class="lib-cat-n">${n}</span>
+      </button>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('.lib-sort-btn').forEach((b) =>
+    b.classList.toggle('on', b.dataset.sort === _libSort));
+
+  // ── Filter + sort ──
+  let list = ALL_STORIES.slice();
+  if (_libCategory !== 'all') list = list.filter((s) => s.category === _libCategory);
+  if (_libSort === 'shortest') list.sort((a, b) => a.minutes - b.minutes || a.slides - b.slides);
+  else list.sort((a, b) => String(b.published || '').localeCompare(String(a.published || '')));
+
+  // ── Header ──
+  const cat   = catOf(_libCategory);
+  const title = document.getElementById('lib-title');
+  const clear = document.getElementById('lib-clear');
+  const count = document.getElementById('lib-count');
+  if (title) title.textContent = cat ? cat.label : 'Stories';
+  if (clear) clear.hidden = !cat;
+  if (count) {
+    const unread = list.filter((s) => !completed.includes(s.id)).length;
+    const sortWord = _libSort === 'shortest' ? 'shortest first' : 'most recent';
+    count.textContent = `${list.length} ${list.length === 1 ? 'story' : 'stories'}`
+      + (unread ? `, ${unread} unread` : ', all read')
+      + ` · sorted by ${sortWord}`;
+  }
+
+  // ── Cards ──
+  if (!list.length) {
+    grid.innerHTML = `<p class="lib-empty">Nothing in there yet. I'm still writing that one.</p>`;
+  } else {
+    grid.innerHTML = list.map((s) => {
+      const t      = toneOf(s.category);
+      const p      = CAT_TONE[STORY_TONE[s.topic]] || t;   // plate follows the topic
+      const isRead = completed.includes(s.id);
+      const isNew  = !isRead && _isNewStory(s);
+      const locked = !isRead && dayDone;
+      const done   = Math.min(progress[s.id] || 0, s.slides);
+      const pct    = isRead ? 0 : Math.round((done / s.slides) * 100);
+      const badge  = isRead
+        ? `<span class="lib-badge read">${EA.icon('check', { size: 10 })}Read</span>`
+        : isNew ? `<span class="lib-badge new">New</span>` : '';
+      const plate  = s.cover
+        ? `<span class="lib-plate"><img src="${esc(s.cover)}" alt="" loading="lazy">${badge}</span>`
+        : `<span class="lib-plate fallback" style="--plate-bg:${p.plate};--cat-ink:${p.ink}">`
+          + `${EA.icon(STORY_ICON[s.topic] || 'book-open', { size: 30 })}${badge}</span>`;
+      return `<div class="lib-card${isNew ? ' is-new' : ''}${isRead ? ' is-read' : ''}${locked ? ' locked' : ''}"
+        style="--cat-ink:${t.ink}" role="button" tabindex="0"
+        data-course="${esc(s.id)}" onclick="openCourse('${esc(s.id)}')">
+        ${plate}
+        <div class="lib-card-body">
+          <p class="lib-card-title">${esc(s.title)}</p>
+          <p class="lib-card-meta">${s.minutes} min · ${isRead ? 'read' : _sinceLabel(s.published)}</p>
+          ${pct > 0 && pct < 100 ? `<span class="lib-bar"><span style="width:${pct}%"></span></span>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Still writing ──
+  const soon = document.getElementById('lib-soon');
+  if (soon) {
+    soon.innerHTML = STORY_SOON.length
+      ? `<p class="lib-soon-label">Still writing</p>
+         <p class="lib-soon-line">${STORY_SOON.map((s) => `<b>${esc(s.title)}</b>`).join(' · ')} · I'll shout when they're up.</p>`
+      : '';
+  }
+}
+
+// Kept for the callers that only want the read/lock states refreshed
+function _updateStoriesTabReadState(nk) {
+  renderStoriesLibrary();
 }
 
 function markStoryComplete(id) {
@@ -4272,7 +4299,10 @@ async function openCourse(id) {
     alert('I couldn\'t load that story. Give it another go in a moment.');
     return;
   }
-  _cpIndex = 0;
+  // Pick up where this player left off, but never on the completion screen
+  const _nk    = playerName ? playerName.toLowerCase().replace(/\s+/g, '_') : '';
+  const _saved = _nk ? (_storyProgress(_nk)[id] || 0) : 0;
+  _cpIndex = Math.min(_saved, _course.slides.length - 1);
   _buildProgressBar();
   _renderSlide(_cpIndex, 'none');
   // Restore tap zones and hide completion overlay from any previous session
@@ -4460,6 +4490,10 @@ function _renderSlide(idx, direction) {
   const stage  = document.getElementById('cp-stage');
   const slide  = _course.slides[idx];
   const total  = _course.slides.length;
+
+  // Remember how far this player got, so the library card can draw a bar
+  // and the story reopens here rather than at slide one.
+  if (playerName) saveStoryProgress(playerName.toLowerCase().replace(/\s+/g, '_'), _course.id, idx, total);
 
   // Determine enter class
   const enterClass = direction === 'forward'  ? 'entering-right'

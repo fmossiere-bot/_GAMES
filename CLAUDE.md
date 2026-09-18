@@ -21,11 +21,16 @@ Hard rules, no exceptions:
 - Short strings stay short. If the voice does not fit a button, shorten it and flag it.
 - The taglines "Play. Learn. Act." and "One step a day for the planet." stay as they are.
 
-One name per thing: the games are "Daily quiz" (library version "Random quiz"), "Sort it out" and "Water challenge". Stories use sentence case. Story tag, title and slide count must match in three places: Stories tab markup, `ALL_STORIES` in index.html, and the course JSON.
+One name per thing: the games are "Daily quiz" (library version "Random quiz"), "Sort it out" and "Water challenge". Stories use sentence case.
+
+Adding a story is two files: an entry in `stories.json` (the library index: title, tag, category, topic, cover, slides, minutes, published) and its `courses/course-<id>.json`. The Stories tab, the home lead card and engine.js all read `stories.json`, so nothing is duplicated in markup. Keep `slides` and `minutes` matching the course file. A story with no `cover` falls back to a tinted plate carrying its topic icon, so it is fine to add one before the artwork exists.
 
 Run `python3 check-voice.py` before committing. It flags em-dashes, emoji and American spellings in user-facing files and data.
 
 ## Working notes
 - The companion (companion.php, api-proxy.php system prompt, claims.json) has not had the Envie voice pass yet.
+- The Stories tab is the library layout from the "Stories, once there are a hundred" canvas (`_DESIGNS/stories-tab/screen-21.html` is the artboard). Rendered by `renderStoriesLibrary()` in index.html, styled by the `.lib-*` block at the end of app.css.
+- `published` dates in stories.json came from the course file timestamps, not a real publishing log. Correct them when you know the real dates: they drive the "most recent" sort, the "5 days ago" line and which story wears the "New" label.
+- Sort offers "Most recent" and "Shortest". The canvas also shows "Most read", which needs per-story read counts that nothing collects yet.
 - `_DESIGNS/envie-text-inventory.md` lists every user-facing string by screen; `_DESIGNS/envie-rewrite-batch-*.md` are the reviewed rewrites.
 - Only change text values, never keys, logic or variable names, unless asked.
