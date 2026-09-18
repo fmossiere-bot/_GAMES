@@ -1130,3 +1130,11 @@ body.sheet-open { overflow: hidden; }
 /* Meta sinks to the bottom so it lines up card to card; the bar keeps its
    own 7px gap underneath rather than running into the text. */
 .skin .lib-card-meta { margin-top: auto; padding-top: 6px; }
+
+/* Real category names are two words, so they wrap. Tighten the chips to keep
+   the panel from pushing the first row of stories off the first screen. */
+.skin .lib-cats { gap: 7px; }
+.skin .lib-cat { padding: 8px 10px; gap: 7px; align-items: flex-start; }
+.skin .lib-cat svg { width: 15px; height: 15px; margin-top: 1px; }
+.skin .lib-cat-name { font-size: 12.5px; line-height: 1.2; }
+.skin .lib-cat-n { margin-top: 1px; }

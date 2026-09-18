@@ -3586,10 +3586,15 @@ async function loadStories() {
     const data = await res.json();
     STORY_CATS = data.categories || [];
     STORY_SOON = data.soon || [];
+    // A story's category is also its label: home.js and engine.js read s.tag,
+    // so fill it in from the category rather than storing the name twice.
+    const label = (id) => (STORY_CATS.find((c) => c.id === id) || {}).label || '';
     ALL_STORIES = (data.stories || []).map((s) => ({
       ...s,
+      tag:  label(s.category),
       meta: `${s.slides} slides · ${s.minutes} min`,
     }));
+    STORY_SOON = STORY_SOON.map((s) => ({ ...s, tag: label(s.category) }));
   } catch (e) {
     console.warn('stories.json failed to load:', e);
     ALL_STORIES = [];
@@ -3616,11 +3621,7 @@ function dayDoneToast() {
   if (typeof showEnvieToast === 'function') showEnvieToast('That\'s two for today', 'One a day is the rhythm. I\'ll have more for you tomorrow.', 'flag');
 }
 
-// Topic to Lucide icon and tone, used for the fallback plate when a story has
-// no cover image yet. The plate follows the story's own topic, not the broader
-// filter category, so "Good news" stays green rather than taking Society's rose.
-const STORY_ICON = { 'topic-finance': 'landmark', 'topic-data': 'server', 'topic-climate': 'sparkles', 'topic-activism': 'ice-cream', 'topic-forestry': 'tree-pine', 'topic-food': 'sprout', 'topic-society': 'message-circle', 'topic-circular': 'wrench' };
-const STORY_TONE = { 'topic-finance': 'amber', 'topic-data': 'aqua', 'topic-climate': 'sky', 'topic-activism': 'rose', 'topic-forestry': 'sky', 'topic-food': 'sky', 'topic-society': 'amber', 'topic-circular': 'aqua' };
+
 
 // ── Read progress: how far into each story the player got ────
 // The course player used to forget the slide on close. It now saves the
@@ -3669,6 +3670,7 @@ const CAT_TONE = {
   amber: { ink: '#f0a060', tint: 'rgba(230,126,34,.2)',   plate: 'linear-gradient(160deg,#3a2410,#20140a)' },
   aqua:  { ink: '#6ec6f0', tint: 'rgba(110,198,240,.18)', plate: 'linear-gradient(160deg,#123f5c,#0b2c40)' },
   rose:  { ink: '#ff8fa3', tint: 'rgba(255,143,163,.18)', plate: 'linear-gradient(160deg,#3a1520,#22101a)' },
+  moss:  { ink: '#c9a96e', tint: 'rgba(138,109,63,.22)',  plate: 'linear-gradient(160deg,#14261a,#0d1a11)' },
 };
 const catOf  = (id) => STORY_CATS.find((c) => c.id === id) || null;
 const toneOf = (id) => CAT_TONE[(catOf(id) || {}).tone] || CAT_TONE.aqua;
@@ -3700,13 +3702,14 @@ function renderStoriesLibrary() {
   // ── Category buttons, with real counts ──
   const cats = document.getElementById('lib-cats');
   if (cats) {
-    cats.innerHTML = STORY_CATS.map((c) => {
+    // A category with nothing in it yet is not worth a chip
+    cats.innerHTML = STORY_CATS.filter((c) => ALL_STORIES.some((s) => s.category === c.id)).map((c) => {
       const n = ALL_STORIES.filter((s) => s.category === c.id).length;
       const t = CAT_TONE[c.tone] || CAT_TONE.aqua;
       const on = _libCategory === c.id;
-      return `<button type="button" class="lib-cat${on ? ' on' : ''}${n ? '' : ' empty'}"
+      return `<button type="button" class="lib-cat${on ? ' on' : ''}"
         style="--cat-ink:${t.ink};--cat-tint:${t.tint}"
-        ${n ? `onclick="setStoryCategory('${c.id}')"` : 'disabled'}>
+        onclick="setStoryCategory('${c.id}')">
         ${EA.icon(c.icon, { size: 16 })}
         <span class="lib-cat-name">${esc(c.label)}</span>
         <span class="lib-cat-n">${n}</span>
@@ -3744,7 +3747,6 @@ function renderStoriesLibrary() {
   } else {
     grid.innerHTML = list.map((s) => {
       const t      = toneOf(s.category);
-      const p      = CAT_TONE[STORY_TONE[s.topic]] || t;   // plate follows the topic
       const isRead = completed.includes(s.id);
       const isNew  = !isRead && _isNewStory(s);
       const locked = !isRead && dayDone;
@@ -3755,8 +3757,8 @@ function renderStoriesLibrary() {
         : isNew ? `<span class="lib-badge new">New</span>` : '';
       const plate  = s.cover
         ? `<span class="lib-plate"><img src="${esc(s.cover)}" alt="" loading="lazy">${badge}</span>`
-        : `<span class="lib-plate fallback" style="--plate-bg:${p.plate};--cat-ink:${p.ink}">`
-          + `${EA.icon(STORY_ICON[s.topic] || 'book-open', { size: 30 })}${badge}</span>`;
+        : `<span class="lib-plate fallback" style="--plate-bg:${t.plate};--cat-ink:${t.ink}">`
+          + `${EA.icon((catOf(s.category) || {}).icon || 'book-open', { size: 30 })}${badge}</span>`;
       return `<div class="lib-card${isNew ? ' is-new' : ''}${isRead ? ' is-read' : ''}${locked ? ' locked' : ''}"
         style="--cat-ink:${t.ink}" role="button" tabindex="0"
         data-course="${esc(s.id)}" onclick="openCourse('${esc(s.id)}')">

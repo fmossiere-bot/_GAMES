@@ -1,38 +1,48 @@
 {
-  "_note": "The story library index. This is the single source: the Stories tab, the home lead card and the 'up next' card all read it. Adding a story means one entry here plus its courses/course-<id>.json. Keep id, slides and minutes matching the course file.",
+  "_note": "The story library index. This is the single source: the Stories tab, the home lead card and the 'up next' card all read it. A story's category is also the label shown on it, so there is one name per topic and nothing to keep in sync. Adding a story means one entry here plus its courses/course-<id>.json, and it must use an existing category id below. A story that fits none of them needs a new category agreed with Fabien first, never a loose fit. Keep slides and minutes matching the course file.",
   "categories": [
     {
-      "id": "nature",
-      "label": "Nature",
-      "icon": "tree-pine",
-      "tone": "sky"
+      "id": "brands-activism",
+      "label": "Brands & Activism",
+      "icon": "flag",
+      "tone": "rose"
     },
     {
-      "id": "energy",
-      "label": "Energy",
-      "icon": "zap",
+      "id": "climate-finance",
+      "label": "Climate & Finance",
+      "icon": "landmark",
       "tone": "amber"
     },
     {
-      "id": "money",
-      "label": "Money",
-      "icon": "landmark",
+      "id": "land-nature",
+      "label": "Land & Nature",
+      "icon": "tree-pine",
+      "tone": "moss"
+    },
+    {
+      "id": "circular-economy",
+      "label": "Circular Economy",
+      "icon": "recycle",
+      "tone": "sky"
+    },
+    {
+      "id": "energy-consumption",
+      "label": "Energy & Consumption",
+      "icon": "zap",
       "tone": "aqua"
     },
     {
-      "id": "society",
-      "label": "Society",
-      "icon": "message-circle",
-      "tone": "rose"
+      "id": "positive-stories",
+      "label": "Positive Stories",
+      "icon": "sparkles",
+      "tone": "sky"
     }
   ],
   "stories": [
     {
       "id": "patagonia",
       "title": "The Patagonia story",
-      "tag": "Brands & activism",
-      "category": "money",
-      "topic": "topic-activism",
+      "category": "brands-activism",
       "cover": "courses/images/patagonia-cover.jpg",
       "slides": 16,
       "minutes": 6,
@@ -41,9 +51,7 @@
     {
       "id": "right-to-repair",
       "title": "The right to repair",
-      "tag": "Circular economy",
-      "category": "energy",
-      "topic": "topic-circular",
+      "category": "circular-economy",
       "cover": "courses/images/repair-technician-customer-kitchen.jpg",
       "slides": 13,
       "minutes": 6,
@@ -52,9 +60,7 @@
     {
       "id": "ireland-forestry",
       "title": "Ireland's forestry problem",
-      "tag": "Land & nature",
-      "category": "nature",
-      "topic": "topic-forestry",
+      "category": "land-nature",
       "cover": "courses/images/forested-valley-aerial.jpg",
       "slides": 19,
       "minutes": 8,
@@ -63,9 +69,7 @@
     {
       "id": "ben-and-jerrys",
       "title": "The Ben & Jerry's story",
-      "tag": "Brands & activism",
-      "category": "money",
-      "topic": "topic-activism",
+      "category": "brands-activism",
       "cover": "courses/images/vermont-ice-cream-van.jpg",
       "slides": 15,
       "minutes": 7,
@@ -74,9 +78,7 @@
     {
       "id": "data-centres-ireland",
       "title": "Data centres in Ireland",
-      "tag": "Tech & energy",
-      "category": "energy",
-      "topic": "topic-data",
+      "category": "energy-consumption",
       "cover": "courses/images/ireland-night.jpg",
       "slides": 12,
       "minutes": 5,
@@ -85,9 +87,7 @@
     {
       "id": "climate-and-finance",
       "title": "Climate & finance",
-      "tag": "Finance",
-      "category": "money",
-      "topic": "topic-finance",
+      "category": "climate-finance",
       "cover": "courses/images/Finance-District.jpg",
       "slides": 9,
       "minutes": 6,
@@ -96,9 +96,7 @@
     {
       "id": "climate-wins-2025",
       "title": "Climate wins in 2025",
-      "tag": "Good news",
-      "category": "society",
-      "topic": "topic-climate",
+      "category": "positive-stories",
       "cover": null,
       "slides": 10,
       "minutes": 5,
@@ -108,15 +106,11 @@
   "soon": [
     {
       "title": "Food waste and composting",
-      "tag": "Food & waste",
-      "category": "nature",
-      "topic": "topic-food"
+      "category": "circular-economy"
     },
     {
       "title": "Talking about climate change",
-      "tag": "Society",
-      "category": "society",
-      "topic": "topic-society"
+      "category": "positive-stories"
     }
   ]
 }

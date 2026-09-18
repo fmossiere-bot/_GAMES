@@ -23,7 +23,9 @@ Hard rules, no exceptions:
 
 One name per thing: the games are "Daily quiz" (library version "Random quiz"), "Sort it out" and "Water challenge". Stories use sentence case.
 
-Adding a story is two files: an entry in `stories.json` (the library index: title, tag, category, topic, cover, slides, minutes, published) and its `courses/course-<id>.json`. The Stories tab, the home lead card and engine.js all read `stories.json`, so nothing is duplicated in markup. Keep `slides` and `minutes` matching the course file. A story with no `cover` falls back to a tinted plate carrying its topic icon, so it is fine to add one before the artwork exists.
+Adding a story is two files: an entry in `stories.json` (the library index: title, category, cover, slides, minutes, published) and its `courses/course-<id>.json`. The Stories tab, the home lead card and engine.js all read `stories.json`, so nothing is duplicated in markup. Keep `slides` and `minutes` matching the course file. A story with no `cover` falls back to a tinted plate carrying its category icon, so it is fine to add one before the artwork exists.
+
+**Categories are Fabien's call, always.** A story's `category` is also the label shown on it, so the filter chips and the card tags can never drift apart. Before adding a story, ask him which existing category it belongs to, or whether it needs a new one. Never invent a category, never rename one, and never force a story into a loose fit to avoid asking. The list is: Brands & Activism, Climate & Finance, Land & Nature, Circular Economy, Energy & Consumption, Positive Stories. Category labels are title case (each significant word capitalised), unlike story titles, which stay sentence case.
 
 Run `python3 check-voice.py` before committing. It flags em-dashes, emoji and American spellings in user-facing files and data.
 
