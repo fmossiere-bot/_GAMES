@@ -1016,3 +1016,117 @@ body.sheet-open { overflow: hidden; }
 .skin .profile-share { margin-top: 12px; }
 .skin .profile-share .cta { padding: 13px; font-size: 14px; border-radius: 16px; }
 .skin .credit-body .share-btn { width: 100%; margin: 0 0 10px; padding: 13px; font-size: 14px; border-radius: 16px; }
+
+/* ════════════════════════════════════════════════════════════
+   STORIES LIBRARY (tab) — from the "Stories, once there are a
+   hundred" canvas, screen 21. Compact header, category panel,
+   sort row, 2-up image cards with New/Read labels and progress.
+   ════════════════════════════════════════════════════════════ */
+
+.skin .lib-head { padding: 8px 20px 0; position: relative; z-index: 2; }
+.skin .lib-head-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.skin .lib-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 26px; color: #fff; }
+.skin .lib-clear {
+  display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px;
+  background: rgba(255,255,255,.08); border: 0; color: rgba(255,255,255,.75);
+  font-family: var(--font-body); font-size: 12px; font-weight: 700; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.skin .lib-clear svg { width: 14px; height: 14px; }
+.skin .lib-clear[hidden] { display: none; }
+.skin .lib-count { margin: 5px 0 0; font-family: var(--font-body); font-size: 12.5px; color: rgba(255,255,255,.5); }
+
+/* ── Category + sort panel ─────────────────────────────────── */
+.skin .lib-panel {
+  margin: 14px 20px 0; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+  border-radius: 22px; padding: 14px; position: relative; z-index: 2;
+}
+.skin .lib-panel-label {
+  margin: 0 0 10px; font-family: var(--font-body); font-size: 10px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45);
+}
+.skin .lib-cats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.skin .lib-cat {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 14px;
+  background: rgba(255,255,255,.06); border: 1.5px solid transparent; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; text-align: left; transition: transform .12s;
+}
+.skin .lib-cat:active { transform: scale(.97); }
+.skin .lib-cat svg { width: 16px; height: 16px; flex: none; color: var(--cat-ink, rgba(255,255,255,.7)); }
+.skin .lib-cat-name { flex: 1; min-width: 0; font-family: var(--font-body); font-size: 13px; font-weight: 700; color: rgba(255,255,255,.8); }
+.skin .lib-cat-n { font-family: var(--font-body); font-size: 11px; color: rgba(255,255,255,.4); }
+.skin .lib-cat.on { background: var(--cat-tint); border-color: var(--cat-ink); }
+.skin .lib-cat.on .lib-cat-name { color: #fff; }
+.skin .lib-cat.on .lib-cat-n { color: rgba(255,255,255,.55); }
+.skin .lib-cat.empty { opacity: .4; cursor: default; }
+
+.skin .lib-sort {
+  margin-top: 12px; padding-top: 11px; border-top: 1px solid rgba(255,255,255,.1);
+  display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+}
+.skin .lib-sort-label {
+  font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: rgba(255,255,255,.4);
+}
+.skin .lib-sort-btn {
+  padding: 6px 11px; border-radius: 999px; border: 0; background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.7); font-family: var(--font-body); font-size: 11.5px; font-weight: 700;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.skin .lib-sort-btn.on { background: var(--amber); color: #2a1305; }
+
+/* ── The grid ──────────────────────────────────────────────── */
+.skin .lib-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 16px 20px 0; position: relative; z-index: 1; }
+.skin .lib-card {
+  background: rgba(255,255,255,.055); border: 1.5px solid transparent; border-radius: 18px;
+  overflow: hidden; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: transform .12s; text-align: left; padding: 0; font: inherit; color: inherit; display: block;
+}
+.skin .lib-card:active { transform: scale(.98); }
+.skin .lib-card.is-new { background: rgba(255,255,255,.07); border-color: rgba(240,160,96,.4); }
+.skin .lib-card.is-read { opacity: .72; }
+.skin .lib-card.locked { opacity: .4; cursor: default; }
+
+.skin .lib-plate { position: relative; display: block; height: 78px; background: var(--plate-bg, linear-gradient(160deg, #123f5c, #0b2c40)); }
+.skin .lib-plate img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* No cover yet: tinted plate carrying the topic icon, same footprint as a photo */
+.skin .lib-plate.fallback { display: grid; place-items: center; }
+.skin .lib-plate.fallback svg { width: 30px; height: 30px; color: var(--cat-ink, var(--aqua)); opacity: .85; }
+
+.skin .lib-badge {
+  position: absolute; top: 7px; left: 7px; display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 8px; border-radius: 999px; font-family: var(--font-body); font-size: 8.5px;
+  font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+}
+.skin .lib-badge.new  { background: var(--amber); color: #2a1305; }
+.skin .lib-badge.read { background: rgba(4,18,27,.6); color: var(--sky); letter-spacing: 0; }
+.skin .lib-badge.read svg { width: 10px; height: 10px; }
+
+.skin .lib-card-body { padding: 9px 11px 11px; }
+.skin .lib-card-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 13.5px; line-height: 1.25; color: #fff; }
+.skin .lib-card.is-read .lib-card-title { color: rgba(255,255,255,.85); }
+.skin .lib-card-meta { margin: 6px 0 0; font-family: var(--font-body); font-size: 10.5px; color: rgba(255,255,255,.5); }
+.skin .lib-bar { margin-top: 7px; height: 4px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; }
+.skin .lib-bar span { display: block; height: 100%; border-radius: 999px; background: var(--cat-ink, var(--aqua)); }
+
+/* ── Empty state + still writing ───────────────────────────── */
+.skin .lib-empty { grid-column: 1 / -1; padding: 26px 16px; text-align: center; font-family: var(--font-body); font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.6; }
+.skin .lib-soon { padding: 18px 20px 0; position: relative; z-index: 1; }
+.skin .lib-soon-label { margin: 0 0 8px; font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+.skin .lib-soon-line {
+  margin: 0; padding: 11px 14px; border-radius: 14px; border: 1.5px dashed rgba(255,255,255,.14);
+  font-family: var(--font-body); font-size: 12px; line-height: 1.6; color: rgba(255,255,255,.38);
+}
+.skin .lib-soon-line b { color: rgba(255,255,255,.55); font-weight: 700; }
+.skin .lib-foot { height: 110px; }
+
+/* The library is dense: the background mascot would sit under the cards */
+.skin #screen-learn .bg-envie { display: none; }
+/* Two-line title box keeps the cards in a row the same height */
+.skin .lib-grid { align-items: start; }
+.skin .lib-card { height: 100%; display: flex; flex-direction: column; }
+.skin .lib-card-body { flex: 1; display: flex; flex-direction: column; }
+.skin .lib-card-title { min-height: 2.5em; }
+/* Meta sinks to the bottom so it lines up card to card; the bar keeps its
+   own 7px gap underneath rather than running into the text. */
+.skin .lib-card-meta { margin-top: auto; padding-top: 6px; }
