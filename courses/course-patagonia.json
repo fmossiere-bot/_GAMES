@@ -1,0 +1,199 @@
+{
+  "id": "patagonia",
+  "title": "The Patagonia story",
+  "category": "Brands &amp; activism",
+  "accent": "activism",
+  "readTime": 8,
+  "voice": "Every title, desc, comment or intro here is read by a player and is written as Envie speaking. See CLAUDE.md and _DESIGNS/envie-voice-and-text-rewrite-guide.md: plain short sentences, no em-dashes, European spelling, no emoji, facts and sources untouched. The optional 'envie' line on a slide is his own aside, one short sentence.",
+  "slides": [
+    {
+      "type": "photo",
+      "image": "patagonia-ireland-coast-hikers-sheep.jpg",
+      "align": "center",
+      "tag": "Brands &amp; activism",
+      "text": "I went walking on the coast here at the weekend. I had to stop and just look.",
+      "bold": "just look",
+      "footer": "Then I noticed the jacket. And the jacket turned into a story about a man who gave everything away."
+    },
+    {
+      "type": "text",
+      "theme": "blue",
+      "text": "Ireland does the outdoors properly. Wicklow in the mist, the Burren, the whole west falling into the sea. From up in space I never got a sense of it. Down here it stops you.",
+      "bold": "Down here it stops you",
+      "footer": "Half the walkers I passed had the same name on their coat, borrowed from a place at the other end of the world. So I went looking into it.",
+      "envie": "One walk, and here we are."
+    },
+    {
+      "type": "photo",
+      "image": "yvon-chouinard-portrait.jpg",
+      "align": "center",
+      "tag": "Yvon Chouinard",
+      "text": "This is the man who started it. He never wanted a business at all.",
+      "bold": "never wanted a business",
+      "footer": "He wanted to climb. Everything else happened by accident, and then on purpose."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "Born in Maine in 1938 to a Franco-Canadian family. A poor student, out of place everywhere except outdoors. At 14 he joined a falconry club with his mates.",
+      "bold": "out of place everywhere except outdoors",
+      "footer": "Climbing down cliffs to reach the nests turned into a lifelong thing about mountains.",
+      "envie": "I know that feeling. Some people are only right outside."
+    },
+    {
+      "type": "stat",
+      "theme": "orange",
+      "stat": "18 days",
+      "caption": "The climbing gear back then was poor, so he forged his own and sold it out of the boot of his car along the Californian coast. He lived on almost nothing. In 1962 he did 18 days in a jail in Arizona, arrested for wandering with no money and no fixed address.",
+      "bold": "sold it out of the boot of his car",
+      "note": "So who funded it? Nobody did. No investor, no bank, no rich family. One piece of gear at a time, out of a car.",
+      "envie": "Locked up for being skint. That one stayed with me."
+    },
+    {
+      "type": "photo",
+      "image": "torres-del-paine-lake.jpg",
+      "align": "center",
+      "tag": "Patagonia, the place",
+      "text": "In 1968 he drove to the end of South America, to this.",
+      "bold": "to this",
+      "footer": "He and his friends opened a new route up Fitz Roy. Thirty hours on the rock. He never really came home from it."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "Then came 1970, and the Nose route on El Capitan in Yosemite. The rock was covered in hundreds of pitons, hammered in and left behind. On one of them he read his own company's name.",
+      "bold": "his own company's name",
+      "footer": "His gear was wrecking the thing he loved. That is a hard morning.",
+      "envie": "Imagine reading your own name on the damage."
+    },
+    {
+      "type": "compare",
+      "theme": "dark",
+      "title": "In 1972 he stopped making pitons. They were his best seller.",
+      "badLabel": "What the business logic said",
+      "bad": [
+        "Pitons pay the wages",
+        "Climbers are already buying them",
+        "Nobody is asking you to stop"
+      ],
+      "goodLabel": "What he did instead",
+      "good": [
+        "Dropped the product that made the most money",
+        "Built aluminium chocks you can place and take out without marking the rock",
+        "Learned his first rule of business: the planet comes before the profit"
+      ]
+    },
+    {
+      "type": "visual",
+      "theme": "dark",
+      "image": "courses/images/patagonia-logo-old.png",
+      "text": "That same year he found a heavy rugby shirt in Scotland and all his climbing friends wanted one. So he started selling clothes for people who go outdoors, and named it after the place he could not forget.",
+      "bold": "the place he could not forget"
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "The start was rough. Bad products from outsourced factories, partners walking away, banks saying no to loans. It survived anyway, and grew from 20 to 100 million dollars in five years.",
+      "bold": "banks saying no to loans",
+      "footer": "Which is the point where most founders buy a bigger house. He did something else with it.",
+      "envie": "That is a lot of nos before it worked."
+    },
+    {
+      "type": "stat",
+      "theme": "orange",
+      "stat": "2 to 8%",
+      "caption": "That is the share of the world's greenhouse gases that gets put on the clothing industry. I went looking for one clean number and found a pile of different ones, from about 2% up to 10%.",
+      "bold": "found a pile of different ones",
+      "note": "The gap is the story. Nobody can measure it properly, because nobody has to.",
+      "source": "UNEP and published industry studies",
+      "envie": "When a number is that vague, somebody is benefiting from the fog."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "Two numbers did stick, though. Between 2000 and 2015 the world roughly doubled the amount of clothing it makes. Over the same years each item got worn about a third less before it was binned.",
+      "bold": "doubled the amount of clothing it makes",
+      "bullets": [
+        "Under 1%: the share of old clothing that comes back as new clothing",
+        "Most of what we wear now: polyester, which is plastic, which is oil",
+        "Every second: about a truckload of textiles burned or buried"
+      ],
+      "footer": "Ellen MacArthur Foundation, 2017.",
+      "envie": "Twice as much made, worn half as long. That is a system, not an accident."
+    },
+    {
+      "type": "text",
+      "theme": "green",
+      "text": "So this company started doing things that cost it money on purpose. In 1994 it dropped ordinary cotton, one of the dirtiest crops going, for organic cotton, hemp and recycled polyester. The margins took the hit.",
+      "bold": "cost it money on purpose",
+      "footer": "It also pushed people to mend rather than replace. Free repair workshops, second hand ranges, a van going round America fixing coats for nothing.",
+      "envie": "A clothing company telling you to keep the old one. Unusual."
+    },
+    {
+      "type": "photo",
+      "image": "one-percent-for-the-planet-arctic.jpg",
+      "align": "center",
+      "tag": "1% for the Planet",
+      "text": "Since 1985 it has given away 1% of everything it sells. Not 1% of profit.",
+      "bold": "Not 1% of profit",
+      "footer": "Chouinard went on to co-found One Percent for the Planet so other companies could sign up to the same thing."
+    },
+    {
+      "type": "photo",
+      "image": "patagonia-ridge-runner.jpg",
+      "align": "center",
+      "tag": "Black Friday, 2011",
+      "text": "It took a full page in the New York Times to tell people not to buy its jacket.",
+      "bold": "not to buy its jacket",
+      "footer": "A clothing brand, on the biggest shopping day of the year, asking you to think twice."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "callout": "\"The President Stole Your Land.\"",
+      "calloutTop": true,
+      "text": "In 2017 Trump shrank two protected areas in Utah so mining and drilling could go in. Patagonia put that one line on its website, then sued the President of the United States.",
+      "bold": "sued the President of the United States",
+      "bullets": [
+        "2018: it gave away the $10 million it saved from his corporate tax cut",
+        "2021: the Utah protections went back"
+      ],
+      "envie": "A jacket company took on the White House, and won."
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "stat": "$3bn",
+      "caption": "In 2022, at 83, Chouinard gave the company away. Not to his children, not to investors. The voting shares went to a trust that guards what the company stands for, and everything else to a non-profit fighting the climate crisis.",
+      "bold": "gave the company away",
+      "note": "Every dollar of profit not put back into the business, roughly $100 million a year, now goes to defending the environment.",
+      "source": "New York Times, 2022",
+      "envie": "He could have taken the three billion. He took nothing."
+    },
+    {
+      "type": "photo",
+      "image": "patagonia-glacier.jpg",
+      "align": "center",
+      "tag": "The final act",
+      "text": "As he put it, Earth is now our only shareholder.",
+      "bold": "Earth is now our only shareholder",
+      "footer": "He came off the billionaire list on purpose, which is not a sentence I expected to write."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "I am not going to sell you a saint. Patagonia still makes clothes and still ships them round the world, a lot of them made in low cost countries like Vietnam and Sri Lanka. Plenty of people call the whole thing very well dressed greenwashing.",
+      "bold": "I am not going to sell you a saint",
+      "footer": "Fair enough. And it has still done more than nearly anyone else in an industry that is one of the planet's biggest polluters.",
+      "envie": "Both of those can be true at once."
+    },
+    {
+      "type": "text",
+      "theme": "green",
+      "text": "Here is what I took from a man who sold climbing gear out of a car boot. It is not the most powerful people who change things. It is the most stubborn ones.",
+      "bold": "the most stubborn ones",
+      "footer": "And the greenest jacket is the one already in your wardrobe. Wear it out, get it patched, buy the next one second hand. Then go back out and look at those hills.",
+      "envie": "Go on. I will see you out there."
+    }
+  ]
+}
