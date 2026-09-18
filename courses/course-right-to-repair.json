@@ -112,6 +112,15 @@
       "envie": "Odd, that. The better outcome counts for less."
     },
     {
+      "type": "photo",
+      "image": "phone-repair-search.jpg",
+      "align": "center",
+      "tag": "One small habit",
+      "text": "Search for someone to fix it, not something to replace it.",
+      "bold": "not something to replace it",
+      "footer": "That is the whole shift, really."
+    },
+    {
       "type": "text",
       "theme": "green",
       "text": "So next time something packs in, look up who near you can fix it before you look up what to replace it with.",
