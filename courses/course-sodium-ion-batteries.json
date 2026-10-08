@@ -1,0 +1,152 @@
+{
+  "id": "sodium-ion-batteries",
+  "title": "Batteries made from salt",
+  "category": "Energy & Consumption",
+  "accent": "data",
+  "readTime": 6,
+  "voice": "Every title, desc, comment or intro here is read by a player and is written as Envie speaking. See CLAUDE.md and _DESIGNS/envie-voice-and-text-rewrite-guide.md: plain short sentences, no em-dashes, European spelling, no emoji, facts and sources untouched. The optional 'envie' line on a slide is his own aside, one short sentence.",
+  "slides": [
+    {
+      "type": "photo",
+      "image": "sodium-salt-battery.jpg",
+      "align": "center",
+      "tag": "Energy &amp; consumption",
+      "text": "What if the next big battery was made from salt?",
+      "bold": "made from salt",
+      "footer": "I nearly laughed when I first read that. Then I kept reading."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "Almost every battery you own runs on lithium. Your phone, your laptop, most electric cars.",
+      "bold": "lithium",
+      "footer": "Lithium is brilliant. It is also rare, dug up in a few countries, and its price can jump from $20,000 to $70,000 a tonne.",
+      "envie": "I never once wondered what was inside my phone."
+    },
+    {
+      "type": "stat",
+      "theme": "orange",
+      "stat": "99%",
+      "caption": "And we need more batteries every year. In 30 years they got 99% cheaper, and sales keep doubling every two to three years.",
+      "bold": "99% cheaper",
+      "source": "RMI, X-Change: Batteries",
+      "envie": "Faster than anyone predicted."
+    },
+    {
+      "type": "text",
+      "theme": "blue",
+      "text": "So I looked one row down on the periodic table. Lithium has a sibling there. Sodium, the stuff in your salt.",
+      "bold": "Sodium",
+      "footer": "Same family, same trick. Tiny charged bits rock back and forth between the two ends of the battery, like a rocking chair.",
+      "envie": "A rocking chair. I like that."
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "stat": "1,000x",
+      "caption": "Sodium is over 1,000 times more common than lithium in the ground. In the sea, it is 60,000 times more common.",
+      "bold": "60,000 times",
+      "envie": "From up there, Earth is mostly sea. Plenty to go round."
+    },
+    {
+      "type": "compare",
+      "theme": "dark",
+      "title": "Same job, different ingredients",
+      "badLabel": "Lithium-ion",
+      "bad": [
+        "Rare, mined in a few countries",
+        "About $20,000 a tonne of raw material",
+        "Often needs cobalt and nickel",
+        "Struggles in the cold"
+      ],
+      "goodLabel": "Sodium-ion",
+      "good": [
+        "Found almost everywhere, even in seawater",
+        "About $500 a tonne of raw material",
+        "No cobalt or nickel in the cleanest versions",
+        "Keeps about 90% of its power at -40&deg;C"
+      ]
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "So is lithium finished? Not at all. Sodium has one weak spot. It is heavier for the same amount of energy.",
+      "bold": "heavier",
+      "footer": "An SUV on sodium alone goes up to about 350 km. On lithium, 400 to 600 km. Grand for city cars, scooters and buses. Less so for long trips.",
+      "envie": "Nobody is perfect. Not even salt."
+    },
+    {
+      "type": "photo",
+      "image": "grid-battery-site.jpg",
+      "align": "center",
+      "tag": "Where sodium shines",
+      "text": "A battery beside a wind farm never moves. So weight does not matter.",
+      "bold": "never moves",
+      "footer": "What matters there is cheap, safe and long lasting. That is sodium's home ground."
+    },
+    {
+      "type": "photo",
+      "image": "windfarms-ireland.jpg",
+      "align": "center",
+      "tag": "The climate part",
+      "text": "Wind and sun don't work to our timetable. Batteries save the extra for later.",
+      "bold": "save the extra for later",
+      "footer": "Cheaper storage means less gas burnt to fill the gaps on a still winter evening."
+    },
+    {
+      "type": "stat",
+      "theme": "blue",
+      "stat": "15 Gt",
+      "caption": "Batteries that match wind and sun to when we use power could cut almost 15 billion tonnes of CO2 a year.",
+      "bold": "15 billion tonnes of CO2 a year",
+      "source": "RMI, X-Change: Batteries",
+      "envie": "I had to read that number twice."
+    },
+    {
+      "type": "text",
+      "theme": "dark",
+      "text": "It is not only about cost. It is also about who gets hurt along the way.",
+      "bold": "who gets hurt along the way",
+      "bullets": [
+        "Cobalt: about 75% comes from Congo, where child labour in the mines is well documented.",
+        "Water: lithium from brine uses millions of litres per tonne in dry South American valleys.",
+        "Shipping: sodium cells can travel fully empty, at 0 volts, so there is no fire risk at sea."
+      ],
+      "envie": "Sodium dodges most of that."
+    },
+    {
+      "type": "stat",
+      "theme": "green",
+      "stat": "15x",
+      "caption": "And it is not a lab idea any more. Factories making sodium batteries for the grid are set to grow 15 times, from 10 GWh in 2025 to 150 GWh by 2030.",
+      "bold": "not a lab idea any more",
+      "footer": "CATL, the biggest battery maker in the world, started deliveries this September. Over 95% of the new factories are in China, though.",
+      "envie": "Europe, are you watching?"
+    },
+    {
+      "type": "photo",
+      "image": "irish-home-battery-shed.jpg",
+      "align": "center",
+      "tag": "And Ireland?",
+      "text": "Plenty of home batteries here live in a cold, damp shed. Sodium doesn't mind.",
+      "bold": "Sodium doesn't mind",
+      "footer": "They keep working down to -20&deg;C without wasting power heating themselves. Finally, the Irish weather gets a win."
+    },
+    {
+      "type": "text",
+      "theme": "blue",
+      "text": "Ireland is an island, so every big battery arrives by ship. One that can travel empty is simpler and safer to bring in.",
+      "bold": "travel empty",
+      "footer": "Irish researchers are already testing sodium batteries with home solar, in a project called TRIDENT. And the first sodium home batteries are on sale here.",
+      "envie": "Fair play to them."
+    },
+    {
+      "type": "text",
+      "theme": "green",
+      "text": "So next time someone says batteries are too rare, too dirty or too dear, tell them about salt.",
+      "bold": "tell them about salt",
+      "footer": "Sodium won't replace lithium. They will work side by side, each on the job it does best. More batteries, from stuff found everywhere, means more wind and sun on the grid.",
+      "envie": "I am properly excited about this one."
+    }
+  ]
+}
