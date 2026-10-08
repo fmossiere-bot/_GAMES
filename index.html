@@ -9,14 +9,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5S6BPNG30H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-5S6BPNG30H');
-</script>
+<script src="analytics.js" data-manual-pageview data-voice="envie"></script>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="/_images/_logo/assets/environmentle-favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/_images/_logo/assets/environmentle-favicon-32.png">
@@ -2896,65 +2889,36 @@
     </button>
   </div>
 
-  <!-- Hero banner below topbar -->
-  <div class="games-lib-hero">
-    <div class="games-lib-hero-bg">
-      <div class="games-lib-orb games-lib-orb-1"></div>
-      <div class="games-lib-orb games-lib-orb-2"></div>
-      <div class="games-lib-orb games-lib-orb-3"></div>
+  <!-- Library header, same shape as Stories -->
+  <div class="lib-head">
+    <div class="lib-head-top">
+      <h2 class="lib-title" id="games-title">Games</h2>
+      <button class="lib-clear" id="games-clear" onclick="clearGameType()" hidden>
+        <i data-icon="x" data-size="14"></i>Clear
+      </button>
     </div>
-    <div class="games-lib-hero-content">
-      <div class="games-lib-eyebrow">
-        <div class="games-lib-eyebrow-dot"></div>
-        <span class="games-lib-eyebrow-text">Three games · Free to play</span>
-      </div>
-      <div class="games-lib-title">GAMES</div>
-      <p class="games-lib-subtitle">Short games, real numbers. Pick one, I'll keep score.</p>
-      <p class="tab-lock-note" id="games-lock-note" hidden>Two done today. I'll open the games again tomorrow.</p>
-    </div>
+    <p class="lib-count" id="games-count"></p>
+    <p class="tab-lock-note" id="games-lock-note" hidden>Two done today. I'll open the games again tomorrow.</p>
   </div>
 
-  <div class="games-library-body">
-    <div class="rim quiz" onclick="openGame('quiz','random')">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="dices" data-size="26"></i></span>
-        <div class="rim-body">
-          <p class="rim-tag">Quiz</p>
-          <p class="rim-title">Random quiz</p>
-          <div class="rim-chips"><span class="chip">3 questions</span><span class="chip">150 pts</span><span class="chip muted">~2 min</span></div>
-        </div>
-        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
-      </div>
+  <!-- Toolbar: sort always visible, types fold out underneath -->
+  <div class="lib-tools">
+    <div class="lib-bar-row">
+      <button type="button" class="lib-catbtn" id="games-typebtn" aria-expanded="false" aria-controls="games-types"
+              onclick="toggleGameTypes()">
+        <span class="lib-catbtn-icon" id="games-typebtn-icon"></span>
+        <span class="lib-catbtn-label" id="games-typebtn-label">All types</span>
+        <i data-icon="chevron-right" data-size="15" class="lib-caret"></i>
+      </button>
+      <button type="button" class="lib-sort-btn on" data-gsort="recent"  onclick="setGameSort('recent')">Most recent</button>
+      <button type="button" class="lib-sort-btn"    data-gsort="quickest" onclick="setGameSort('quickest')">Quickest</button>
     </div>
-    <div class="rim sort" onclick="openGame('sort')">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="arrow-down-up" data-size="26"></i></span>
-        <div class="rim-body">
-          <p class="rim-tag">Carbon</p>
-          <p class="rim-title">Sort it out</p>
-          <div class="rim-chips"><span class="chip">6 cards</span><span class="chip">3 tries</span><span class="chip muted">~3 min</span></div>
-        </div>
-        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
-      </div>
-    </div>
-    <div class="rim water" onclick="openGame('water')">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="droplet" data-size="26"></i></span>
-        <div class="rim-body">
-          <p class="rim-tag">Water</p>
-          <p class="rim-title">Water challenge</p>
-          <div class="rim-chips"><span class="chip">5 rounds</span><span class="chip">150 pts</span><span class="chip muted">~3 min</span></div>
-        </div>
-        <span class="playbtn"><i data-icon="play" data-size="17"></i></span>
-      </div>
-    </div>
-    <div class="rim soon">
-      <div class="rim-in">
-        <span class="tile lg"><i data-icon="shield" data-size="24"></i></span>
-        <div class="rim-body"><p class="rim-title">Greenwasher</p><p class="rim-meta">In the workshop</p></div>
-      </div>
-    </div>
+    <div class="lib-cats" id="games-types" hidden></div>
   </div>
+
+  <!-- The library -->
+  <div class="lib-grid games-grid" id="games-grid"></div>
+  <div class="lib-foot"></div>
 </div>
 
 <!-- ════════════════════════════════════════════════════
@@ -2989,15 +2953,19 @@
     <p class="tab-lock-note" id="stories-lock-note" hidden>Two done today. I'll open the stories again tomorrow.</p>
   </div>
 
-  <!-- Filter by category + sort -->
-  <div class="lib-panel">
-    <p class="lib-panel-label">Filter by category</p>
-    <div class="lib-cats" id="lib-cats"></div>
-    <div class="lib-sort">
-      <span class="lib-sort-label">Sort</span>
+  <!-- Toolbar: sort always visible, categories fold out underneath -->
+  <div class="lib-tools">
+    <div class="lib-bar-row">
+      <button type="button" class="lib-catbtn" id="lib-catbtn" aria-expanded="false" aria-controls="lib-cats"
+              onclick="toggleStoryCats()">
+        <span class="lib-catbtn-icon" id="lib-catbtn-icon"></span>
+        <span class="lib-catbtn-label" id="lib-catbtn-label">All categories</span>
+        <i data-icon="chevron-right" data-size="15" class="lib-caret"></i>
+      </button>
       <button type="button" class="lib-sort-btn on" data-sort="recent"   onclick="setStorySort('recent')">Most recent</button>
       <button type="button" class="lib-sort-btn"    data-sort="shortest" onclick="setStorySort('shortest')">Shortest</button>
     </div>
+    <div class="lib-cats" id="lib-cats" hidden></div>
   </div>
 
   <!-- The library -->
@@ -3091,7 +3059,7 @@
         <span class="settings-item-label">Notifications</span>
         <i data-icon="chevron-right" data-size="18" class="settings-item-chevron"></i>
       </button>
-      <button class="settings-item" type="button">
+      <button class="settings-item" type="button" onclick="window.envConsent && envConsent.open()">
         <span class="settings-item-icon"><i data-icon="shield" data-size="20"></i></span>
         <span class="settings-item-label">Privacy</span>
         <i data-icon="chevron-right" data-size="18" class="settings-item-chevron"></i>
@@ -3207,10 +3175,25 @@
           <p>Every day I hand you three ways to play your part: a <strong>game</strong>, a <strong>story</strong> or an <strong>action</strong>. Pick one. That's your challenge for the day, and it keeps your streak going.</p>
           <p><strong>Games</strong> are short quizzes and sorting games built on real data. The daily quiz changes every weekday. On weekends the library is open and I suggest a game you haven't played for a while.</p>
           <p><strong>Stories</strong> are short visual reads on one climate topic, things I've found out since I landed, five to eight minutes each.</p>
-          <p><strong>Actions</strong> are small, specific things you can do this week, drawn from what you've been playing and reading. I suggest one later in the week, once you've done a couple of challenges. You read it, then pledge it or say no and get another. Two pledges a week is the limit.</p>
+          <p><strong>Actions</strong> are small, specific things you can do this week, drawn from what you've been playing and reading. I suggest one later in the week, once you've done a couple of challenges. You read it, then pledge it or say no and get another. Three pledges a week is the limit. Tap any action on your profile later to add a note on how it went.</p>
           <p><strong>One challenge a day is the rhythm.</strong> If you want more, you can do a second one. After that, the home page tells you the day is done and I wait for tomorrow. The Companion is always open.</p>
           <p><strong>Points.</strong> A game earns up to 150 points depending on how well you do, a story earns 100, and an action 30 or 50. Actions earn the least because I take your word for them. Playing several days in a row adds a small streak bonus.</p>
           <p><strong>Impact credits.</strong> Every 1,500 points becomes an impact credit, about a fortnight of play. Your score never goes down. A credit can be spent with one of our partners on something real, like a native tree or a patch of pollinator meadow. Your profile shows how far you are from the next one.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span class="faq-question-text">Why are the actions so small?</span>
+        <span class="material-symbols-outlined faq-chevron">chevron_right</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <p>Because small is what lasts. A nudge is a gentle prompt at the right moment, not a lecture. A tiny action is something you can do in a couple of minutes, so there's no good reason to put it off.</p>
+          <p>Learning on its own rarely changes what we do. Knowing a fact and acting on it are two different things. That's why I pair the two: you play or read something, then I suggest one small thing to try while it's fresh.</p>
+          <p>Each small action you finish makes the next one feel easier, and over time it stops being a task and becomes how you see yourself. Someone who checks the label, switches off standby or takes the bag to the shop is already thinking like a person who looks after the planet.</p>
+          <p>That's the long game here: not one big change, but a mindset built a few minutes at a time. It's also why I keep it to three pledges a week. Easy to do, easy to repeat.</p>
         </div>
       </div>
     </div>
@@ -3401,7 +3384,24 @@ function toggleFaq(btn) {
 // ════════════════════════════════════
 // SCREEN TRANSITIONS
 // ════════════════════════════════════
+// Each screen reports as its own page in analytics (/home, /games…).
+// Repeat calls for the screen already showing don't count twice.
+const _screenPages = {
+  'screen-name':    ['welcome', 'Welcome'],
+  'screen-hub':     ['home',    'Home'],
+  'screen-games':   ['games',   'Games'],
+  'screen-learn':   ['learn',   'Learn'],
+  'screen-profile': ['profile', 'Profile'],
+  'screen-actions': ['actions', 'Take an action'],
+  'screen-credit':  ['credit',  'Credit earned'],
+};
+let _lastTrackedScreen = null;
+
 function showScreen(id) {
+  if (id && id !== _lastTrackedScreen && _screenPages[id] && window.trackPage) {
+    _lastTrackedScreen = id;
+    trackPage(..._screenPages[id]);
+  }
   document.querySelectorAll('.screen').forEach(s => {
     if (s.classList.contains('active')) {
       s.classList.add('exit');
@@ -3481,7 +3481,7 @@ function getCategoryIcon(cat) {
 // HUB
 // ════════════════════════════════════
 async function openHub() {
-  await loadStories();          // the library index, before anything renders from it
+  await Promise.all([loadStories(), loadGames()]);   // the two library indexes, before anything renders from them
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
   document.getElementById('hub-greeting').textContent = `${greeting}, ${playerName}`;
@@ -3526,55 +3526,163 @@ async function openHub() {
 }
 
 // Games tab cards: "Done today" badges and click handlers
-function refreshGameCards(nk) {
+// Which games are done for today. The water game grants one extra go if you
+// go out on its first question, so it is not done until that go is used.
+function _gamePlayedToday(nk, g) {
   const today = new Date().toISOString().slice(0, 10);
-  const dayDone = Engine.dayDone(nk);
+  const played = localStorage.getItem(g.playedKey + nk) === today;
+  if (g.id !== 'water') return played;
+  const firstOut = localStorage.getItem('wc_first_loss_' + nk) === today;
+  const retried  = localStorage.getItem('wc_retry_used_' + nk) === today;
+  return played && !(firstOut && !retried);
+}
+
+const GAME_NEW_DAYS = 21;   // how long a freshly added game wears the "New" label
+function _isNewGame(g) {
+  if (!g.added) return false;
+  const latest = ALL_GAMES.reduce((m, x) => (x.added > m ? x.added : m), '');
+  if (g.added !== latest) return false;
+  const then = new Date(g.added + 'T00:00:00');
+  if (isNaN(then)) return false;
+  return (Date.now() - then) / 86400000 < GAME_NEW_DAYS;
+}
+
+let _gameType     = 'all';       // active type filter, or 'all'
+let _gameSort     = 'recent';    // 'recent' | 'quickest'
+let _gameTypesOpen = false;
+
+function toggleGameTypes() { _gameTypesOpen = !_gameTypesOpen; refreshGameCards(_nk()); }
+function setGameType(t)    { _gameType = (_gameType === t) ? 'all' : t; _gameTypesOpen = false; refreshGameCards(_nk()); }
+function clearGameType()   { _gameType = 'all'; _gameTypesOpen = false; refreshGameCards(_nk()); }
+function setGameSort(k)    { _gameSort = k; refreshGameCards(_nk()); }
+function _nk() { return playerName ? playerName.toLowerCase().replace(/\s+/g, '_') : ''; }
+
+// The Games tab, built from the "Games library" canvas (screen 23): same
+// header and toolbar as Stories, with the flat game artwork on each card.
+function refreshGameCards(nk) {
+  const grid = document.getElementById('games-grid');
+  if (!grid) return;
+  const dayDone = nk ? Engine.dayDone(nk) : false;
+
   const note = document.getElementById('games-lock-note');
   if (note) note.hidden = !dayDone;
-  const quizCard  = document.querySelector('.row.quiz');
-  const sortCard  = document.querySelector('.row.sort');
-  const waterCard = document.querySelector('.row.water');
 
-  const setCard = (card, played, go) => {
-    if (!card) return;
-    card.classList.toggle('played-today', played);
-    card.classList.toggle('locked', !played && dayDone);
-    const badge = card.querySelector('.played-badge, .coming-badge');
-    if (badge) badge.outerHTML = EA.icon('chevron-right', { size: 18, cls: 'row-chev' });
-    if (played) {
-      card.onclick = null;
-      const arrow = card.querySelector('.row-chev');
-      if (arrow) arrow.outerHTML = '<span class="played-badge">✓ Done today</span>';
-    } else if (dayDone) {
-      card.onclick = () => dayDoneToast();
-      const arrow = card.querySelector('.row-chev');
-      if (arrow) arrow.outerHTML = '<span class="coming-badge">Tomorrow</span>';
-    } else {
-      card.onclick = go;
-    }
+  // The game Envie would point you at next, same call the home screen uses
+  let suggested = null;
+  if (nk && !dayDone) {
+    try { suggested = (Engine.suggestGame(nk, Engine.state(nk), null) || {}).type || null; } catch (e) { suggested = null; }
+  }
+
+  // ── Type chips, only for types that hold a game ──
+  const types = [...new Set(ALL_GAMES.map((g) => g.type))];
+  const typesEl = document.getElementById('games-types');
+  if (typesEl) {
+    typesEl.hidden = !_gameTypesOpen;
+    typesEl.innerHTML = types.map((t) => {
+      const g = ALL_GAMES.find((x) => x.type === t);
+      const n = ALL_GAMES.filter((x) => x.type === t).length;
+      const c = CAT_TONE[g.tone] || CAT_TONE.aqua;
+      return `<button type="button" class="lib-cat${_gameType === t ? ' on' : ''}"
+        style="--cat-ink:${c.ink};--cat-tint:${c.tint}" onclick="setGameType('${esc(t)}')">
+        ${EA.icon(g.icon, { size: 16 })}
+        <span class="lib-cat-name">${esc(t)}</span>
+        <span class="lib-cat-n">${n}</span>
+      </button>`;
+    }).join('');
+  }
+
+  const btn = document.getElementById('games-typebtn');
+  if (btn) {
+    const g = _gameType === 'all' ? null : ALL_GAMES.find((x) => x.type === _gameType);
+    const c = g ? (CAT_TONE[g.tone] || CAT_TONE.aqua) : null;
+    btn.classList.toggle('open', _gameTypesOpen);
+    btn.classList.toggle('picked', !!g);
+    btn.setAttribute('aria-expanded', String(_gameTypesOpen));
+    btn.style.cssText = c ? `--cat-ink:${c.ink};--cat-tint:${c.tint}` : '';
+    document.getElementById('games-typebtn-icon').innerHTML = EA.icon(g ? g.icon : 'layout-grid', { size: 15 });
+    document.getElementById('games-typebtn-label').textContent = g ? _gameType : 'All types';
+  }
+  document.querySelectorAll('.lib-sort-btn[data-gsort]').forEach((b) =>
+    b.classList.toggle('on', b.dataset.gsort === _gameSort));
+
+  // ── Filter + sort ──
+  let list = ALL_GAMES.slice();
+  if (_gameType !== 'all') list = list.filter((g) => g.type === _gameType);
+  if (_gameSort === 'quickest') list.sort((a, b) => a.minutes - b.minutes);
+  else list.sort((a, b) => String(b.added || '').localeCompare(String(a.added || '')));
+
+  // ── Header ──
+  const title = document.getElementById('games-title');
+  const clear = document.getElementById('games-clear');
+  if (title) title.textContent = _gameType === 'all' ? 'Games' : _gameType;
+  if (clear) clear.hidden = _gameType === 'all';
+  const playedCount = nk ? list.filter((g) => _gamePlayedToday(nk, g)).length : 0;
+  const count = document.getElementById('games-count');
+  if (count) {
+    const sortWord = _gameSort === 'quickest' ? 'quickest first' : 'most recent';
+    count.textContent = `${list.length} ${list.length === 1 ? 'game' : 'games'}`
+      + (playedCount ? `, ${playedCount} played today` : ', none played today')
+      + ` · sorted by ${sortWord}`;
+  }
+
+  // ── Cards ──
+  const card = (g) => {
+    const played = nk ? _gamePlayedToday(nk, g) : false;
+    const isNew  = !played && _isNewGame(g);
+    const today  = !played && !isNew && g.id === suggested;
+    const locked = !played && dayDone;
+    const badge  = played ? `<span class="lib-badge read">${EA.icon('check', { size: 10 })}Played</span>`
+                 : isNew  ? '<span class="lib-badge new">New</span>'
+                 : today  ? '<span class="lib-badge new">Today</span>' : '';
+    return `<div class="lib-card game-card${(isNew || today) ? ' is-new' : ''}${played ? ' is-read' : ''}${locked ? ' locked' : ''}"
+      role="button" tabindex="0" data-game="${esc(g.id)}">
+      <span class="lib-plate"><img src="${esc(g.art)}" alt="" loading="lazy">${badge}</span>
+      <div class="lib-card-body">
+        <p class="lib-card-title">${esc(g.name)}</p>
+        <p class="lib-card-meta">${esc(g.type)} · ${esc(g.detail)} · ${played ? 'played today' : g.minutes + ' min'}</p>
+      </div>
+    </div>`;
   };
 
-  setCard(quizCard, localStorage.getItem('quiz_last_played_' + nk) === today, () => openGame('quiz', 'random'));
-  setCard(sortCard, localStorage.getItem('sio_last_played_' + nk) === today, () => openGame('sort'));
+  const soonCards = (_gameType === 'all' ? GAMES_SOON : []).map((s) => `
+    <div class="lib-card game-card game-soon">
+      <span class="lib-plate"><img src="${esc(s.art)}" alt="" loading="lazy">
+        <span class="lib-badge soon">${EA.icon('clock', { size: 10 })}Soon</span></span>
+      <div class="lib-card-body">
+        <p class="lib-card-title">${esc(s.name)}</p>
+        <p class="lib-card-meta">${esc(s.detail)} · in the workshop</p>
+      </div>
+    </div>`).join('');
 
-  // Water game grants one extra go if you go out on its first question
-  const waterPlayed   = localStorage.getItem('wc_last_played_' + nk) === today;
-  const waterFirstOut = localStorage.getItem('wc_first_loss_' + nk) === today;
-  const waterRetried  = localStorage.getItem('wc_retry_used_' + nk) === today;
-  setCard(waterCard, waterPlayed && !(waterFirstOut && !waterRetried), () => openGame('water'));
+  const tail = _gameType === 'all'
+    ? `<div class="game-more">${EA.icon('sparkles', { size: 34 })}<p>More games on the way</p></div>` : '';
+
+  grid.innerHTML = list.length
+    ? list.map(card).join('') + soonCards + tail
+    : `<p class="lib-empty">Nothing of that sort yet. I'm still building.</p>`;
+
+  // Played games do nothing, locked ones explain themselves, the rest open
+  grid.querySelectorAll('.lib-card[data-game]').forEach((el) => {
+    const g = ALL_GAMES.find((x) => x.id === el.dataset.game);
+    if (!g) return;
+    if (nk && _gamePlayedToday(nk, g)) { el.onclick = null; return; }
+    if (dayDone) { el.onclick = () => dayDoneToast(); return; }
+    el.onclick = () => openGame(g.id, g.mode || undefined);
+  });
 }
 
 // ════════════════════════════════════
-// STORIES (home section)
+// STORIES LIBRARY
 // ════════════════════════════════════
 
 // The library index lives in stories.json. ALL_STORIES keeps its name and
-// shape (id, topic, tag, title, meta) because home.js and engine.js read it.
+// shape (id, tag, title, meta) because home.js and engine.js read it.
 let ALL_STORIES   = [];
 let STORY_CATS    = [];
 let STORY_SOON    = [];
 let _libCategory  = 'all';      // active category id, or 'all'
 let _libSort      = 'recent';   // 'recent' | 'shortest'
+let _libCatsOpen  = false;      // the category drawer starts closed
 
 const esc = (s) => String(s == null ? '' : s)
   .replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -3603,25 +3711,10 @@ async function loadStories() {
 
 const STORY_POINTS = 100;
 
-function refreshHubProgress(nk, progress) {
-  // Accept either a progress object or re-read from localStorage
-  const p = progress || JSON.parse(localStorage.getItem('env_progress_' + nk) || 'null');
-  const hasActivity = p && ((p.totalScore || 0) > 0 || (p.sessionsPlayed || 0) > 0);
-  const el = document.getElementById('hub-progress');
-  if (!el) return;
-  const q = p || {};
-  document.getElementById('progress-total-score').textContent = (q.totalScore || 0).toLocaleString();
-  document.getElementById('progress-sessions').textContent    = q.sessionsPlayed || 0;
-  document.getElementById('progress-actions').textContent     = q.actionsPledged || 0;
-  el.style.display = 'flex';
-}
-
 // Two challenges a day is the cap: Envie says so instead of opening the thing
 function dayDoneToast() {
   if (typeof showEnvieToast === 'function') showEnvieToast('That\'s two for today', 'One a day is the rhythm. I\'ll have more for you tomorrow.', 'flag');
 }
-
-
 
 // ── Read progress: how far into each story the player got ────
 // The course player used to forget the slide on close. It now saves the
@@ -3653,6 +3746,7 @@ function _sinceLabel(iso) {
   const months = Math.floor(days / 30);
   return months <= 1 ? 'last month' : months + ' months ago';
 }
+
 const STORY_NEW_DAYS = 10;  // how long the latest story wears the "New" label
 // Only the newest publish date wears it, so the label stays worth something
 // however many stories land in the same week.
@@ -3665,6 +3759,7 @@ function _isNewStory(s) {
   return (Date.now() - then) / 86400000 < STORY_NEW_DAYS;
 }
 
+// Shared by both libraries: the tones a category or game can carry
 const CAT_TONE = {
   sky:   { ink: '#85d083', tint: 'rgba(133,208,131,.2)',  plate: 'linear-gradient(160deg,#14503c,#0b2c22)' },
   amber: { ink: '#f0a060', tint: 'rgba(230,126,34,.2)',   plate: 'linear-gradient(160deg,#3a2410,#20140a)' },
@@ -3675,12 +3770,18 @@ const CAT_TONE = {
 const catOf  = (id) => STORY_CATS.find((c) => c.id === id) || null;
 const toneOf = (id) => CAT_TONE[(catOf(id) || {}).tone] || CAT_TONE.aqua;
 
+function toggleStoryCats() {
+  _libCatsOpen = !_libCatsOpen;
+  renderStoriesLibrary();
+}
 function setStoryCategory(id) {
   _libCategory = (_libCategory === id) ? 'all' : id;
+  _libCatsOpen = false;          // picked one, fold it away again
   renderStoriesLibrary();
 }
 function clearStoryCategory() {
   _libCategory = 'all';
+  _libCatsOpen = false;
   renderStoriesLibrary();
 }
 function setStorySort(key) {
@@ -3717,8 +3818,25 @@ function renderStoriesLibrary() {
     }).join('');
   }
 
-  document.querySelectorAll('.lib-sort-btn').forEach((b) =>
+  document.querySelectorAll('.lib-sort-btn[data-sort]').forEach((b) =>
     b.classList.toggle('on', b.dataset.sort === _libSort));
+
+  // The trigger carries the active category, so the drawer can stay shut
+  const catsEl = document.getElementById('lib-cats');
+  const btn    = document.getElementById('lib-catbtn');
+  const active = catOf(_libCategory);
+  if (catsEl) catsEl.hidden = !_libCatsOpen;
+  if (btn) {
+    const t = active ? toneOf(_libCategory) : null;
+    btn.classList.toggle('open', _libCatsOpen);
+    btn.classList.toggle('picked', !!active);
+    btn.setAttribute('aria-expanded', String(_libCatsOpen));
+    btn.style.cssText = t ? `--cat-ink:${t.ink};--cat-tint:${t.tint}` : '';
+    document.getElementById('lib-catbtn-icon').innerHTML =
+      EA.icon(active ? active.icon : 'layout-grid', { size: 15 });
+    document.getElementById('lib-catbtn-label').textContent =
+      active ? active.label : 'All categories';
+  }
 
   // ── Filter + sort ──
   let list = ALL_STORIES.slice();
@@ -3796,128 +3914,36 @@ function markStoryComplete(id) {
     completed.push(id);
     localStorage.setItem('completed_stories_' + nk, JSON.stringify(completed));
 
-    // Award points
+    // Award points, first read only
     const progress = JSON.parse(localStorage.getItem('env_progress_' + nk) || '{}');
     progress.totalScore = (progress.totalScore || 0) + STORY_POINTS;
     localStorage.setItem('env_progress_' + nk, JSON.stringify(progress));
   }
-  // Reading a story is one of the three daily challenges: stamps the streak
-  // and marks "story done today", first read or not.
-  Engine.recordStory(nk, id);
+  // Stamps the streak and marks "story done today". Re-reads are free, so the
+  // engine is told whether this was the first read.
+  Engine.recordStory(nk, id, isFirst);
   syncPlayerToFirestore(nk);
-  return isFirst; // caller uses this to decide whether to show the toast
+  return isFirst; // caller uses this to decide whether to show the points
 }
 
 // ════════════════════════════════════
-// RECENT GAMES
+// GAMES LIBRARY (index)
 // ════════════════════════════════════
 
-const GAME_DEFS = {
-  'quiz:random': {
-    type: 'quiz', mode: 'random',
-    cls: 'quiz', icon: 'casino', lucide: 'dices', tone: 'aqua', tag: 'Quiz',
-    name: 'Random quiz',
-    desc: 'A random quiz from our library of daily challenges. Three questions, real data.',
-    meta: ['3 questions', '150 pts max'],
-    onclick: "openGame('quiz','random')"
-  },
-  'sort': {
-    type: 'sort', mode: null,
-    cls: 'sort', icon: 'co2', lucide: 'arrow-down-up', tone: 'amber', tag: 'Carbon',
-    name: 'Sort it out',
-    desc: '6 everyday items. Drag them into order by carbon footprint, lowest to highest. 3 tries.',
-    meta: ['6 cards', '3 tries'],
-    onclick: "openGame('sort')"
-  },
-  'water': {
-    type: 'water', mode: null,
-    cls: 'water', icon: 'water_drop', lucide: 'droplet', tone: 'sky', tag: 'Water game',
-    name: 'Water challenge',
-    desc: 'Higher or lower, water edition. Guess which everyday thing takes more water to make. Five rounds, one wrong answer ends the run.',
-    meta: ['5 rounds', '150 pts max'],
-    onclick: "openGame('water')"
+let ALL_GAMES  = [];
+let GAMES_SOON = [];
+
+async function loadGames() {
+  if (ALL_GAMES.length) return;
+  try {
+    const res  = await fetch('games.json', { cache: 'no-cache' });
+    const data = await res.json();
+    ALL_GAMES  = data.games || [];
+    GAMES_SOON = data.soon  || [];
+  } catch (e) {
+    console.warn('games.json failed to load:', e);
+    ALL_GAMES = [];
   }
-};
-
-function timeAgo(ts) {
-  if (!ts) return null;
-  const diff = Date.now() - ts;
-  const mins  = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
-  const days  = Math.floor(diff / 86400000);
-  const weeks = Math.floor(days / 7);
-  const months = Math.floor(days / 30);
-  if (mins  <  2)  return 'just now';
-  if (hours <  1)  return `${mins} min ago`;
-  if (hours < 24)  return `${hours}h ago`;
-  if (days  ===1)  return 'yesterday';
-  if (days  <  7)  return `${days} days ago`;
-  if (weeks ===1)  return 'last week';
-  if (weeks <  5)  return `${weeks} weeks ago`;
-  if (months===1)  return 'last month';
-  return `${months} months ago`;
-}
-
-function gameCardHTML(key, animClass, lastPlayedTs) {
-  const g = GAME_DEFS[key];
-  if (!g) return '';
-  const ago  = lastPlayedTs ? timeAgo(lastPlayedTs) : null;
-  const meta = g.meta.join(' · ') + (ago ? ' · played ' + ago : '');
-  return `
-    <div class="row ${g.cls} ${animClass}" onclick="${g.onclick}">
-      <span class="tile sm ${g.tone}">${EA.icon(g.lucide, { size: 21 })}</span>
-      <div class="row-body">
-        <p class="row-title">${g.name}</p>
-        <p class="row-meta">${meta}</p>
-      </div>
-      ${EA.icon('chevron-right', { size: 18, cls: 'row-chev' })}
-    </div>`;
-}
-
-// "Unlocks tomorrow" / "Unlocks 14 Sep" for the coming-up card
-function _unlockLabel(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00');
-  const t = new Date(); t.setDate(t.getDate() + 1);
-  if (d.toDateString() === t.toDateString()) return 'tomorrow';
-  return d.toLocaleDateString('en-IE', { day: 'numeric', month: 'short' });
-}
-
-function renderRecentGames(nk) {
-  const list  = document.getElementById('recent-games-list');
-  const label = document.getElementById('recent-games-label');
-  if (!list) return;
-
-  // history is [{key, ts}, ...] newest first
-  const history = JSON.parse(localStorage.getItem('recent_games_' + nk) || '[]');
-
-  // Most recently played first, then top up with the games that are not in the
-  // history yet. Without the top-up the home list is rebuilt from the history
-  // alone, so playing one game hides every game you have not played (a newly
-  // released one disappears from the home screen the moment you play anything
-  // else). Unknown keys from older builds are skipped rather than rendered as
-  // an empty slot.
-  const seen    = new Set();
-  const entries = []; // [{key, ts}]
-  for (const item of history) {
-    const k = typeof item === 'string' ? item : item.key; // back-compat
-    if (seen.has(k) || !GAME_DEFS[k]) continue;
-    seen.add(k);
-    entries.push({ key: k, ts: item.ts || null });
-    if (entries.length === 3) break;
-  }
-  for (const k of Object.keys(GAME_DEFS)) {
-    if (entries.length === 3) break;
-    if (seen.has(k)) continue;
-    seen.add(k);
-    entries.push({ key: k, ts: null });
-  }
-
-  label.textContent = entries.every(e => e.ts) ? 'Recently played'
-                    : entries.some(e => e.ts)  ? 'Your games'
-                    : 'Games to try';
-
-  const animClasses = ['anim-1', 'anim-2', 'anim-3'];
-  list.innerHTML = entries.map((e, i) => gameCardHTML(e.key, animClasses[i] || '', e.ts)).join('');
 }
 
 function recordRecentGame(type, mode) {
@@ -3935,7 +3961,8 @@ function recordRecentGame(type, mode) {
 const GAME_URLS = {
   quiz: 'environmentle-quiz-game.html',
   sort: 'environmentle-sort-it-out.html',
-  water: 'environmentle-water-challenge.html'
+  water: 'environmentle-water-challenge.html',
+  bins: 'environmentle-bin-day.html'
 };
 
 function openGame(type, mode) {
@@ -4002,9 +4029,13 @@ function mergeActionHistory(localArr, remoteArr) {
   for (const a of all) {
     if (!a || !a.title || !a.date) continue;
     const key = a.title + '|' + a.date;
-    if (seen.has(key)) continue;
+    if (seen.has(key)) {
+      const kept = out.find((o) => o.title + '|' + o.date === key);
+      if (kept && !kept.note && a.note) kept.note = a.note;
+      continue;
+    }
     seen.add(key);
-    out.push(Object.assign({ title: a.title, date: a.date }, a.id ? { id: a.id } : {}, a.type ? { type: a.type } : {}, a.points ? { points: a.points } : {}));
+    out.push(Object.assign({ title: a.title, date: a.date }, a.id ? { id: a.id } : {}, a.type ? { type: a.type } : {}, a.points ? { points: a.points } : {}, a.note ? { note: a.note } : {}));
   }
   out.sort((x, y) => (x.date || '').localeCompare(y.date || ''));
   return out.slice(-ACTIONS_HISTORY_CAP);
@@ -4065,7 +4096,7 @@ async function syncPlayerToFirestore(nk) {
       sessionsPlayed: progress.sessionsPlayed || 0,
       actionsPledged: progress.actionsPledged || 0,
       streak:         streak,
-      actionsHistory: actions.slice(-ACTIONS_HISTORY_CAP),
+      actionsHistory: actions.slice(-ACTIONS_HISTORY_CAP).map(({ note, ...rest }) => rest),   // notes stay on this device
       updatedAt:      firebase.firestore.FieldValue.serverTimestamp(),
     };
     Object.assign(update, Engine.syncFields(nk));
@@ -4280,6 +4311,7 @@ function acceptInstallBanner() {
     if (params.get('profile') === '1') openProfile();
     if (params.get('actions') === '1') openActions();
     if (params.get('credit')  === '1') openCredit();
+    if (params.get('capped')  === '1') dayDoneToast();   // sent back by day-guard.js
     return;
   }
   openNameScreen();
@@ -4299,7 +4331,12 @@ const SLIDE_READ_MS = 3500; // progress-bar fill duration (visual only)
 
 // ── Load & open ─────────────────────────────────────
 async function openCourse(id) {
-  if (playerName && Engine.dayDone(playerName.toLowerCase().replace(/\s+/g, '_'))) { dayDoneToast(); return; }
+  // Two a day is the cap, but a story you have already read stays open: re-reads are free.
+  if (playerName) {
+    const _nk = playerName.toLowerCase().replace(/\s+/g, '_');
+    const _read = JSON.parse(localStorage.getItem('completed_stories_' + _nk) || '[]').includes(id);
+    if (!_read && Engine.dayDone(_nk)) { dayDoneToast(); return; }
+  }
   try {
     const res  = await fetch(`courses/course-${id}.json`, { cache: 'no-cache' });
     _course    = await res.json();

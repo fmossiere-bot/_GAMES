@@ -313,7 +313,7 @@
 .skin .cp-space .star:nth-child(5) { top: 62%; left: 85%; width: 2px; height: 2px; animation-duration: 7s; }
 .skin .cp-ghost { position: absolute; bottom: 96px; right: -30px; font-family: var(--font-display); font-weight: 700; font-size: clamp(140px, 48vw, 190px); line-height: 1; color: rgba(255,255,255,.045); pointer-events: none; z-index: 0; letter-spacing: -.04em; }
 .skin .cp-mark { position: absolute; bottom: -50px; right: -60px; width: 280px; height: 280px; color: #fff; opacity: .05; pointer-events: none; z-index: 0; transform: rotate(-8deg); }
-.skin .cp-slide .cp-stat-number { font-size: clamp(64px, 24vw, 92px); line-height: .92; letter-spacing: -.03em; }
+.skin .cp-slide .cp-stat-number { font-size: clamp(64px, 24vw, 92px); line-height: 1.05; letter-spacing: -.03em; padding-top: .04em; }
 .skin .cp-slide .cp-stat-caption { font-family: var(--font-body); font-size: 19px; color: #fff; }
 .skin .cp-slide .cp-text { font-family: var(--font-display); }
 .skin .cp-slide.theme-dark .cp-stat-body, .skin .cp-slide .cp-stat-body { align-items: flex-start; text-align: left; }

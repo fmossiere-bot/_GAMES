@@ -35,10 +35,10 @@
     {
       "type": "stat",
       "theme": "orange",
-      "stat": "586 kg",
-      "caption": "That is how much waste each person in Ireland throws out in a year. Sixth highest in the EU. A fair bit of it still worked on the way to the bin.",
+      "stat": "631 kg",
+      "caption": "That is how much waste each person in Ireland threw out in 2023. Fifth highest in the EU. A fair bit of it still worked on the way to the bin.",
       "bold": "still worked on the way to the bin",
-      "source": "CSO",
+      "source": "CSO, 2023",
       "envie": "I did not expect that from a country this green."
     },
     {

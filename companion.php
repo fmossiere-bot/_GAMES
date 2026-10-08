@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Ask Envie, Environmentle</title>
+<script src="analytics.js" data-voice="envie"></script>
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="/_images/_logo/assets/environmentle-favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/_images/_logo/assets/environmentle-favicon-32.png">
@@ -432,6 +433,22 @@
     border: 1px solid rgba(226,126,34,0.25);
     color: #f0a55a;
     cursor: default;
+  }
+
+  .suggestion-chip.more {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 6px;
+  }
+  .suggestion-chip.more .pill {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #f0a55a;
   }
 
   .msg-source.ai-supplemented {
@@ -1593,8 +1610,10 @@ function appendAssistant(text, sourceType, sources, furtherLinks, oneLine) {
       EA.bubble({ head: escapeHtml(oneLine), r: 3, tail: 'top' }) + '</div>';
   }
 
+  // Effective source: wiki/hybrid only count when a wiki page actually resolved
+  const effSource = ((sourceType === 'wiki' || sourceType === 'hybrid') && sources && sources.length) ? sourceType : 'ai';
   const panel = document.createElement('div');
-  panel.className = 'ans-panel';
+  panel.className = 'ans-panel src-' + effSource;
   panel.innerHTML = '<p class="ans-eyebrow">The longer answer</p>' +
     ((!isFirst && oneLine) ? '<p class="ans-lead">' + escapeHtml(oneLine) + '</p>' : '') +
     renderMarkdown(text);
@@ -1619,7 +1638,28 @@ function appendAssistant(text, sourceType, sources, furtherLinks, oneLine) {
   } else {
     badgesRow.appendChild(chip('ai', 'sparkles', 'From AI knowledge'));
   }
+  // A wiki-only answer offers one tap to bring AI knowledge in, styled like the landing-page
+  // prompts. Only the latest answer keeps it.
+  thread.querySelectorAll('.suggestion-chip.more').forEach(b => b.remove());
   row.appendChild(badgesRow);
+
+  if (effSource === 'wiki') {
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'suggestion-chip more';
+    more.innerHTML = '<span class="sc-text">Tell me more</span><span class="pill amber">Adds AI knowledge</span>' +
+      EA.icon('chevron-right', { size: 17 });
+    const chev = more.querySelector('svg');
+    if (chev) chev.classList.add('row-chev');
+    more.onclick = () => {
+      thread.querySelectorAll('.suggestion-chip.more').forEach(b => b.remove());
+      const inp = document.getElementById('user-input');
+      inp.value = 'Tell me more. Go beyond our wiki and add what you know.';
+      autoResize(inp);
+      sendMessage();
+    };
+    row.appendChild(more);
+  }
 
   // Further reading links
   if (furtherLinks && furtherLinks.length) {
@@ -2074,6 +2114,15 @@ function ccAskCompanion(claim) {
    ═══════════════════════════════════════════════════════════════════ */
 
 const WIKI_RAW      = 'https://raw.githubusercontent.com/fmossiere-bot/climate-action-wiki/main/wiki/';
+
+// Tag names from the wiki's vocabulary, used to hide #tags typed in article bodies.
+const WK_TAGS = new Set();
+fetch(WIKI_RAW + 'tags-vocabulary.json').then(r => r.json()).then(d => {
+  Object.entries(d.tags || {}).forEach(([slug, e]) => {
+    WK_TAGS.add(slug);
+    (e.aliases || []).forEach(a => WK_TAGS.add(String(a).toLowerCase().replace(/\s+/g, '-')));
+  });
+}).catch(() => { /* tags stay visible if the vocabulary can't load */ });
 const WK_INDEX_KEY  = 'wiki_index_cache';
 const WK_INDEX_TTL  = 5 * 60 * 1000;
 
@@ -2391,6 +2440,11 @@ function wkStripFrontmatter(md) {
       if (kv) meta[kv[1].toLowerCase()] = kv[2].trim().replace(/^["']|["']$/g, '');
     });
     body = body.slice(m[0].length);
+  }
+  // Paragraph and section tags (#ireland) are for the Companion, not for readers.
+  body = body.replace(/^[ \t]*(?:#[A-Za-z0-9][\w-]*[ \t]*)+$/gm, '');
+  for (let i = 0; i < 3; i++) {
+    body = body.replace(/[ \t]+#([A-Za-z0-9][\w-]*)[ \t]*$/gm, (full, t) => WK_TAGS.has(t.toLowerCase()) ? '' : full);
   }
   return { meta, body };
 }

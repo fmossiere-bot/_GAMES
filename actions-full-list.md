@@ -1,0 +1,283 @@
+# Environmentle actions: full list
+
+255 actions. E = easy (30 pts), M = medium (50 pts). I = individual, C = community.
+
+
+## Food (49)
+
+- **Plan one meat-free day per week for April** (M, I): One full day a week without meat, for the whole month. I did the sums, that alone could save around 50 to 100 kg CO₂ over April.
+- **Check the sustainability rating of your fish today** (E, I): The Marine Conservation Society has a Good Fish Guide that rates fish by sustainability. Check goodfishguide.org before you buy fish this week. I found it handy.
+- **Try mackerel, mussels or sardines this week** (E, I): Some of the most sustainable and nutritious seafood you can get in Ireland, and usually cheaper than salmon or tuna. Tinned does the job just as well.
+- **Eat one less portion of beef this week** (E, I): Swap one beef meal for chicken, fish or legumes. It saves carbon, sure, but the part I didn't know was how much hidden water goes with it.
+- **Commit to one meat-free day per week** (M, I): Switching one day a week from meat to plants is one of the biggest diet changes a single person can make. Try it for April first, see how it goes.
+- **Do a fridge audit before your next food shop** (E, I): Before you go shopping this week, look at what's already in the fridge and cupboards. Write a list of what you actually need. Then stick to it, that's the hard bit.
+- **Try one 'use it up' meal this week** (E, I): Cook one meal from what's already in the fridge and cupboards, no new shopping. I tried this. It was surprisingly good, and it saves money and waste.
+- **Download the Too Good To Go app** (E, I): Too Good To Go lets you buy surplus food from local restaurants, cafés and supermarkets for a fraction of the price. It works in Dublin, Cork, Galway and plenty of other Irish towns.
+- **Have a quiet hour at home tonight, no screens, no background noise** (E, I): Turn off the TV and the music for one hour. Read, cook, chat or sit outside. Notice how your body settles into the quiet.
+- **Cook one traditional Irish plant-based meal this week** (E, I): Colcannon, vegetable soup or a bowl of porridge. Simple, cheap and very low carbon. The traditional Irish diet was ahead of its time, I hadn't expected that.
+- **Buy one Irish-grown vegetable this week instead of an imported one** (E, I): Check the label. Irish-grown carrots, cabbage, leeks and potatoes are in every supermarket. Buying local cuts food miles and keeps Irish farmland productive.
+- **Cook one meal from what is already in your fridge and cupboards** (E, I): Before your next shop, cook once using only what you already have. Cheaper, nothing wasted, and often better than you'd expect.
+- **Check if your workplace uses Fairtrade tea and coffee** (E, C): If not, suggest it. It's usually the same price, and some suppliers throw in free point-of-sale materials. One switch at work reaches a lot of people at once.
+- **Build one meal this week around Irish veg or legumes, not meat** (E, I): Lentils and beans fix nitrogen on their own, so they need less chemical fertiliser. Cheap, filling and easy to find. A simple dahl or bean stew does the job.
+- **Try oat milk in your tea or coffee once this week** (E, I): Flahavan's, an Irish brand, now makes oat milk from Irish-grown oats. One switch a day over a year saves roughly 50 to 100 kg CO₂. Most cafés and supermarkets have it.
+- **If you buy dairy, look for the Origin Green or organic label** (E, I): Both mean higher environmental standards. Organic dairy farms have far more wildlife than conventional ones. More wildflowers, more insects, more birds. I like that.
+- **Stop cutting one patch of grass for the rest of May** (E, I): Let whatever grows there flower. Dandelions, clover and daisies are some of the best food bees can get, and they grow themselves. No effort, big result.
+- **Choose Fairtrade or direct trade coffee, tea or chocolate this week** (E, I): Look at where your daily coffee comes from. Fairtrade and direct trade support farmers on the front line of climate change, and you'll find them in most Irish supermarkets and cafés.
+- **Check the sustainability label on seafood before you buy it this week** (E, I): Look for the Marine Stewardship Council (MSC) label on fish. It's the most widely recognised standard for sustainably caught seafood, and most Irish supermarkets stock it.
+- **Find a Great Big Green Week event near you** (E, I): Go to greatbiggreenweek.com and find something local this week, from beach cleans to talks. There's community action on climate and nature happening all over Ireland right now.
+- **Find a Great Big Green Week event and sign up** (E, I): Have a look at greatbiggreenweek.com. Beach cleans, sustainability workshops, community tree planting. Most of it is free. I'm going along to one myself.
+- **Share one thing you did or learned during Great Big Green Week** (E, C): Tell a friend, post it, or bring it up at work. Talking openly about what you're doing is one of the best ways to make it normal for everyone else.
+- **Switch to peat-free compost this year** (E, I): Peat-free compost is in most Irish garden centres and supermarkets now. It works just as well, and it leaves the bogs alone. I've walked on one, they're worth keeping.
+- **Support the Irish Peatland Conservation Council** (E, I): Have a look at ipcc.ie to see how bog restoration works in Ireland and how to get involved. You can adopt a bog, join a guided walk, or donate to the restoration work.
+- **Check your fridge before you shop and plan meals around what is there** (E, I): Before you go shopping this week, open the fridge and write a list of only what you actually need. Stick to it. Five minutes, and it saves money.
+- **Freeze bread, meat, or leftovers before they go off** (E, I): Most food can go in the freezer before it turns. Bread, meat, cheese and cooked leftovers all freeze well. Freeze it today rather than bin it tomorrow.
+- **Choose loose fruit and veg instead of pre-packaged ones this week** (E, I): Loose produce is nearly always there in Irish supermarkets and costs the same or less. It's one of the easiest packaging cuts you can make, every single week.
+- **Scan your personal care products with the Beat the Microbead app** (E, I): The Beat the Microbead app (beatthemicrobead.org) is free. Scan a product and it tells you if plastic particles were added on purpose.
+- **Bring your reusable coffee cup every day this week** (E, I): Put it beside your keys or bag tonight so you can't leave without it tomorrow. If you forget it, skip the takeaway coffee. That's the challenge.
+- **Pick loose fruit and veg over pre-packaged options this weekend** (E, I): Most Irish supermarkets have loose produce at the same quality and price as the packaged stuff. Do this swap every week and over a year that's a serious amount of packaging gone.
+- **Cook one meal this week with no plastic-packaged ingredients** (E, I): Plan a meal around loose produce, glass jars or tins. Pasta with tomatoes from a jar, loose onions and garlic is a good place to start.
+- **Choose only certified sustainable seafood this week** (E, I): Sustainable fishing protects the coastal places that matter most for blue carbon storage, seagrass beds and the habitats beside mangroves. Look for the MSC label.
+- **Use your brown bin for garden and food waste this BBQ season** (E, I): Grass clippings and food scraps go in there, not the general bin.
+- **Portion your BBQ food a little more carefully** (E, I): Cooking too much is one of the most common reasons summer food gets wasted. A rough headcount before you shop helps.
+- **Check in on elderly or vulnerable neighbours during a heatwave** (E, C): Heat illness is a real and growing risk, even in Ireland's famously mild summers.
+- **Try one organic swap in your weekly shop** (E, I): Pick one thing, maybe your fruit and veg, and go organic for a week.
+- **Look for the EU organic logo when shopping** (E, I): The green leaf logo means the product meets strict EU organic farming standards. Easy to spot once you know it.
+- **Get your solid fuel stove serviced** (E, I): A stove that isn't looked after burns less efficiently and makes more smoke.
+- **Add one seasonal Irish item to your shop this week** (E, I): Irish apples, blackberries or kale instead of the imported ones. I checked the prices, it's often cheaper too.
+- **Check the origin label before you buy fruit and veg** (E, I): Takes a second, and it builds the habit of noticing where your food comes from.
+- **Do one plastic-free grocery shop** (E, I): Loose fruit and veg, and packaging-free options where you can find them. Harder than it sounds.
+- **Check your fridge and AC unit are properly serviced** (E, I): Older units can still leak banned refrigerant gases if damaged or not looked after.
+- **Plan your meals before you shop this week** (E, I): A rough list stops food going off before you get round to it.
+- **Start composting food waste if you don't already** (E, I): Composting cuts food waste's climate impact by more than 90% versus landfill. That surprised me.
+- **Switch to a certified sustainable coffee brand** (E, I): Next time you buy beans or ground coffee, look for Rainforest Alliance or organic certification on the bag.
+- **Try one lamb-free week this month** (E, I): Lamb has one of the biggest footprints of any meat. Swapping it for chicken or legumes makes a real difference.
+- **Try one beef-free week** (E, I): Beef is the highest-impact everyday food I've come across. Swap it for chicken, fish or plant protein just once a week and it adds up.
+- **Switch your dog to a lower-impact food brand** (M, I): A dog's footprint is about 770 kg CO₂ a year, mostly from meat-based food. A few brands now do lower-carbon recipes with insect or plant protein. The dog won't mind.
+- **Plan your meals this week to reduce food waste** (E, I): The average household throws away enough food to make 1,600 kg CO₂ a year. A simple weekly plan and a look in the fridge before shopping can cut that in half.
+
+## Circularity and waste (46)
+
+- **Take a 20-minute walk outside without your phone this week** (E, I): Leave the podcast and headphones behind, just once. Walk somewhere green if you can, a park, a canal path, a beach. Notice what you see, hear and smell. Rain counts.
+- **Pack a festival kit that cuts waste** (E, I): Reusable cup, water bottle, a solid shampoo bar and a bag for sorting the recycling. Most of it costs nothing if you already have it. Mine's packed.
+- **Switch to a plastic-free shampoo or soap bar** (E, I): A shampoo bar lasts 2 to 3 times longer than the bottled kind and skips the plastic entirely. Several Irish brands make them now. I was doubtful, then I tried one.
+- **Repair something instead of replacing it this week** (E, I): A torn bag, a broken button, a cracked phone case. Look up a repair tutorial before you buy a replacement. Repair Cafés run in most Irish cities and cost nothing to attend.
+- **Declutter one drawer or shelf and donate or sell what you don't use** (E, I): Charity shops, Done Deal or a Buy Nothing group. Anything that keeps a thing in use and out of landfill. I've been amazed what people take.
+- **Swap one gym session for an outdoor run or walk this week** (E, I): Exercise outdoors has been shown to do more for your mental health than the same workout indoors. And it uses no energy. The weather here is not an excuse, apparently.
+- **Repair something this week instead of replacing it** (E, I): A torn bag, a broken button, a cracked phone case. Look up a repair tutorial on YouTube before you buy new. Repair Cafés run in most Irish cities and they're free. Find one at repaircafe.ie.
+- **Swap one product in your weekly shop for a Fairtrade alternative** (E, I): Coffee, tea, chocolate or bananas are the easiest place to start. All of them sit in Irish supermarkets with the Fairtrade mark, usually the same price or very close. I checked the shelf myself.
+- **Switch to reusable bags for good, if you haven't already** (E, I): Check your freezer bags, sandwich bags and cling film too. All of them have reusable or compostable versions in Irish supermarkets now. Single-use plastic bags are among the most common items found in Irish marine surveys. That one got to me.
+- **Reduce one plastic item you use this week** (E, I): Plastic pollution is one of the top threats to marine ecosystems. This week, refuse a plastic bag, a straw or a coffee cup lid and swap in something reusable.
+- **Use the Re-Turn app to return your bottles and cans this week** (E, I): Find your nearest return point and bring your plastic bottles and aluminium cans. You get your deposit back, and the materials stay in the circular economy instead of the ocean. I like a system where the machine pays you.
+- **Refuse a plastic straw or lid the next time you buy a drink** (E, I): Most cafés and takeaways will happily skip the straw or the plastic lid if you ask. Takes one second, and that's one piece of plastic out of circulation. I've started saying it before they offer.
+- **Sign up for Plastic Free July starting next week** (E, I): Go to plasticfreejuly.org and pick your level of challenge for July. Over 100 million people take part, and it turns out cutting single-use plastic is much easier when millions of others are at it with you.
+- **Sign up for the official Plastic Free July challenge** (E, I): Go to plasticfreejuly.org. It's free, takes one minute, and puts you alongside over 100 million people doing the same thing. Pick your level: one item, the top four, or all single-use plastic. I went for the top four.
+- **Tell one other person about Plastic Free July today** (E, C): Changing a habit is easier with someone beside you. Tell a friend, a colleague or someone at home, and ask them to join you. Go on.
+- **Return your plastic bottles and cans this week** (E, I): Use the Re-Turn app or website to find your nearest return point. You get your deposit back, and the materials stay in the circular economy and out of the ocean.
+- **Count how many single-use plastic bags come into your home this week** (E, I): Just count them. Knowing the number is the first step. Then try to halve it next week by keeping a reusable bag in the car, your bag or a coat pocket. Mine lives in my suit.
+- **Share Ireland's plastic bag levy story with someone outside Ireland** (E, C): Most people outside Ireland have no idea it started here. I didn't either. It's a great example of a policy that actually worked, and a handy way to start a conversation about what's possible.
+- **Refuse a straw, lid, or single-use cutlery you do not need this week** (E, I): When you order food or a drink, just say you don't need the straw or the plastic lid. One word, one less piece of plastic, every time.
+- **Find your nearest zero-waste or refill shop** (E, I): Search 'zero waste shop' with your town name. A lot of Irish towns have one now. Try buying one thing without packaging this week, washing-up liquid, shampoo or oats.
+- **Write to your supermarket asking for more loose or refill options** (E, C): Supermarkets do listen to customers. A short email asking for more loose produce or a refill station takes five minutes, and it all adds up to change on the shelves.
+- **Carry a reusable cup today** (E, I): Heading for a coffee shop? Bring your cup. Forgot it? Drink in rather than take away. One cup a day comes to around 250 disposable cups a year. That number surprised me.
+- **Write down which plastic swaps you have managed to make this month** (E, I): Even a note on your phone counts. Looking back at what you've done makes it far more likely you'll keep going once July is over.
+- **Share your Plastic Free July experience with one person** (E, C): Tell someone what you've changed this month. Research shows that talking about a change with other people is one of the best ways to make it stick.
+- **If you know a farmer, ask how they manage farm plastic** (E, I): It starts a useful conversation, and it might point a farmer to options they hadn't heard of, like county collection schemes or Repak take-back programmes. I've learned a lot just by asking.
+- **Avoid buying products that use excessive secondary plastic packaging** (E, I): Secondary packaging, the shrink wrap and the plastic trays holding several items together, is some of the least necessary plastic out there. Leaving it on the shelf sends a message to the producers.
+- **Write to one brand asking what it's doing about single-use plastic** (E, C): Companies track what customers say. A short email from one customer carries more weight than you'd think, especially when others are asking the same question.
+- **Find your nearest refill shop and buy one product unpackaged** (E, I): Search 'zero waste shop' or 'refill shop' with your town name. Many now stock washing-up liquid, shampoo, conditioner and dry goods. Try one product this week and see how you get on.
+- **Ask your workplace about its policy on single-use plastic** (E, C): Does your canteen, office kitchen or event catering use single-use plastic? One simple question to facilities or the sustainability team can start a useful conversation.
+- **Buy from one business this week that's cutting its packaging** (E, I): Vote with your wallet. Backing the businesses that have already changed nudges the rest to follow. Look for reusable cup discounts, loose produce and plastic-free shelves.
+- **Check for a uniform swap or secondhand scheme at school** (E, C): Lots of parent associations run informal swaps. Worth asking before you buy new.
+- **Reuse stationery and bags from last year where you can** (E, I): A schoolbag or pencil case that still works doesn't need replacing just because the year changed.
+- **Try repairing one item before replacing it** (E, I): A patch, a stitch or a trip to the cobbler often costs far less than buying new. Fair play to the cobbler, I didn't know that job still existed.
+- **Drop unwanted textiles at a collection point, not the general bin** (E, I): Textile banks and charity shops keep clothes in use instead of landfill.
+- **Do a wardrobe audit this weekend** (E, I): Count how many things you haven't worn in a year. That's your list of what to sell, swap or donate.
+- **Look up your nearest clothes swap or charity shop** (E, I): Ireland has a serious charity shop culture, I noticed that early on. Check what's already out there before buying new.
+- **Take the Second-Hand September pledge** (E, I): Buy nothing new this month. Try a charity shop, a swap or an online secondhand marketplace first. I'm giving it a go myself.
+- **Sell or donate 5 items you no longer wear** (E, I): Someone else's secondhand find starts in your wardrobe.
+- **Refuse single-use cutlery or straws this week** (E, I): Say no when they're offered, or carry a small reusable set. Over hundreds of takeaways a year, it adds up.
+- **Try one bamboo product swap** (E, I): Toothbrushes, socks and kitchen utensils are the usual starting points. Watch out for bamboo viscose fabric though. It's heavily processed and loses much of the benefit.
+- **Check mywaste.ie for anything you're unsure about** (E, I): Two minutes now saves a contaminated bin later. I check it more than I'd like to admit.
+- **Start a bottle jar at home** (E, I): A few euro in deposits adds up fast, and none of it ends up as litter. Grand little system.
+- **Choose products with less packaging, not just recyclable packaging** (E, I): Less packaging beats recyclable packaging every time. Took me a while to get that one.
+- **Buy your next pair of shoes second-hand or from a sustainable brand** (M, I): Making one pair of leather shoes produces ~30 kg CO₂. Second-hand or vegan options cut that dramatically.
+- **Keep your current phone for one more year** (E, I): Making a new smartphone produces ~70 kg CO₂. The best phone for the planet is the one already in your pocket.
+- **Repair or refurbish your laptop instead of buying new** (M, I): A new laptop produces ~300 kg CO₂ in manufacturing alone. Most repairs cost a fraction of that and give it years more. Mine's been patched more than once.
+
+## Nature and biodiversity (45)
+
+- **Spend 30 minutes outside in a green space this week** (E, I): It doesn't have to be wild, a local park counts. Leave the headphones behind if you can and just notice what's around you. I keep spotting things I missed the day before.
+- **Let a patch of your garden or windowsill go wild** (E, I): Stop cutting one corner of the lawn, or plant a small pot of wildflowers on your windowsill. Even tiny wild patches support pollinators in urban areas. Small, but they find it.
+- **Download the iNaturalist app and log one species this week** (E, I): iNaturalist is free. You photograph a plant, bird or insect and it tells you what it is. Every observation goes into national biodiversity data. Mine started with a snail.
+- **Plant one native Irish wildflower this spring** (E, I): Primrose, cowslip, wild garlic or ox-eye daisy. All easy to grow in pots or gardens, and native insects love them. Most garden centres stock them from April.
+- **Go for a hedgerow walk and identify 3 species** (E, I): Use the free iNaturalist or PlantNet app to work out what's growing in a local hedgerow. Hawthorn, blackthorn and elder are the most common in Ireland. Nobody warned me there'd be this many hedges.
+- **Plant a native Irish hedgerow plant in your garden** (M, I): Hawthorn, blackthorn or hazel. All cheap, fast-growing and brilliant for wildlife. Even one plant in a garden makes a difference for birds and insects.
+- **Take part in a Clean Coasts beach clean this month** (E, I): Clean Coasts Ireland runs community beach cleans right around the coast. Find one at cleancoasts.org, they provide the bags and gloves. Bring a coat, I learned that the hard way.
+- **Find one piece of art, music or writing about nature or climate** (E, I): A poem, a documentary, an album, a painting, it doesn't matter which. Notice how it makes you feel. Art gets to the parts that facts sometimes can't.
+- **Add one climate or nature book to your reading list** (E, I): Try 'Braiding Sweetgrass' by Robin Wall Kimmerer, 'Feral' by George Monbiot, or 'How to Avoid a Climate Disaster' by Bill Gates. Your local library will likely have at least one. I'm halfway through the first.
+- **Listen to one episode of a climate or nature podcast this week** (E, I): Try 'How to Save a Planet', 'Outrage + Optimism', or 'The Irish Times Climate Podcast'. One episode can shift how you think about the whole thing. Good for a bus ride, too.
+- **Plant a tree, or fund one being planted** (M, I): Native Irish trees like oak, birch, hazel or rowan. No garden? Organisations like Easy Treesie or Native Woodland Trust will plant on your behalf.
+- **Choose wood products with FSC certification** (E, I): The Forest Stewardship Council (FSC) label means the timber came from a responsibly managed forest. Look for it on paper, furniture and wood products. It's widely available in Irish shops, once you know to look.
+- **Download the BirdWatch Ireland app and log one bird sighting this week** (E, I): The app is free and helps you identify and record birds. Every sighting feeds national population data that scientists and policymakers actually use.
+- **Let a patch of your outdoor space grow a little wilder this month** (E, I): Stop cutting one corner of the lawn, or leave a strip along a fence uncut. Even small wild patches support the insects that birds, migrants included, depend on for food.
+- **Ask your GP about green prescribing or nature wellbeing programmes** (E, C): Look up local programmes at mentalhealthireland.ie or greencareireland.ie. Nature-based activities are increasingly recognised as real treatment, not just a lifestyle extra. That surprised me, in a good way.
+- **Leave a corner of your outdoor space uncut this month** (E, I): If you have a garden, leave one corner uncut until the end of May. Ground-nesting insects and small mammals use rough grass, and whatever flowers turn up will feed pollinators.
+- **Visit one of Ireland's national parks or nature reserves this weekend** (E, I): Ireland has 6 national parks: Killarney, Glenveagh, Connemara, Ballycroy, The Burren and Wicklow Mountains. All free to enter. Find events near you at biodiversityweek.ie. I've only made it to one so far.
+- **Photograph one plant, bird or insect with the free iNaturalist app** (E, I): iNaturalist names the species from your photo and sends the record to national biodiversity databases. Every observation matters, especially outside the main cities.
+- **Check what biodiversity events are happening near you this week** (E, I): Have a look at biodiversityweek.ie. Rockpool tours, moth nights, wildflower walks. Most are free and run by local naturalists, conservation groups and councils. Moth nights, who knew.
+- **Plant one bee-friendly plant this week** (E, C): Lavender, borage, phacelia or any native wildflower, all in Irish garden centres from May. A single lavender plant in flower can pull in dozens of bee species. Even a small pot on a windowsill counts.
+- **Sign your organisation or group up to the All-Ireland Pollinator Plan** (M, C): It's free and takes 10 minutes at pollinators.ie. Every signed-up organisation commits to at least one action for pollinators, from changing mowing schedules to planting wildflowers.
+- **Visit the Irish Seed Savers Association online** (E, I): Go to irishseedsavers.ie. You can order heritage Irish seeds by post and grow them at home. Every garden growing heritage varieties helps keep Ireland's food biodiversity alive.
+- **Share one thing you learned about Irish biodiversity with someone** (E, C): A friend, a colleague, a post online. Talking about biodiversity is one of the best ways to build momentum for change. Most people care, they just don't have the facts yet.
+- **Ask your council what it is doing for the All-Ireland Pollinator Plan** (M, I): Every council in Ireland has signed up to the Pollinator Plan. Ask what they're doing in your area: changing mowing schedules, planting wildflowers, creating pollinator corridors. Your question matters.
+- **Do a 10-minute litter pick on your nearest beach, river or canal** (E, I): Bring a bag and pick up what you find. Clean Coasts Ireland runs organised beach cleans too, find one near you at cleancoasts.org. They provide bags and gloves.
+- **Email your local TD about one specific climate or nature issue** (E, C): You don't need to be an expert, just a constituent. Find your TD at oireachtas.ie and send one short, specific, polite message about something you care about. TDs do respond to constituent contact.
+- **Visit a green space near you that you have never been to before** (E, I): Most Irish towns and cities have parks, canal walks or nature areas within easy reach. Find one you've never been to and go this week. I've a list going.
+- **Report a litter blackspot in your area** (E, I): Contact your local council or use the Litter.ie reporting tool. Local authorities have to respond to litter reports. Your report matters.
+- **Visit a green space, forest, beach or national park this weekend** (E, I): Leave the phone behind if you can. Walk slowly. Notice what you see, hear and smell. Research shows even 20 minutes makes a measurable difference to your mood.
+- **Invite one other person to join you outdoors** (E, C): Being in nature is good. Being in nature with someone is better. Suggest an outdoor walk, cycle or park visit to someone you care about this week.
+- **Reflect on what biodiversity means to you and share it with one person** (E, C): Biodiversity is abstract until it's personal. Think of a wild animal, plant or landscape you love and tell someone why it matters to you. Personal stories move people more than anything else.
+- **Learn to identify 3 native hedgerow species near you** (E, I): Blackthorn, hawthorn and hazel are common in Irish hedges. Start with those three.
+- **Support a local hedgerow or tree planting scheme** (E, I): One mature hedge can support hundreds of species. Hundreds, from one hedge.
+- **Support an elephant or raptor conservation charity** (E, I): Small, regular donations fund habitat protection and anti-poaching work. Steady beats big and once.
+- **Cut back on garden fertiliser this month** (E, I): Excess nutrients feed the same algae blooms hitting places like Lough Neagh. I saw the photos. Not pretty.
+- **Visit a restored bog walk near you** (E, I): Many restored midland bogs now have boardwalks and trails. A good way to see peatland recovery for yourself, and springier than I expected.
+- **Leave a corner of your garden a little wild** (E, I): Long grass and native shrubs bring in the insects that bats feed on.
+- **Let one patch of your garden or green space grow wild this month** (E, I): Late summer wildflowers like ivy and heather are a vital late-season food source for bees. The last shift, basically.
+- **Support dune and coastal habitat restoration where you can** (E, I): Healthy dune systems are a natural buffer against erosion and storm surges. The sea here doesn't mess about, so that matters.
+- **Learn your area's wildfire risk if you're near forest or gorse land** (E, I): Ireland has had its own gorse and forest fires in dry spells. Knowing the risk where you live helps you act early. I didn't expect fires in a place this rainy.
+- **Follow research updates from Irish biodiversity conferences** (E, I): Universities and NPWS often share key findings publicly after events like this. Worth a follow.
+- **Share one surprising biodiversity fact with someone this week** (E, C): Awareness is often the first step towards support for conservation funding and policy. Pick the one that surprised you most.
+- **Record a wildlife sighting on a citizen science app** (E, I): Apps like iNaturalist or BirdTrack let you log what you see, and the data genuinely helps researchers. Your sighting, their dataset.
+- **Learn one action from Ireland's National Biodiversity Action Plan** (E, I): A few minutes on npws.ie shows practical steps happening at national level. Pick one and see what it actually means on the ground.
+- **Support a local biodiversity project** (E, I): From community gardens to local Tidy Towns biodiversity projects, small local efforts add up. Fair play to the people running them.
+
+## Community (29)
+
+- **Share one surprising fact with someone today** (E, C): Pick the most surprising thing you learned in this quiz and mention it to one person. Research shows peer conversations shift views more than media campaigns do. I've noticed that here already.
+- **Suggest a walking meeting at work this week** (E, C): Swap one sit-down meeting for a walk and talk outside. Better for ideas, better for your head, and it uses no energy at all.
+- **Support an Irish environmental arts project** (E, C): Look up Commonage, Phizzfest or similar Irish environmental arts programmes. Even sharing their work on social media builds the audience for climate culture. I didn't expect art to be part of this.
+- **Have one climate conversation this week, without lecturing** (E, C): Start by asking someone what they think about something local. The weather, food prices, a nature story in the news. Listen first. Share one surprising fact if it feels natural.
+- **Share one thing you learned today on social media or WhatsApp** (E, C): Even a short message, or forwarding this quiz to one person, breaks the spiral of silence. You don't need to be an expert. Curious is enough.
+- **Talk to 3 people about climate action this week** (E, C): Tell people what you learned today. Research shows social norms shift when people talk openly about changing their habits. And most people are more open than you'd expect. That surprised me.
+- **Suggest one green initiative at your workplace this week** (M, C): It could be as simple as asking about a green energy tariff, starting a composting scheme, or setting up a lunchtime walking group. Someone has to ask first.
+- **Attend or follow Africa Day events in Dublin or your local area** (E, C): A lot of Africa Day events have climate and environment themes. Check africaday.ie for events near you this weekend. Seeing the human face of climate change is where caring starts.
+- **Register your action on the UNEP global map** (E, C): Go to worldenvironmentday.global. Two minutes to register a pledge, and you're on the same map as people acting on climate all over the world.
+- **Share one climate fact with someone today using #NowForClimate** (E, C): Pick the most surprising thing from today's challenge and tell one person, face to face or on social media. Breaking the spiral of silence on climate is one of the most powerful things you can do. I keep hearing that, and I believe it now.
+- **Suggest a walk or outdoor lunch to a male friend or colleague** (E, C): You don't need to make it about mental health. Just the walk. Getting outside together is one of the simplest and best things two people can do for each other.
+- **Ask your local authority what community climate support exists** (E, C): Most local councils in Ireland now have a climate action officer and community grants. One email or call can turn up support you didn't know was there. I'm still learning what a council does.
+- **Look up social prescribing services in your local area through the HSE** (E, C): If you or someone you know is struggling with stress or low mood, nature-based activities are more and more available through GPs and community health networks. Ask about it. A walk on prescription, I like that.
+- **Sign up to the Clean Coasts network** (E, C): Clean Coasts Ireland connects thousands of volunteers around Ireland's coastline. Signing up takes two minutes and keeps you close to marine action all year round. There's a lot of coastline here. I checked.
+- **Report any sea turtle sighting off the Irish coast** (E, C): Spot a sea turtle off the Irish coast? Report it to the Irish Whale and Dolphin Group at iwdg.ie. Every sighting feeds national marine monitoring. Turtles, in Irish water. I didn't believe it either.
+- **Write to your local TD about offshore wind planning in your area** (M, C): Offshore wind projects are being held up by planning and grid connection issues. A short, polite message to your TD asking about local progress takes five minutes, and it does make a difference.
+- **Bring your own container to a deli or takeaway that allows it** (E, C): Plenty of Irish delis and cafes now take your own container. Ask first. Most are happy to, and some give a small discount.
+- **Ask what conditions a 'biodegradable' label actually needs** (E, C): Most 'biodegradable' plastics only break down in industrial composting facilities, not in home compost or out in the environment. If the label doesn't say what conditions it needs, be sceptical. I was.
+- **Support WWF's tiger conservation work** (E, C): Go to wwf.ie to see how tiger conservation works and how your support reaches the field protection teams. Even a small monthly donation pays for habitat protection and anti-poaching work.
+- **Join a bat walk this month** (E, C): Lots of local heritage and biodiversity groups run evening bat walks with bat detectors. I'm going too.
+- **Check if your workplace or community group is on the AIPP list** (E, C): Businesses, schools and community groups can sign up to take specific pollinator-friendly actions. Is yours on it yet?
+- **Learn if your area has a local coastal or flood risk plan** (E, C): Local authority websites often have flood risk maps. Worth a look if you're near the coast or a river. Better to know.
+- **Check if there's a Safe Routes scheme near your school** (E, C): See what's planned or already built near you, and back it if there's a local consultation on.
+- **Reach out to check in with someone today** (E, C): A short message or call to someone you haven't talked to in a while matters more than you think. I'm far from home. I know.
+- **Take a 15-minute walk somewhere green** (E, C): Doesn't need to be long or far. A local park, a riverside path, a bit of coast all count. Even in the rain, which is often.
+- **Check out Climate Carnival or a local Mobility Week event near you** (E, C): Local events often have free bike checks, taster cycling sessions or public transport demos. Go on, have a look.
+- **Support Irish Aid or a climate justice charity** (E, C): Groups like Trócaire work directly with the communities facing the worst of it.
+- **Suggest a green idea at work this week** (E, C): A bike rack, a recycling audit. Small changes that lift morale too. Fair play for asking.
+- **Choose a local or low-travel event for your next big trip** (M, C): One trip to a big sporting event can cost 125 kg CO₂. Picking one within driving distance makes a big difference. I ran the numbers twice.
+
+## Getting around (25)
+
+- **Plan public transport for any festival you go to this summer** (E, I): Most major Irish festivals have shuttle buses or trains. Check the options now and book early. Usually cheaper, and no parking stress.
+- **Swap one car commute for walking, cycling or public transport** (E, I): Even one day a week makes a difference. Most Irish cities now have Bike to Work schemes and Leap card subsidies through employers. Worth asking.
+- **Walk or cycle instead of driving for one short trip this week** (E, I): Every car journey swapped for walking or cycling means less noise, cleaner air, less carbon, and it's good for you. Hard to argue with.
+- **Check if your employer is signed up to the Bike to Work scheme** (E, I): Go to biketowork.ie, it takes 5 minutes. The scheme saves you up to 52% on a new bike through salary sacrifice. That's a lot of bike.
+- **Try cycling or walking for one short trip this week instead of driving** (E, I): Any trip under 3km is faster by bike in most Irish towns once you count the parking. Give it one go this week.
+- **Plan one outdoor walk this weekend using the Trails Ireland app** (E, I): The Trails Ireland app is free and lists thousands of walks across the country by location, distance and difficulty. Find one near you and go. I've been working my way through them.
+- **Walk or cycle to your next GP or pharmacy visit if it is under 3 km** (E, I): Short car trips under 3 km produce disproportionately high emissions per km, the engine never warms up fully. Walking or cycling is better for you and for the air around the clinic.
+- **Cycle or walk one journey this week you would usually make by car** (E, I): Any trip under 3km is often faster by bike once you count the parking. Give it one try this week and notice how you feel after.
+- **Try using public transport or a bicycle for one car journey this week** (E, I): The most sustainable vehicle is the one you don't use. Swapping even one car journey a week for public transport or a bike adds up to a real saving over a year.
+- **Check mywaste.ie before putting something in the recycling bin** (E, I): Not all plastic is recyclable. Black plastic trays, crisp packets and stretchy film can't go in the household recycling. Check before you bin. I got the crisp packets wrong.
+- **Before you bin something today, check it on mywaste.ie** (E, I): One contaminated load can send a whole truck of recycling to landfill. Checking takes 30 seconds and it keeps the system working.
+- **Rinse containers before putting them in the recycling bin** (E, I): Food left on packaging contaminates everything else in the recycling. A quick rinse of yogurt pots, sauce jars and tins is all it takes.
+- **Plan one Irish trip this year instead of flying** (E, I): Explore a county you've never been to, by train or car. I'm collecting counties. Slowly.
+- **If you do fly, choose direct routes** (E, I): Layovers mean extra take-offs and landings, the most fuel-heavy part of any flight. I know a thing or two about take-offs.
+- **Walk or cycle the school run at least once this week** (E, C): Even one day makes a difference to the traffic and the air outside the school gates.
+- **Swap one short car trip for walking or cycling this week** (E, I): If it's under 5km, there's a good chance you could walk or cycle it just as easily. Go on then.
+- **Leave the car home for one trip today** (E, I): Walk, cycle or bus one journey you'd normally drive. I'm doing the same today.
+- **Check your local Local Link or bus route** (E, I): Many areas have more options than people realise. Turns out there was a bus near me all along.
+- **Try a Leap Card or local transport app for a week** (E, I): See how far one card or app gets you across buses, trains and trams. A week is long enough to find out.
+- **Cycle or walk one journey you'd usually drive** (E, I): Doesn't need to be your commute. A short errand counts.
+- **Try one active or public transport commute this week** (E, I): Even once counts. Once is grand.
+- **Make sure recycling is clean, dry and loose** (E, I): Food left on things, and recycling put in bags, are the usual reasons a batch gets rejected. Clean and loose, that's it.
+- **Rinse and dry your recycling before it goes out** (E, I): A few seconds under the tap stops a whole batch getting contaminated. Cheap insurance.
+- **Replace one car journey with public transport this week** (E, I): One return trip by bus or train instead of the car, done weekly, saves roughly 50 kg CO₂ over the year. I checked the sum twice.
+- **Buy your next bike second-hand** (E, I): Making a new bicycle uses ~96 kg CO₂. Second-hand cuts that to near zero, and saves you money too.
+
+## Habits and learning (24)
+
+- **Pick one sustainable habit to add this week** (E, I): Pick something small and specific, like bringing a bag to the shops or switching off standby before bed. Tie it to something you already do every day. That's how mine stuck.
+- **Check one climate 'fact' you believe and verify it** (E, I): Pick something you think you know about climate and look it up on Our World in Data or the EPA Ireland site. I did this. Got one wrong myself.
+- **Calculate your carbon footprint today** (E, I): Use a free online calculator, try myclimate.org or the WWF footprint calculator. It takes 5 minutes and shows where your biggest impact is. Mine was travel. No surprise there.
+- **Check your home's BER rating** (E, I): Go to seai.ie. It's free and shows where your home loses most heat and energy. A poor BER means higher bills and higher emissions.
+- **Calculate your household carbon footprint together** (M, I): Use the free calculator at myclimate.org. It takes about 10 minutes as a family and shows clearly where your biggest impact is. Knowing is the first step. Do it together, it's more honest that way.
+- **Next time you're near a river or lake, stop and watch a few minutes** (E, I): Otters are most active at dawn and dusk, and they're more common than most people realise, even in urban rivers. Know what lives in your local waterway and you'll start caring about it. I've yet to see one. I keep looking.
+- **Read about the Irish Supreme Court climate case** (E, I): Go to friendsoftheirishenvironment.org. It shows what citizens can do when they hold a government to account. Understanding the case takes about 5 minutes and changes how you see climate policy. It changed how I see it.
+- **Read Trócaire's annual report on climate and conflict** (E, I): Go to trocaire.org. It puts real human stories behind the data on climate displacement and conflict. Ireland's overseas aid work is tied directly to climate resilience in the most vulnerable regions.
+- **Check if climate is a factor in the next conflict story you read** (E, I): Use reliefweb.int or ceobs.org to find the environmental context behind a global crisis. It usually is a factor, and once you know that, the news reads differently.
+- **Plan a visit to one of Ireland's six national parks this summer** (E, I): Killarney, Glenveagh, Connemara, Ballycroy, Wicklow Mountains, and the Burren. All free to enter. Pick the one closest to you and put a date in the diary. I'm working through the list myself.
+- **Plan a visit to Killarney National Park or Glengarriff Woods** (E, I): Both are free to enter and hold Ireland's finest surviving rainforest. Bring waterproofs and look at the layers of moss, lichen and fern on every surface. A rainforest, in Ireland. I had to check twice.
+- **Note one sustainability change or lesson from the first half of 2026** (E, I): Even one note in your phone counts. Looking back at what you've done so far makes it more likely you'll keep going. Progress, not perfection.
+- **Check your bathroom cabinet for products containing microbeads** (E, I): Look for 'polyethylene' or 'polypropylene' in the ingredients of scrubs, toothpaste or face washes. If it's there, switch to a product without them. The Beat the Microbead app scans products for you.
+- **Learn about Ireland's saltmarshes and seagrass beds** (E, I): Go to npws.ie to read about Ireland's coastal habitats. Saltmarshes sit in sheltered bays around Ireland and are some of the most carbon-dense ecosystems in the country. They don't look like much. They are.
+- **Pick one new habit and attach it to something you already do** (E, I): Like a reusable cup when you get coffee, or switching devices off before bed. Hook it onto something you do anyway.
+- **Report white-tailed eagle sightings if you spot one** (E, I): Golden Eagle Trust and NPWS track sightings to keep an eye on the population. I'd love to see one.
+- **Learn what Bord na Móna's rehabilitation programme covers** (E, I): It's restoring 33,000 hectares of former industrial peatland across 82 midland bogs, over half already done. I'd never seen a bog before I landed.
+- **Check if smoky coal or turf is legal to burn in your area** (E, I): The rules have been tightening across Ireland. A quick check saves you breaking them without knowing.
+- **Watch for a murmuration at dusk this month** (E, I): Starlings gather at reliable roost sites just before sunset. BirdWatch Ireland lists the known spots. I want to see one.
+- **Look up what Ireland's carbon tax actually funds** (E, I): A few minutes on gov.ie shows exactly where the ring-fenced revenue goes. I looked, it's very specific.
+- **Follow COP31 coverage as it happens** (E, I): Even a few days of proper coverage gives a much clearer picture than headlines alone. I'll be watching too.
+- **Learn one thing about an environmental success story** (E, I): The ozone layer is proof that the world can fix something when it agrees to. I saw the hole from up there. It's closing. Worth telling someone.
+- **Look for FSC or verified sourcing on bamboo products** (E, I): Not all bamboo is grown or processed responsibly. A recognised certification is the simple way to check.
+- **Find your nearest Re-Turn point** (E, I): Most supermarkets have a machine, many corner shops take returns over the counter. Grand once you know where.
+
+## Water (19)
+
+- **Fix a dripping tap at home this week** (E, I): A dripping tap wastes about 21 litres a day. That's over 5,000 litres a year, from one tap. Most fixes take 10 minutes and cost very little.
+- **Cook one meal this week with a vegetable or grain new to you** (E, I): Pearl barley, spelt, or a heritage vegetable from a local market or farm shop. Eating more variety keeps up the demand for farming diversity. I'm still working my way through the list.
+- **Never pour cooking oil, medicines or cleaning products down the drain** (E, I): They go straight into the waterways and hit everything living there. Let cooking oil cool and put it in the bin. Medicines can go back to any pharmacy in Ireland.
+- **Support the Wild Atlantic Rainforest Restoration Project** (E, I): Have a look at hometree.ie to see how rainforest restoration works in Ireland and how to help. Every native tree planted is a step back toward this ancient landscape.
+- **Pick up three pieces of litter on your next walk near water** (E, I): Takes 30 seconds and it stops marine pollution before it starts. Rivers, canals and coastal paths are where plastic from land most often gets into the sea.
+- **Share the fact that Ireland has rainforest with one person today** (E, C): Most Irish people have never heard of temperate rainforest. I hadn't either. Telling the story builds support for looking after it. You could start by sharing today's challenge.
+- **Carry a refillable bottle this week and use a public refill point** (E, I): The Tap app shows you a free water refill point near you. It's free, takes no extra time, and every refill is one plastic bottle fewer.
+- **Use a pocket ashtray instead of dropping the butt** (E, I): If you smoke or vape, a small tin or pouch ashtray is cheap and stops butts washing into the drains and rivers.
+- **Pick up 3 cigarette butts next time you're out for a walk** (E, I): Sounds small, I know. But every butt kept out of a drain is one less source of microplastics and chemicals in the water.
+- **Fix a dripping tap this week** (E, I): One dripping tap can waste over 5,000 litres of water a year.
+- **Take one minute off your shower** (E, I): Small change, adds up fast across a household. Go on then.
+- **Check the EPA's bathing water status before you swim** (E, I): Takes a minute, and you'll know what you're swimming in.
+- **Replace one short-haul flight with a train or ferry** (M, I): A return Dublin to Madrid flight makes about 550 kg CO₂. For trips under 5 to 6 hours the train usually works, and it's far lower impact.
+- **Swap one beef meal a week for chicken, or for beans and lentils** (E, I): A 200 g beef portion is 3,083 L of water. The same portion of chicken is 865 L. That's the biggest single lever in the whole dataset. One meal, not your whole diet.
+- **Eat what you buy: finish the cheese, bread and leftovers in time** (E, I): Waste a 1 kg block of cheese and 5,060 L go with it. An 800 g loaf, 1,286 L. Food you already own is the cheapest water saving there is.
+- **Get one more year out of the clothes you own before replacing them** (M, I): One t-shirt is 2,495 L, one pair of jeans is 8,000 L. Not buying one garment beats months of shorter showers. That one surprised me.
+- **Turn the tap off while you brush** (E, I): 12 L becomes 1 L, twice a day. Costs nothing, and over a year it's about three t-shirts' worth of water.
+- **Take two minutes off your shower** (E, I): The average Irish shower runs at 7 L a minute. Same sort of size as the toothbrush habit. Small, but it compounds, every single day.
+- **Fix the tap that drips** (M, I): A slow drip is about 21 L a day. A ten-minute job that keeps paying off for the rest of the year.
+
+## Energy at home (18)
+
+- **Do a 10-minute home energy audit** (E, I): Walk around your home and note anything using energy for no reason. Old bulbs, devices on standby, gaps around doors or windows. Most fixes take minutes.
+- **Check if your home energy provider offers a green tariff** (E, I): Plenty of Irish energy suppliers now offer a tariff where your electricity is matched to renewable generation. Switching can take under 10 minutes online.
+- **Check if your electricity supplier offers a green tariff** (E, I): Loads of Irish energy suppliers now offer a tariff where your electricity is matched to renewable generation. Switching can take under 10 minutes online and often costs the same or less. I didn't expect that.
+- **Look into the SEAI home upgrade grant scheme** (M, I): In 2026 there are grants of up to EUR 1,800 for solar panels and up to EUR 12,500 for heat pumps. Even just reading through the options at seai.ie is a proper first step. Those numbers made me look twice.
+- **Turn your heating thermostat down by one degree** (E, I): Turning the thermostat down by just one degree can cut your heating costs by around 10% and take a noticeable chunk off your home's emissions over a full year. Small dial, big difference.
+- **Use the SEAI solar calculator to estimate savings at your address** (E, I): The free calculator at seai.ie estimates generation, savings and payback time for any Irish address. About five minutes. I ran it out of curiosity and it's oddly satisfying.
+- **Check if your electricity supplier is sourcing wind power** (E, I): If your supplier isn't using renewable sources, look for a green tariff. Switching takes about 10 minutes and adds to the demand for wind energy. This island has no shortage of wind, I've noticed.
+- **Use the SEAI solar calculator to see what your roof could generate** (E, I): The free tool at seai.ie takes about five minutes and gives you a personalised estimate of generation, savings and grant eligibility. Worth doing even if you're only curious.
+- **Look into a community energy project if solar isn't right for you** (E, C): Not every home suits rooftop solar. Community energy projects let a group share the benefits of renewables without anyone needing panels on their own roof. Have a look at communitypower.ie.
+- **Check if there is a community energy project in your area** (E, C): Go to communitypower.ie to find active projects near you, or see how to start one. Community groups, GAA clubs and housing estates have all launched them. I had to look up what a GAA club was.
+- **Share this challenge with a neighbour and talk about community energy** (E, C): Most community energy projects began with one person asking one neighbour a question. You don't need any technical know-how, just curiosity and the nerve to start.
+- **Wash synthetic clothing less frequently and at lower temperatures** (E, I): Synthetic fibres like polyester and nylon shed microplastics with every wash. Washing at 30C, and less often, cuts what gets released into waterways by a good bit.
+- **Do a 10-minute home energy check** (E, I): Walk around your home and note anything using energy for nothing. Most fixes take minutes. I found more than I expected on my first lap.
+- **Check what share of your electricity supplier's mix is renewable** (E, C): Most Irish suppliers publish a fuel mix disclosure. Worth a look. I was curious what was actually behind the socket.
+- **Time energy-heavy tasks for windier days if you can** (E, I): Ireland's grid runs cleanest when wind output is high, so a small shift in timing helps. Turns out the weather is good for something.
+- **Check your attic and wall insulation** (E, I): Poor insulation is one of the biggest reasons Irish homes lose heat. SEAI grants can cover a large share of the upgrade cost. I felt the draught before I read the data.
+- **Bleed your radiators before the cold sets in** (E, I): Trapped air makes a radiator work harder for less heat. A five-minute job, and oddly satisfying.
+- **Enable downloads instead of streaming this week** (E, I): Streaming keeps data centres busy the whole time. Download music or videos on Wi-Fi and watch offline, and that energy use drops a good bit.

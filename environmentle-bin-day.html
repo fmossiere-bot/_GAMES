@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Environmentle, Bin day</title>
+<link rel="icon" type="image/svg+xml" href="/_images/_logo/assets/environmentle-favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/_images/_logo/assets/environmentle-favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/_images/_logo/assets/environmentle-icon-hero-180.png">
+<script src="analytics.js" data-voice="envie"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500&family=Rubik:wght@500&family=Caveat:wght@700&family=Mulish:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="envie.js" defer></script>
+<script src="app.js"></script>
+<script src="engine.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark:  #0a293b;
+    --green-mid:   #4e8a4d;
+    --green-light: #7dbf7c;
+    --green-pale:  #eaf5ea;
+    --orange:      #e27e22;
+    --orange-pale: #fdf0e3;
+    --cream:       #f0f0f0;
+    --text:        #0a293b;
+    --text-soft:   #4a6070;
+    --white:       #FFFFFF;
+    --radius:      14px;
+    --radius-sm:   8px;
+    --nav-h:       56px;
+  }
+
+  html {
+    height: 100%;
+    background: #05182a;
+  }
+
+  body {
+    height: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    position: relative;
+    background: var(--cream);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text);
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,0,0,0.5);
+  }
+
+  /* ── SCREEN MANAGER ── */
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    transform: translateY(16px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+  .screen.exit {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+
+  /* ══════════════════════════════════════
+     SCREEN 1 — INTRO
+  ══════════════════════════════════════ */
+  #screen-intro {
+    background: var(--green-dark);
+    justify-content: space-between;
+  }
+
+  #screen-played {
+    background: var(--green-dark);
+    justify-content: space-between;
+  }
+
+  .intro-top {
+    padding: 84px 28px 32px;
+    flex: 1;
+  }
+
+  .badge-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .category-badge {
+    background: var(--orange);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+  }
+
+  .sub-badge {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .intro-label {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .intro-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(38px, 10vw, 52px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .intro-title em {
+    color: var(--green-light);
+    font-style: italic;
+  }
+
+  .did-you-know {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+
+  .dyk-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 8px;
+  }
+
+  .dyk-text {
+    font-family: 'Comfortaa', cursive;
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.5;
+  }
+
+  .dyk-text strong { color: white; font-weight: 700; }
+
+  .intro-bottom {
+    padding: 24px 28px 44px;
+    background: rgba(0,0,0,0.15);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+  }
+
+  .meta-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green-light);
+  }
+
+  .btn-play {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-play:active { transform: scale(0.97); background: #c96e2d; }
+
+  /* ══════════════════════════════════════
+     SCREEN 3 — SCORE
+  ══════════════════════════════════════ */
+  #screen-score {
+    background: var(--green-dark);
+    justify-content: space-between;
+  }
+
+  .score-top {
+    padding: 88px 28px 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .score-label {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .score-number {
+    font-family: 'Comfortaa', cursive;
+    font-size: clamp(72px, 20vw, 96px);
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .score-max {
+    color: rgba(255,255,255,0.4);
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+
+  .score-message {
+    font-family: 'Comfortaa', cursive;
+    font-size: 17px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .score-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    max-width: 280px;
+  }
+
+  .score-pills {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .score-pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 100px;
+  }
+
+  .score-pill.highlight {
+    background: rgba(126,200,160,0.2);
+    border-color: var(--green-light);
+    color: var(--green-light);
+  }
+
+  .score-bottom {
+    padding: 16px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+
+  /* Finish button — dark with orange border */
+  .btn-finish {
+    width: 100%;
+    background: var(--green-dark);
+    color: rgba(255,255,255,0.9);
+    border: 1.5px solid var(--orange);
+    border-radius: var(--radius);
+    padding: 13px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-finish:active { transform: scale(0.97); background: rgba(255,255,255,0.05); }
+
+  /* Primary CTA — Take further action */
+  .btn-action {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 13px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-action:active { transform: scale(0.97); background: #c96e2d; }
+
+  .btn-secondary {
+    width: 100%;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    padding: 15px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-secondary:active { transform: scale(0.97); }
+
+  /* ── GAME BOTTOM NAV ── */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle; line-height: 1;
+  }
+  .app-nav {
+    display: none; /* shown by JS on score/action screens only */
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%; max-width: 460px;
+    height: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+    padding: 0 8px env(safe-area-inset-bottom, 0px);
+    background: rgba(10,41,59,0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 -8px 28px rgba(0,0,0,0.35);
+    justify-content: space-around;
+    align-items: center;
+    z-index: 300;
+  }
+  .app-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 7px 14px;
+    border-radius: 100px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+  }
+  .app-nav-item .material-symbols-outlined { font-size: 22px !important; }
+  .app-nav-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.07em;
+  }
+  .app-nav-item.active { background: #e27e22; color: white; }
+  .app-nav-item:active { transform: scale(0.88); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes pop {
+    0%   { transform: scale(0.8); opacity: 0; }
+    60%  { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  .pop-in { animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+  .stagger-1 { animation: slideUp 0.4s 0.05s both; }
+  .stagger-2 { animation: slideUp 0.4s 0.15s both; }
+  .stagger-3 { animation: slideUp 0.4s 0.25s both; }
+  .stagger-4 { animation: slideUp 0.4s 0.35s both; }
+
+  /* ── BACK TO HUB ── */
+  .back-to-hub {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 460px;
+    z-index: 999;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px 10px 14px;
+    background: var(--green-dark);
+    opacity: 1;
+    transition: opacity 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .back-to-hub:active { opacity: 0.6; }
+
+  /* Environmentle wordmark, live text per brand kit */
+  .em-lockup {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .em-wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    position: relative;
+    font-family: 'Rubik', 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+  .em-wordmark .em-le {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.3em;
+    line-height: 1;
+    color: #62c46a;
+    margin-left: 0.03em;
+    position: relative;
+    top: 0.2em;
+  }
+  .em-tagline {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 8.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #62c46a;
+    margin-top: 8px;
+  }
+  .em-swoosh::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0.6em;
+    bottom: -0.16em;
+    height: 0.14em;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M1 8.5 Q 50 1 99 5.5' fill='none' stroke='%2362c46a' stroke-width='2.2' stroke-linecap='round'/></svg>") no-repeat center / 100% 100%;
+    pointer-events: none;
+  }
+
+
+  /* ══════════════════════════════════════
+     BIN DAY
+  ══════════════════════════════════════ */
+  #screen-game { background: radial-gradient(110% 60% at 50% -10%, #13405c 0%, transparent 54%) #061924; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+  .bd-header { position: relative; z-index: 5; flex: none; padding: 84px 20px 12px; background: rgba(6,25,36,.5); }
+  .bd-header-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .bd-title { display: flex; align-items: center; gap: 8px; }
+  .bd-title p { margin: 0; font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 15px; color: #fff; }
+  .bd-chips { display: flex; align-items: center; gap: 8px; }
+  .bd-chip { display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 999px; background: rgba(255,255,255,.08); color: rgba(255,255,255,.68); font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .bd-chip.chain { color: #f0a060; background: rgba(230,126,34,.2); }
+  .bd-chip.chain svg { width: 13px; height: 13px; }
+  .bd-chip.chain.bump { animation: bdBump .3s ease-out; }
+  .bd-tier { padding: 4px 9px; border-radius: 999px; background: rgba(133,208,131,.2); color: #85d083; font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+  .bd-progress { margin-top: 12px; height: 7px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; }
+  .bd-progress > div { width: 0; height: 100%; border-radius: 999px; background: #85d083; transition: width .3s; }
+
+  .bd-stage-wrap { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+  /* The stage is drawn at 390 x 727 design pixels and scaled to fit, so every position matches the canvas. */
+  .bd-stage { position: absolute; left: 50%; top: 0; width: 390px; height: 727px; transform-origin: top left; }
+  .bd-belt { position: absolute; left: 0; top: 0; width: 390px; height: 470px; overflow: visible; filter: drop-shadow(0 12px 18px rgba(0,0,0,.4)); }
+  .bd-belt .dash { animation: bdRoll 1.2s linear infinite; }
+  .bd-paused .bd-belt .dash { animation-play-state: paused; }
+
+  .bd-item { position: absolute; width: 78px; height: 78px; z-index: 3; cursor: grab; touch-action: none; will-change: transform, left, top; }
+  .bd-item svg { width: 78px; height: 78px; display: block; overflow: visible; pointer-events: none;
+    filter: drop-shadow(1.6px 0 0 #f5f1e6) drop-shadow(-1.6px 0 0 #f5f1e6) drop-shadow(0 1.6px 0 #f5f1e6) drop-shadow(0 -1.6px 0 #f5f1e6) drop-shadow(3px 4px 0 rgba(6,25,36,.6)); }
+  .bd-item svg { transform: rotate(var(--r, 0deg)); }
+  .bd-item .tag { position: absolute; left: 50%; top: 73px; transform: translateX(-50%); padding: 2px 7px; border-radius: 999px; background: rgba(6,25,36,.82); color: #fff; font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 700; white-space: nowrap; pointer-events: none; }
+  .bd-item.notag .tag { display: none; }
+  .bd-item.held { z-index: 20; cursor: grabbing; }
+  .bd-item.held svg { transform: scale(1.18) rotate(-9deg); filter: drop-shadow(1.6px 0 0 #f5f1e6) drop-shadow(-1.6px 0 0 #f5f1e6) drop-shadow(0 1.6px 0 #f5f1e6) drop-shadow(0 -1.6px 0 #f5f1e6) drop-shadow(0 16px 12px rgba(0,0,0,.5)); }
+  .bd-item.held .tag, .bd-item.picked .tag { display: block; top: 84px; }
+  .bd-item.picked::before { content: ''; position: absolute; inset: -9px; border-radius: 50%; border: 3px dashed #85d083; animation: bdSpin 6s linear infinite; }
+  .bd-item.fly { transition: left .42s cubic-bezier(.4,0,.2,1), top .42s cubic-bezier(.4,-0.4,.6,1), transform .42s, opacity .42s; pointer-events: none; z-index: 15; }
+  .bd-item.part { z-index: 6; }
+  .bd-item.split::after { content: 'tap'; position: absolute; right: -8px; top: -6px; padding: 2px 7px; border-radius: 999px; background: #f0a060; border: 2px solid #0a293b; color: #2a1400; font-family: 'Mulish', sans-serif; font-size: 8.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; pointer-events: none; }
+
+  .bd-till { position: absolute; left: 298px; top: 354px; width: 100px; height: 76px; background: #f5f1e6; border: 3px solid #0a293b; border-radius: 14px 6px 6px 14px; box-shadow: 4px 5px 0 rgba(6,25,36,.55); z-index: 4; }
+  .bd-till .scr { position: absolute; left: 10px; top: 12px; width: 62px; height: 28px; border-radius: 6px; background: #0a293b; display: flex; align-items: center; justify-content: center; font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 11px; color: #85d083; }
+  .bd-till .slot { position: absolute; left: 10px; top: 48px; width: 62px; height: 12px; border-radius: 3px; background: #d9d4c6; border: 2px solid #0a293b; }
+  .bd-envie { position: absolute; left: 206px; top: 316px; width: 86px; z-index: 2; color: #fff; pointer-events: none; }
+  .bd-envie envie-mascot { width: 86px; display: block; }
+  .bd-crate { position: absolute; left: 322px; top: 440px; width: 64px; display: none; flex-direction: column; align-items: center; z-index: 3; pointer-events: none; }
+  .bd-crate.on { display: flex; }
+  .bd-crate p { margin: 6px 0 0; font-family: 'Mulish', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #f0a060; text-align: center; }
+
+  .bd-say { position: absolute; left: 12px; top: 336px; width: 176px; z-index: 7; opacity: 0; transform: rotate(-1.4deg) scale(.96); transition: opacity .18s, transform .18s; pointer-events: none; }
+  .bd-say.on { opacity: 1; transform: rotate(-1.4deg) scale(1); }
+  .skin .bd-say .bb { padding: 11px 13px; transform: none; }
+  .skin .bd-say .bb .t { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 13px; line-height: 1.3; margin: 0; }
+  .skin .bd-say .bb .s { font-family: 'Mulish', sans-serif; font-size: 11.5px; line-height: 1.4; margin: 4px 0 0; color: #5a6a74; }
+  .skin .bd-say .bb.dark .s { color: rgba(255,255,255,.72); }
+  .skin .bd-say .bb .s:empty { display: none; }
+  .bd-say .pts { position: absolute; right: -10px; top: -16px; padding: 4px 9px; border-radius: 999px; background: #85d083; border: 2.5px solid #0a293b; color: #062a16; font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 700; }
+  .bd-say .pts:empty { display: none; }
+
+  .bd-prep { position: absolute; left: 14px; top: 436px; z-index: 5; font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #f0a060; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .bd-prep.on { opacity: 1; }
+
+  .bd-bins { position: absolute; left: 0; right: 0; top: 590px; display: flex; justify-content: space-around; align-items: flex-end; padding: 0 12px; z-index: 2; }
+  .bd-bin { position: relative; display: flex; flex-direction: column; align-items: center; width: 66px; padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: none; }
+  .bd-bin svg { pointer-events: none; }
+  .bd-bin .lbl { margin: 6px 0 0; font-family: 'Mulish', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.62); line-height: 1.2; text-align: center; min-height: 22px; }
+  .bd-bin.hot::before { content: ''; position: absolute; left: 1px; right: 1px; top: 0; height: 86px; border-radius: 16px; border: 3px dashed #85d083; }
+  .bd-bin.hot .lbl { color: #85d083; }
+  .bd-bin.shake svg { animation: bdShake .45s; }
+  .bd-bin.gulp svg { animation: bdGulp .3s; }
+  .bd-bin .no { position: absolute; left: -2px; top: -8px; width: 26px; height: 26px; border-radius: 50%; background: #d9364f; border: 3px solid #061924; display: none; place-items: center; color: #fff; }
+  .bd-bin .no svg { width: 14px; height: 14px; }
+  .bd-bin.shake .no { display: grid; }
+
+  .bd-bays { position: absolute; left: 0; right: 0; top: 548px; display: none; justify-content: space-around; align-items: flex-end; padding: 0 12px; z-index: 2; }
+  .bd-baytitle { position: absolute; left: 14px; top: 0; display: none; }
+  .bd-stage.two .bd-bays { display: flex; }
+  .bd-stage.two .bd-bins { top: 640px; }
+  .bd-stage.two .bd-bin svg { width: 46px !important; height: 60px !important; }
+  .bd-stage.two .bd-bin .lbl { margin-top: 3px; font-size: 8px; min-height: 18px; }
+  .bd-stage.two .bd-bin.hot::before { height: 64px; left: 6px; right: 6px; border-radius: 13px; }
+  .bd-stage.two .bd-crate { display: none; }
+  .bd-float { position: absolute; z-index: 30; font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 16px; color: #85d083; pointer-events: none; animation: bdFloat .9s ease-out forwards; text-shadow: 0 2px 0 rgba(6,25,36,.8); }
+  .bd-count { position: absolute; inset: 0; z-index: 40; display: none; align-items: center; justify-content: center; background: rgba(6,25,36,.55); font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 84px; color: #fff; }
+  .bd-count.on { display: flex; }
+  .bd-count span { animation: pop .5s both; }
+  .bd-count .rnd { display: flex; flex-direction: column; align-items: center; gap: 10px; animation: pop .5s both; }
+  .bd-count .rnd b { font-size: 46px; font-weight: 700; }
+  .bd-count .rnd i { font-family: 'Mulish', sans-serif; font-style: normal; font-size: 15px; font-weight: 400; color: rgba(255,255,255,.75); }
+
+  @keyframes bdRoll  { to { stroke-dashoffset: -36; } }
+  @keyframes bdSpin  { to { transform: rotate(360deg); } }
+  @keyframes bdBump  { 0% { transform: scale(1) } 50% { transform: scale(1.2) } 100% { transform: scale(1) } }
+  @keyframes bdShake { 0%,100% { transform: rotate(0) } 20% { transform: rotate(-9deg) } 40% { transform: rotate(7deg) } 60% { transform: rotate(-5deg) } 80% { transform: rotate(3deg) } }
+  @keyframes bdGulp  { 0% { transform: scale(1) } 50% { transform: scale(1.08, .94) } 100% { transform: scale(1) } }
+  @keyframes bdFloat { 0% { opacity: 0; transform: translateY(6px) } 20% { opacity: 1 } 100% { opacity: 0; transform: translateY(-34px) } }
+  @media (prefers-reduced-motion: reduce) { .bd-belt .dash, .bd-item.picked::before { animation: none; } }
+
+  /* Intro extras */
+  .bd-shelf { display: flex; justify-content: center; gap: 6px; margin-top: 20px; }
+  .bd-shelf svg { width: 46px; height: 46px; overflow: visible; filter: drop-shadow(1.4px 0 0 #f5f1e6) drop-shadow(-1.4px 0 0 #f5f1e6) drop-shadow(0 1.4px 0 #f5f1e6) drop-shadow(0 -1.4px 0 #f5f1e6) drop-shadow(3px 4px 0 rgba(6,25,36,.6)); }
+  .bd-proto { margin: 0 0 16px; padding: 10px 12px; border-radius: 16px; border: 1.5px dashed rgba(255,255,255,.22); }
+  .bd-proto p { margin: 0 0 8px; font-family: 'Mulish', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+  .bd-proto div { display: flex; gap: 6px; }
+  .bd-proto button { flex: 1; padding: 8px 0; border-radius: 999px; border: 0; background: rgba(255,255,255,.08); color: rgba(255,255,255,.7); font-family: 'Mulish', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .bd-proto button.on { background: #85d083; color: #062a16; }
+
+  /* Score: the receipt */
+  #screen-score { justify-content: flex-start; }
+  .bd-score-top { padding: 84px 20px 0; }
+  .bd-score-label { margin: 0 0 6px; font-family: 'Mulish', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.48); }
+  .bd-score-row { display: flex; align-items: baseline; gap: 10px; }
+  .bd-score-num { margin: 0; font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 76px; line-height: 1; color: #fff; }
+  .bd-score-row span { font-family: 'Mulish', sans-serif; font-size: 15px; color: rgba(255,255,255,.55); }
+  .bd-score-top .erow { margin-top: 10px; }
+  .bd-score-top .erow .bb { margin-bottom: 30px; }
+  .bd-score-top .bb .t { margin: 0; font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.3; }
+  .bd-score-top .bb .s { margin: 6px 0 0; font-family: 'Mulish', sans-serif; font-size: 12px; line-height: 1.5; color: #5a6a74; }
+  .bd-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+  .bd-receipt-wrap { transform: rotate(.8deg); }
+  .bd-receipt { position: relative; background: #f5f1e6; border: 3px solid #0a293b; border-bottom: 0; border-radius: 10px 10px 0 0; padding: 18px 18px 12px; box-shadow: 5px 6px 0 rgba(6,25,36,.55); font-family: 'Mulish', sans-serif; color: #0a293b; }
+  .bd-receipt h3 { margin: 0; text-align: center; font-family: 'Comfortaa', sans-serif; font-size: 15px; font-weight: 700; color: #0a293b; }
+  .bd-receipt .sub { margin: 2px 0 10px; text-align: center; font-size: 11px; color: #6b7a84; }
+  .bd-receipt hr { border: 0; border-top: 2px dashed #0a293b; margin: 8px 0; }
+  .bd-receipt hr.soft { border-top-color: rgba(10,41,59,.35); }
+  .bd-rline { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 3px 0; }
+  .bd-rline.b { font-weight: 700; }
+  .bd-rline i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #0a293b; flex: none; }
+  .bd-rline span:nth-last-child(2) { flex: 1; }
+  .bd-rline span:last-child { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .bd-tear { display: block; width: 100%; height: 12px; overflow: visible; }
+  .bd-review { margin: 30px 20px 0; background: rgba(255,255,255,.07); border-radius: 22px; padding: 18px 18px 8px; }
+  .bd-review h3 { margin: 0 0 4px; font-family: 'Comfortaa', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
+  .bd-rrow { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid rgba(255,255,255,.08); }
+  .bd-rrow > svg { width: 48px; height: 48px; flex: none; overflow: visible; filter: drop-shadow(1.4px 0 0 #f5f1e6) drop-shadow(-1.4px 0 0 #f5f1e6) drop-shadow(0 1.4px 0 #f5f1e6) drop-shadow(0 -1.4px 0 #f5f1e6); }
+  .bd-rrow .n { margin: 0; font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 14px; color: #fff; }
+  .bd-rrow .w { margin: 2px 0 0; font-family: 'Mulish', sans-serif; font-size: 12px; line-height: 1.45; color: rgba(255,255,255,.62); }
+  .bd-rrow .h { flex: none; width: 46px; display: flex; flex-direction: column; align-items: center; }
+  .bd-rrow .h svg { width: 34px !important; height: 45px !important; }
+  .bd-rrow .h p { margin: 3px 0 0; font-family: 'Mulish', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.62); text-align: center; }
+  .bd-score-bottom { padding: 22px 20px 32px; }
+</style>
+<link rel="stylesheet" href="app.css">
+</head>
+<body class="game g-bins">
+
+<a class="back-to-hub" href="index.html">
+  <img src="_images/_logo/assets/environmentle-icon-hero.svg" width="36" height="36" alt="Environmentle logo" style="object-fit:contain;">
+  <span class="em-lockup">
+    <span class="em-wordmark em-swoosh">Environment<span class="em-le">le</span></span>
+    <span class="em-tagline">Play. Learn. Act.</span>
+  </span>
+</a>
+
+<!-- SCREEN 0: already played today -->
+<div id="screen-played" class="screen">
+  <div class="intro-top" style="justify-content:center;align-items:center;text-align:center;gap:16px;">
+    <envie-mascot pose="wave" hat="hat" aria-hidden="true" style="display:block;position:relative;width:120px;margin:0 auto 4px;color:#fff;"></envie-mascot>
+    <p class="intro-label">You've already played today</p>
+    <h1 class="intro-title" style="font-size:clamp(28px,7vw,42px);">Come back<br><em>tomorrow</em></h1>
+    <p style="font-size:14px;color:rgba(255,255,255,0.6);max-width:280px;line-height:1.6;">One a day, that's the rhythm. Your score from today:</p>
+    <div style="font-family:'Comfortaa',cursive;font-size:52px;font-weight:700;color:white;" id="played-score">0</div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:0.05em;">pts</p>
+  </div>
+  <div class="intro-bottom">
+    <a class="btn-play stagger-4" href="index.html" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;">Back to games</a>
+  </div>
+</div>
+
+<!-- SCREEN 1: intro -->
+<div id="screen-intro" class="screen active">
+  <div class="intro-top">
+    <div class="badge-row stagger-1">
+      <span class="category-badge" id="intro-badge">Recycling</span>
+      <span class="sub-badge">Bin day</span>
+    </div>
+    <p class="intro-label stagger-1" id="intro-label">Today's game</p>
+    <h1 class="intro-title stagger-2" id="intro-title">Bin <em>day</em></h1>
+    <div class="erow mid stagger-3">
+      <envie-mascot pose="point" hat="cap"></envie-mascot>
+      <div class="bb r2 tail-low">
+        <p class="dyk-text" id="intro-say"></p>
+        <svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg>
+      </div>
+    </div>
+    <div class="bd-shelf stagger-3" id="intro-shelf"></div>
+  </div>
+  <div class="intro-bottom">
+    <div class="bd-proto stagger-4" id="proto-tiers">
+      <p>Tester mode, try a tier</p>
+      <div id="proto-tier-btns"></div>
+    </div>
+    <div class="meta-row stagger-4">
+      <div class="meta-item"><div class="meta-dot"></div> <span id="intro-meta1">2 rounds of 10</span></div>
+      <div class="meta-item"><div class="meta-dot"></div> Round 2 is faster</div>
+      <div class="meta-item"><div class="meta-dot"></div> Chains score more</div>
+    </div>
+    <button class="btn-play stagger-4" onclick="startGame()">
+      Get sorting
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+    <p class="micro" style="text-align:center;">One game a day. Up to 150 points.</p>
+  </div>
+</div>
+
+<!-- SCREEN 2: game -->
+<div id="screen-game" class="screen">
+  <div class="bd-header">
+    <div class="bd-header-row">
+      <div class="bd-title"><p>Bin day</p><span class="bd-tier" id="hud-tier"></span></div>
+      <div class="bd-chips">
+        <span class="bd-chip chain" id="hud-chain"><i data-icon="zap" data-size="13"></i> <span>chain ×0</span></span>
+        <span class="bd-chip" id="hud-count">0 of 20</span>
+      </div>
+    </div>
+    <div class="bd-progress"><div id="hud-bar"></div></div>
+  </div>
+  <div class="bd-stage-wrap" id="stage-wrap">
+    <div class="bd-stage" id="stage">
+      <svg class="bd-belt" viewBox="0 0 390 470" aria-hidden="true">
+        <path d="M -50 54 H 296 a49 49 0 0 1 0 98 H 94 a49 49 0 0 0 0 98 H 296 a49 49 0 0 1 49 49 V 352" fill="none" stroke="#0a293b" stroke-width="88" stroke-linejoin="round"></path>
+        <path id="belt-path" d="M -50 54 H 296 a49 49 0 0 1 0 98 H 94 a49 49 0 0 0 0 98 H 296 a49 49 0 0 1 49 49 V 352" fill="none" stroke="#0e3850" stroke-width="81" stroke-linejoin="round"></path>
+        <path class="dash" d="M -50 54 H 296 a49 49 0 0 1 0 98 H 94 a49 49 0 0 0 0 98 H 296 a49 49 0 0 1 49 49 V 352" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="16" stroke-dasharray="16 20"></path>
+        <path d="M304 348 H 386" fill="none" stroke="#f0a060" stroke-width="2.5" stroke-dasharray="5 5"></path>
+      </svg>
+      <div class="bd-till"><div class="scr" id="till-scr">TILL 1</div><div class="slot"></div></div>
+      <div class="bd-envie"><envie-mascot id="envie" pose="point" hat="cap"></envie-mascot></div>
+      <div class="bd-crate" id="crate"><span id="crate-art"></span><p>For the centre</p></div>
+      <div class="bd-say" id="say"><div class="bb tail-right" id="say-bb"><p class="t" id="say-t"></p><p class="s" id="say-s"></p><span class="pts" id="say-pts"></span><svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg></div></div>
+      <div class="bd-prep" id="prep"></div>
+      <div class="bd-bays" id="bays"></div>
+      <div class="bd-bins" id="bins"></div>
+      <div class="bd-count" id="count"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 3: score, the till receipt -->
+<div id="screen-score" class="screen">
+  <div class="bd-score-top">
+    <p class="bd-score-label">Your score</p>
+    <div class="bd-score-row"><p class="bd-score-num pop-in" id="final-score">0</p><span>pts today</span></div>
+    <div class="erow lg">
+      <envie-mascot id="score-envie" pose="flag" hat="hat"></envie-mascot>
+      <div class="bb r5 tail-low">
+        <p class="t" id="score-t"></p>
+        <p class="s" id="score-s"></p>
+        <svg class="tail" viewBox="0 0 30 44" aria-hidden="true"><path d="M25.5 12 C20 16 12 19 2 22 C12 25 20 28 25.5 32"></path></svg>
+      </div>
+    </div>
+    <div class="bd-pills" id="score-pills"></div>
+    <div class="bd-receipt-wrap">
+      <div class="bd-receipt" id="receipt"></div>
+      <svg class="bd-tear" viewBox="0 0 350 12" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 H350 V2 l-12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 -12.5 9 -12.5 -9 Z" fill="#f5f1e6" stroke="#0a293b" stroke-width="3" stroke-linejoin="round"></path><path d="M2 0 H348" stroke="#f5f1e6" stroke-width="5"></path></svg>
+    </div>
+  </div>
+  <div class="bd-review" id="review"></div>
+  <div class="bd-score-bottom">
+    <button class="btn-action" onclick="finishAndGoHub()">Finish</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// BIN DAY
+// Items roll down a zig-zag checkout belt towards Envie at the till.
+// Rules and homes come from mywaste.ie (see _DESIGNS/bin-day/data/bin-day-items.json).
+// Facts stay as the source gives them; only the voice is Envie's.
+// ══════════════════════════════════════════════════════
+
+// Tester mode: shows the tier picker on the intro and lifts the once-a-day lock and the day cap,
+// on this device only. Players never see it. To switch it on for your own phone or browser, open
+//   environmentle-bin-day.html?tester=1      (remembered on that device from then on)
+// and to switch it off again
+//   environmentle-bin-day.html?tester=0
+const PROTOTYPE = (function () {
+  try {
+    const t = new URLSearchParams(location.search).get('tester');
+    if (t === '1') localStorage.setItem('bd_tester', '1');
+    if (t === '0') localStorage.removeItem('bd_tester');
+    return localStorage.getItem('bd_tester') === '1';
+  } catch (e) { return false; }
+})();
+
+// ── Art (generated from the design canvas) ──────────────
+const ART  = {"laptop": "<path d=\"M14 14 h36 a3 3 0 0 1 3 3 v23 H11 V17 a3 3 0 0 1 3 -3 z\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"16\" y=\"19\" width=\"32\" height=\"17\" fill=\"#6ec6f0\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M5 40 h54 l-3 8 a3 3 0 0 1 -3 2 H11 a3 3 0 0 1 -3 -2 z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M26 45 h12\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "tv": "<rect x=\"6\" y=\"12\" width=\"52\" height=\"34\" rx=\"4\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"11\" y=\"17\" width=\"42\" height=\"24\" fill=\"#3a4852\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M16 22 l10 12 M24 20 l6 8\" fill=\"none\" stroke=\"#6b7a84\" stroke-width=\"2\" stroke-linecap=\"round\"></path><path d=\"M26 46 l-4 8 h20 l-4 -8\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "toaster": "<path d=\"M10 24 a6 6 0 0 1 6 -6 h32 a6 6 0 0 1 6 6 v24 a4 4 0 0 1 -4 4 H14 a4 4 0 0 1 -4 -4 z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M18 18 v-5 a3 3 0 0 1 3 -3 h8 a3 3 0 0 1 3 3 v5 M34 18 v-5 a3 3 0 0 1 3 -3 h6 a3 3 0 0 1 3 3 v5\" fill=\"#dcbd88\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"46\" y=\"28\" width=\"5\" height=\"12\" rx=\"2\" fill=\"#2b3a44\"></rect><path d=\"M14 52 v4 M50 52 v4\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "hairdryer": "<path d=\"M8 16 h30 a12 12 0 0 1 0 24 H8 z\" fill=\"#d95f8a\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M8 16 v24\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M12 22 v12\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\"></path><path d=\"M28 40 l3 16 a3 3 0 0 0 3 2 h4 a3 3 0 0 0 3 -3 l-3 -15 z\" fill=\"#a83f66\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><circle cx=\"38\" cy=\"28\" r=\"5\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle>", "etooth": "<rect x=\"26\" y=\"4\" width=\"12\" height=\"14\" rx=\"4\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M29 6 v8 M32 6 v8 M35 6 v8\" fill=\"none\" stroke=\"#6ec6f0\" stroke-width=\"2\" stroke-linecap=\"round\"></path><path d=\"M29 18 h6 v6 h-6 z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"24\" y=\"24\" width=\"16\" height=\"36\" rx=\"6\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"28\" y=\"30\" width=\"8\" height=\"10\" rx=\"3\" fill=\"#6ec6f0\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><circle cx=\"32\" cy=\"50\" r=\"2.500\" fill=\"#85d083\"></circle>", "toothbrush": "<rect x=\"26\" y=\"4\" width=\"12\" height=\"14\" rx=\"4\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M29 6 v8 M32 6 v8 M35 6 v8\" fill=\"none\" stroke=\"#6ec6f0\" stroke-width=\"2\" stroke-linecap=\"round\"></path><path d=\"M29 18 h6 l1 40 a3 3 0 0 1 -3 3 h-2 a3 3 0 0 1 -3 -3 z\" fill=\"#85d083\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "remote": "<rect x=\"22\" y=\"6\" width=\"20\" height=\"52\" rx=\"6\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><circle cx=\"32\" cy=\"15\" r=\"3\" fill=\"#d9364f\"></circle><circle cx=\"28\" cy=\"26\" r=\"2\" fill=\"#cfd8dc\"></circle><circle cx=\"36\" cy=\"26\" r=\"2\" fill=\"#cfd8dc\"></circle><circle cx=\"28\" cy=\"33\" r=\"2\" fill=\"#cfd8dc\"></circle><circle cx=\"36\" cy=\"33\" r=\"2\" fill=\"#cfd8dc\"></circle><circle cx=\"32\" cy=\"45\" r=\"5\" fill=\"none\" stroke=\"#cfd8dc\" stroke-width=\"2\"></circle>", "p_remote": "<rect x=\"22\" y=\"6\" width=\"20\" height=\"52\" rx=\"6\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><circle cx=\"32\" cy=\"15\" r=\"3\" fill=\"#d9364f\"></circle><circle cx=\"28\" cy=\"26\" r=\"2\" fill=\"#cfd8dc\"></circle><circle cx=\"36\" cy=\"26\" r=\"2\" fill=\"#cfd8dc\"></circle><circle cx=\"28\" cy=\"33\" r=\"2\" fill=\"#cfd8dc\"></circle><circle cx=\"36\" cy=\"33\" r=\"2\" fill=\"#cfd8dc\"></circle><circle cx=\"32\" cy=\"45\" r=\"5\" fill=\"none\" stroke=\"#cfd8dc\" stroke-width=\"2\"></circle><rect x=\"26\" y=\"50\" width=\"12\" height=\"6\" rx=\"1\" fill=\"#0a293b\"></rect>", "p_batt": "<g transform=\"rotate(-18 32 32)\"><rect x=\"10\" y=\"20\" width=\"40\" height=\"11\" rx=\"3\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"10\" y=\"20\" width=\"13\" height=\"11\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"50\" y=\"23\" width=\"4\" height=\"5\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"10\" y=\"36\" width=\"40\" height=\"11\" rx=\"3\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"10\" y=\"36\" width=\"13\" height=\"11\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"50\" y=\"39\" width=\"4\" height=\"5\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect></g>", "tshirt": "<path d=\"M22 9 c3 4 6 6 10 6 s7 -2 10 -6 l14 7 -5 11 -7 -3 v30 H20 V24 l-7 3 -5 -11 z\" fill=\"#6ec6f0\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M22 9 c3 4 6 6 10 6 s7 -2 10 -6\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "shoe": "<path d=\"M6 42 c0 -7 4 -11 10 -13 l7 -10 c4 3 7 9 12 12 c8 4 23 4 23 13 v3 H6 z\" fill=\"#e67e22\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M6 47 h52 v4 a3 3 0 0 1 -3 3 H9 a3 3 0 0 1 -3 -3 z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M24 26 l6 4 M28 22 l6 5 M21 31 l6 3\" fill=\"none\" stroke=\"#f5f1e6\" stroke-width=\"2.4\" stroke-linecap=\"round\"></path>", "teddy": "<circle cx=\"20\" cy=\"12\" r=\"6\" fill=\"#c9a96e\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><circle cx=\"44\" cy=\"12\" r=\"6\" fill=\"#c9a96e\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><ellipse cx=\"32\" cy=\"45\" rx=\"15\" ry=\"14\" fill=\"#c9a96e\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse><path d=\"M18 38 l-9 6 M46 38 l9 6\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"7\" stroke-linecap=\"round\"></path><path d=\"M18 38 l-9 6 M46 38 l9 6\" fill=\"none\" stroke=\"#c9a96e\" stroke-width=\"3.500\" stroke-linecap=\"round\"></path><circle cx=\"32\" cy=\"22\" r=\"13\" fill=\"#c9a96e\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><ellipse cx=\"32\" cy=\"26\" rx=\"6\" ry=\"4.500\" fill=\"#f5e6c8\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse><circle cx=\"27\" cy=\"19\" r=\"1.800\" fill=\"#0a293b\"></circle><circle cx=\"37\" cy=\"19\" r=\"1.800\" fill=\"#0a293b\"></circle><ellipse cx=\"32\" cy=\"46\" rx=\"7\" ry=\"7\" fill=\"#f5e6c8\"></ellipse>", "book": "<path d=\"M14 10 h34 a3 3 0 0 1 3 3 v40 a3 3 0 0 1 -3 3 H14 z\" fill=\"#2d84b8\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M14 10 v46 M20 10 v46\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"14\" y=\"10\" width=\"6\" height=\"46\" fill=\"#1f5f87\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"26\" y=\"18\" width=\"18\" height=\"12\" rx=\"2\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M30 22 h10 M30 26 h7\" fill=\"none\" stroke=\"#2d84b8\" stroke-width=\"1.800\" stroke-linecap=\"round\"></path>", "book_torn": "<path d=\"M16 12 h28 l-4 6 5 5 -5 6 4 6 -4 6 5 6 -2 8 H16 z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M13 10 h10 v47 H13 z\" fill=\"#d9364f\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M27 20 h10 M27 26 h12 M27 32 h8 M27 38 h11 M27 44 h9\" fill=\"none\" stroke=\"#8a97a0\" stroke-width=\"2\" stroke-linecap=\"round\"></path><path d=\"M13 22 l5 3 -4 4\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "toy": "<path d=\"M6 42 v-9 c0 -3 2 -5 5 -5 h6 l7 -10 h17 l8 10 h4 c3 0 5 2 5 5 v9 z\" fill=\"#d9364f\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M22 28 l4 -6 h6 v6 z M36 22 h4 l5 6 h-9 z\" fill=\"#bfe6f7\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"43\" r=\"7\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><circle cx=\"46\" cy=\"43\" r=\"7\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><circle cx=\"19\" cy=\"43\" r=\"2.500\" fill=\"#cfd8dc\"></circle><circle cx=\"46\" cy=\"43\" r=\"2.500\" fill=\"#cfd8dc\"></circle><path d=\"M50 33 h6\" fill=\"none\" stroke=\"#f2c94c\" stroke-width=\"3\" stroke-linecap=\"round\"></path>", "toy_broken": "<g transform=\"rotate(-7 32 36)\"><path d=\"M6 42 v-9 c0 -3 2 -5 5 -5 h6 l7 -10 h17 l8 10 h4 c3 0 5 2 5 5 v9 z\" fill=\"#d9364f\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M22 28 l4 -6 h6 v6 z M36 22 h4 l5 6 h-9 z\" fill=\"#bfe6f7\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><circle cx=\"19\" cy=\"43\" r=\"7\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><path d=\"M30 18 l3 8 -5 5 4 8\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></g><circle cx=\"52\" cy=\"54\" r=\"6.500\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><circle cx=\"52\" cy=\"54\" r=\"2.300\" fill=\"#cfd8dc\"></circle>", "kettle": "<path d=\"M20 20 h24 l5 34 a3 3 0 0 1 -3 3 H18 a3 3 0 0 1 -3 -3 z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M20 26 l-10 -5 v8 z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"22\" y=\"13\" width=\"20\" height=\"8\" rx=\"3\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M45 26 c10 0 12 18 3 22\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"24\" y=\"30\" width=\"6\" height=\"16\" rx=\"3\" fill=\"#6ec6f0\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect>", "phone": "<rect x=\"19\" y=\"6\" width=\"26\" height=\"52\" rx=\"6\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"23\" y=\"12\" width=\"18\" height=\"36\" rx=\"2\" fill=\"#6ec6f0\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M26 14 l6 12 -4 6 8 14\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.800\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><circle cx=\"32\" cy=\"53\" r=\"2\" fill=\"#cfd8dc\"></circle>", "tissue": "<path d=\"M14 40 C10 30 16 20 26 22 C28 12 42 12 44 22 C54 22 56 34 50 42 C46 50 20 50 14 40 Z\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M24 30 c4 4 6 8 5 14 M36 28 c-2 5 -1 10 3 15 M44 30 c-1 3 -1 6 1 9\" fill=\"none\" stroke=\"#b7c4cb\" stroke-width=\"2\" stroke-linecap=\"round\"></path>", "wipes": "<path d=\"M12 22 C20 18 28 26 36 21 C44 17 50 22 54 20 L52 44 C46 47 40 42 32 46 C24 50 18 44 10 47 Z\" fill=\"#d8eef8\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M18 28 h26 M18 34 h26 M18 40 h20\" fill=\"none\" stroke=\"#9ccbe2\" stroke-width=\"2\" stroke-dasharray=\"3 4\" stroke-linecap=\"round\"></path>", "mug": "<path d=\"M14 16 h28 v30 a6 6 0 0 1 -6 6 H20 a6 6 0 0 1 -6 -6 Z\" fill=\"#6ec6f0\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M42 22 h6 a6 6 0 0 1 6 6 v6 a6 6 0 0 1 -6 6 h-6\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M28 16 l4 10 l-5 8 l6 9 l-3 9\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M14 16 l8 -4 l6 4\" fill=\"#6ec6f0\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "foil_dirty": "<path d=\"M12 30 c4 -12 30 -16 40 -4 c2 8 -6 16 -20 16 s-22 -4 -20 -12 z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M20 30 l8 4 M32 24 l6 8\" fill=\"none\" stroke=\"#8a97a0\" stroke-width=\"2\" stroke-linecap=\"round\"></path><ellipse cx=\"30\" cy=\"36\" rx=\"7\" ry=\"4\" fill=\"#c0693c\"></ellipse><circle cx=\"42\" cy=\"30\" r=\"3\" fill=\"#c0693c\"></circle><circle cx=\"22\" cy=\"27\" r=\"2\" fill=\"#d9364f\"></circle>", "perfume": "<rect x=\"18\" y=\"24\" width=\"28\" height=\"30\" rx=\"5\" fill=\"#f7c9d4\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"27\" y=\"14\" width=\"10\" height=\"10\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"25\" y=\"6\" width=\"14\" height=\"9\" rx=\"2\" fill=\"#0a293b\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"24\" y=\"33\" width=\"16\" height=\"12\" rx=\"2\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect>", "vape": "<rect x=\"24\" y=\"14\" width=\"16\" height=\"42\" rx=\"6\" fill=\"#7b4fa0\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M28 14 v-6 a3 3 0 0 1 3 -3 h2 a3 3 0 0 1 3 3 v6 z\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"28\" y=\"24\" width=\"8\" height=\"12\" rx=\"2\" fill=\"#d8c6e8\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><circle cx=\"32\" cy=\"46\" r=\"2.500\" fill=\"#85d083\"></circle>", "cable": "<rect x=\"8\" y=\"12\" width=\"20\" height=\"18\" rx=\"4\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M13 12 v-6 M23 12 v-6\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M18 30 C18 46 30 36 34 44 C38 52 46 40 50 48\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"46\" y=\"46\" width=\"12\" height=\"8\" rx=\"2\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect>", "aerosol": "<path d=\"M20 22 c0 -6 6 -8 12 -8 s12 2 12 8 V54 a3 3 0 0 1 -3 3 H23 a3 3 0 0 1 -3 -3 Z\" fill=\"#f0a060\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"27\" y=\"6\" width=\"10\" height=\"9\" rx=\"2\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M39 9 h4\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"20\" y=\"28\" width=\"24\" height=\"14\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M48 6 l3 -2 M49 10 h4 M48 14 l3 2\" fill=\"none\" stroke=\"#6ec6f0\" stroke-width=\"2\" stroke-linecap=\"round\"></path>", "milk_carton": "<path d=\"M18 24 L24 12 H40 L46 24 V54 a3 3 0 0 1 -3 3 H21 a3 3 0 0 1 -3 -3 Z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M18 24 H46 M24 12 L32 24 L40 12\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M40 12 l9 -3 l-3 9 z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"18\" y=\"31\" width=\"28\" height=\"16\" fill=\"#2d84b8\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M32 33.5 c3 4 4 6 4 8 a4 4 0 0 1 -8 0 c0 -2 1 -4 4 -8 z\" fill=\"#fff\"></path>", "milk_jug": "<path d=\"M21 22 c0 -5 3 -7 7 -9 V9 h10 v4 c5 2 9 5 9 11 V52 a4 4 0 0 1 -4 4 H25 a4 4 0 0 1 -4 -4 Z\" fill=\"#f5f7f8\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M40 22 c4 0 5 2 5 5 v7 c0 3 -1 4 -5 4 z\" fill=\"#b7c4cb\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"26\" y=\"4\" width=\"14\" height=\"6\" rx=\"2\" fill=\"#2d84b8\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"21\" y=\"38\" width=\"20\" height=\"12\" fill=\"#2d84b8\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M31 40 c2 3 3 4 3 5.5 a3 3 0 0 1 -6 0 c0 -1.500 1 -2.500 3 -5.500 z\" fill=\"#fff\"></path>", "juice": "<path d=\"M20 15 H44 V54 a3 3 0 0 1 -3 3 H23 a3 3 0 0 1 -3 -3 Z\" fill=\"#f0a060\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M20 15 l4 -7 h16 l4 7 z\" fill=\"#f5c08a\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><circle cx=\"37\" cy=\"11\" r=\"3\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><circle cx=\"32\" cy=\"37\" r=\"9.500\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><path d=\"M32 27.500 c1 -4 4 -5 7 -5 c0 3 -2 5 -7 5 z\" fill=\"#4e8a4d\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M32 30 v14 M25 37 h14\" fill=\"none\" stroke=\"#c99a1f\" stroke-width=\"1.6\"></path>", "fizzy": "<path d=\"M27 8 h10 v5 c0 4 7 6 7 14 V54 a4 4 0 0 1 -4 4 H24 a4 4 0 0 1 -4 -4 V27 c0 -8 7 -10 7 -14 Z\" fill=\"#bfe6f7\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"26\" y=\"3\" width=\"12\" height=\"6\" rx=\"2\" fill=\"#d9364f\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"20\" y=\"29\" width=\"24\" height=\"12\" fill=\"#d9364f\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M25 35 h14\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\"></path><circle cx=\"41\" cy=\"50\" r=\"6.5\" fill=\"#2a8c7e\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><path d=\"M38 50 a3 3 0 1 1 3 3 M41 53 l-2 -1.6 M41 53 l-1.4 2\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.8\" stroke-linecap=\"round\"></path>", "can": "<path d=\"M20 12 h24 v40 a5 5 0 0 1 -5 5 H25 a5 5 0 0 1 -5 -5 Z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"20\" y=\"20\" width=\"24\" height=\"20\" fill=\"#2d5a3d\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M34 22 l-6 9 h5 l-3 8 l7 -10 h-5 z\" fill=\"#f2c94c\"></path><ellipse cx=\"32\" cy=\"12\" rx=\"12\" ry=\"4\" fill=\"#eceff1\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse><path d=\"M29 12 h6\" fill=\"none\" stroke=\"#8a97a0\" stroke-width=\"2\" stroke-linecap=\"round\"></path><circle cx=\"41\" cy=\"50\" r=\"6.5\" fill=\"#2a8c7e\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><path d=\"M38 50 a3 3 0 1 1 3 3 M41 53 l-2 -1.6 M41 53 l-1.4 2\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.8\" stroke-linecap=\"round\"></path>", "punnet": "<path d=\"M13 34 L17 13 h38 l-5 21 z\" fill=\"#e8f5fb\" opacity=\".85\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M10 34 h44 l-4 19 a4 4 0 0 1 -4 3 H18 a4 4 0 0 1 -4 -3 Z\" fill=\"#d2ebf7\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M20 38 l2 14 M32 38 v14 M44 38 l-2 14\" fill=\"none\" stroke=\"#9ccbe2\" stroke-width=\"2\" stroke-linecap=\"round\"></path><rect x=\"25\" y=\"17\" width=\"20\" height=\"11\" rx=\"2\" transform=\"rotate(-6 35 22)\" fill=\"#7b4fa0\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><circle cx=\"31\" cy=\"22\" r=\"2\" fill=\"#fff\"></circle><circle cx=\"36\" cy=\"21.500\" r=\"2\" fill=\"#fff\"></circle><circle cx=\"33.500\" cy=\"25\" r=\"2\" fill=\"#fff\"></circle>", "salad_bag": "<path d=\"M14 11 C20 14 26 9 32 11 C38 13 44 9 50 11 L52 53 C46 51 40 55 32 53 C24 51 18 55 12 53 Z\" fill=\"#e8f5fb\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"18\" y=\"21\" width=\"28\" height=\"20\" rx=\"4\" fill=\"#4e8a4d\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M26 37 c0 -8 5 -12 13 -12 c0 8 -4 12 -13 12 z M26 37 l7 -7\" fill=\"#85d083\" stroke=\"#fff\" stroke-width=\"1.6\" stroke-linejoin=\"round\"></path><path d=\"M16 16 h32\" fill=\"none\" stroke=\"#9ccbe2\" stroke-width=\"2\" stroke-dasharray=\"3 3\"></path>", "orange_net": "<path d=\"M32 9 C25 16 11 27 11 41 a21 15 0 0 0 42 0 C53 27 39 16 32 9 Z\" fill=\"#f7c9a0\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M20 26 L44 52 M14 36 L34 56 M28 18 L51 44 M44 26 L20 52 M50 36 L30 56 M36 18 L13 44\" fill=\"none\" stroke=\"#c0392b\" stroke-width=\"1.700\" stroke-linecap=\"round\"></path><rect x=\"27\" y=\"4\" width=\"10\" height=\"8\" rx=\"2\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect>", "pasta_bag": "<path d=\"M16 8 h32 l3 49 H13 Z\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M16 14 h32\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"15\" y=\"17\" width=\"34\" height=\"7\" fill=\"#c0392b\" stroke=\"none\"></rect><rect x=\"21\" y=\"29\" width=\"22\" height=\"21\" rx=\"4\" fill=\"#fdf3d0\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M25 34 c3 -2 3 3 6 1 s3 3 6 1 M25 40 c3 -2 3 3 6 1 s3 3 6 1 M25 46 c3 -2 3 3 6 1 s3 3 6 1\" fill=\"none\" stroke=\"#c99a1f\" stroke-width=\"2\" stroke-linecap=\"round\"></path>", "meat_pack": "<path d=\"M7 27 h50 l-5 23 a4 4 0 0 1 -4 3 H16 a4 4 0 0 1 -4 -3 Z\" fill=\"#3a4852\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M7 27 l5 -9 h40 l5 9 z\" fill=\"#d8eef8\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M16 25 c4 -5 12 -5 15 -1 c4 -4 12 -4 16 1 z\" fill=\"#e06377\" stroke=\"none\"></path><rect x=\"22\" y=\"14\" width=\"20\" height=\"10\" rx=\"2\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M26 19 h12\" fill=\"none\" stroke=\"#c0392b\" stroke-width=\"2.4\" stroke-linecap=\"round\"></path><path d=\"M52 18 l6 -5 l-1 8 z\" fill=\"#d8eef8\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "yoghurt": "<path d=\"M18 21 h28 l-4 33 a3 3 0 0 1 -3 3 H25 a3 3 0 0 1 -3 -3 Z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M19.300 31 h25.400 l-1.700 14 H21 Z\" fill=\"#ff8fa3\" stroke=\"none\"></path><path d=\"M32 34 c3 0 5 2 5 4.500 s-3 5 -5 6 c-2 -1 -5 -3.500 -5 -6 s2 -4.500 5 -4.500 z\" fill=\"#d9364f\"></path><rect x=\"15\" y=\"16\" width=\"34\" height=\"6\" rx=\"3\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M17 16 c7 -9 21 -10 30 -3 l-7 3 z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "bread": "<path d=\"M8 24 c0 -8 7 -12 17 -12 h14 c8 0 13 4 13 10 v26 a4 4 0 0 1 -4 4 H12 a4 4 0 0 1 -4 -4 Z\" fill=\"#fdf3d0\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M52 27 l9 -6 c-2 6 -2 14 0 20 l-9 -6 z\" fill=\"#fdf3d0\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"8\" y=\"29\" width=\"44\" height=\"13\" fill=\"#c0392b\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M22 35.500 h16\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.600\" stroke-linecap=\"round\"></path><rect x=\"50\" y=\"29\" width=\"4\" height=\"12\" rx=\"1\" fill=\"#2d84b8\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect>", "crisps": "<path d=\"M16 10 C21 13 27 8 32 10 C37 12 43 8 48 10 L51 54 C45 52 39 56 32 54 C25 52 19 56 13 54 Z\" fill=\"#d9364f\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><ellipse cx=\"32\" cy=\"33\" rx=\"10\" ry=\"8\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse><path d=\"M26 33 c3 -3 9 -3 12 0\" fill=\"none\" stroke=\"#c99a1f\" stroke-width=\"1.800\"></path><path d=\"M19 15 l1 34\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" opacity=\".5\"></path>", "cereal": "<path d=\"M16 9 l6 -5 h30 l-6 5\" fill=\"#f5c08a\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M16 9 h30 v49 H16 Z\" fill=\"#f0a060\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M46 9 l6 -5 v47 l-6 7 z\" fill=\"#c96a12\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M21 36 h20 a10 10 0 0 1 -20 0 z\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><circle cx=\"27\" cy=\"33\" r=\"2.200\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><circle cx=\"33\" cy=\"31.500\" r=\"2.200\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><circle cx=\"37\" cy=\"34\" r=\"2.200\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><path d=\"M22 17 h18 M22 23 h12\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.600\" stroke-linecap=\"round\"></path>", "eggbox": "<path d=\"M9 31 c0 -11 9 -16 23 -16 s23 5 23 16 z\" fill=\"#d6cdb8\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M7 31 h50 l-3 18 a3 3 0 0 1 -3 3 H13 a3 3 0 0 1 -3 -3 Z\" fill=\"#bdb29a\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M17 31 c0 6 6 6 6 0 M29 31 c0 6 6 6 6 0 M41 31 c0 6 6 6 6 0\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"26\" y=\"20\" width=\"12\" height=\"7\" rx=\"1.500\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect>", "tin": "<path d=\"M18 15 h28 v39 a3 3 0 0 1 -3 3 H21 a3 3 0 0 1 -3 -3 Z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"18\" y=\"23\" width=\"28\" height=\"24\" fill=\"#2d84b8\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><ellipse cx=\"32\" cy=\"35\" rx=\"8\" ry=\"6\" fill=\"#f0a060\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse><ellipse cx=\"32\" cy=\"15\" rx=\"14\" ry=\"4.500\" fill=\"#6b7a84\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse><ellipse cx=\"41\" cy=\"8\" rx=\"12\" ry=\"3.500\" transform=\"rotate(-22 41 8)\" fill=\"#eceff1\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse>", "pizza_box": "<rect x=\"8\" y=\"12\" width=\"48\" height=\"40\" rx=\"3\" fill=\"#2d5a3d\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><circle cx=\"32\" cy=\"32\" r=\"14\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></circle><circle cx=\"27\" cy=\"28\" r=\"3\" fill=\"#d9364f\"></circle><circle cx=\"37\" cy=\"30\" r=\"3\" fill=\"#d9364f\"></circle><circle cx=\"31\" cy=\"38\" r=\"3\" fill=\"#d9364f\"></circle><path d=\"M8 18 h48\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.600\" opacity=\".5\"></path>", "tube": "<path d=\"M14 22 h36 v20 H14 Z\" fill=\"#c9a96e\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><ellipse cx=\"50\" cy=\"32\" rx=\"5\" ry=\"10\" fill=\"#8a6d3f\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse><ellipse cx=\"14\" cy=\"32\" rx=\"5\" ry=\"10\" fill=\"#c9a96e\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse><path d=\"M22 23 l8 18 M34 23 l8 18\" fill=\"none\" stroke=\"#a88a52\" stroke-width=\"2\"></path>", "banana": "<g transform=\"scale(1.3333)\"><path d=\"M9 33 C7 20 16 9 29 9 C27 13 24 18 24 25 C24 32 29 37 35 36 C31 43 12 44 9 33 Z\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M29 9 l4 -3\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M14 30 C14 22 20 14 27 12\" fill=\"none\" stroke=\"#c99a1f\" stroke-width=\"2\" stroke-linecap=\"round\"></path></g>", "teabag": "<g transform=\"scale(1.3333)\"><path d=\"M15 22 h18 v14 a4 4 0 0 1 -4 4 H19 a4 4 0 0 1 -4 -4 z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M24 22 C24 16 28 12 32 8\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"30\" y=\"4\" width=\"8\" height=\"6\" rx=\"1\" fill=\"#e67e22\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M19 30 h10\" fill=\"none\" stroke=\"#c9a96e\" stroke-width=\"2\"></path></g>", "wine": "<g transform=\"scale(1.3333)\"><path d=\"M20 4 h8 v9 c5 2 6 6 6 10 v19 a2 2 0 0 1 -2 2 h-16 a2 2 0 0 1 -2 -2 V23 c0 -4 1 -8 6 -10 z\" fill=\"#2d5a3d\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"16\" y=\"26\" width=\"16\" height=\"10\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"20\" y=\"4\" width=\"8\" height=\"5\" fill=\"#8a1c2b\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect></g>", "jar": "<g transform=\"scale(1.3333)\"><rect x=\"13\" y=\"14\" width=\"22\" height=\"28\" rx=\"4\" fill=\"#bfe6f7\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"15\" y=\"30\" width=\"18\" height=\"10\" rx=\"2\" fill=\"#a82a3f\" stroke=\"none\"></rect><rect x=\"11\" y=\"8\" width=\"26\" height=\"8\" rx=\"2\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect></g>", "cup": "<g transform=\"scale(1.3333)\"><path d=\"M13 16 L16 42 a2 2 0 0 0 2 2 h12 a2 2 0 0 0 2 -2 L35 16 z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M14 24 L16 34 h16 l2 -10 z\" fill=\"#8a6d3f\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"10\" y=\"10\" width=\"28\" height=\"6\" rx=\"2\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M18 10 v-3 h12 v3\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></g>", "cup_compost": "<g transform=\"scale(1.3333)\"><path d=\"M13 16 L16 42 a2 2 0 0 0 2 2 h12 a2 2 0 0 0 2 -2 L35 16 z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M14 22 L16.500 37 h15 l2.500 -15 z\" fill=\"#d9e8c8\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"10\" y=\"10\" width=\"28\" height=\"6\" rx=\"2\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M18 10 v-3 h12 v3\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><circle cx=\"24\" cy=\"29.500\" r=\"5\" fill=\"#4e8a4d\" stroke=\"#0a293b\" stroke-width=\"1.600\"></circle><path d=\"M21.700 31.800 c0 -4 2.300 -5.300 5.300 -5.300 c0 4 -1.600 5.300 -5.300 5.300 z\" fill=\"#fff\"></path></g>", "pizza": "<g transform=\"scale(1.3333)\"><rect x=\"7\" y=\"16\" width=\"34\" height=\"22\" rx=\"2\" fill=\"#dcbd88\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M7 22 h34\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><circle cx=\"16\" cy=\"30\" r=\"3\" fill=\"#c99a1f\" opacity=\".7\"></circle><circle cx=\"27\" cy=\"32\" r=\"2.400\" fill=\"#c99a1f\" opacity=\".7\"></circle><circle cx=\"34\" cy=\"28\" r=\"2\" fill=\"#c99a1f\" opacity=\".7\"></circle></g>", "receipt": "<g transform=\"scale(1.3333)\"><path d=\"M14 6 h20 v32 l-3 -3 -3 3 -4 -3 -4 3 -3 -3 -3 3 z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M19 13 h10 M19 18 h10 M19 23 h6 M19 28 h10\" fill=\"none\" stroke=\"#8a97a0\" stroke-width=\"2\" stroke-linecap=\"round\"></path></g>", "toothpaste": "<path d=\"M12 22 h34 l6 4 v12 l-6 4 H12 Z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"52\" y=\"27\" width=\"7\" height=\"10\" rx=\"2\" fill=\"#2d84b8\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M12 22 v20\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M18 28 h22 v8 H18 Z\" fill=\"#6ec6f0\" stroke=\"none\"></path><path d=\"M8 20 v24\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "pyrex": "<g transform=\"scale(1.3333)\"><path d=\"M8 18 h32 l-3 18 a4 4 0 0 1 -4 4 H15 a4 4 0 0 1 -4 -4 z\" fill=\"#bfe6f7\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M12 24 h24\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\"></path><path d=\"M4 18 h8 M36 18 h8\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></g>", "battery": "<g transform=\"scale(1.3333)\"><rect x=\"16\" y=\"12\" width=\"16\" height=\"30\" rx=\"3\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"16\" y=\"12\" width=\"16\" height=\"10\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><rect x=\"21\" y=\"7\" width=\"6\" height=\"5\" rx=\"1\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M24 28 v8 M20 32 h8\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.200\" stroke-linecap=\"round\"></path></g>", "bulb": "<g transform=\"scale(1.3333)\"><path d=\"M24 5 a12 12 0 0 1 7 21.600 c-1.600 1.400 -2 3 -2 5.400 h-10 c0 -2.400 -.4 -4 -2 -5.400 A12 12 0 0 1 24 5 z\" fill=\"#f2c94c\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"19\" y=\"32\" width=\"10\" height=\"8\" rx=\"2\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M21 43 h6\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></g>", "paint": "<g transform=\"scale(1.3333)\"><path d=\"M12 16 h24 v22 a3 3 0 0 1 -3 3 H15 a3 3 0 0 1 -3 -3 z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"10\" y=\"12\" width=\"28\" height=\"6\" rx=\"2\" fill=\"#eceff1\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M12 18 h24 v5 c-3 0 -3 6 -6 6 s-3 -4 -6 -4 s-3 7 -6 7 s-3 -5 -6 -5 z\" fill=\"#d9364f\" stroke=\"none\"></path><path d=\"M12 20 C4 22 4 34 12 34\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></g>", "p_tray": "<path d=\"M7 24 h50 l-5 24 a4 4 0 0 1 -4 3 H16 a4 4 0 0 1 -4 -3 Z\" fill=\"#3a4852\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M13 29 h38 l-3 16 H16 Z\" fill=\"#2b3a44\" stroke=\"none\"></path>", "p_film": "<path d=\"M10 20 C18 14 26 24 34 17 C42 11 50 18 55 15 L52 44 C44 50 38 40 30 46 C22 52 16 44 9 48 Z\" fill=\"#d8eef8\" opacity=\".9\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M18 24 l10 8 M32 22 l12 12 M20 38 l8 -4\" fill=\"none\" stroke=\"#9ccbe2\" stroke-width=\"2\" stroke-linecap=\"round\"></path>", "p_pad": "<rect x=\"12\" y=\"20\" width=\"40\" height=\"26\" rx=\"4\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M18 27 h28 M18 33 h28 M18 39 h28\" fill=\"none\" stroke=\"#d9d4c6\" stroke-width=\"2\" stroke-dasharray=\"2 4\"></path><ellipse cx=\"38\" cy=\"34\" rx=\"8\" ry=\"6\" fill=\"#e06377\" opacity=\".55\"></ellipse>", "p_lid": "<ellipse cx=\"32\" cy=\"36\" rx=\"22\" ry=\"8\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></ellipse><path d=\"M14 34 c0 -10 8 -14 18 -14 s18 4 18 14\" fill=\"#3a4852\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"28\" y=\"22\" width=\"8\" height=\"4\" rx=\"2\" fill=\"#0a293b\"></rect>", "p_sleeve": "<path d=\"M12 22 h40 l-4 22 H16 Z\" fill=\"#c9a96e\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M18 28 h28 M19 34 h26 M20 40 h24\" fill=\"none\" stroke=\"#a88a52\" stroke-width=\"2\"></path>", "p_foil": "<path d=\"M12 30 c4 -12 30 -16 40 -4 c2 8 -6 16 -20 16 s-22 -4 -20 -12 z\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M20 30 l8 4 M32 24 l6 8 M26 40 l10 -2\" fill=\"none\" stroke=\"#8a97a0\" stroke-width=\"2\" stroke-linecap=\"round\"></path>", "p_pot": "<path d=\"M18 18 h28 l-4 34 a3 3 0 0 1 -3 3 H25 a3 3 0 0 1 -3 -3 Z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><rect x=\"15\" y=\"13\" width=\"34\" height=\"6\" rx=\"3\" fill=\"#fff\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect>", "p_wrap": "<path d=\"M10 20 C18 14 26 24 34 17 C42 11 50 18 55 15 L52 44 C44 50 38 40 30 46 C22 52 16 44 9 48 Z\" fill=\"#d8eef8\" opacity=\".9\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "p_box": "<rect x=\"8\" y=\"14\" width=\"48\" height=\"36\" rx=\"3\" fill=\"#2d5a3d\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M8 22 h48\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.600\" opacity=\".5\"></path>", "p_net": "<path d=\"M32 12 C25 18 12 28 12 41 a20 13 0 0 0 40 0 C52 28 39 18 32 12 Z\" fill=\"#f7c9a0\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M20 28 L44 52 M15 38 L33 54 M44 28 L20 52 M49 38 L31 54\" fill=\"none\" stroke=\"#c0392b\" stroke-width=\"1.700\" stroke-linecap=\"round\"></path>", "p_clip": "<rect x=\"20\" y=\"22\" width=\"24\" height=\"18\" rx=\"3\" fill=\"#cfd8dc\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></rect><path d=\"M26 31 h12\" fill=\"none\" stroke=\"#8a97a0\" stroke-width=\"2.400\" stroke-linecap=\"round\"></path><path d=\"M32 40 v8\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"2.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path>", "p_cup": "<g transform=\"scale(1.3333)\"><path d=\"M13 12 L16 42 a2 2 0 0 0 2 2 h12 a2 2 0 0 0 2 -2 L35 12 z\" fill=\"#f5f1e6\" stroke=\"#0a293b\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></g>"};
+const BINS_ART = {"clothes": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><rect x=\"7\" y=\"20\" width=\"50\" height=\"62\" rx=\"7\" fill=\"#7b4fa0\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><path d=\"M7 30 h50\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><rect x=\"17\" y=\"36\" width=\"30\" height=\"9\" rx=\"4.500\" fill=\"#5a3878\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><g transform=\"translate(21 52) scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z\"></path></g></g></svg>", "reuse": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><rect x=\"7\" y=\"20\" width=\"50\" height=\"62\" rx=\"7\" fill=\"#d95f8a\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><path d=\"M7 30 h50\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><rect x=\"17\" y=\"36\" width=\"30\" height=\"9\" rx=\"4.500\" fill=\"#a83f66\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><g transform=\"translate(21 52) scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"></path><path d=\"M21 3v5h-5\"></path><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"></path><path d=\"M8 16H3v5\"></path></g></g></svg>", "weee": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><rect x=\"7\" y=\"20\" width=\"50\" height=\"62\" rx=\"7\" fill=\"#c96a12\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><path d=\"M7 30 h50\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><rect x=\"17\" y=\"36\" width=\"30\" height=\"9\" rx=\"4.500\" fill=\"#9a4f0c\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><g transform=\"translate(21 52) scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 22v-5\"></path><path d=\"M9 8V2\"></path><path d=\"M15 8V2\"></path><path d=\"M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z\"></path></g></g></svg>", "battery": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><rect x=\"7\" y=\"20\" width=\"50\" height=\"62\" rx=\"7\" fill=\"#e0b020\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><path d=\"M7 30 h50\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><rect x=\"17\" y=\"36\" width=\"30\" height=\"9\" rx=\"4.500\" fill=\"#a8820f\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><g transform=\"translate(21 52) scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"7\" width=\"16\" height=\"10\" rx=\"2\"></rect><path d=\"M22 11v2\"></path><path d=\"M6 12h4\"></path><path d=\"M8 10v4\"></path></g></g></svg>", "paint": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><rect x=\"7\" y=\"20\" width=\"50\" height=\"62\" rx=\"7\" fill=\"#c0392b\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><path d=\"M7 30 h50\" fill=\"none\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><rect x=\"17\" y=\"36\" width=\"30\" height=\"9\" rx=\"4.500\" fill=\"#8f271c\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></rect><g transform=\"translate(21 52) scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z\"></path></g></g></svg>", "green": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><path d=\"M12 34 L16 78 a4 4 0 0 0 4 4 h24 a4 4 0 0 0 4-4 L52 34 z\" fill=\"#4e8a4d\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><path d=\"M22 42 v30 M32 42 v32 M42 42 v30\" fill=\"none\" stroke=\"#3a6b39\" stroke-width=\"3\" stroke-linecap=\"round\"></path><rect x=\"8\" y=\"24\" width=\"48\" height=\"12\" rx=\"5\" fill=\"#3a6b39\" stroke=\"#0a293b\" stroke-width=\"3\"></rect><g transform=\"translate(21 48)\"><g transform=\"scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 19H4.8a1 1 0 0 1-.87-1.5l2.2-3.8\"></path><path d=\"M11 19h6.2a1 1 0 0 0 .87-1.5L16 14\"></path><path d=\"M14.6 6.3 12.9 3.4a1 1 0 0 0-1.74 0L8.9 7.3\"></path><path d=\"m5.3 11.4 1.2-4.4 4.4 1.2\"></path><path d=\"m19.2 10.6-1.2 4.4-4.4-1.2\"></path><path d=\"M7.5 19l3-3v6z\"></path></g></g></g></svg>", "brown": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><path d=\"M12 34 L16 78 a4 4 0 0 0 4 4 h24 a4 4 0 0 0 4-4 L52 34 z\" fill=\"#8a6d3f\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><path d=\"M22 42 v30 M32 42 v32 M42 42 v30\" fill=\"none\" stroke=\"#6b5230\" stroke-width=\"3\" stroke-linecap=\"round\"></path><rect x=\"8\" y=\"24\" width=\"48\" height=\"12\" rx=\"5\" fill=\"#6b5230\" stroke=\"#0a293b\" stroke-width=\"3\"></rect><g transform=\"translate(21 48)\"><g transform=\"scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z\"></path><path d=\"M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12\"></path></g></g></g></svg>", "black": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><path d=\"M12 34 L16 78 a4 4 0 0 0 4 4 h24 a4 4 0 0 0 4-4 L52 34 z\" fill=\"#4a5a65\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><path d=\"M22 42 v30 M32 42 v32 M42 42 v30\" fill=\"none\" stroke=\"#2b3a44\" stroke-width=\"3\" stroke-linecap=\"round\"></path><rect x=\"8\" y=\"24\" width=\"48\" height=\"12\" rx=\"5\" fill=\"#2b3a44\" stroke=\"#0a293b\" stroke-width=\"3\"></rect><g transform=\"translate(21 48)\"><g transform=\"scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 6h18\"></path><path d=\"M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6\"></path><path d=\"M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2\"></path><path d=\"M10 11v6\"></path><path d=\"M14 11v6\"></path></g></g></g></svg>", "glass": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><path d=\"M10 78 V46 a22 22 0 0 1 44 0 V78 z\" fill=\"#3f7fa8\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><rect x=\"8\" y=\"74\" width=\"48\" height=\"8\" rx=\"3\" fill=\"#2d5f80\" stroke=\"#0a293b\" stroke-width=\"3\"></rect><circle cx=\"32\" cy=\"46\" r=\"7\" fill=\"#2d5f80\" stroke=\"#0a293b\" stroke-width=\"3\"></circle><g transform=\"translate(21 52)\"><g transform=\"scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 22h8\"></path><path d=\"M7 10h10\"></path><path d=\"M12 15v7\"></path><path d=\"M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z\"></path></g></g></g></svg>", "return": "<svg viewBox=\"0 0 64 84\" style=\"width: 64px; height: 84px; display: block; overflow: visible;\"><g><rect x=\"10\" y=\"22\" width=\"44\" height=\"60\" rx=\"6\" fill=\"#2a8c7e\" stroke=\"#0a293b\" stroke-width=\"3\"></rect><rect x=\"18\" y=\"30\" width=\"28\" height=\"9\" rx=\"4.5\" fill=\"#1e6a5f\" stroke=\"#0a293b\" stroke-width=\"3\"></rect><g transform=\"translate(21 48)\"><g transform=\"scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 10h12\"></path><path d=\"M4 14h9\"></path><path d=\"M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2\"></path></g></g><rect x=\"18\" y=\"16\" width=\"28\" height=\"8\" rx=\"3\" fill=\"#1e6a5f\" stroke=\"#0a293b\" stroke-width=\"3\"></rect></g></svg>", "crate": "<svg viewBox=\"0 0 64 84\" style=\"width: 54px; height: 71px; display: block; overflow: visible;\"><g><path d=\"M8 40 h48 l-4 38 a4 4 0 0 1 -4 4 H16 a4 4 0 0 1 -4 -4 z\" fill=\"#c96a12\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><path d=\"M8 40 l6 -12 h36 l6 12\" fill=\"#9a4f0c\" stroke=\"#0a293b\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><g transform=\"translate(21 50)\"><g transform=\"scale(.92)\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7.5 4.27 9 5.15\"></path><path d=\"M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z\"></path><path d=\"m3.3 7 8.7 5 8.7-5\"></path><path d=\"M12 22V12\"></path></g></g></g></svg>"};
+
+// ── Homes ───────────────────────────────────────────────
+const HOMES = {
+  green:  { name: 'Green bin',   colour: '#4e8a4d' },
+  brown:  { name: 'Brown bin',   colour: '#8a6d3f' },
+  black:  { name: 'Black bin',   colour: '#4a5a65' },
+  glass:  { name: 'Bottle bank', colour: '#3f7fa8' },
+  return: { name: 'Re-turn',     colour: '#2a8c7e', receipt: 'Re-turn, deposit back' },
+  centre:  { name: 'For the centre', colour: '#c96a12' },
+  // the recycling centre, open from tier 4
+  clothes: { name: 'Clothes bank', colour: '#7b4fa0' },
+  reuse:   { name: 'Reuse',        colour: '#d95f8a' },
+  weee:    { name: 'Electricals',  colour: '#c96a12' },
+  battery: { name: 'Battery box',  colour: '#e0b020' },
+  paint:   { name: 'Paint',        colour: '#c0392b', receipt: 'Paint drop-off' }
+};
+const BAYS = ['clothes','reuse','weee','battery','paint'];
+
+// ── Tiers. Tune the feel here. ──────────────────────────
+//   travel: seconds for one item to ride the whole belt at base speed
+//   gap:    seconds between items entering
+//   names:  show the name under each item on the belt
+const ALL_BINS = ['green','brown','black','glass','return'];
+//   bays:   the recycling centre is open as a second row, and I stop carrying things there myself
+const TIERS = {
+  1: { name: 'Home, week one', homes: ALL_BINS, travel: 16,   gap: 3.6, names: true,  twins: 0,    bays: false },
+  2: { name: 'Home, regular',  homes: ALL_BINS, travel: 14.5, gap: 3.1, names: false, twins: 0.25, bays: false },
+  3: { name: 'Home, expert',   homes: ALL_BINS, travel: 13,   gap: 2.7, names: false, twins: 0.4,  bays: false },
+  4: { name: 'Centre, new job', homes: ALL_BINS, travel: 12.5, gap: 2.6, names: false, twins: 0.5,  bays: true  },
+  5: { name: 'Centre, manager', homes: ALL_BINS, travel: 11.5, gap: 2.3, names: false, twins: 0.6,  bays: true  }
+};
+const ROUND_ITEMS = 20;
+// One game is two belts of ten. Round 1 warms up and builds. Round 2 starts where round 1 ended and keeps going.
+const ROUNDS = 2, PER_ROUND = ROUND_ITEMS / ROUNDS;
+const WARMUP_ITEMS = 3;                       // the first few of round 1 ride a slow belt
+const SPEED = { 1: [0.62, 1.0],  2: [1.05, 1.5]  };   // belt speed multiplier, first item to last, per round
+const GAP   = { 1: [1.35, 0.9],  2: [0.85, 0.58] };   // spacing multiplier, first item to last, per round
+const OWN_TIER_SHARE = { 1: 0.5, 2: 0.85 };           // how much of each round comes from the player's own tier
+function rampNow() {                          // 0 to 1 across the current round
+  const k = G.spawned - (G.round - 1) * PER_ROUND;
+  if (G.round === 1) return Math.min(1, Math.max(0, (k - WARMUP_ITEMS) / (PER_ROUND - WARMUP_ITEMS)));
+  return Math.min(1, k / PER_ROUND);
+}
+const mul = (pair) => pair[0] + (pair[1] - pair[0]) * rampNow();
+const SLOW_AFTER_WRONG = 1900;           // ms the belt eases off so the reason can be read (tiers 1 to 3 only)
+const PTS_BASE = 5, PTS_FAST = 2, PTS_PASS = 7, CHAIN_EVERY = 5, CHAIN_BONUS = 5, MAX_SCORE = 150;
+
+// ── Items ───────────────────────────────────────────────
+//   home:  green | brown | black | glass | return | centre (let it pass) | split (tap to take apart)
+//   ok:    what I say when it lands in the right place
+//   why:   the rule, said when it goes wrong. Facts from mywaste.ie.
+const ITEMS = [
+  // tier 1: the five bins, the everyday things, and a few look-alikes
+  { art: 'milk_carton', name: 'Milk carton',  home: 'green', tier: 1, ok: 'Green bin, grand. Cartons want a rinse first.', why: 'Cartons go in the green bin. Rinse it, let it dry, drop it in loose.' },
+  { art: 'juice',       name: 'Juice carton', home: 'green', tier: 1, ok: 'Green bin. Rinsed and dry, that\'s the trick.', why: 'Juice cartons go in the green bin, rinsed and dry.' },
+  { art: 'cereal',      name: 'Cereal box',   home: 'green', tier: 1, ok: 'Green bin. Card is the easy one.', why: 'Clean cardboard goes in the green bin.' },
+  { art: 'eggbox',      name: 'Egg box',      home: 'green', tier: 1, ok: 'Green bin, clean and dry.', why: 'Egg boxes go in the green bin, clean, dry and loose.' },
+  { art: 'tin',         name: 'Bean tin',     home: 'green', tier: 1, ok: 'Green bin. I\'d rinse the tin first.', why: 'Food tins go in the green bin. Give it a rinse.' },
+  { art: 'tube',        name: 'Kitchen roll tube', short: 'Roll tube', home: 'green', tier: 1, ok: 'Green bin. Just card, that.', why: 'The card tube goes in the green bin.' },
+  { art: 'yoghurt',     name: 'Yoghurt pot',  home: 'green', tier: 1, ok: 'Green bin, once it\'s clean.', why: 'A rigid plastic pot goes in the green bin once it\'s clean.' },
+  { art: 'punnet',      name: 'Fruit punnet', home: 'green', tier: 1, ok: 'Green bin. Clean, dry, loose.', why: 'Plastic tubs and trays go in the green bin, clean and dry.' },
+  { art: 'banana',      name: 'Banana peel',  home: 'brown', tier: 1, ok: 'Brown bin. Food always goes there.', why: 'Peelings are food waste. Brown bin.' },
+  { art: 'teabag',      name: 'Tea bag',      home: 'brown', tier: 1, ok: 'Brown bin, bag and all.', why: 'Tea bags and leaves go in the brown bin.' },
+  { art: 'toothpaste',  name: 'Toothpaste tube', short: 'Toothpaste', home: 'black', tier: 1, ok: 'Black bin. No other bin wants that tube.', why: 'Toothpaste tubes go in the black bin.' },
+  { art: 'pyrex',       name: 'Pyrex dish',   home: 'black', tier: 2, ok: 'Black bin. It fooled me too, it\'s glass.', why: 'Pyrex is glass treated to take oven heat, so it can\'t be recycled. Black bin, never the bottle bank.' },
+  { art: 'wine',        name: 'Wine bottle',  home: 'glass', tier: 1, ok: 'Bottle bank. Lovely clink.', why: 'Glass bottles go to the bottle bank, not a household bin.' },
+  { art: 'jar',         name: 'Jam jar',      home: 'glass', tier: 1, ok: 'Bottle bank. Jars count too.', why: 'Glass jars go to the bottle bank.' },
+  { art: 'can',         name: 'Drink can, deposit logo', short: 'Drink can', home: 'return', tier: 1, ok: 'Re-turn. That\'s your deposit back.', why: 'See the deposit logo? That can goes back to a Re-turn machine for the money.' },
+  { art: 'fizzy',       name: 'Fizzy bottle, deposit logo', short: 'Fizzy bottle', home: 'return', tier: 1, ok: 'Re-turn. Money back, fair play.', why: 'Bottles with the deposit logo go back to a Re-turn machine.' },
+  { art: 'milk_jug',    name: 'Plastic milk bottle', short: 'Milk bottle', home: 'green', tier: 1, ok: 'Green bin. No deposit on milk, I checked.', why: 'Milk bottles aren\'t part of the deposit scheme. Green bin, clean and dry.' },
+  // tier 2: the ones most people get wrong
+  { art: 'crisps',      name: 'Crisp packet', home: 'green', tier: 2, ok: 'Green bin. Soft plastic counts, if it\'s clean.', why: 'Soft plastic goes in the green bin when it\'s clean, dry and loose.' },
+  { art: 'pasta_bag',   name: 'Pasta bag',    home: 'green', tier: 2, ok: 'Green bin. If you can scrunch it, it\'s soft plastic.', why: 'Pasta bags are soft plastic. Green bin, clean, dry and loose.' },
+  { art: 'salad_bag',   name: 'Salad bag',    home: 'green', tier: 2, ok: 'Green bin, once it\'s clean and dry.', why: 'Salad bags are soft plastic. Green bin, clean, dry and loose.' },
+  { art: 'bread',       name: 'Bread wrapper', home: 'green', tier: 2, ok: 'Green bin. Shake the crumbs out first.', why: 'Bread wrappers are soft plastic. Green bin, clean, dry and loose.' },
+  { art: 'cup',         name: 'Coffee cup, no mark', short: 'Coffee cup', home: 'black', tier: 2, ok: 'Black bin. No compostable mark, so no brown bin.', why: 'No compostable mark, so it\'s paper and plastic stuck together. Black bin.' },
+  { art: 'cup_compost', name: 'Coffee cup, marked compostable', short: 'Coffee cup', home: 'brown', tier: 2, ok: 'Brown bin. The compostable mark is what counts.', why: 'That cup is marked compostable, so it can go in the brown bin.' },
+  { art: 'pizza',       name: 'Greasy pizza box', short: 'Pizza box', home: 'brown', tier: 2, ok: 'Brown bin. Grease is food, I suppose.', why: 'Greasy card goes in the brown bin. Only clean card is for the green bin.' },
+  { art: 'receipt',     name: 'Shiny till receipt', short: 'Till receipt', home: 'black', tier: 2, ok: 'Black bin. Shiny paper isn\'t really paper.', why: 'Shiny receipts are treated with chemicals and can\'t be recycled. Black bin.' },
+  { art: 'orange_net',  name: 'Orange net with clip', short: 'Orange net', home: 'black', tier: 2, maxTier: 3, ok: 'Black bin, with the clip still on.', why: 'Net, clip and label left together go in the black bin.' },
+  { art: 'toothbrush', name: 'Toothbrush', home: 'black', tier: 2, ok: 'Black bin. The plain ones have nowhere else to go.', why: 'A manual toothbrush goes in the black bin. An electric one is electrical waste.' },
+  { art: 'tissue',   name: 'Used tissue', home: 'brown', tier: 2, ok: 'Brown bin. Tissues rot down with the food.', why: 'Tissues, napkins and paper towels go in the brown bin, not the green one.' },
+  { art: 'wipes',    name: 'Wet wipe',    home: 'black', tier: 2, ok: 'Black bin. Never the toilet, never the green bin.', why: 'Wet wipes go in the black bin.' },
+  { art: 'mug',      name: 'Broken mug',  home: 'black', tier: 2, ok: 'Black bin. Crockery isn\'t glass.', why: 'Crockery goes in the black bin. It is not for the bottle bank.' },
+  { art: 'p_foil',   name: 'Clean foil, scrunched', short: 'Clean foil', home: 'green', tier: 2, ok: 'Green bin. Clean and scrunched in a ball.', why: 'Clean foil goes in the green bin, scrunched into a ball. Dirty foil is black bin.' },
+  { art: 'foil_dirty', name: 'Foil with food on it', short: 'Dirty foil', home: 'black', tier: 2, ok: 'Black bin. Food on it, so no recycling.', why: 'Foil with food on it can\'t be recycled. Black bin.' },
+  { art: 'perfume',  name: 'Perfume bottle', home: 'glass', tier: 2, ok: 'Bottle bank. It\'s glass, after all.', why: 'Perfume bottles are glass. Bottle bank.' },
+  // tier 3: not for any bin. Hands off, let it reach me.
+  { art: 'battery',     name: 'Battery',      home: 'centre', tier: 3, ok: 'That one\'s mine. Batteries go to the centre.', why: 'No bin takes a battery, not even the black one. Let it come to me.', bay: 'battery', okBay: "Battery box. Shops that sell them take them back too.", whyBay: "Batteries go in a battery box, at the centre or in a shop that sells them." },
+  { art: 'bulb',        name: 'Light bulb',   home: 'centre', tier: 3, ok: 'Mine. Bulbs go to the recycling centre.', why: 'Light bulbs aren\'t for any bin. Let it ride to me, I\'ll bring it to the centre.', bay: 'weee', okBay: "Electricals. Bulbs count as electrical waste.", whyBay: "Light bulbs go to the electrical drop-off." },
+  { art: 'paint',       name: 'Paint tin',    home: 'centre', tier: 3, ok: 'Mine. Paint goes to the recycling centre.', why: 'Paint isn\'t for any bin. Let it come to me for the centre.', bay: 'paint', okBay: "Paint drop-off. Some centres pass good paint on.", whyBay: "Paint goes to the paint drop-off at the recycling centre." },
+  { art: 'vape',     name: 'Vape',        home: 'centre', tier: 3, ok: 'Mine. Vapes have a battery inside.', why: 'Vapes are electrical waste. No bin takes them, let it come to me.', bay: 'weee', okBay: "Electricals. There's a battery inside that.", whyBay: "Vapes are electrical waste. Electricals." },
+  { art: 'cable',    name: 'Old charger', home: 'centre', tier: 3, ok: 'Mine. Cables go to the electrical drop-off.', why: 'Cables and chargers are electrical waste. Not for any bin.', bay: 'weee', okBay: "Electricals. Anything with a plug.", whyBay: "Cables and chargers are electrical waste. Electricals." },
+  { art: 'aerosol',  name: 'Aerosol can', home: 'centre', tier: 3, ok: 'Mine. Aerosols go to the recycling centre.', why: 'Aerosols go to the recycling centre, not in a bin.', bay: 'paint', okBay: "", whyBay: "", maxTier: 3 },
+  { art: 'tshirt', name: 'Old T-shirt', home: 'centre', tier: 3, ok: 'Mine. Clothes go to the clothes bank.', why: 'Clothes aren\'t for any bin. Let it come to me for the clothes bank.', bay: 'clothes', okBay: 'Clothes bank. Someone else gets a wear out of it.', whyBay: 'Clothes go in the clothes bank, not a bin.' },
+  { art: 'shoe',   name: 'Runners',     home: 'centre', tier: 3, ok: 'Mine. Shoes go to the clothes bank too.', why: 'Shoes aren\'t for any bin. Let them come to me for the clothes bank.', bay: 'clothes', okBay: 'Clothes bank. Shoes count.', whyBay: 'Shoes and boots go in the clothes bank.' },
+  { art: 'teddy',  name: 'Teddy',       home: 'centre', tier: 3, ok: 'Mine. A teddy is a textile, I checked.', why: 'Soft toys count as textiles. Not for any bin, let it come to me.', bay: 'clothes', okBay: 'Clothes bank. I didn\'t expect that for a teddy either.', whyBay: 'Soft toys count as textiles. Clothes bank.' },
+  { art: 'book',   name: 'Book, good as new', short: 'Book', home: 'centre', tier: 3, ok: 'Mine. A good book gets passed on.', why: 'A book in good nick gets passed on or donated, not binned.', bay: 'reuse', okBay: 'Reuse. A good book deserves another reader.', whyBay: 'A book in good nick gets passed on or donated. Reuse.' },
+  { art: 'toy',    name: 'Toy car, still works', short: 'Toy car', home: 'centre', tier: 3, ok: 'Mine. It works, so someone can still play with it.', why: 'Working toys should be passed on for reuse, not binned.', bay: 'reuse', okBay: 'Reuse. It still works, so it still has a job.', whyBay: 'Working toys should be passed on for reuse.' },
+  { art: 'kettle', name: 'Kettle',      home: 'centre', tier: 3, ok: 'Mine. Anything with a plug goes to the centre.', why: 'Anything with a plug is electrical waste. Not for any bin.', bay: 'weee', okBay: 'Electricals. Anything with a plug.', whyBay: 'Anything with a plug is electrical waste. Electricals.' },
+  { art: 'phone',  name: 'Old phone',   home: 'centre', tier: 3, ok: 'Mine. Phones are electrical waste.', why: 'Phones are electrical waste. Not for any bin.', bay: 'weee', okBay: 'Electricals. The battery stays in, they deal with it.', whyBay: 'Phones are electrical waste. Electricals.' },
+  { art: 'laptop',    name: 'Old laptop',  home: 'centre', tier: 3, ok: 'Mine. Laptops are electrical waste.', why: 'A laptop is electrical waste. Not for any bin, let it come to me.', bay: 'weee', okBay: 'Electricals. Wipe it first, I would.', whyBay: 'Laptops are electrical waste. Electricals.' },
+  { art: 'toaster',   name: 'Toaster',     home: 'centre', tier: 3, ok: 'Mine. It has a plug, so it\'s for the centre.', why: 'A toaster is electrical waste, not scrap for the black bin.', bay: 'weee', okBay: 'Electricals. Plug on it, so that\'s the one.', whyBay: 'Anything with a plug is electrical waste. Electricals.' },
+  { art: 'hairdryer', name: 'Hair dryer',  home: 'centre', tier: 3, ok: 'Mine. Small electricals go to the centre too.', why: 'A hair dryer is electrical waste. Not for any bin.', bay: 'weee', okBay: 'Electricals. Small ones count as well.', whyBay: 'Small electricals like hair dryers go in Electricals.' },
+  { art: 'etooth',    name: 'Electric toothbrush', short: 'Electric brush', home: 'centre', tier: 3, ok: 'Mine. There\'s a battery sealed inside that.', why: 'An electric toothbrush is electrical waste. Only a manual one goes in the black bin.', bay: 'weee', okBay: 'Electricals. Sealed battery inside.', whyBay: 'An electric toothbrush is electrical waste. Electricals.' },
+  { art: 'tv',        name: 'Old TV',      home: 'centre', tier: 4, bay: 'weee', ok: 'Mine.', why: 'A TV is electrical waste.', okBay: 'Electricals. Big ones too, and it costs nothing to drop off.', whyBay: 'TVs are electrical waste. Electricals.' },
+  // tier 4: the recycling centre opens, and these two look like they belong there. They don't.
+  { art: 'book_torn',  name: 'Paperback, falling apart', short: 'Old paperback', home: 'green', tier: 4, ok: 'Green bin. A paperback is just paper in the end.', why: 'A paperback past saving goes in the green bin. A hardback needs its cover taken off first.' },
+  { art: 'toy_broken', name: 'Broken toy car', short: 'Broken toy', home: 'black', tier: 4, ok: 'Black bin. Broken and glued together, nothing else for it.', why: 'A broken toy that can\'t be taken apart goes in the black bin.' },
+  // tier 5: tap to take apart, then every bit needs a home.
+  { art: 'meat_pack',   name: 'Meat pack',    home: 'split', tier: 5, why: 'That\'s three things in one. Tap it to pull it apart.', parts: [
+      { art: 'p_tray', name: 'Tray, washed', home: 'green', ok: 'Green bin. Any colour tray, once it\'s washed.', why: 'Meat trays go in the green bin whatever the colour, once washed or wiped.' },
+      { art: 'p_film', name: 'Film',         home: 'green', ok: 'Green bin, clean and dry.', why: 'The film is soft plastic. Green bin, clean, dry and loose.' },
+      { art: 'p_pad',  name: 'Soak pad',     home: 'black', ok: 'Black bin. Nothing else will have it.', why: 'The soak pad can\'t be recycled. Take it out, it goes in the black bin.' } ] },
+  { art: 'pizza_box',   name: 'Frozen pizza box', short: 'Frozen pizza', home: 'split', tier: 5, why: 'Two things in one. Tap it to pull it apart.', parts: [
+      { art: 'p_box',  name: 'Card box',   home: 'green', ok: 'Green bin. Clean card.', why: 'A clean card box goes in the green bin.' },
+      { art: 'p_wrap', name: 'Clear wrap', home: 'green', ok: 'Green bin. Soft plastic, clean and dry.', why: 'The clear wrap on a frozen pizza is soft plastic. Green bin.' } ] },
+  { art: 'cup',         name: 'Coffee cup with lid', short: 'Coffee cup', home: 'split', tier: 5, why: 'Cup, lid and sleeve. Tap it to pull it apart.', parts: [
+      { art: 'p_cup',    name: 'Cup, no mark', home: 'black', ok: 'Black bin. No compostable mark.', why: 'No compostable mark, so the cup is black bin.' },
+      { art: 'p_lid',    name: 'Lid',          home: 'green', ok: 'Green bin, clean and dry.', why: 'A clean, dry lid can go in the green bin.' },
+      { art: 'p_sleeve', name: 'Card sleeve',  home: 'green', ok: 'Green bin. Card again.', why: 'The card sleeve goes in the green bin.' } ] },
+  { art: 'remote',      name: 'TV remote',    home: 'split', tier: 5, why: 'There are batteries in there. Tap it to take them out first.', parts: [
+      { art: 'p_batt',   name: 'Batteries',           home: 'battery', ok: 'Battery box. Always out before anything else.', why: 'Batteries come out and go in a battery box, never in with the device.' },
+      { art: 'p_remote', name: 'Remote, no batteries', home: 'weee',    ok: 'Electricals, now it\'s empty.', why: 'The remote itself is electrical waste. Electricals.' } ] },
+  { art: 'orange_net',  name: 'Net of oranges', short: 'Orange net', home: 'split', tier: 5, why: 'Net and clip. Tap it to pull it apart.', parts: [
+      { art: 'p_net',  name: 'Net on its own', home: 'green', ok: 'Green bin, now the clip is off.', why: 'Once the clip and label are off, the netting can go in the green bin.' },
+      { art: 'p_clip', name: 'Clip and label', home: 'black', ok: 'Black bin for the clip.', why: 'The clip and label go in the black bin.' } ] }
+];
+
+const TWINS = [['cup','cup_compost'], ['can','tin'], ['fizzy','milk_jug'], ['jar','pyrex'], ['wine','perfume'], ['p_foil','foil_dirty'], ['tissue','wipes'], ['battery','can'], ['aerosol','tin'], ['pizza','cereal'], ['receipt','tube'], ['mug','jar'], ['book','book_torn'], ['toy','toy_broken'], ['teddy','toy'], ['kettle','tin'], ['phone','receipt'], ['etooth','toothbrush'], ['laptop','book'], ['toaster','tin'], ['hairdryer','fizzy'], ['tv','pizza']];
+
+// ── Player, storage, once a day ─────────────────────────
+const _q = new URLSearchParams(location.search);
+const _playerName = _q.get('player') || localStorage.getItem('env_player_name') || 'guest';
+const _nk = _playerName.toLowerCase().replace(/\s+/g, '_');
+const PLAYED_KEY = 'bd_last_played_' + _nk;
+const SCORE_KEY  = 'bd_last_score_' + _nk;
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+function hasPlayedToday() { return localStorage.getItem(PLAYED_KEY) === todayStr(); }
+// Two challenges a day is the cap, even by direct link (see day-guard.js). The prototype switch lifts it.
+if (!PROTOTYPE && window.Engine && !hasPlayedToday() && Engine.dayDone(_nk)) location.replace('index.html?hub=1&capped=1');
+
+// Tier follows the player's level in the engine: one level per 500 points.
+function playerLevel() {
+  const p = JSON.parse(localStorage.getItem('env_progress_' + _nk) || '{}');
+  return Math.floor((p.totalScore || 0) / 500) + 1;
+}
+function tierForLevel(lv) { return lv >= 12 ? 5 : lv >= 8 ? 4 : lv >= 5 ? 3 : lv >= 3 ? 2 : 1; }
+// ?tier=N picks a tier, for testers only. Everyone else gets the tier their level has earned.
+let tier = Math.min(5, Math.max(1, (PROTOTYPE && parseInt(_q.get('tier'), 10)) || tierForLevel(playerLevel())));
+
+// ── Screens ─────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => {
+    if (s.classList.contains('active')) { s.classList.add('exit'); s.classList.remove('active'); setTimeout(() => s.classList.remove('exit'), 400); }
+  });
+  const nav = document.getElementById('game-bottom-nav');
+  if (nav) nav.style.display = 'none';
+  setTimeout(() => { const next = document.getElementById(id); next.classList.add('active'); next.scrollTop = 0; if (id === 'screen-game') fitStage(); }, 50);
+}
+
+const $ = (id) => document.getElementById(id);
+const svgOf = (art) => '<svg viewBox="0 0 64 64" aria-hidden="true">' + ART[art] + '</svg>';
+
+// ── The story ───────────────────────────────────────────
+// Tiers 1 to 3 are at home: I did the weekly shop and you sort what is left of it.
+// From tier 4 you got the job at the recycling centre, where there is a second row of bays.
+const PROMOTED_KEY = 'bd_promoted_' + _nk;
+function atCentre() { return !!TIERS[tier].bays; }
+function paintIntro() {
+  const centre = atCentre(), first = centre && !localStorage.getItem(PROMOTED_KEY);
+  $('intro-badge').textContent = centre ? 'Recycling centre' : 'Recycling';
+  $('intro-label').textContent = first ? 'Fair play to you' : 'Today\'s game';
+  $('intro-title').innerHTML = first ? 'You got <em>the job</em>' : 'Bin <em>day</em>';
+  $('intro-say').innerHTML = centre
+    ? (first ? 'You sorted at home so well that the recycling centre hired you. ' : 'Back on shift at the recycling centre. ') +
+      'Same belt, but now there\'s <strong>a second row of bays</strong>: clothes, reuse, electricals, batteries, paint. And I\'m not carrying anything for you any more.'
+    : (tier === 3
+      ? 'I did the weekly shop, and cleared out a drawer while I was at it. Some of this is <strong>not for any bin</strong>. Leave those alone and let them reach me, I\'ll bring them to the recycling centre.'
+      : 'I did the weekly shop, and now it\'s all empty. Twenty things zig-zag down the belt towards me at the till. Get each one into the right bin <strong>before it reaches me</strong>. One bin even gives you money back.');
+  $('intro-meta1').textContent = centre ? '2 rounds of 10, 10 homes' : '2 rounds of 10';
+  $('intro-shelf').innerHTML = (centre ? ['tshirt','book','kettle','battery','teddy','paint'] : ['milk_jug','punnet','meat_pack','pasta_bag','juice','can']).map(svgOf).join('');
+}
+
+// ── Intro ───────────────────────────────────────────────
+(function initIntro() {
+  paintIntro();
+  const box = $('proto-tiers');
+  if (!PROTOTYPE) { box.style.display = 'none'; }
+  else {
+    const btns = $('proto-tier-btns');
+    btns.innerHTML = [1,2,3,4,5].map(t => '<button data-t="' + t + '">' + t + '</button>').join('');
+    const paint = () => btns.querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.t === tier));
+    btns.addEventListener('click', e => { const t = +(e.target.dataset || {}).t; if (t) { tier = t; paint(); paintIntro(); } });
+    paint();
+  }
+  if (!PROTOTYPE && hasPlayedToday()) {
+    const s = localStorage.getItem(SCORE_KEY);
+    $('played-score').textContent = s || '0';
+    document.querySelectorAll('.screen').forEach(x => x.classList.remove('active'));
+    $('screen-played').classList.add('active');
+  }
+})();
+
+// ── Stage scaling ───────────────────────────────────────
+let stageScale = 1;
+function fitStage() {
+  const wrap = $('stage-wrap'), stage = $('stage');
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  if (!w || !h) return;
+  stageScale = Math.min(w / 390, h / 727);
+  stage.style.transform = 'translateX(' + (-195 * stageScale) + 'px) scale(' + stageScale + ')';
+}
+window.addEventListener('resize', fitStage);
+
+const HALF = 39;   // half the item size, in stage pixels. Items are 78 wide (see .bd-item in the CSS).
+
+// ── Game state ──────────────────────────────────────────
+let G = null;
+const pathEl = document.getElementById('belt-path');
+let PATH_LEN = 0;
+
+function buildDeck(t) {
+  const pool = ITEMS.filter(i => i.tier <= t && (!i.maxTier || t <= i.maxTier));
+  const own = pool.filter(i => i.tier === t), below = pool.filter(i => i.tier < t);
+  const easy = ITEMS.filter(i => i.tier === 1 && i.home !== 'split' && i.home !== 'centre');
+  const bays = TIERS[t].bays, deck = [];
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const count = (f) => deck.filter(f).length;
+  const ok = (it) => {
+    const last = deck[deck.length - 1], prev = deck[deck.length - 2], inRound2 = deck.length >= PER_ROUND;
+    if (last === it || prev === it) return false;
+    if (count(d => d === it) >= (pool.length < 14 ? 3 : 2)) return false;
+    if (it.home === 'split') {                         // take-apart packs belong to round 2
+      if (!inRound2 || count(d => d.home === 'split') >= 3 || (last && last.home === 'split')) return false;
+    }
+    if (it.home === 'centre') {
+      if (count(d => d.home === 'centre') >= (bays ? 9 : 5)) return false;
+      if (!bays && ((last && last.home === 'centre') || (!inRound2 && count(d => d.home === 'centre') >= 2))) return false;
+    }
+    return true;
+  };
+  const fill = (upto, ownShare, twinBoost) => {
+    let guard = 0;
+    while (deck.length < upto && guard++ < 900) {
+      const src = (below.length && Math.random() > ownShare) || !own.length ? (below.length ? below : pool) : own;
+      const it = pick(src);
+      if (!ok(it)) continue;
+      deck.push(it);
+      // look-alikes like to arrive together: a marked cup right behind a plain one
+      if (deck.length < upto && it.home !== 'split' && Math.random() < TIERS[t].twins * twinBoost) {
+        const pair = TWINS.find(tw => tw.includes(it.art));
+        const twinArt = pair && pair.find(a => a !== it.art);
+        const twin = twinArt && pool.find(x => x.art === twinArt && x.home !== 'split');
+        if (twin && ok(twin)) deck.push(twin);
+      }
+    }
+    const safe = pool.filter(i => i.home !== 'split' && i.home !== 'centre');
+    while (deck.length < upto) deck.push(pick(safe));
+  };
+  for (let k = 0; k < WARMUP_ITEMS; k++) { let e, g = 0; do { e = pick(easy); } while (deck.includes(e) && g++ < 50); deck.push(e); }
+  fill(PER_ROUND,   OWN_TIER_SHARE[1], 0.6);
+  fill(ROUND_ITEMS, OWN_TIER_SHARE[2], 1.6);
+  return deck;
+}
+
+function startGame() {
+  const T = TIERS[tier];
+  PATH_LEN = pathEl.getTotalLength();
+  $('stage').querySelectorAll('.bd-item, .bd-float').forEach(n => n.remove());
+  G = {
+    T, deck: buildDeck(tier), spawned: 0, resolved: 0, live: [], parts: [],
+    clock: 0, nextSpawn: 0.6, slowUntil: 0, running: false, last: 0,
+    chain: 0, bestChain: 0, raw: 0, max: 0, units: [], held: null, picked: null, ended: false, round: 1
+  };
+  $('hud-tier').textContent = T.name;
+  $('till-scr').textContent = T.bays ? 'CENTRE' : 'TILL 1';
+  if (T.bays) localStorage.setItem(PROMOTED_KEY, '1');
+  $('crate').classList.add('on');
+  $('stage').classList.toggle('two', T.bays);
+  $('crate-art').innerHTML = BINS_ART.crate;
+  $('bins').innerHTML = T.homes.map(h =>
+    '<button class="bd-bin" data-home="' + h + '" aria-label="' + HOMES[h].name + '">' + BINS_ART[h] +
+    '<span class="no">' + (window.EA ? EA.icon('x', { size: 14 }) : '') + '</span><p class="lbl">' + HOMES[h].name + '</p></button>').join('');
+  $('bays').innerHTML = !T.bays ? '' : BAYS.map(h =>
+    '<button class="bd-bin" data-home="' + h + '" aria-label="' + HOMES[h].name + '">' + BINS_ART[h] +
+    '<span class="no">' + (window.EA ? EA.icon('x', { size: 14 }) : '') + '</span><p class="lbl">' + HOMES[h].name + '</p></button>').join('');
+  $('stage').querySelectorAll('.bd-bin').forEach(b => b.addEventListener('pointerup', onBinTap));
+  updateHud(); hideSay(); $('prep').classList.remove('on');
+  showScreen('screen-game');
+  setEnvie('point');
+  countdown(() => { G.running = true; G.last = performance.now(); requestAnimationFrame(tick); });
+}
+
+function nextRound() {
+  G.running = false; G.round++;
+  setPicked(null); hideSay(); setEnvie('celebrate', 1500);
+  updateHud();
+  countdown(() => { G.nextSpawn = G.clock + 0.4; G.running = true; G.last = performance.now(); requestAnimationFrame(tick); },
+            '<div class="rnd"><b>Round ' + G.round + '</b><i>I\'ve turned the belt up.</i></div>');
+}
+
+function countdown(done, lead) {
+  const c = $('count'); let n = 3;
+  if (lead) { c.classList.add('on'); c.innerHTML = lead; setTimeout(() => countdown(done), 1500); return; }
+  c.classList.add('on');
+  const step = () => {
+    if (n === 0) { c.classList.remove('on'); c.innerHTML = ''; done(); return; }
+    c.innerHTML = '<span>' + n + '</span>'; n--; setTimeout(step, 650);
+  };
+  setTimeout(step, 450);
+}
+
+// ── The loop ────────────────────────────────────────────
+function speedNow() {
+  let v = (PATH_LEN / G.T.travel) * mul(SPEED[G.round]);
+  if (performance.now() < G.slowUntil) v *= 0.25;
+  return v;
+}
+
+function tick(now) {
+  if (!G || G.ended) return;
+  const dt = Math.min(0.05, (now - G.last) / 1000); G.last = now;
+  if (G.running) {
+    const v = speedNow();
+    const slow = performance.now() < G.slowUntil;
+    G.clock += slow ? dt * 0.25 : dt;
+    if (G.spawned < G.round * PER_ROUND && G.clock >= G.nextSpawn) spawn();
+    for (const it of G.live.slice()) {
+      it.d += v * dt;
+      if (it.d >= PATH_LEN) { reachedTill(it); continue; }
+      if (!it.held) place(it);
+    }
+    if (G.spawned >= G.round * PER_ROUND && !G.live.length && !G.parts.length) {
+      if (G.round < ROUNDS) nextRound(); else endRound();
+      return;
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+function spawn() {
+  let def = G.deck[G.spawned++];
+  if (def.home === 'centre' && G.T.bays && def.bay) def = Object.assign({}, def, { home: def.bay, ok: def.okBay, why: def.whyBay });
+  const el = document.createElement('div');
+  el.className = 'bd-item' + (G.T.names ? '' : ' notag') + (def.home === 'split' ? ' split' : '');
+  el.innerHTML = svgOf(def.art) + '<span class="tag">' + (def.short || def.name) + '</span>';
+  el.style.setProperty('--r', (Math.random() * 12 - 6).toFixed(1) + 'deg');
+  $('stage').appendChild(el);
+  const it = { def, el, d: 0, held: false, born: G.clock };
+  el.addEventListener('pointerdown', (e) => grab(e, it));
+  G.live.push(it); place(it);
+  G.nextSpawn = G.clock + G.T.gap * mul(GAP[G.round]);
+  updateHud();
+}
+
+function place(it) {
+  const p = pathEl.getPointAtLength(Math.max(0, it.d));
+  it.x = p.x; it.y = p.y;
+  it.el.style.left = (p.x - HALF) + 'px';
+  it.el.style.top  = (p.y - (G.T.names ? HALF + 6 : HALF)) + 'px';
+}
+
+// ── Input: drag, or tap then tap ────────────────────────
+function stagePoint(e) {
+  const r = $('stage').getBoundingClientRect();
+  return { x: (e.clientX - r.left) / stageScale, y: (e.clientY - r.top) / stageScale };
+}
+function binUnder(e) {
+  // nearest home wins, so the two rows never steal each other's drops
+  let hit = null, best = 1e9;
+  const two = $('stage').classList.contains('two');
+  $('stage').querySelectorAll('.bd-bin').forEach(b => {
+    const r = b.getBoundingClientRect(), pad = (two ? 6 : 14) * stageScale;
+    if (e.clientX < r.left - pad || e.clientX > r.right + pad || e.clientY < r.top - pad * 2 || e.clientY > r.bottom + pad) return;
+    const d = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
+    if (d < best) { best = d; hit = b; }
+  });
+  return hit;
+}
+function clearHot() { $('stage').querySelectorAll('.bd-bin.hot').forEach(b => b.classList.remove('hot')); }
+
+function grab(e, it) {
+  if (!G || !G.running || G.held || it.gone) return;
+  e.preventDefault();
+  const start = stagePoint(e), t0 = performance.now();
+  let moved = false;
+  it.el.setPointerCapture(e.pointerId);
+  const move = (ev) => {
+    const p = stagePoint(ev);
+    if (!moved && Math.hypot(p.x - start.x, p.y - start.y) < 9) return;
+    if (!moved) { moved = true; it.held = true; G.held = it; it.el.classList.add('held'); setPicked(null); }
+    it.el.style.left = (p.x - HALF) + 'px'; it.el.style.top = (p.y - HALF - 22) + 'px';   // rides above the finger so it stays visible
+    clearHot(); const b = binUnder(ev); if (b) b.classList.add('hot');
+  };
+  const up = (ev) => {
+    it.el.removeEventListener('pointermove', move); it.el.removeEventListener('pointerup', up); it.el.removeEventListener('pointercancel', up);
+    clearHot();
+    if (it.gone) return;
+    if (!moved) {                         // a tap
+      if (performance.now() - t0 < 450) tapItem(it);
+      return;
+    }
+    it.held = false; G.held = null; it.el.classList.remove('held');
+    const b = binUnder(ev);
+    if (b) drop(it, b.dataset.home, b);
+    else if (!it.part) place(it);         // back on the belt where it would have been
+    else homePart(it);
+  };
+  it.el.addEventListener('pointermove', move); it.el.addEventListener('pointerup', up); it.el.addEventListener('pointercancel', up);
+}
+
+function setPicked(it) {
+  if (G.picked) G.picked.el.classList.remove('picked');
+  G.picked = it; if (it) it.el.classList.add('picked');
+}
+function tapItem(it) {
+  if (it.def.home === 'split' && !it.part) { takeApart(it); return; }
+  setPicked(G.picked === it ? null : it);
+}
+function onBinTap(e) {
+  if (!G || !G.running || !G.picked || G.held) return;
+  const it = G.picked; setPicked(null);
+  if (!it.gone) drop(it, e.currentTarget.dataset.home, e.currentTarget);
+}
+
+// ── Take it apart (tier 5) ──────────────────────────────
+const PART_SLOTS = [[8, 452], [98, 452], [188, 452]];
+function takeApart(it) {
+  if (G.parts.length) { say('One pack at a time.', 'Finish the bits you have first.', false); return; }
+  removeFromBelt(it); it.gone = true; it.el.remove(); G.resolved++;
+  $('prep').textContent = it.def.name + ', taken apart'; $('prep').classList.add('on');
+  say(it.def.parts.length === 2 ? 'Two things in one.' : 'Three things in one.', 'Now find each bit a home.', false);
+  it.def.parts.forEach((pd, i) => {
+    const el = document.createElement('div');
+    el.className = 'bd-item part';
+    el.innerHTML = svgOf(pd.art) + '<span class="tag">' + pd.name + '</span>';
+    el.style.left = (it.x - HALF) + 'px'; el.style.top = (it.y - HALF) + 'px';
+    $('stage').appendChild(el);
+    const part = { def: pd, el, part: true, slot: PART_SLOTS[i], parent: it.def, born: G.clock, d: 0 };
+    el.addEventListener('pointerdown', (e) => grab(e, part));
+    G.parts.push(part);
+    setTimeout(() => { el.classList.add('fly'); homePart(part); setTimeout(() => el.classList.remove('fly'), 450); }, 30);
+  });
+  updateHud();
+}
+function homePart(p) { p.el.style.left = p.slot[0] + 'px'; p.el.style.top = p.slot[1] + 'px'; }
+
+// ── Resolving ───────────────────────────────────────────
+function removeFromBelt(it) { const i = G.live.indexOf(it); if (i >= 0) G.live.splice(i, 1); if (G.picked === it) setPicked(null); }
+
+function record(def, right, parent) {
+  G.units.push({ def, right, parent });
+  G.max += (def.home === 'centre' ? PTS_PASS : PTS_BASE + PTS_FAST);
+}
+function award(pts) {
+  G.chain++; G.bestChain = Math.max(G.bestChain, G.chain);
+  if (G.chain % CHAIN_EVERY === 0) { pts += CHAIN_BONUS; setEnvie('celebrate', 1400); }
+  G.raw += pts;
+  const c = $('hud-chain'); c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump');
+  return pts;
+}
+function breakChain() { G.chain = 0; }
+
+function drop(it, home, binEl) {
+  const def = it.def;
+  it.gone = true;
+  if (it.part) { G.parts.splice(G.parts.indexOf(it), 1); if (!G.parts.length) $('prep').classList.remove('on'); }
+  else { removeFromBelt(it); G.resolved++; }
+
+  if (def.home === 'split') {             // dragged whole into a bin
+    def.parts.forEach(pd => record(pd, false, def));
+    breakChain(); wrongFx(it, binEl, null); say('Not in one piece.', def.why, true);
+  } else if (def.home === 'centre') {     // binned something no bin takes
+    record(def, false); breakChain(); wrongFx(it, binEl, 'crate');
+    say('Not for any bin.', def.why, true);
+  } else if (def.home === home) {
+    record(def, true);
+    const fast = it.part ? (G.clock - it.born < 4) : (it.d < PATH_LEN * 0.5);
+    const pts = award(PTS_BASE + (fast ? PTS_FAST : 0));
+    rightFx(it, binEl, pts);
+    const parts = def.ok.split('. ');
+    say(parts[0] + (parts.length > 1 ? '.' : ''), parts.slice(1).join('. '), false, '+' + pts);
+  } else {
+    record(def, false); breakChain(); wrongFx(it, binEl, def.home);
+    say(HOMES[def.home].name + ' for that one, I\'m afraid.', def.why, true);
+  }
+  updateHud();
+}
+
+function reachedTill(it) {
+  const def = it.def;
+  removeFromBelt(it); it.gone = true; G.resolved++;
+  if (G.held === it) { G.held = null; it.el.classList.remove('held'); }
+  if (def.home === 'centre') {            // correct: hands off, it rode to me
+    record(def, true); const pts = award(PTS_PASS);
+    flyTo(it, 354, 472, true); floatPts(330, 442, '+' + pts);
+    const parts = def.ok.split('. ');
+    say(parts[0] + '.', parts.slice(1).join('. '), false, '+' + pts);
+  } else {
+    if (def.home === 'split') def.parts.forEach(pd => record(pd, false, def)); else record(def, false);
+    breakChain(); flyTo(it, 348, 392, true); setEnvie('think', 1600);
+    if (tier <= 3) G.slowUntil = performance.now() + SLOW_AFTER_WRONG;
+    say('Too late, that one got to me.', def.why, true);
+  }
+  updateHud();
+}
+
+// ── Effects ─────────────────────────────────────────────
+function binCentre(home) {
+  const b = home === 'crate' ? $('crate') : $('stage').querySelector('.bd-bin[data-home="' + home + '"]');
+  if (!b) return null;
+  const r = b.getBoundingClientRect(), s = $('stage').getBoundingClientRect();
+  return { x: (r.left + r.width / 2 - s.left) / stageScale, y: (r.top - s.top) / stageScale + 30, el: b };
+}
+function flyTo(it, x, y, shrink) {
+  it.el.classList.add('fly');
+  requestAnimationFrame(() => {
+    it.el.style.left = (x - HALF) + 'px'; it.el.style.top = (y - HALF) + 'px';
+    if (shrink) { it.el.style.transform = 'scale(.25)'; it.el.style.opacity = '0'; }
+  });
+  setTimeout(() => it.el.remove(), 480);
+}
+function floatPts(x, y, txt) {
+  const f = document.createElement('div'); f.className = 'bd-float'; f.textContent = txt;
+  f.style.left = (x - 12) + 'px'; f.style.top = (y - 20) + 'px';
+  $('stage').appendChild(f); setTimeout(() => f.remove(), 950);
+}
+function rightFx(it, binEl, pts) {
+  const c = binCentre(binEl.dataset.home);
+  flyTo(it, c.x, c.y, true); floatPts(c.x, c.y - 20, '+' + pts);
+  binEl.classList.remove('gulp'); void binEl.offsetWidth; binEl.classList.add('gulp');
+}
+function wrongFx(it, binEl, rightHome) {
+  binEl.classList.remove('shake'); void binEl.offsetWidth; binEl.classList.add('shake');
+  setTimeout(() => binEl.classList.remove('shake'), 1300);
+  setEnvie('think', 1800);
+  if (tier <= 3) G.slowUntil = performance.now() + SLOW_AFTER_WRONG;
+  const from = binCentre(binEl.dataset.home);
+  it.el.style.left = (from.x - HALF) + 'px'; it.el.style.top = (from.y - 84) + 'px';
+  const to = rightHome ? binCentre(rightHome) : null;
+  if (to) {
+    to.el.classList.add('hot'); setTimeout(() => to.el.classList.remove('hot'), 1300);
+    setTimeout(() => flyTo(it, to.x, to.y, true), 380);
+  } else setTimeout(() => flyTo(it, from.x, from.y - 110, true), 380);
+}
+
+let sayTimer = 0;
+function say(title, sub, dark, pts) {
+  $('say-bb').className = 'bb tail-right' + (dark ? ' dark' : '');
+  $('say-t').textContent = title; $('say-s').textContent = sub || ''; $('say-pts').textContent = pts || '';
+  $('say').classList.add('on');
+  clearTimeout(sayTimer); sayTimer = setTimeout(hideSay, dark ? 3200 : 2000);
+}
+function hideSay() { $('say').classList.remove('on'); }
+
+let envieTimer = 0;
+function setEnvie(pose, ms) {
+  const e = $('envie'); if (!e) return;
+  e.setAttribute('pose', pose);
+  clearTimeout(envieTimer);
+  if (ms) envieTimer = setTimeout(() => e.setAttribute('pose', 'point'), ms);
+}
+
+function updateHud() {
+  $('hud-chain').querySelector('span').textContent = 'chain ×' + G.chain;
+  const inRound = Math.max(0, Math.min(PER_ROUND, G.resolved - (G.round - 1) * PER_ROUND));
+  $('hud-count').textContent = 'Round ' + G.round + ' · ' + inRound + ' of ' + PER_ROUND;
+  $('hud-bar').style.width = Math.round(inRound * 100 / PER_ROUND) + '%';
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (!G || G.ended) return;
+  if (document.hidden) { G.running = false; $('screen-game').classList.add('bd-paused'); }
+  else if ($('screen-game').classList.contains('active') && !$('count').classList.contains('on')) { G.running = true; G.last = performance.now(); $('screen-game').classList.remove('bd-paused'); }
+});
+
+// ── End of round: the receipt ───────────────────────────
+function endRound() {
+  G.ended = true; G.running = false;
+  const units = G.units, right = units.filter(u => u.right).length;
+  const score = G.max ? Math.min(MAX_SCORE, Math.round(MAX_SCORE * G.raw / (G.max + Math.floor(units.length / CHAIN_EVERY) * CHAIN_BONUS))) : 0;
+  G.score = score;
+
+  $('final-score').textContent = score;
+  const bits = units.length;
+  let t, s;
+  if (bits > ROUND_ITEMS) { t = (G.T.bays ? 'One shift, ' : 'One shop, ') + bits + ' bits of rubbish.'; s = 'I counted twice. You found the right home for ' + right + ' of them' + (right / bits > 0.8 ? ', fair play.' : '.'); }
+  else if (right === bits) { t = 'Every single one. Maith thú.'; s = 'Twenty things from one shop, and not one in the wrong place.'; }
+  else { t = right + ' of ' + bits + ' in the right place.'; s = G.T.bays ? 'Ten homes to choose from, and the belt doesn\'t wait. Not a bad shift.' : 'Twenty things from one shop. That\'s a lot of bin for a few dinners.'; }
+  $('score-t').textContent = t; $('score-s').textContent = s;
+  $('score-envie').setAttribute('pose', right / bits >= 0.8 ? 'flag' : 'think');
+
+  const streakBonus = (!hasPlayedToday()) ? saveProgress(score) : 0;
+  $('score-pills').innerHTML = '<span class="chip outline">' + right + ' sorted</span><span class="chip">Best chain ' + G.bestChain + '</span>' + (streakBonus ? '<span class="chip">Streak +' + streakBonus + '</span>' : '');
+
+  const tally = {}; units.forEach(u => { tally[u.def.home] = (tally[u.def.home] || 0) + 1; });
+  const line = (label, n, colour, bold) => '<div class="bd-rline' + (bold ? ' b' : '') + '">' + (colour ? '<i style="background:' + colour + '"></i>' : '') + '<span>' + label + '</span><span>' + n + '</span></div>';
+  $('receipt').innerHTML = (G.T.bays ? '<h3>Recycling centre, today\'s shift</h3><p class="sub">what came in, and where it went</p><hr>' : '<h3>Till 1, today\'s shop</h3><p class="sub">what it all turned into</p><hr>') +
+    line(G.T.bays ? 'Things that came in' : 'Things I bought', ROUND_ITEMS, null, true) + line('Bits of rubbish they made', bits, null, true) + '<hr class="soft">' +
+    Object.keys(HOMES).filter(h => tally[h]).map(h => line(HOMES[h].receipt || HOMES[h].name, tally[h], HOMES[h].colour)).join('') +
+    '<hr>' + line('You sorted right', right + ' of ' + bits, null, true);
+
+  const seen = new Set(), wrong = [];
+  units.filter(u => !u.right).forEach(u => { if (!seen.has(u.def.art + u.def.home)) { seen.add(u.def.art + u.def.home); wrong.push(u); } });
+  const rv = $('review');
+  if (!wrong.length) rv.style.display = 'none';
+  else {
+    rv.style.display = '';
+    const n = Math.min(3, wrong.length);
+    rv.innerHTML = '<h3>' + (n === 1 ? 'The one I\'d check again' : 'The ' + ['', '', 'two', 'three'][n] + ' I\'d check again') + '</h3>' +
+      wrong.slice(0, 3).map(u => {
+        const home = u.def.home === 'centre' ? 'crate' : u.def.home;
+        return '<div class="bd-rrow">' + svgOf(u.def.art) + '<div style="flex:1;min-width:0;"><p class="n">' + u.def.name + '</p><p class="w">' + u.def.why + '</p></div>' +
+               '<div class="h">' + BINS_ART[home] + '<p>' + HOMES[u.def.home].name + '</p></div></div>';
+      }).join('');
+  }
+  setTimeout(() => showScreen('screen-score'), 700);
+}
+
+// ── Progress (same keys and streak rule as the other games) ──
+function getStreakBonus(nk) {
+  const today = todayStr(), yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const key = 'streak_' + nk, data = JSON.parse(localStorage.getItem(key) || '{}');
+  if (data.lastDate === today) { /* already counted today */ }
+  else if (data.lastDate === yesterday) { data.count = (data.count || 1) + 1; data.lastDate = today; localStorage.setItem(key, JSON.stringify(data)); }
+  else { data.count = 1; data.lastDate = today; localStorage.setItem(key, JSON.stringify(data)); }
+  const count = data.count || 1;
+  return count >= 5 ? 50 : count >= 3 ? 25 : 0;
+}
+function saveProgress(finalScore) {
+  localStorage.setItem(PLAYED_KEY, todayStr());
+  localStorage.setItem(SCORE_KEY, finalScore);
+  const bonus = getStreakBonus(_nk);
+  const key = 'env_progress_' + _nk, prev = JSON.parse(localStorage.getItem(key) || '{}');
+  localStorage.setItem(key, JSON.stringify({
+    totalScore: (prev.totalScore || 0) + finalScore + bonus,
+    sessionsPlayed: (prev.sessionsPlayed || 0) + 1,
+    actionsPledged: prev.actionsPledged || 0
+  }));
+  return bonus;
+}
+function finishAndGoHub() { window.location.href = 'index.html?hub=1'; }
+</script>
+
+<nav class="app-nav" id="game-bottom-nav" style="display:none;">
+  <a class="app-nav-item active" href="index.html"><span class="material-symbols-outlined">home</span><span class="app-nav-label">Home</span></a>
+</nav>
+</body>
+</html>

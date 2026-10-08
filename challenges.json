@@ -362,7 +362,7 @@
       "actions": [
         {
           "title": "Fix a dripping tap at home this week",
-          "desc": "A dripping tap wastes up to 15 litres a day, that's over 5,000 litres a year. Most fixes take 10 minutes and cost very little.",
+          "desc": "A dripping tap wastes about 21 litres a day, that's over 5,000 litres a year. Most fixes take 10 minutes and cost very little.",
           "level": "beginner",
           "points": 50,
           "carbon": "5,000L water saved/year"
@@ -7450,6 +7450,1122 @@
         }
       ],
       "resources": "Guardian mass balance investigation, Jan 2026: theguardian.com | mywaste.ie | Repak: repak.ie"
+    },
+    {
+      "id": "where-halloween-began",
+      "date": "2026-10-07",
+      "title_line1": "Where Halloween",
+      "title_line2": "Really Began",
+      "category_badge": "Sustainability",
+      "category_full": "Sustainability",
+      "intro_fact": "Today I started my Halloween countdown. I found out it didn't start in America at all. Long before costumes and sweets, the Celts marked Samhain, and <strong>it was the most important festival in the Celtic calendar</strong>. I wanted to know how it ended up all over the world.",
+      "questions": [
+        {
+          "text": "What does the Irish word 'Samhain' mean today?",
+          "options": [
+            "Ghost",
+            "November",
+            "Harvest",
+            "Winter"
+          ],
+          "correct": 1,
+          "fact": "I like this one. <strong>Samhain is simply the Irish word for November</strong>. Oíche Shamhna, Halloween, is the night before it starts."
+        },
+        {
+          "text": "Which hill in County Meath is linked by tradition to a great fire lit at Samhain?",
+          "options": [
+            "The Hill of Tara",
+            "The Hill of Ward (Tlachtga)",
+            "The Hill of Uisneach",
+            "Knocknarea"
+          ],
+          "correct": 1,
+          "fact": "Archaeologists from UCD dug there and found <strong>signs of large-scale burning and big feasts at the Hill of Ward</strong>, with activity up to around AD 400 to 520. They're careful though: nobody can prove those fires were for Samhain."
+        },
+        {
+          "text": "Who brought Halloween customs to America?",
+          "options": [
+            "Roman soldiers",
+            "Irish emigrants in the 19th century",
+            "Victorian shopkeepers",
+            "Hollywood film studios"
+          ],
+          "correct": 1,
+          "fact": "So Halloween travelled with people. <strong>Irish emigrants brought their Halloween customs to America in the 19th century</strong>, and some of them changed to fit the new place, like carving pumpkins instead of turnips."
+        }
+      ],
+      "action_intro": "Halloween started here with things people already had. That's a good place to start this year too.",
+      "actions": [
+        {
+          "title": "Read about Ireland's old Halloween customs",
+          "desc": "The National Museum has a short piece on ghost turnips, the púca and fortune telling. Five minutes, and you'll see Halloween differently.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Builds connection to Irish heritage"
+        },
+        {
+          "title": "Plan one part of Halloween using what you already have",
+          "desc": "A costume from old clothes, a lantern from a turnip, food you already bought. Pick one and plan it now, before the shops pull you in.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Avoids single-use Halloween products"
+        }
+      ],
+      "resources": "Tourism Ireland Halloween traditions: ireland.com | National Museum of Ireland: museum.ie | Archaeology Magazine, Samhain Revival: archaeology.org"
+    },
+    {
+      "id": "the-geese-are-back",
+      "date": "2026-10-08",
+      "title_line1": "The Geese",
+      "title_line2": "Are Back",
+      "category_badge": "Biodiversity",
+      "category_full": "Biodiversity",
+      "intro_fact": "Today is two days before World Migratory Bird Day. I spotted geese grazing on a football pitch near the coast, like sheep. They're light-bellied Brent geese, just in from the Arctic, and <strong>almost the whole population spends the winter in Ireland</strong>. I felt quite lucky to be here.",
+      "questions": [
+        {
+          "text": "Where does the light-bellied Brent goose population from the high Arctic spend almost the whole winter?",
+          "options": [
+            "Iceland",
+            "Ireland",
+            "The Netherlands",
+            "Scotland"
+          ],
+          "correct": 1,
+          "fact": "Here's what BirdWatch Ireland says. <strong>This population winters almost entirely in Ireland</strong>, with small numbers in Britain and France. Most are here between October and April."
+        },
+        {
+          "text": "While the geese arrive, the swallows have just left. Where do Ireland's swallows spend the winter?",
+          "options": [
+            "Spain",
+            "Southern Africa",
+            "Morocco",
+            "They stay in Ireland"
+          ],
+          "correct": 1,
+          "fact": "That's a long trip for a small bird. <strong>Swallows spend the winter in southern Africa</strong>, crossing the Mediterranean and the Sahara. They leave Ireland in late September and come back in mid-March."
+        },
+        {
+          "text": "The 2026 World Migratory Bird Day theme is 'Every Bird Counts'. What is it asking people to do?",
+          "options": [
+            "Feed birds every day",
+            "Record and share the birds they see",
+            "Keep cats indoors",
+            "Build nest boxes"
+          ],
+          "correct": 1,
+          "fact": "I like that anyone can help. <strong>The 2026 theme is all about community science</strong>: the birds ordinary people spot and record help scientists track how migration is changing."
+        }
+      ],
+      "action_intro": "You don't need to be an expert to help birds. You just need to look up and write it down.",
+      "actions": [
+        {
+          "title": "Note one bird you see this week",
+          "desc": "Anything counts: a goose, a robin, a gull. Log it with the National Biodiversity Data Centre. Every record adds to the national picture.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Supports citizen science"
+        },
+        {
+          "title": "Visit a coastal spot to see the Brent geese",
+          "desc": "Dublin Bay, Strangford Lough, or your nearest estuary. Go at low tide and keep your distance so they can feed.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Zero carbon if you walk or cycle"
+        }
+      ],
+      "resources": "BirdWatch Ireland: birdwatchireland.ie | World Migratory Bird Day: migratorybirdday.org | National Biodiversity Data Centre: biodiversityireland.ie"
+    },
+    {
+      "id": "dark-evenings-green-minds",
+      "date": "2026-10-09",
+      "title_line1": "Dark Evenings,",
+      "title_line2": "Green Minds",
+      "category_badge": "Wellbeing",
+      "category_full": "Wellbeing",
+      "intro_fact": "Today is the day before World Mental Health Day. The evenings here are closing in fast, and I noticed people heading outside less. Then I found that <strong>two hours a week in nature</strong> seems to make a real difference to how people feel, so I dug into it.",
+      "questions": [
+        {
+          "text": "In 2025, what share of Irish adults said they spend time in nature to look after their mental health?",
+          "options": [
+            "About 20%",
+            "About 44%",
+            "About 70%",
+            "About 90%"
+          ],
+          "correct": 1,
+          "fact": "This one went the wrong way. <strong>It dropped from 53.5% in 2024 to 44.1% in 2025</strong>. People aged 55 and over were the most likely to get outside."
+        },
+        {
+          "text": "A study of nearly 20,000 people found good health and wellbeing were more likely after how much time in nature each week?",
+          "options": [
+            "15 minutes",
+            "At least 2 hours",
+            "At least 10 hours",
+            "A full day"
+          ],
+          "correct": 1,
+          "fact": "And it doesn't have to be all at once. <strong>At least 120 minutes a week, in one go or spread over several short visits</strong>, was linked to better health and wellbeing."
+        },
+        {
+          "text": "According to the WHO, how many working days are lost worldwide each year to depression and anxiety?",
+          "options": [
+            "About 12 million",
+            "About 120 million",
+            "About 12 billion",
+            "About 1 billion"
+          ],
+          "correct": 2,
+          "fact": "That number stopped me. <strong>About 12 billion working days are lost every year</strong> to depression and anxiety, costing the world economy around US$1 trillion."
+        }
+      ],
+      "action_intro": "The light is short now, so catch it while you can. Small and often works.",
+      "actions": [
+        {
+          "title": "Take a 20-minute walk somewhere green before dark",
+          "desc": "A park, a canal, a tree-lined road. Do it six days and you've hit your two hours for the week.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Zero carbon, good for your head"
+        },
+        {
+          "title": "Swap 20 minutes of screen time for time outside",
+          "desc": "In the same survey, over a third of people said screen time stops them looking after their mental health.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Less screen, more daylight"
+        }
+      ],
+      "resources": "Mental Health Ireland: mentalhealthireland.ie | HSE mental health supports: yourmentalhealth.ie | WHO mental health: who.int"
+    },
+    {
+      "id": "fixed-not-binned",
+      "date": "2026-10-12",
+      "title_line1": "Fixed,",
+      "title_line2": "Not Binned",
+      "category_badge": "Circularity",
+      "category_full": "Circularity",
+      "intro_fact": "Today I'm starting three days on fixing things, because I keep hearing 'a new one is cheaper'. I checked the numbers: <strong>each person in Ireland made 631 kg of municipal waste in 2023</strong>, the fifth highest in the EU. So what happens when your washing machine breaks?",
+      "questions": [
+        {
+          "text": "Since summer 2026, if your washing machine breaks after the guarantee has ended, what must the maker do?",
+          "options": [
+            "Nothing, the guarantee is over",
+            "Offer to repair it, free or at a reasonable price",
+            "Refund half the price",
+            "Replace it with a new one"
+          ],
+          "correct": 1,
+          "fact": "Fair play to whoever pushed for this. Under the EU right to repair, now Irish law, <strong>makers of listed products must offer a repair even after the guarantee runs out</strong>, either free or at a reasonable price."
+        },
+        {
+          "text": "You ask for a repair quote on the new European Repair Information Form. How long must the repairer stick to it?",
+          "options": [
+            "7 days",
+            "14 days",
+            "30 days",
+            "90 days"
+          ],
+          "correct": 2,
+          "fact": "No more quotes that change every time you ring. <strong>The repairer can't change the quoted terms for 30 days</strong>."
+        },
+        {
+          "text": "Your item is still under guarantee and you choose a repair instead of a replacement. What do you get?",
+          "options": [
+            "Nothing extra",
+            "A 10% refund",
+            "An extra 12 months on the guarantee",
+            "A free accessory"
+          ],
+          "correct": 2,
+          "fact": "Maith thú to whoever thought of this bit. <strong>Choosing repair adds 12 months to the legal guarantee</strong>, so doing the better thing doesn't cost you your cover."
+        }
+      ],
+      "action_intro": "Next time something packs in, look up who can fix it before you look up what to replace it with.",
+      "actions": [
+        {
+          "title": "Search RepairMyStuff.ie for a repairer near you",
+          "desc": "Pick your county and category, from phones to fridges. Save the link for the next time something breaks.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Keeps products in use for longer"
+        },
+        {
+          "title": "Ask for a written repair quote",
+          "desc": "If something breaks this month, ask for the European Repair Information Form. It holds for 30 days, so you can compare.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Makes repair easier to choose"
+        }
+      ],
+      "resources": "RepairMyStuff.ie: repairmystuff.ie | CCPC right to repair: ccpc.ie | CSO Environmental Indicators 2025: cso.ie"
+    },
+    {
+      "id": "why-fixing-matters",
+      "date": "2026-10-13",
+      "title_line1": "Why Fixing",
+      "title_line2": "Matters",
+      "category_badge": "Circularity",
+      "category_full": "Circularity",
+      "intro_fact": "Today is day two of fixing things. I went looking for repairers and found more than I expected: <strong>an EPA study counted over 1,500 repair businesses in Ireland</strong> that fix things for the public. Saturday is International Repair Day, so the timing is good.",
+      "questions": [
+        {
+          "text": "How much second-hand stuff did each person in Ireland reuse in 2024?",
+          "options": [
+            "5 kg",
+            "15.5 kg",
+            "30 kg",
+            "55 kg"
+          ],
+          "correct": 1,
+          "fact": "Not bad, but there's a target to hit. <strong>Ireland reused 15.5 kg per person in 2024</strong>, and the goal is 20 kg by 2030."
+        },
+        {
+          "text": "The European Commission estimated that throwing out goods that could be repaired costs EU consumers about how much a year?",
+          "options": [
+            "€120 million",
+            "€1.2 billion",
+            "€12 billion",
+            "€50 billion"
+          ],
+          "correct": 2,
+          "fact": "That's real money in the bin. <strong>Premature disposal costs EU consumers about €12 billion a year</strong>, and creates around 35 million tonnes of waste."
+        },
+        {
+          "text": "Where was the world's first Repair Café held, in 2009?",
+          "options": [
+            "Dublin",
+            "Berlin",
+            "Amsterdam",
+            "Copenhagen"
+          ],
+          "correct": 2,
+          "fact": "It started small and spread. <strong>The first Repair Café opened in Amsterdam in October 2009</strong>, and now there are over 2,500 around the world."
+        }
+      ],
+      "action_intro": "Fixing is a skill, and skills spread. Find out who near you has it.",
+      "actions": [
+        {
+          "title": "Find a repair café or repairer for Repair Day on Saturday",
+          "desc": "Search RepairMyStuff.ie or your council website. Bring one thing that's been sitting broken in a drawer.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Extends product life"
+        },
+        {
+          "title": "Fix one small thing yourself this week",
+          "desc": "A loose button, a wobbly chair, a torn bag. Look up a short how-to video first.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Avoids buying new"
+        }
+      ],
+      "resources": "EPA repair study: epa.ie | Repair Café International: repaircafe.org | International Repair Day: openrepair.org | RepairMyStuff.ie"
+    },
+    {
+      "id": "fast-tech-slow-waste",
+      "date": "2026-10-14",
+      "title_line1": "Fast Tech,",
+      "title_line2": "Slow Waste",
+      "category_badge": "Recycling & Waste",
+      "category_full": "Recycling & Waste",
+      "intro_fact": "Today is International E-Waste Day, and this year it's about 'fast tech': cheap cables, earbuds, light-up toys and vapes we bin without thinking. <strong>Ireland collected 41.5% of its e-waste in 2024</strong>, well short of the EU's 65% target. That surprised me.",
+      "questions": [
+        {
+          "text": "Do you have to buy something new to hand in a small broken electrical item (under 25 cm) at a big electrical shop?",
+          "options": [
+            "Yes, it's one-for-one only",
+            "No, large shops must take it free with no purchase",
+            "Only at civic amenity sites",
+            "Only if you pay a fee"
+          ],
+          "correct": 1,
+          "fact": "Most people I asked didn't know this. <strong>Large electrical shops must take back small items under 25 cm free, with no need to buy anything</strong>. Any shop selling electricals also takes old items free when you buy a new one."
+        },
+        {
+          "text": "How many vapes went through WEEE Ireland's recycling scheme in 2025?",
+          "options": [
+            "About 14,000",
+            "About 140,000",
+            "More than 1.4 million",
+            "About 14 million"
+          ],
+          "correct": 2,
+          "fact": "That's a lot of tiny batteries. <strong>More than 1.4 million vapes were recycled in 2025</strong>. In a normal bin, their lithium batteries can start fires at waste and recycling sites."
+        },
+        {
+          "text": "The world produced 62 million tonnes of e-waste in 2022. How much of it was documented as properly collected and recycled?",
+          "options": [
+            "About 5%",
+            "About 22%",
+            "About 45%",
+            "About 70%"
+          ],
+          "correct": 1,
+          "fact": "Less than a quarter. <strong>Only 22.3% of the world's e-waste was properly collected and recycled</strong>, so most of the metals in it were lost."
+        }
+      ],
+      "action_intro": "Every drawer in Ireland seems to have a tangle of old cables. Today is a good day to clear yours.",
+      "actions": [
+        {
+          "title": "Gather dead cables, chargers and light-up toys and drop them off",
+          "desc": "Bring them to a big electrical shop or civic amenity site. It's free.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Recovers metals, prevents fires"
+        },
+        {
+          "title": "Never put vapes or loose batteries in the bin",
+          "desc": "Bring them to a WEEE Ireland drop-off point or a shop that sells batteries.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Prevents battery fires"
+        }
+      ],
+      "resources": "WEEE Ireland drop-off finder: weeeireland.ie | EPA WEEE statistics: epa.ie | International E-Waste Day: weee-forum.org"
+    },
+    {
+      "id": "not-down-the-drain",
+      "date": "2026-10-15",
+      "title_line1": "Not Down",
+      "title_line2": "the Drain",
+      "category_badge": "Ocean & Water",
+      "category_full": "Ocean & Water",
+      "intro_fact": "Today I'm looking at something nobody likes to think about: what we flush and pour. At Dublin's Ringsend plant, <strong>about 60 tonnes of wipes and other items were being pulled out every month</strong> when Uisce Éireann last counted. That's a lot of wipes.",
+      "questions": [
+        {
+          "text": "Uisce Éireann says only the '3 Ps' should go down the toilet. What are they?",
+          "options": [
+            "Paper, pads and plasters",
+            "Pee, poo and paper",
+            "Pee, poo and paper towels",
+            "Paper, plastic-free wipes and pee"
+          ],
+          "correct": 1,
+          "fact": "Easy to remember. <strong>Only pee, poo and paper should be flushed</strong>. Everything else, even wipes labelled 'flushable', goes in the bin."
+        },
+        {
+          "text": "Between 2018 and 2024, how did the share of Irish households pouring fats, oils and grease down the sink change?",
+          "options": [
+            "It rose from 20% to 36%",
+            "It stayed at about 50%",
+            "It fell from 44% to 36%",
+            "It fell to 5%"
+          ],
+          "correct": 2,
+          "fact": "Good news, but not there yet. <strong>It fell from 44% in 2018 to 36% in 2024</strong>. Grease sets hard in pipes and causes blockages."
+        },
+        {
+          "text": "Under the EU's new wastewater law, who pays at least 80% of the cost of removing traces of medicines and cosmetics from water?",
+          "options": [
+            "Households, through water bills",
+            "National governments",
+            "The pharmaceutical and cosmetics makers",
+            "Water companies"
+          ],
+          "correct": 2,
+          "fact": "I thought this was fair. <strong>At least 80% of the cost will be covered by the producers</strong>, because their products cause the pollution."
+        }
+      ],
+      "action_intro": "Your sink and toilet connect straight to our rivers and sea. Two small habits keep them clear.",
+      "actions": [
+        {
+          "title": "Put a small bin in the bathroom",
+          "desc": "For wipes, cotton buds and sanitary items, even ones that say 'flushable'.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Prevents sewer blockages and beach litter"
+        },
+        {
+          "title": "Let cooking fat cool, then bin it",
+          "desc": "Pour it into an empty yogurt pot or egg carton, let it set, and put it in the general waste bin.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Keeps pipes and rivers clear"
+        }
+      ],
+      "resources": "Uisce Éireann Think Before You Flush: water.ie/thinkbeforeyouflush | Think Before You Pour: water.ie/thinkbeforeyoupour | Clean Coasts: cleancoasts.org"
+    },
+    {
+      "id": "the-pumpkin-problem",
+      "date": "2026-10-16",
+      "title_line1": "The Pumpkin",
+      "title_line2": "Problem",
+      "category_badge": "Food & Water",
+      "category_full": "Food & Water",
+      "intro_fact": "Today is World Food Day, and the shops here are already full of pumpkins. Plenty of them will never be eaten. That worried me, because <strong>Irish homes threw away about 219,000 tonnes of food in 2024</strong>, close to a third of all the food Ireland wasted.",
+      "questions": [
+        {
+          "text": "Of the pumpkins Irish households buy for Halloween, roughly how many never get eaten?",
+          "options": [
+            "About 10%",
+            "About 30%",
+            "About 60%",
+            "About 90%"
+          ],
+          "correct": 2,
+          "fact": "That's most of them. Global Action Plan Ireland estimates <strong>60% of the pumpkins we buy never get eaten</strong>. Ireland doesn't officially measure pumpkin waste, so nobody knows the exact tonnes."
+        },
+        {
+          "text": "Before pumpkins, what did people in Ireland carve into Halloween lanterns?",
+          "options": [
+            "Potatoes",
+            "Apples",
+            "Turnips",
+            "Marrows"
+          ],
+          "correct": 2,
+          "fact": "I went to see one. <strong>Irish people carved turnips into scary-faced lanterns</strong>. The National Museum keeps a model of one from Fintown, Co. Donegal, from around 1900."
+        },
+        {
+          "text": "How much food did the world waste in 2022?",
+          "options": [
+            "10 million tonnes",
+            "105 million tonnes",
+            "1.05 billion tonnes",
+            "5 billion tonnes"
+          ],
+          "correct": 2,
+          "fact": "That's over a billion meals a day. <strong>The world wasted 1.05 billion tonnes of food in 2022</strong>, and food waste causes 8 to 10% of global greenhouse gas emissions."
+        }
+      ],
+      "action_intro": "A pumpkin is food first and a decoration second. Eat it before you carve it, and bin it right after.",
+      "actions": [
+        {
+          "title": "Eat your pumpkin, not just carve it",
+          "desc": "Make soup with the flesh and roast the seeds for a snack. Raw chunks freeze for months.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Cuts food waste"
+        },
+        {
+          "title": "After Halloween, chop the lantern into the brown bin",
+          "desc": "Don't leave it in the garden or the woods. The brown bin turns it into compost.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Avoids methane from landfill"
+        }
+      ],
+      "resources": "Stop Food Waste pumpkin tips: stopfoodwaste.ie | EPA food waste statistics: epa.ie | Brown bin guide: mywaste.ie | FAO World Food Day: fao.org"
+    },
+    {
+      "id": "road-to-cop31",
+      "date": "2026-10-19",
+      "title_line1": "Road to",
+      "title_line2": "COP31",
+      "category_badge": "Climate & Action",
+      "category_full": "Climate & Action",
+      "intro_fact": "Today I'm starting two days on the big UN climate talks, because COP31 is only weeks away. <strong>COP31 runs from 9 to 20 November in Antalya, Türkiye</strong>, with Australia leading the negotiations. I'd never heard of a set-up like that before.",
+      "questions": [
+        {
+          "text": "Where did the very first COP, the UN climate conference, take place?",
+          "options": [
+            "Rio de Janeiro",
+            "Kyoto",
+            "Berlin",
+            "Geneva"
+          ],
+          "correct": 2,
+          "fact": "It's older than I thought. <strong>The first COP was held in Berlin in 1995</strong>, and countries have met every year since."
+        },
+        {
+          "text": "What temperature limit does the Paris Agreement aim for?",
+          "options": [
+            "Under 3°C",
+            "Under 2.5°C",
+            "Well below 2°C, aiming for 1.5°C",
+            "Under 1°C"
+          ],
+          "correct": 2,
+          "fact": "This is the number every COP comes back to. <strong>Paris aims to keep warming well below 2°C and to try for 1.5°C</strong>, compared with pre-industrial times."
+        },
+        {
+          "text": "At COP30 in Brazil, what role did Ireland's climate minister take within the EU team?",
+          "options": [
+            "EU chief negotiator",
+            "Co-lead of the EU ministers' team on adaptation",
+            "Lead on climate finance",
+            "Observer only"
+          ],
+          "correct": 1,
+          "fact": "Ireland punches above its weight here. <strong>Minister Darragh O'Brien was one half of the EU's ministerial team on adaptation</strong>, helping countries cope with the climate change already happening."
+        }
+      ],
+      "action_intro": "COP can feel far away, but it shapes the rules here at home. Knowing a little helps you follow the news.",
+      "actions": [
+        {
+          "title": "Follow one COP31 story in November",
+          "desc": "Pick one Irish news source and read one update during the talks. Notice what Ireland is pushing for.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Builds climate literacy"
+        },
+        {
+          "title": "Explain what a COP is to someone in one sentence",
+          "desc": "Try it at dinner. If you can explain it simply, you understand it.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Spreads climate knowledge"
+        }
+      ],
+      "resources": "UNFCCC COP: unfccc.int | Climate Home News COP31 dates: climatechangenews.com | Department of Climate, Energy and the Environment: gov.ie"
+    },
+    {
+      "id": "irelands-role-at-cop",
+      "date": "2026-10-20",
+      "title_line1": "Ireland's",
+      "title_line2": "Role at COP",
+      "category_badge": "Climate Justice",
+      "category_full": "Climate Justice",
+      "intro_fact": "Today is part two of my COP31 homework: what does Ireland actually bring to the table? Money matters a lot at these talks, and <strong>Ireland gave €207.7 million in climate finance to poorer countries in 2024</strong>, up 30% on the year before.",
+      "questions": [
+        {
+          "text": "In 2021, Ireland promised international climate finance of at least how much a year by 2025?",
+          "options": [
+            "€100 million",
+            "€225 million",
+            "€500 million",
+            "€1 billion"
+          ],
+          "correct": 1,
+          "fact": "Ireland got close in 2024. <strong>The promise was at least €225 million a year by 2025</strong>. The 2025 figure isn't out yet, so we'll have to wait to see if it was met."
+        },
+        {
+          "text": "How much did Ireland pledge to the new Loss and Damage Fund at COP28 for 2024 and 2025?",
+          "options": [
+            "€5 million",
+            "€25 million",
+            "€100 million",
+            "€225 million"
+          ],
+          "correct": 1,
+          "fact": "This fund helps countries hit by climate disasters they did little to cause. <strong>Ireland pledged €25 million for 2024 and 2025</strong>."
+        },
+        {
+          "text": "In 2025, the EU pledged to cut its net emissions by 2035 within which range, compared with 1990?",
+          "options": [
+            "40 to 45%",
+            "55 to 60%",
+            "66.25 to 72.5%",
+            "90 to 95%"
+          ],
+          "correct": 2,
+          "fact": "Ireland negotiates as part of the EU at COP. <strong>The EU's 2035 pledge is a cut of 66.25 to 72.5%</strong> compared with 1990."
+        }
+      ],
+      "action_intro": "Climate justice means the people least responsible get help first. You can follow how Ireland does.",
+      "actions": [
+        {
+          "title": "Read one page of Ireland's climate finance report",
+          "desc": "Irish Aid publishes where the money goes. Pick one country and see what it funds.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Builds understanding of climate justice"
+        },
+        {
+          "title": "Check your council's climate action plan",
+          "desc": "All 31 councils have one. Find one action in your area you didn't know about.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Connects global talks to local action"
+        }
+      ],
+      "resources": "Irish Aid climate finance: ireland.ie | Dóchas climate finance report: dochas.ie | EU climate action: climate.ec.europa.eu"
+    },
+    {
+      "id": "darker-evenings-lower-bills",
+      "date": "2026-10-21",
+      "title_line1": "Darker Evenings,",
+      "title_line2": "Lower Bills",
+      "category_badge": "Energy & Tech",
+      "category_full": "Energy & Tech",
+      "intro_fact": "Today is World Energy Saving Day, and the clocks go back on Sunday. More dark evenings means more lights and heating. The easy win I found: <strong>turning your thermostat down by just one degree can cut your heating bill by about 10%</strong>, according to SEAI.",
+      "questions": [
+        {
+          "text": "How much of a home's heat can escape through the roof, according to SEAI?",
+          "options": [
+            "About 5%",
+            "About 20 to 30%",
+            "About 50%",
+            "About 70%"
+          ],
+          "correct": 1,
+          "fact": "That's why attic insulation comes first. <strong>About 20 to 30% of the heat in a home can be lost through the roof</strong>, and up to 35% through the walls."
+        },
+        {
+          "text": "A shower uses roughly what share of the energy of a full bath?",
+          "options": [
+            "About 20%",
+            "About 50%",
+            "About 80%",
+            "The same"
+          ],
+          "correct": 0,
+          "fact": "I'm a shower person now. <strong>A shower typically uses about 20% of the energy of a full bath</strong>."
+        },
+        {
+          "text": "The EU Energy Efficiency Directive aims to cut energy use by at least how much by 2030?",
+          "options": [
+            "5%",
+            "11.7%",
+            "20%",
+            "32.5%"
+          ],
+          "correct": 1,
+          "fact": "It sounds small, but it's across a whole continent. <strong>The EU target is at least 11.7% less energy use by 2030</strong>, compared with earlier projections."
+        }
+      ],
+      "action_intro": "The cheapest energy is the energy you don't use. Two small changes before the clocks go back.",
+      "actions": [
+        {
+          "title": "Turn your thermostat down by one degree",
+          "desc": "SEAI suggests 20°C in living rooms and 15 to 18°C in bedrooms.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "About 10% off your heating"
+        },
+        {
+          "title": "Set the heating to switch off 30 minutes earlier",
+          "desc": "Your home stays warm for a while after the heating goes off. Do the same in the morning.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Cuts wasted heat"
+        }
+      ],
+      "resources": "SEAI energy saving tips: seai.ie/home-energy/energy-saving-tips | SEAI grants: seai.ie/grants | EU Energy Efficiency Directive: energy.ec.europa.eu"
+    },
+    {
+      "id": "the-real-cost-of-bonfires",
+      "date": "2026-10-22",
+      "title_line1": "The Real Cost",
+      "title_line2": "of Bonfires",
+      "category_badge": "Recycling & Waste",
+      "category_full": "Recycling & Waste",
+      "intro_fact": "Today I'm looking at Halloween bonfires, because the piles are already growing in some places. I didn't expect the size of it: <strong>Dublin City Council removed 654 tonnes of bonfire material in 2024</strong>, before it could be burned.",
+      "questions": [
+        {
+          "text": "About how much did Halloween 2025 cost South Dublin County Council for clean-up and grass repairs?",
+          "options": [
+            "About €16,500",
+            "About €65,000",
+            "About €165,000",
+            "About €1.6 million"
+          ],
+          "correct": 2,
+          "fact": "That's money that could go to parks and playgrounds. <strong>Halloween 2025 cost South Dublin about €165,000</strong> to clear waste and repair burnt grass."
+        },
+        {
+          "text": "By 8pm on Halloween night 2025, how many fire calls had Dublin Fire Brigade received?",
+          "options": [
+            "24",
+            "100",
+            "244",
+            "1,000"
+          ],
+          "correct": 2,
+          "fact": "And that was before the night really got going. <strong>Dublin Fire Brigade had 244 fire calls by 8pm</strong>, plus 401 ambulance calls."
+        },
+        {
+          "text": "Burning waste in Ireland, including on a bonfire, can lead to a fine of up to how much?",
+          "options": [
+            "€50",
+            "€500",
+            "€5,000",
+            "€50,000"
+          ],
+          "correct": 2,
+          "fact": "It's illegal for a good reason. <strong>Burning waste can bring a fine of up to €5,000</strong>. Burning things like tyres and treated wood releases toxic dioxins."
+        }
+      ],
+      "action_intro": "Bonfires grow from things left lying around. You can help stop a pile before it starts.",
+      "actions": [
+        {
+          "title": "Report a bonfire stockpile to your council",
+          "desc": "In Dublin City call 01 222 2222. Most councils have a Halloween collection line in October.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Prevents toxic smoke"
+        },
+        {
+          "title": "Don't leave pallets, tyres or garden waste out",
+          "desc": "Store them or bring them to a recycling centre so they don't end up on a fire.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Keeps waste out of bonfires"
+        }
+      ],
+      "resources": "Dublin City Council Halloween collection: dublincity.ie | EPA backyard burning: epa.ie | Fingal stockpiling leaflet: fingal.ie"
+    },
+    {
+      "id": "irelands-emissions-gap",
+      "date": "2026-10-23",
+      "title_line1": "Ireland's",
+      "title_line2": "Emissions Gap",
+      "category_badge": "Climate & Action",
+      "category_full": "Climate & Action",
+      "intro_fact": "Today is the eve of the International Day of Climate Action, so I checked Ireland's report card. Good news first: <strong>Ireland's emissions fell by 2.3% in 2025</strong>, according to the EPA. Now for the harder part.",
+      "questions": [
+        {
+          "text": "Ireland's first carbon budget covered 2021 to 2025. How much of it did Ireland use?",
+          "options": [
+            "75%",
+            "99.6%",
+            "110%",
+            "150%"
+          ],
+          "correct": 1,
+          "fact": "That was close. <strong>Ireland used 99.6% of its first carbon budget</strong>, staying inside by just 1.1 million tonnes."
+        },
+        {
+          "text": "EPA projections from May 2026 say Ireland's emissions could fall by up to how much by 2030, against a 51% target?",
+          "options": [
+            "13%",
+            "25%",
+            "40%",
+            "51%"
+          ],
+          "correct": 1,
+          "fact": "This is the gap. <strong>Ireland could cut emissions by up to 25% by 2030</strong>, about half of the 51% it promised in law."
+        },
+        {
+          "text": "Even if every country keeps its current climate pledges, how much warming does the UN expect this century?",
+          "options": [
+            "1.5°C",
+            "1.8°C",
+            "2.3 to 2.5°C",
+            "4°C"
+          ],
+          "correct": 2,
+          "fact": "That's well past the Paris goal. <strong>Full delivery of today's pledges still points to 2.3 to 2.5°C of warming</strong>, and current policies to 2.8°C."
+        }
+      ],
+      "action_intro": "Ireland is close on some things and far on others. Local action is where it starts to feel real.",
+      "actions": [
+        {
+          "title": "Find one action in your council's climate action plan",
+          "desc": "Every council has a plan and a Decarbonising Zone. See what's happening near you.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Connects you to local climate action"
+        },
+        {
+          "title": "Share one number from today with someone",
+          "desc": "The 2.3% drop or the 25% gap. One fact in a conversation goes a long way.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Social multiplier effect"
+        }
+      ],
+      "resources": "EPA greenhouse gas emissions: epa.ie | Climate Change Advisory Council: climatecouncil.ie | UNEP Emissions Gap Report: unep.org"
+    },
+    {
+      "id": "costumes-for-one-night",
+      "date": "2026-10-26",
+      "title_line1": "Costumes for",
+      "title_line2": "One Night",
+      "category_badge": "Recycling & Waste",
+      "category_full": "Recycling & Waste",
+      "intro_fact": "Today is a bank holiday, and Circular Week starts across Europe. Halloween costumes are on every shelf, and many get worn once. I checked: <strong>Ireland throws away around 110,000 tonnes of textiles every year</strong>.",
+      "questions": [
+        {
+          "text": "Of the textiles Ireland throws away, how much clothing ends up in household bins each year?",
+          "options": [
+            "About 4,200 tonnes",
+            "About 42,000 tonnes",
+            "About 100,000 tonnes",
+            "About 420,000 tonnes"
+          ],
+          "correct": 1,
+          "fact": "Most of it could have had another life. <strong>About 42,000 tonnes of clothing goes into Irish household bins every year</strong>, and from there it's burned or landfilled."
+        },
+        {
+          "text": "How many kilos of new textiles did the average person in the EU buy in 2022?",
+          "options": [
+            "5 kg",
+            "9 kg",
+            "19 kg",
+            "40 kg"
+          ],
+          "correct": 2,
+          "fact": "That's about a large suitcase each. <strong>EU consumption reached 19 kg of new textiles per person in 2022</strong>, up from 17 kg in 2019."
+        },
+        {
+          "text": "Worldwide, how much textile waste is landfilled or burned?",
+          "options": [
+            "One rubbish truck a day",
+            "One rubbish truck an hour",
+            "One rubbish truck a minute",
+            "One rubbish truck every second"
+          ],
+          "correct": 3,
+          "fact": "I had to read that twice. <strong>Every second, one rubbish truck of textiles is landfilled or burned</strong> somewhere in the world."
+        }
+      ],
+      "action_intro": "The best costume is one that already exists. Swap, borrow or make it.",
+      "actions": [
+        {
+          "title": "Swap or borrow a costume this year",
+          "desc": "Ask friends, neighbours or your school. Some councils lend out swap packs with rails and hangers.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Avoids a single-use costume"
+        },
+        {
+          "title": "Pass on outgrown costumes",
+          "desc": "If it's clean and wearable, give it to a charity shop or clothes bank after Halloween.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Keeps textiles in use"
+        }
+      ],
+      "resources": "mywaste.ie clothing and textiles | European Environment Agency textiles: eea.europa.eu | Circular Week: circulareconomy.europa.eu"
+    },
+    {
+      "id": "irelands-night-hunters",
+      "date": "2026-10-27",
+      "title_line1": "Ireland's",
+      "title_line2": "Night Hunters",
+      "category_badge": "Biodiversity",
+      "category_full": "Biodiversity",
+      "intro_fact": "Today is the middle of Bat Week. Bats get a scary name at Halloween, but I've grown fond of them here. They eat midges all night and <strong>every bat in Ireland is protected by law</strong>. Around now they start getting ready to hibernate.",
+      "questions": [
+        {
+          "text": "How many bat species are confirmed as living in Ireland?",
+          "options": [
+            "3",
+            "9",
+            "15",
+            "22"
+          ],
+          "correct": 1,
+          "fact": "More than I guessed. <strong>Nine bat species are confirmed residents in Ireland</strong>, from tiny pipistrelles to Leisler's bat, which is rare elsewhere in Europe."
+        },
+        {
+          "text": "How many insects can one tiny pipistrelle bat eat in a single night?",
+          "options": [
+            "Up to 30",
+            "Up to 300",
+            "Up to 3,000",
+            "Up to 30,000"
+          ],
+          "correct": 2,
+          "fact": "Free pest control. <strong>A pipistrelle can eat as many as 3,000 small insects in one night</strong>, mostly midges, mosquitoes and small moths."
+        },
+        {
+          "text": "About what share of the world's land mammal species are bats?",
+          "options": [
+            "1 in 100",
+            "1 in 20",
+            "1 in 5",
+            "Half"
+          ],
+          "correct": 2,
+          "fact": "Bats are everywhere. <strong>About one in five land mammal species is a bat</strong>, with 1,462 species known."
+        }
+      ],
+      "action_intro": "Bats need insects and quiet places to sleep. Both are easy to help with.",
+      "actions": [
+        {
+          "title": "Leave roof spaces and soffits alone this winter",
+          "desc": "Bats may roost there. If you think you have bats, contact Bat Conservation Ireland before any work.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Protects hibernating bats"
+        },
+        {
+          "title": "Skip fake spider webs outside",
+          "desc": "Wildlife groups warn they can trap birds and insects. Use paper or fabric decorations instead.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Safer for garden wildlife"
+        }
+      ],
+      "resources": "Bat Conservation Ireland: batconservationireland.org | NPWS: npws.ie | IUCN Bat Specialist Group: iucnbsg.org"
+    },
+    {
+      "id": "hedgehogs-before-winter",
+      "date": "2026-10-28",
+      "title_line1": "Hedgehogs Before",
+      "title_line2": "Winter",
+      "category_badge": "Biodiversity",
+      "category_full": "Biodiversity",
+      "intro_fact": "Today is World Sustainability Day, and I spent it thinking about hedgehogs. They're fattening up to sleep through winter, and <strong>Irish hedgehogs hibernate from about October to March</strong>. A pile of leaves or a bonfire heap looks like a perfect bed to them.",
+      "questions": [
+        {
+          "text": "In 2024, the IUCN Red List moved the hedgehog found in Ireland into which category?",
+          "options": [
+            "Least Concern",
+            "Near Threatened",
+            "Critically Endangered",
+            "Extinct in the Wild"
+          ],
+          "correct": 1,
+          "fact": "That one worried me. <strong>The Western European hedgehog was moved from Least Concern to Near Threatened in 2024</strong>, because numbers are falling across much of Europe."
+        },
+        {
+          "text": "In the Irish Hedgehog Survey, where were hedgehogs found more often?",
+          "options": [
+            "Only on farmland",
+            "In towns and cities",
+            "Only on islands",
+            "Equally everywhere"
+          ],
+          "correct": 1,
+          "fact": "I didn't expect that. <strong>Hedgehogs turned up in 70% of urban surveys</strong>, but only in just over a third of rural ones. Gardens matter."
+        },
+        {
+          "text": "If you want to help a hedgehog, what should you leave out to drink?",
+          "options": [
+            "Cow's milk",
+            "Fruit juice",
+            "Water",
+            "Nothing, they never drink"
+          ],
+          "correct": 2,
+          "fact": "Milk sounds kind, but it isn't. <strong>Leave a shallow dish of water, never milk</strong>. Dún Laoghaire-Rathdown council also says to avoid bread, fruit and peanuts."
+        }
+      ],
+      "action_intro": "A hedgehog-friendly garden is a slightly messy one. Good news if you hate raking leaves.",
+      "actions": [
+        {
+          "title": "Leave a pile of leaves in a quiet corner",
+          "desc": "And check leaf piles and bonfire heaps before you move or burn them.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Gives hedgehogs a safe place to hibernate"
+        },
+        {
+          "title": "Record any hedgehog you see",
+          "desc": "Log it with the National Biodiversity Data Centre. Every record helps track them.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Supports citizen science"
+        }
+      ],
+      "resources": "National Biodiversity Data Centre: biodiversityireland.ie | DLR hedgehog campaign: dlrcoco.ie | Vincent Wildlife Trust: vincentwildlife.ie"
+    },
+    {
+      "id": "pets-fireworks-halloween",
+      "date": "2026-10-29",
+      "title_line1": "Pets, Fireworks",
+      "title_line2": "and Halloween",
+      "category_badge": "Wildlife",
+      "category_full": "Wildlife",
+      "intro_fact": "Today the bangs have already started in a lot of Irish estates. I checked how our animals cope, and it isn't great: <strong>55% of dogs have shown fear when they hear fireworks</strong>, according to Dogs Trust Ireland.",
+      "questions": [
+        {
+          "text": "In Ireland, what's the maximum penalty for throwing a lit firework at a person or property?",
+          "options": [
+            "A warning",
+            "A €100 fine",
+            "A €500 fine",
+            "Up to €10,000 and 5 years in prison"
+          ],
+          "correct": 3,
+          "fact": "That's serious, and it should be. <strong>Throwing a lit firework can mean a fine of up to €10,000 and up to 5 years in prison</strong>. The same applies to having fireworks to sell."
+        },
+        {
+          "text": "Which Halloween treat ingredient is highly toxic to dogs?",
+          "options": [
+            "Plain rice",
+            "Cooked carrot",
+            "Raisins and sultanas",
+            "Apple slices"
+          ],
+          "correct": 2,
+          "fact": "Keep the brack on the table, not the floor. <strong>Grapes, raisins, currants and sultanas are highly toxic for dogs</strong>, and so is chocolate."
+        },
+        {
+          "text": "A Dutch study used weather radar on New Year's Eve. How many more birds were in the air near fireworks than on a normal night?",
+          "options": [
+            "Twice as many",
+            "10 times as many",
+            "About 1,000 times as many",
+            "Fewer birds"
+          ],
+          "correct": 2,
+          "fact": "They fly up in panic and burn energy they need for winter. <strong>On average 1,000 times as many birds were in the air</strong> close to where fireworks went off."
+        }
+      ],
+      "action_intro": "Halloween night is loud for animals. A bit of planning makes it easier for them.",
+      "actions": [
+        {
+          "title": "Walk your dog in daylight this week",
+          "desc": "Feed them earlier, close the curtains and put on the radio or TV in the evening.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Calmer pets"
+        },
+        {
+          "title": "Check your pet's microchip and tag details",
+          "desc": "Scared pets bolt. Up-to-date details get them home faster.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Fewer lost animals"
+        }
+      ],
+      "resources": "Dogs Trust Ireland: dogstrust.ie | ISPCA: ispca.ie | Department of Justice fireworks campaign: gov.ie"
+    },
+    {
+      "id": "oiche-shamhna-the-old-way",
+      "date": "2026-10-30",
+      "title_line1": "Oíche Shamhna,",
+      "title_line2": "the Old Way",
+      "category_badge": "Sustainability",
+      "category_full": "Sustainability",
+      "intro_fact": "Today is the last challenge before Halloween, so I went back to the old ways. They used what people already had: turnips, fruit bread, old clothes. And people want that back: <strong>80% of Irish adults think shops should cut single-use plastic from Halloween products</strong>.",
+      "questions": [
+        {
+          "text": "In the old barmbrack game, what did finding a coin in your slice mean?",
+          "options": [
+            "Poverty",
+            "Marriage",
+            "Wealth",
+            "A long journey"
+          ],
+          "correct": 2,
+          "fact": "I'd take the coin. In the brack, <strong>a ring meant marriage, a coin meant wealth and a rag meant poverty</strong>."
+        },
+        {
+          "text": "On which Irish island do people still put on masks at Halloween and stay silent, even in the pubs?",
+          "options": [
+            "Achill",
+            "Tory",
+            "Inis Mór",
+            "Valentia"
+          ],
+          "correct": 2,
+          "fact": "That's my favourite thing I learned this month. <strong>On Inis Mór, people mask themselves and stay silent</strong>, so nobody can tell who they are."
+        },
+        {
+          "text": "How much did adults in Ireland plan to spend on Halloween in 2025?",
+          "options": [
+            "About €12 million",
+            "About €61 million",
+            "About €150 million",
+            "About €320 million"
+          ],
+          "correct": 1,
+          "fact": "That's a lot of sweets and costumes. <strong>Adults planned to spend €61 million on Halloween in 2025</strong>, down €11.5 million on the year before."
+        }
+      ],
+      "action_intro": "Oíche Shamhna was about the harvest, the fire and the people around you. Not much of that comes in plastic.",
+      "actions": [
+        {
+          "title": "Carve a turnip instead of a pumpkin",
+          "desc": "It's the original Irish lantern. Use the insides in a soup or mash.",
+          "level": "beginner",
+          "points": 75,
+          "carbon": "Less food waste, more tradition"
+        },
+        {
+          "title": "Make or bake one Halloween thing at home",
+          "desc": "A barmbrack, colcannon or a mask from fabric scraps. Skip one packet of plastic-wrapped sweets.",
+          "level": "beginner",
+          "points": 50,
+          "carbon": "Cuts single-use plastic"
+        }
+      ],
+      "resources": "Tourism Ireland Halloween traditions: ireland.com | National Museum of Ireland: museum.ie | iReach Halloween 2025: ireachinsights.com"
     }
   ]
 }

@@ -40,6 +40,15 @@
   ],
   "stories": [
     {
+      "id": "sodium-ion-batteries",
+      "title": "Batteries made from salt",
+      "category": "energy-consumption",
+      "cover": "courses/images/sodium-ion-cover.jpg",
+      "slides": 15,
+      "minutes": 6,
+      "published": "2026-10-08"
+    },
+    {
       "id": "patagonia",
       "title": "The Patagonia story",
       "category": "brands-activism",

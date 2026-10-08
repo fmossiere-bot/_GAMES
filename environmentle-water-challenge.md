@@ -1,19 +1,27 @@
-# Water Challenge
+# Water challenge
 
 A hyper-casual browser game about the fresh water hidden inside everyday things.
-No build step, no framework, no dependencies. Laid out the same way as the Carbon
-Challenge: one self-contained HTML file at the repository root, one data file
-beside it.
+No build step, no framework, no dependencies. Laid out the same way as Sort it
+out (the Carbon Challenge): one self-contained HTML file in `app/`, one data
+file beside it.
 
 | File | What it is |
 |---|---|
-| `environmentle-water-challenge.html` | The whole game — markup, styles and logic in one file, plus the inline dataset fallback |
-| `water-cards.json` | 69 cards, the explainer, 6 actions, 11 comparison lines |
+| `environmentle-water-challenge.html` | The whole game: markup, styles and logic in one file, plus the inline dataset fallback |
+| `water-cards.json` | 146 cards (138 in play), the explainer, the reality-check yardsticks, 10 everyday dilemmas, 6 actions (no longer read by the game, see below), 11 comparison lines |
 | `environmentle-water-challenge.md` | This file |
 
-It is reachable from the hub: `index.html` lists it on the Games tab and
-`GAME_URLS.water` points at it, exactly as `GAME_URLS.sort` points at
-`environmentle-sort-it-out.html`.
+It is reachable from the hub in three places, like every other game:
+
+- `games.json` has the `water` entry that draws its card on the Games tab
+  (`playedKey: "wc_last_played_"`, detail "5 rounds").
+- `GAME_URLS.water` in `index.html` points at the game file.
+- `engine.js` reads `wc_last_played_<nk>` to count it towards the day cap and
+  to decide whether to suggest it ("Higher or lower · 5 rounds").
+
+The page loads `engine.js` then `day-guard.js` with
+`data-played-key="wc_last_played_"`, so opening it by direct link still
+respects the two-plays-a-day cap.
 
 ## The mechanism, in three sentences
 
@@ -27,10 +35,14 @@ Two things are layered on top. Once per run, after the third correct answer, the
 game interrupts with a full-screen **reality check** that converts something you
 just met into household terms, for example one kilogram of roasted coffee against
 days of home water use. The end screen shows your points, then the comparison
-lines for the items you actually saw and the green/blue/grey explainer to read,
-and then a **Take further action** button leading to a rotating slice of the
-actions, always ranked biggest lever first, which you can pledge for extra
-points on top of the run.
+lines for the items you actually saw, the green/blue/grey explainer and a caveat
+panel to read, and a **Finish** button back to the hub. There is no pledge step
+in the game any more: pledging an action now happens on the app home (see
+"Actions moved to the home screen").
+
+Envie is on every screen: pointing on the intro, thinking in the question bubble
+during a round (switching to `celebrate` or `think` when the answer lands), and
+on the score screen with a pose that follows the result.
 
 ## A run is five rounds, once a day
 
@@ -40,7 +52,7 @@ A run ends in exactly one of three ways:
 
 | Ending | What happens |
 |---|---|
-| Five correct | Perfect run. The score screen says so and pays the full bonus. |
+| Five correct | Perfect run. The score screen says so and pays the perfect and speed bonuses. |
 | One wrong | The run stops there, with whatever you had scored. |
 | **End run** pressed | The run stops there, with whatever you had scored. |
 
@@ -54,8 +66,7 @@ units rule below is untouched.
 
 ### One play a day, with a first-question mulligan
 
-Same gate as the Carbon Challenge, same key shape, same `YYYY-MM-DD` local-day
-boundary:
+Same gate as Sort it out, same key shape, same `YYYY-MM-DD` local-day boundary:
 
 | Key | Meaning |
 |---|---|
@@ -65,206 +76,233 @@ boundary:
 | `wc_retry_used_<nk>` | Set the moment the extra go is taken. |
 
 The exception the owner asked for: go out on the very first question with a score
-of zero and you get **one** more attempt that day. Taking it spends
-`wc_retry_used_<nk>` immediately, so closing the tab does not buy a third go, and
-going out on question one of the retry does not either. Losing on round two or
-later never grants a retry.
+of zero and you get **one** more attempt that day. `retryAvailable()` checks
+for it, and the score screen then shows a **One more go** button next to
+Finish. Taking it spends `wc_retry_used_<nk>` immediately, so closing the tab
+does not buy a third go, and going out on question one of the retry does not
+either. Losing on round two or later never grants a retry.
 
-Coming back after the day is spent shows `#screen-played`, the water twin of the
-Carbon Challenge's played screen: today's score and when the next run unlocks,
-rather than a dead button. `index.html` reads the same keys to put the
-`✓ Done today` badge on the Water Challenge card, exactly as it does for the
-Carbon Challenge, and it accounts for the mulligan so the card stays playable
-while the spare attempt is still on the table.
+Coming back after the day is spent shows `#screen-played`: Envie waving, "Come
+back tomorrow", today's score and roughly how many hours until a fresh run
+unlocks at midnight, with a **Back to games** button. The hub reads the same
+keys to put the Played badge on the Water challenge card, and it accounts for
+the mulligan so the card stays playable while the spare attempt is still on
+the table.
 
 A missing, unreadable or corrupt stored value always means "you may play". A
 storage failure must never lock anyone out.
 
 ### Points
 
-A perfect run is worth 480. The owner set that ceiling; it is this game's own
-number and deliberately not the Carbon Challenge's 2100, which is unchanged.
+A perfect run is worth **150**. The intro screen says so ("150 pts max"), and
+the score screen shows "Max 150 pts" on any run that is not perfect.
 
 ```
-5 correct × 60             =  300
-+ perfect bonus                90
-+ speed bonus, under 45s       90
+5 correct × 20             =  100
++ perfect bonus                25
++ speed bonus, under 45s       25
                             -----
-maximum                       480
+maximum                       150
 ```
 
-The three parts keep the shape they had at the old scale: the correct answers
-carry most of the run, and the two bonuses are equal to each other and smaller.
+The constants live in the SCORING block of the game script:
+`POINTS_PER_CORRECT = 20`, `PERFECT_BONUS = 25`, `TIME_BONUS_MAX = 25`,
+`TIME_BONUS_FREE = 45`, `TIME_BONUS_DECAY = 1`. `MAX_POINTS` is derived from
+them. The run was earlier scaled to 480 (60 / 90 / 90); it was cut to 150 so a
+water run sits on the same scale as the app's home points, where a credit is
+earned every 1,500 points.
 
-The speed bonus is not all-or-nothing past the free window. It pays the full 90
-up to and including 45 seconds, then decays by 3 a second, so it empties in
-thirty seconds and reaches zero at 75. A perfect run therefore scores 480 at its
-fastest and 390 once it passes 75 seconds, with everything between the two on a
-straight line: 477 at 46 seconds, 435 at 60, 390 from 75 on. The decay was
-scaled with the bonus it eats, so the taper keeps its old shape rather than
-suddenly biting harder at a smaller ceiling.
+The speed bonus is paid on perfect runs only. It pays the full 25 up to and
+including 45 seconds, then drops by 1 point a second, so it empties in 25
+seconds and reaches zero at 70. A perfect run therefore scores 150 at its
+fastest and 125 from 70 seconds on, with everything between on a straight
+line. Paying it on an early exit would make quitting on round one worth
+points, which is silly.
 
 Worked examples, for anyone changing the constants again:
 
 | Run | Score |
 | --- | --- |
-| 5 correct in under 45s | `5×60 + 90 + 90` = **480** |
-| 5 correct in 60s | `5×60 + 90 + 45` = **435** |
-| 5 correct in 75s or more | `5×60 + 90 + 0` = **390** |
-| 3 correct | `3×60` = **180** |
+| 5 correct in 45s or less | `5×20 + 25 + 25` = **150** |
+| 5 correct in 60s | `5×20 + 25 + 10` = **135** |
+| 5 correct in 70s or more | `5×20 + 25 + 0` = **125** |
+| 3 correct | `3×20` = **60** |
 | 0 correct | **0** |
 
-The speed bonus is paid on completed runs only. Paying it on an early exit would
-make quitting on round one worth 90 points, which is silly. Points go into the
-shared `env_progress_<nk>.totalScore` alongside the same `streak_<nk>` daily
-bonus the Carbon Challenge maintains, so any hub or profile total picks the water
-game up without special-casing it. Both are plain addition and neither assumes
-anything about how large a water run can be, so the smaller numbers need no
-change there — a water run simply contributes less to the hub total than it did,
-which is what a lower ceiling means. The shared daily streak bonus (100 from
-three days, 250 from five) is Carbon's to set and is left alone, so it is now
-worth more relative to a water run than before.
+`saveProgress()` writes the run once into the shared `env_progress_<nk>`:
+`totalScore` goes up by the run's points plus the shared daily streak bonus,
+and `sessionsPlayed` goes up by one. `actionsPledged` is carried over
+untouched. The daily streak bonus (`dailyStreakBonus()`, key `streak_<nk>`)
+is shared with Sort it out and idempotent within a day: **25** from a three-day
+streak, **50** from five.
 
-`wc_best_streak_<nk>` survives, but "best" now means best score out of five. A
+`wc_best_streak_<nk>` survives, but "best" means best score out of five. A
 value left behind by the earlier endless build can be larger than a run can ever
 be, so `loadBest()` clamps it to `ROUNDS_PER_RUN` and writes the clamped value
 back once. "Best 23 of 5" would be nonsense.
 
-### Actions are a pledge, not a list
+### Actions moved to the home screen
 
-The score screen used to print four actions as text you could not do anything
-with. They are now the Carbon Challenge's pledge flow, reproduced rather than
-approximated, so a water pledge behaves and looks like a carbon one.
+The score screen used to end with **Take further action**, opening a pledge
+screen (`#screen-action`) with four of the six water actions. That screen is
+gone. The markup now carries a single comment where it was ("The pledge step
+moved to the app home (Take an action)"), and the game no longer reads
+`DATA.actions`.
 
-**The flow, side by side.**
+Where the water actions went:
 
-| Step | Carbon Challenge | Water Challenge |
+- They were copied into the app-wide `actions.json`, whose `meta.generated_from`
+  lists `environmentle-water-challenge.html DATA.actions` as a source. There they
+  carry the `water` type and are pledged from the home screen's Take an action,
+  under the home engine's rules (each pledge counts as a play towards the day
+  cap).
+- Playing the Water challenge nudges which actions the home suggests:
+  `GAME_TYPES.water = ['water', 'food']` in `engine.js` bumps both types in the
+  player's affinities.
+
+The `actions` array (with its `rank` and `basePoints` 250 to 100) is still in
+`water-cards.json` and the inline copy. It is harmless but no longer used by
+this game; it is reference data for `actions.json`. If the two ever disagree,
+`actions.json` wins.
+
+### Score screen, top to bottom
+
+| Part | Varies between runs? |
+|---|---|
+| Label ("Your score" or "Perfect run"), points, Envie's pose and message | Yes, with the run |
+| Pills: `N of 5 correct`, `Best N of 5`, and either `Speed bonus N` (perfect) or `Max 150 pts` | Yes |
+| "From what you just saw" comparison lines | Yes. Up to three, ranked by how many of the cards you actually met they mention, ties broken by a stored rotation counter; falls back to two when none match |
+| Green, blue and grey explainer | No. The dataset holds one version of it |
+| "One thing to keep in perspective" caveat, with a link to the wiki | No. Fixed copy |
+| Bottom: **Finish** (orange `.btn-action`, back to `index.html?hub=1`) and, only when the mulligan applies, **One more go** (outlined `.btn-finish`) | Only the second button |
+
+The buttons sit **below** the reading, not above it: the score first, then what
+it meant. `app-nav` stays hidden on every screen, as in the other games.
+
+The explainer is deliberately left alone: there is one version of it in
+`water-cards.json` and rotating it would mean inventing copy that no source
+backs. If more explainer framings are wanted, they belong in the dataset first.
+
+### Answering: swipe the card
+
+Since 27 Sep 2026 the main way to answer is to **swipe the mystery card**:
+right for more, left for less. `initSwipe()` handles it with pointer events,
+so it works for touch, pen and mouse.
+
+- A drag only counts once it is clearly sideways (8 px, and more sideways than
+  vertical). A mostly vertical drag is left to the browser, so the card area
+  still scrolls. The card carries `touch-action: pan-y` for the same reason.
+- While dragging, the card follows the finger with a slight tilt (no tilt under
+  reduced motion), and a full-card tint fades in: navy "← Less" or blue
+  "More →". Its opacity is `--swipe`, from 0 to 1 as the drag nears the
+  threshold.
+- Letting go past `SWIPE_THRESHOLD` (28 per cent of the card's width), or a
+  quick flick (`SWIPE_FLICK`, 0.5 px/ms over at least 40 px), commits. The
+  card springs back and the answer is revealed on it. Short of that, it just
+  springs back and nothing is answered.
+- The card is only draggable while a question is open: `setControls()` toggles
+  the `swipeable` class.
+
+The footer keeps compact **← Less** and **More →** buttons either side of a
+"Swipe the card" hint. They are the fallback for anyone who cannot or would
+rather not drag, and they keep the game usable with switch access and screen
+readers. The app skin (`.skin.g-water .btn-submit` in `app.css`) gives them
+their navy pill; the game's own `.btn-submit.alt` only sizes them. Once the
+answer is shown, a full-width orange **Next** replaces all three. Next moves on
+to the next round, opens the reality check, or goes to the score screen,
+depending on where the run is (`proceed()`).
+
+### Difficulty: the gap closes as the run goes on
+
+Pairs used to be drawn at random from the whole pool, above the 10 per cent
+near-tie floor. The typical question compared things about 5 times apart per
+kg and 12 times apart per item, and half the per-item questions were 10 times
+apart or more (a car against a toilet flush). Nobody got those wrong.
+
+Each round now only pairs cards whose ratio (bigger over smaller) sits inside a
+band, `RATIO_BAND_BY_ROUND` in the game script:
+
+| Round | Ratio band | Feels like |
 |---|---|---|
-| 1 | Score screen: number, message, pills | Same, plus the panels of comparisons, explainer and caveat to read |
-| 2 | Bottom buttons: `Take further action` (orange) then `Finish` (outlined) | The same two, in the same order and treatment, sitting **below** the reading rather than above it |
-| 3 | `showActions()` opens `#screen-action` | `showActions()` opens `#screen-action` |
-| 4 | Header "Take some action", an intro line, a dashed "Nothing for now" opt-out, then 2 action cards | Identical, with 4 action cards, because a water run offers four |
-| 5 | Each card: title, level chip, description, `+N pts`, a saving line, a round tick | Identical, same classes |
-| 6 | Footer: `Commit & collect +N pts` and a text `Back to my score` | Identical |
-| 7 | `commitActions()` adds the bonus, writes progress and history, goes to the hub | Same, except the run itself was already written (see below) |
+| 1 | 1.6 to 3 | a fair warm-up |
+| 2 | 1.4 to 2.5 | |
+| 3 | 1.3 to 2 | |
+| 4 | 1.2 to 1.7 | |
+| 5 | 1.1 to 1.5 | properly tight |
 
-**Where a pledge is stored.** Exactly where carbon puts it, so nothing
-downstream needs to know which game produced it.
+The floor matters as much as the ceiling: one wrong answer ends the run, so a
+near coin flip on round two would feel unfair.
 
-| Key | Shape | Written by |
-|---|---|---|
-| `env_progress_<nk>.actionsPledged` | integer, incremented by the number committed | both games |
-| `env_progress_<nk>.totalScore` | integer, incremented by the pledge bonus | both games |
-| `actions_history_<nk>` | `[{ title, date }]`, most recent last, capped at 20 | both games |
+How it fits the existing rules:
 
-`index.html` reads all three already. `renderActionHistory()` lists
-`actions_history_<nk>` on the profile screen and `openProfile()` shows
-`actionsPledged`, both keyed only by player, so a water pledge appears in the
-shared list alongside carbon's with no special-casing.
+- `comparable()` still gates everything (same pool, same basis, over 10 per
+  cent apart). The band only narrows what passes it.
+- `drawOpponent()` runs the usual unseen, not recent, any ladder **inside the
+  band** first. If the band is empty, it tries anything under the band's
+  ceiling, then the closest valid opponent.
+- `pickStarter()` only starts a chain on a card that has at least one partner
+  in the band (`hasBandOpponent()`), so a chain never opens on a card that can
+  only be asked as an easy question.
 
-**One deliberate difference from carbon.** Carbon defers writing the run until
-you press Finish or Commit. This game cannot: the daily gate is stamped the
-moment the score screen appears, or a reload would buy a second run. So the run
-and the pledge are two separate writes. `saveProgress()` writes the run once,
-`savePledge()` adds the bonus on top once, each guarded by its own flag, so
-committing twice cannot collect twice.
+**Coverage.** After the 27 Sep 2026 data expansion there are 91 per-kg cards
+(median 10 to 19 partners per band) and 45 per-item cards in play. Only the
+extremes lack a partner in the tighter rounds: vanilla, cloves and cocoa butter
+among the per-kg cards, and among the per-item cards the car (65,000 L, next
+is 25,000), "brushing teeth, tap off" (1 L), the flushes, the steak, the
+untreated-tannery boots and the car wash by hose. They still come up through
+the looser early bands or the dilemmas.
 
-**The 480 cap is the run's cap.** Pledge points sit on top of it, as they do in
-carbon, and the pledge screen's header says the run's score out loud so the two
-are never confused.
+### Everyday dilemmas
 
-### Bottom controls, matched to the other games
+Once per run, the per-item half of the run opens with an **everyday dilemma**:
+two choices that do the same job, compared on the same basis. "Does washing up
+by hand need more or less water than a dishwasher cycle?" They live in
+`water-cards.json` under `dilemmas`, each naming a `known` card (shown), a
+`guess` card (hidden) by title, the `basis` they share, Envie's `comment` and a
+`caveat`.
 
-The owner asked for the buttons at the bottom to be the same as the other games.
-They mostly already were, sharing `.btn-action`, `.btn-finish` and `.app-nav`
-verbatim. Four things had drifted, and one has no counterpart at all.
+- `pickDilemma()` walks the list from the stored rotation counter, so it
+  changes run to run, and skips any pair that is missing, on another basis or
+  inside the near-tie floor. `state.dilemmaUsed` keeps it to one per run.
+- The question bubble adds "Everyday dilemma. Both figures are <basis>." After
+  the reveal, the verdict shows the dilemma's comment and caveat instead of the
+  card's own comment.
+- The difficulty band does not apply to dilemmas: they are curated.
+- Normally the chain carries on from the dilemma's hidden card. If that card is
+  not in play (the milk pair measures only freshwater withdrawn), the next
+  round starts a fresh chain instead, so it is never compared with anything
+  else.
 
-| Screen | Control | Carbon and quiz | Water before | Water now |
-|---|---|---|---|---|
-| Intro | `.btn-play` | orange, 18px/24px, 17px text | identical already | unchanged |
-| Mid-run | `.btn-submit` | one full-width button | two `flex: 1` buttons plus an orange Next | unchanged, see below |
-| Score | `.score-bottom` | `16px 20px 16px` | `4px 20px 20px`, and **above** the reading panels | `16px 20px 16px`, **below** them |
-| Score | primary orange | `Take further action` opening the action screen | `Play again`, only ever visible on a mulligan | `Take further action`, same label and target |
-| Score | `Finish` | a `<button>` calling a handler | an `<a href>` styled to look like one | a `<button>`, same as theirs |
-| Score | `.app-nav` | hidden on every screen | shown on the score screen | hidden, same as theirs |
-| Action | `.btn-commit` | game's dark tone, 17px/24px, 16px text | did not exist | identical bar the palette |
-| Action | `.btn-action-back` | text and a back arrow | did not exist | identical |
-
-Two deliberate non-matches:
-
-- **The mid-run footer.** Carbon reveals answers with one full-width button.
-  This game asks a two-way question, so it needs two buttons side by side and a
-  full-width Next after them. Matching carbon's single button would mean
-  removing a choice the game is built on, so the pair stays.
-- **The exit control and the mulligan.** `#btn-exit` and the `One more go`
-  button are water-only. The exit control keeps its own header chrome. The
-  mulligan button now uses the outlined `.btn-finish` treatment rather than the
-  orange one, so the orange stays reserved for `Take further action` exactly as
-  it is in the other two games, and the score screen never shows two orange
-  buttons competing.
-
-### What a pledged action is worth, and why there is no size bonus
-
-Carbon scales its action bonus with the card's footprint:
-`basePoints + max(0, round(log10(impact_kg / 10) * 50))`. Water saves litres,
-not CO2, so the obvious move is the same log shape on litres. It does not work,
-and it is worth writing down why.
-
-The six actions in `water-cards.json` do each carry a quantified saving, but not
-on a comparable basis:
-
-| Rank | Action | Figure the dataset states | Basis |
+| id | Known | Guess | Source |
 |---|---|---|---|
-| 1 | Swap a beef meal | about 115,000 L | a year |
-| 2 | Eat what you buy | 3,178 L / 1,286 L | per wasted item |
-| 3 | One more year from your clothes | 10,495 L | per replacement avoided |
-| 4 | Tap off while brushing | 8,030 L | a year |
-| 5 | Two minutes off the shower | 6,570 L | a year |
-| 6 | Fix the dripping tap | 5,475 L | a year |
+| dishes | Dishwasher, 20 L | Washing up by hand, 103 L | Uisce Éireann; Stamminger et al. 2003 (Bonn) |
+| shower-bath | Bath, 80 L | 7-minute shower, 49 L | Uisce Éireann |
+| power-shower | Bath, 80 L | 10-minute power shower, 150 L | Waterwise flow rate x minutes (medium) |
+| teeth | Tap off, 1 L | Tap on, 12 L | Uisce Éireann / Waterwise |
+| toilets | Modern full flush, 6 L | Old flush, 13 L | Waterwise, European Commission |
+| car-wash | Bucket, 32 L | Hose, 440 L | RAC Drive citing Uswitch (medium) |
+| coffee-tea | Cup of tea, 27 L | Cup of coffee, 132 L | Chapagain & Hoekstra 2007 |
+| instant-coffee | Brewed coffee, 132 L | Instant, 80 L | Chapagain & Hoekstra 2007, Table 9 |
+| burgers | Soy burger, 158 L | Beef burger, 2,350 L | WFN Report 49 |
+| milks | Oat milk, 48 L | Cow's milk, 628 L | Poore & Nemecek 2018 via Our World in Data (withdrawal only) |
 
-Four are annual, two are per-event. Putting all six on one basis means deciding
-how often a household wastes a kilo of cheese or replaces a pair of jeans, and
-the dataset holds neither number. Worse, using the figures as they stand
-inverts the dataset's own ranking: food waste is authored as the second biggest
-lever, but its stated 3,178 L would score it below shorter showers, which is
-ranked fifth. That is exactly the thing the ranking exists to prevent.
-
-So there is no size bonus. Each action carries a flat `basePoints`, the same
-convention carbon uses for the base half of its number, and the value follows
-the dataset's own `rank`, which is its explicit statement about comparability:
-
-```
-points = 250 - (rank - 1) x 30
-
-rank 1  250      rank 4  160
-rank 2  220      rank 5  130
-rank 3  190      rank 6  100
-```
-
-**Calibration against carbon.** Computing carbon's own per-pledge totals from
-`CARD_ACTIONS` and `FALLBACK_CARDS` gives 18 possible pledges ranging 59 to 370,
-median 174, mean 176. Water's ramp gives 100 to 250, median and mean both 175.
-A water pledge is therefore worth almost exactly what a carbon pledge is worth,
-with a narrower spread, which is honest: water's actions are closer together in
-size than carbon's cards are.
-
-One difference to flag rather than hide: carbon offers 2 actions per run and
-water offers 4, so a player who commits to everything can collect more in water
-(820) than in carbon (about 600 at the top end). Per pledge the two match; per
-run water is more generous. Narrowing that means showing fewer actions, which
-would cost the rotation, so it is left as it is for the owner to call.
+Researched but left out: two half loads against one full load (the answer
+depends on whether the machine senses the load), watering can against a
+sprinkler (the can side had no sourced figure; the sprinkler is a plain card,
+1,000 L an hour, from Uisce Éireann), bottled against tap water, polyester
+against cotton, second-hand jeans, paper cups and shopping bags (no credible
+per-use figure).
 
 ### The exit control
 
-`#btn-exit` sits in the game header next to the progress bar, in the same
-low-opacity white chrome as the Carbon Challenge's tries row. It is a real
-button, so it is keyboard reachable, it carries an `aria-label`, and Escape does
-the same thing. There is no confirmation dialogue, because the game is
-hyper-casual and the score is preserved either way, so an accidental tap costs
-nothing but the rest of the run. `showScreen()` sets `hidden` on it whenever the
-active screen is not the game screen: inactive screens here are only faded out,
-not removed, so without that the control would still be focusable from the intro
-and score screens.
+`#btn-exit` sits in the game header next to the progress bar, in low-opacity
+white chrome. It is a real button, so it is keyboard reachable, it carries an
+`aria-label`, and Escape does the same thing. There is no confirmation
+dialogue, because the game is hyper-casual and the score is preserved either
+way, so an accidental tap costs nothing but the rest of the run. `showScreen()`
+sets `hidden` on it whenever the active screen is not the game screen: inactive
+screens here are only faded out, not removed, so without that the control would
+still be focusable from the intro and score screens.
 
 ### What the player has already seen
 
@@ -273,48 +311,26 @@ and persists across sessions. On a new run the starter card and every opponent
 prefer titles the player has not met.
 
 This is a preference, never a rule. `drawOpponent()` and `pickStarter()` each
-walk a three-tier ladder — unseen and not recent, then not recent, then anything
-valid — and **every** tier is gated by `comparable()` first. Preferring an unseen
+walk a three-tier ladder (unseen and not recent, then not recent, then anything
+valid) and **every** tier is gated by `comparable()` first. Preferring an unseen
 card can therefore never produce a cross-pool, cross-basis or near-tie pairing.
 When the preferred tiers are empty the code drops back to a valid pairing rather
-than bending the rule.
+than bending the rule. `RECENT_MEMORY` (10) is how many cards count as recent.
 
-When a pool's unseen count falls below `MIN_UNSEEN`, `recycleSeen()` forgets
+When a pool's unseen count falls below `MIN_UNSEEN` (8), `recycleSeen()` forgets
 everything except what the current run has already used. The next chain draws
 from the whole pool again, in a fresh random order, without repeating what is
 still on screen. It cannot deadlock, because the final tier of every picker is
 the full pool.
 
-### Does the summary change between runs?
-
-Partly, and more than it used to.
-
-| Part of the score screen | Varies? |
-|---|---|
-| Points, message, lead line, pills | Yes, with the run |
-| "From what you just saw" comparison lines | Yes. Ranked by how many of the cards you actually met they mention, with ties broken by a stored rotation counter |
-| The action cards behind "Take further action" | Yes. Four of the six each run, always led by the biggest lever and always in dataset order |
-| Green, blue and grey explainer | No. The dataset holds one version of it |
-| The closing caveat panel | No. It is fixed copy |
-
-The action rotation walks a window over actions 1 to 5 while always keeping
-action 0, so consecutive runs never offer the same four and the ranking
-survives. They used to sit on the score screen as a passive list; they are now
-the pledge cards, which is the only place they appear.
-The explainer is deliberately left alone: there is one version of it in
-`water-cards.json` and rotating it would mean inventing copy that no source
-backs. If more explainer framings are wanted, they belong in the dataset first.
-
 ## How it fits the rest of the repository
 
-Everything here follows the Carbon Challenge (`environmentle-sort-it-out.html`):
+Everything here follows Sort it out, the Carbon Challenge (`environmentle-sort-it-out.html`):
 
 - **Same shell.** `back-to-hub` header, `.screen` / `.screen.active` manager,
   `app-nav` markup kept but hidden throughout as the others keep it, 460 px
   centred frame, the same `gtag` snippet, Comfortaa for display and Montserrat
   for body text, Material Symbols for icons.
-- **Same pledge screen.** `#screen-action` and its `.action-*` classes are the
-  Carbon Challenge's, reproduced rather than reinvented.
 - **Same palette shape.** `:root` carries `--water-dark / --water-mid /
   --water-light / --water-pale` where the Carbon Challenge carries `--green-*`,
   plus the shared `--orange`, `--cream`, `--text`, `--text-soft`, `--radius`,
@@ -324,13 +340,14 @@ Everything here follows the Carbon Challenge (`environmentle-sort-it-out.html`):
 - **Same player conventions.** `?player=` wins, then `localStorage`
   `env_player_name`; the name is lowercased and underscored into `_nk` the same
   way. Progress is written once per run into the shared `env_progress_<nk>`
-  (`totalScore`, `sessionsPlayed`, `actionsPledged`), and pledged actions into
-  the shared `actions_history_<nk>`, so the hub counts this game like any other.
+  (`totalScore` and `sessionsPlayed`; `actionsPledged` is carried over, since
+  pledges now happen on the home screen), so the hub counts this game like any
+  other.
   The water keys sit alongside the Carbon Challenge's `sio_*` keys and mirror
   their shape: `wc_best_streak_<nk>`, `wc_last_played_<nk>`,
   `wc_last_score_<nk>`, `wc_seen_<nk>`.
 - **Same once-a-day gate.** One run a day per player, with `#screen-played` as
-  the water twin of the Carbon Challenge's played screen. See below for the
+  the water twin of the Carbon Challenge's played screen. See above for the
   first-question mulligan, which is the one place the two games differ.
 - **Every read and write is wrapped.** `storeGet` / `storeSet` fall back to an
   in-memory object when `localStorage` throws or is unavailable, which it is in
@@ -343,7 +360,7 @@ Either way works.
 
 ```bash
 # a local server, the normal way
-cd _games
+cd app
 python3 -m http.server 8000
 # then open http://localhost:8000/environmentle-water-challenge.html
 ```
@@ -363,7 +380,7 @@ same shape as the Carbon Challenge's `loadCards()` and its `FALLBACK_CARDS`.
 will drift:
 
 ```bash
-cd _games
+cd app
 python3 - <<'PY'
 import re
 d = open('water-cards.json').read().rstrip()
@@ -452,8 +469,8 @@ only ever pairs two cards from the same pool with the same basis**.
 
 | Pool | Basis | Cards | Played? |
 |---|---|---|---|
-| `per-kg` | one kilogram of product | 38 | yes |
-| `per-unit` | one of the thing: one egg, one cup, one shower, one flush, one pair of jeans | 26 | yes |
+| `per-kg` | one kilogram of product | 91 | yes |
+| `per-unit` | one of the thing: one egg, one cup, one shower, one flush, one pair of jeans | 47 | yes |
 | `per-litre` | one litre of drink | 4 | no, see below |
 
 - Each card states its unit on screen (`per kg`, `per 125 ml cup`, `per 8-minute
@@ -469,7 +486,58 @@ only ever pairs two cards from the same pool with the same basis**.
 - Household rows sit in the `per-unit` pool and are also the yardsticks for the
   reality checks. A shower is never compared against a kilogram of beef.
 
-**Nothing was dropped from the source data.** Five of the 69 rows are excluded from
+### Home use is measured in Irish terms
+
+Since 27 Sep 2026 the household comparisons are Irish first, then European,
+never American:
+
+- New card **Household water use per person per day (Ireland)**: 133 L
+  (Uisce Éireann, reported by The Irish Times, July 2025). It is first in
+  `yardsticks`, so the reality check says, for example, "About 12 days of home
+  water use in Ireland".
+- The **USA** row (310 L) is `in_play: false` with an `excluded_reason` and is
+  no longer a yardstick. It is kept for reference.
+- The Europe row (124 L, EEA) stays in play. It is within 10 per cent of the
+  Irish row, so the two are never paired.
+- The three comparison lines that used a daily household figure (beef,
+  t-shirt, jeans) now use the Irish one: 116, 19 and 60 days.
+- `meta.version` is 1.1.
+
+Later the same day the remaining household rows were moved onto Uisce
+Éireann's own figures (water.ie conservation page and tips):
+
+| Row | Was | Now |
+|---|---|---|
+| Shower | 8 minutes at 9 L/min (Waterwise UK), 72 L | **7 minutes at 7 L/min, 49 L**. Title is now `Shower (typical, 7 minutes)` |
+| Shower per minute (reference) | 9 L | **7 L** |
+| Dripping tap | 15 L a day (USGS drip calculator) | **21 L a day** (fixing one saves about 150 L a week; 5,000 to 10,000 L a year) |
+| Dishwasher cycle | 10 L (APPLiA, eco) | **20 L** |
+| Washing machine cycle | 50 L (APPLiA) | **65 L** |
+
+What moved with them: the shower yardstick ("7-minute showers"), the burger
+and t-shirt comparison lines (47 and 51 showers), the cheese line (78
+washing-machine cycles), the shower and dripping-tap actions in
+`water-cards.json` (5,110 and 7,665 L a year, and the tap now ranks above the
+shower), and the matching text in `actions.json` and `challenges.json`. One
+home action claimed a minute off the shower saves "over 5,000 litres a year";
+that is about 2,555 L at 7 L a minute, so it now says "over 2,500".
+
+The old toilet flush (13 L) still co-cites USGS alongside the European
+Commission and Waterwise, which give the same figure.
+
+**Where each home figure comes from is shown on the card.** Since 27 Sep 2026
+every home row carries `origin` in `water-cards.json`: `IE` for an Uisce
+Éireann figure (shower, bath, brushing teeth, dishwasher, washing machine,
+dripping tap, a day at home in Ireland, sprinkler) and `EU` for a European one
+(toilet flushes, a day at home in Europe, washing up by hand, power shower, car
+wash). `renderCard()` adds a small neutral tag after the unit, "Irish" or
+"Europe". "Europe" rather than "EU" because the power shower and car wash come
+from UK sources. Food and goods rows carry no tag: they are global averages
+from the Water Footprint Network, and the intro line and the closing caveat
+panel now say so instead of calling every figure a global average. The tag is
+grey on purpose: it labels the source, it is not praise.
+
+**Nothing was dropped from the source data.** 8 of the 146 rows are excluded from
 play and each carries an `in_play: false` flag with an `excluded_reason`:
 
 - **Milk, orange juice, beer, wine** (the four `L/L` rows). They are priced by
@@ -477,9 +545,56 @@ play and each carries an `in_play: false` flag with an `excluded_reason`:
   pool to draw fair pairings from, so rather than fudge them onto the per-kg basis
   they are reference only. Their per-serving equivalents (a glass of milk, a glass
   of beer, a glass of wine) do play, in the `per-unit` pool.
-- **Shower per minute.** A flow rate rather than a single act, and the 8-minute
+- **Shower per minute.** A flow rate rather than a single act, and the 7-minute
   shower row already represents showering. The figure is still used by the actions
   list and the reality checks.
+- **Household use per person per day, USA.** Replaced by the Irish figure; see
+  above.
+- **A litre of cow's milk and a litre of oat milk.** These measure only
+  freshwater withdrawn (Poore & Nemecek 2018), not a full green, blue and grey
+  footprint, so they appear only as their own dilemma.
+
+### Categories
+
+Each card's `category` is the label printed on it, and `category_key` picks its
+colour bar and icon (`getCatClass()` and `catIcon()` in the game script). Since
+27 Sep 2026:
+
+| Label | `category_key` | Icon | What goes there |
+|---|---|---|---|
+| FRUIT | `food-fruit` | leaf | fruit, per kg and per piece |
+| VEG | `food-veg` | sprout | vegetables, potatoes |
+| FOOD | `food-plant` | utensils | grains, pulses, oils, bread, pasta, chocolate, prepared food |
+| NUTS & SEEDS | `food-plant` | utensils | nuts, seeds, coconut |
+| MEAT & DAIRY | `food-animal` | beef | meat, dairy, eggs, burgers, steak |
+| DRINK | `drink` | coffee | cups, glasses, pints |
+| COMMODITIES | `commodity` | globe | traded raw crops and materials: coffee and cocoa beans, tea leaves, palm oil, cotton lint, rubber, vanilla, leather, tobacco |
+| CLOTHES | `clothes` | shirt | t-shirt, jeans, shoes, boots |
+| MANUFACTURING | `goods` | wrench | paper, bed sheet, car |
+| TECHNOLOGY | `tech` | smartphone | smartphone, microchip |
+| AT HOME | `household` | droplet | showers, baths, flushes, appliances, daily use |
+
+Technology stays thin on purpose. Most tech figures online are either factory
+water only (Lenovo's desktop declaration) or come from commercial lists with no
+method (the widely repeated 190,000 L laptop), so they were left out.
+
+### Data added on 27 Sep 2026
+
+- **45 per-kg foods** (15 fruit, 12 veg, 11 grains, pulses and oils, 6 nuts
+  and seeds, goat, milk powder), all read from Mekonnen & Hoekstra 2011 Table
+  3 and Report 48 Table 4, opened directly, with the green, blue and grey split
+  in each `note`.
+- **8 commodities per kg**: rubber, vanilla, leather, tobacco, hops, cloves,
+  cocoa butter, jute.
+- **Per-item cards** that fill the old gaps: pizza, beef and soy burgers,
+  chocolate bar, banana, orange, glasses of orange and apple juice, a pint,
+  a steak, a chicken curry, a bed sheet, two pairs of leather boots (tannery
+  waste treated and untreated), a microchip, plus the dilemma cards.
+- The WFN Product Gallery (`tools.waterfootprint.org/product-gallery/`) is
+  readable in a browser: each product's text comes from
+  `details.php?product=N`, 41 products in all. That is how the cheese
+  discrepancy was settled.
+- Every new row carries `"added": "2026-09-27"`.
 
 ## Where the data came from
 
@@ -509,9 +624,10 @@ every row). The primary sources:
   Cars". <https://pubs.acs.org/doi/10.1021/es2040043>
 - **Friends of the Earth**, "Mind Your Step" (smartphone).
 - **Waterwise UK**, **Energy Saving Trust** "At Home With Water", **APPLiA Europe**
-  statistical report 2022-2023, **USGS Water Science School**, **US EPA
-  WaterSense**, **European Environment Agency**, **WHO** emergency water guidance
-  (the household rows).
+  statistical report 2022-2023, **Uisce Éireann** (the Irish daily figure),
+  **European Environment Agency**, **WHO** emergency water guidance (the
+  household rows). **USGS** and **US EPA WaterSense** are behind the
+  reference-only USA row and are co-cited on two others.
 
 ## Data caveats, please read before quoting any of this
 
@@ -521,7 +637,7 @@ hess.copernicus.org and usgs.gov, so every figure was verified through search
 result summaries rather than by opening the source document. The `confidence`
 field on each row records what that means in practice:
 
-- **45 of 69 rows are high confidence**, meaning the exact figure came back
+- **45 of the original 69 rows are high confidence**, meaning the exact figure came back
   verbatim in search results and matches the canonical Water Footprint Network
   value.
 - **21 are medium**, meaning corroborated approximately, or by a single source, or
@@ -534,7 +650,7 @@ concerned:
 
 | Card | Used here | Also published |
 |---|---|---|
-| Cheese | 3,178 L/kg (WFN) | around 5,000 to 5,990 L/kg in some compilations, depending on cheese type and milk-to-cheese ratio |
+| Cheese | **5,060 L/kg** since 27 Sep 2026 (Report 48 Table 4, and the WFN gallery text) | 3,178 L/kg, the WFN gallery's headline figure, which its own text contradicts. The game used 3,178 until 27 Sep 2026 |
 | Car | 65,000 L per car (Berger et al. 2012, peer-reviewed LCA, range 52,000 to 83,000) | the popular 400,000 L figure, which comes from broader virtual-water accounting and is not supported by the LCA |
 | Leather shoes | 8,000 L per pair (commonly cited WFN figure) | 14,000 to 16,600 L per pair, depending on how much leather weight is allocated |
 | Coffee | 18,900 L/kg (roasted, 18,925 exactly) | 15,897 L/kg for green beans |
@@ -563,8 +679,9 @@ This is flagged here only. **Nothing in the wiki repository was edited.**
 
 ## Accessibility
 
-- Fully keyboard playable: left arrow or `L` for Less, right arrow or `M` for
-  More, `Enter` or `Space` to continue and to dismiss a reality check, `Escape`
+- Swipe is never the only way to answer: the Less and More buttons stay in the
+  footer, and the game is fully keyboard playable: left arrow or `L` for Less,
+  right arrow or `M` for More, `Enter` or `Space` to continue and to dismiss a reality check, `Escape`
   to end the run and go to the score screen.
 - Every control is a real `<button>` with a visible label. The exit control adds
   an `aria-label` because "End run" alone does not say where it takes you.
@@ -574,7 +691,7 @@ This is flagged here only. **Nothing in the wiki repository was edited.**
   the final score.
 - The count-up animation is skipped entirely under
   `prefers-reduced-motion: reduce`, along with every other transition.
-- Tap targets are at least 56 pixels tall, and the Less/More buttons sit in a
+- Tap targets are at least 48 pixels tall, and the Less/More buttons sit in a
   fixed footer at the bottom of the screen where a thumb can reach them.
 - Layout tested from 360 pixels wide up to desktop, inside the 460 px frame the
   Carbon Challenge also uses.

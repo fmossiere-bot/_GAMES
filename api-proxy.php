@@ -24,8 +24,10 @@ define('ANTHROPIC_API_KEY',   getenv('ANTHROPIC_API_KEY') ?: '');
 //   Wiki path     → Haiku. Cheap and fast; the wiki context does the heavy lifting.
 //   No-wiki path  → Opus.  More capable and has a fresher training cutoff for the
 //                          ungrounded fallback path where we need raw knowledge.
-define('ANTHROPIC_MODEL_WIKI',     'claude-haiku-4-5-20251001');
+define('ANTHROPIC_MODEL_WIKI',     'claude-haiku-5-5');   // launched 7 Oct 2026; fixed ID, no date suffix
 define('ANTHROPIC_MODEL_FALLBACK', 'claude-opus-4-8');
+// Tried if the primary fallback model errors (retired ID, overload, rate limit).
+define('ANTHROPIC_MODEL_BACKUP',   'claude-opus-5-5');
 define('ANTHROPIC_VERSION',        '2023-06-01');
 
 // ── INFOMANIAK AI ──────────────────────────────────────────────────────────
@@ -35,6 +37,16 @@ define('INFOMANIAK_MODEL_RETRIEVER', 'nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8'
 // Wiki-path answer model: Mistral Small 4 replaces Haiku. Cheap, fast, and well-suited
 // to synthesis from grounded wiki context.
 define('INFOMANIAK_MODEL_WIKI',      'mistralai/Mistral-Small-4-119B-2603');
+
+// Set to true to let Mistral write first-turn wiki answers again (cheaper, but it
+// produced garbled, off-topic or wrong answers in testing, 7 Oct 2026). When false,
+// Claude writes every answer and Mistral/Nemotron are only used for page retrieval.
+define('MISTRAL_WIKI_ANSWERS', false);
+
+// How much Haiku 5.5 thinks before answering: 'off' (thinking disabled), 'low' (it may skip
+// thinking on easy questions), 'medium' (its default). Answers are short and built from wiki text,
+// so 'low' is plenty. Opus 5.5 always thinks and cannot be switched off, so this only applies to Haiku.
+define('HAIKU_THINKING', 'low');
 
 // How many prior turns to forward for multi-turn context (keeps token cost bounded).
 define('MAX_HISTORY_MESSAGES', 10);
@@ -158,6 +170,12 @@ function github_get(string $url): ?string
         $headers[] = 'Authorization: Bearer ' . GITHUB_TOKEN;
     }
     return curl_get($url, $headers);
+}
+
+/** Raw GitHub URL for a wiki file. Filenames contain spaces and commas, which libcurl rejects unencoded. */
+function wiki_raw_url(string $filename): string
+{
+    return WIKI_RAW_BASE . implode('/', array_map('rawurlencode', explode('/', $filename)));
 }
 
 function raw_get(string $url): ?string
@@ -305,6 +323,8 @@ if ($snippets_raw !== null) {
                 'title'    => $title,   // short clean title — used for display
                 'label'    => $label,   // enriched — used only by LLM retriever
                 'filename' => $entry['filename'],
+                'tags'     => array_map(fn($t) => strtolower(ltrim((string)$t, '#')), (array)($entry['tags'] ?? [])),
+                'category' => (string)($entry['category'] ?? ''),
             ];
         }
     }
@@ -388,6 +408,297 @@ if (empty($page_map)) {
     }
 }  // end if ($index_raw !== null)
 }  // end fallback index.md parsing
+
+// ── TAG HELPERS (countries, regions, topics) ──────────────────────────────
+// Wiki hierarchy: category (ireland-hub, eu-hub...) > page tag (frontmatter) > paragraph or
+// section tag. Paragraph and section tags can be written two ways, both understood here:
+//   #ireland                      typed at the END of a paragraph, or alone on its own line
+//   <!-- tag: ireland -->         invisible comment on its own line (what ingest writes)
+//   <!-- tag-start: ireland --> ... <!-- tag-end -->      a range (older: country-start / country-end)
+// Position decides the scope:
+//   directly under a heading      the heading and everything below it, down to the next heading
+//                                 of the same or higher level or a horizontal rule
+//   anywhere else                 the next paragraph, list or table only
+// When the question names a tag (Ireland, France, EU, cool companies...) and the page has
+// blocks tagged for it, only those blocks (plus the title and headings above them) are sent.
+// A page with no matching block is sent whole. The vocabulary (names, aliases, parents) is
+// wiki/tags-vocabulary.json in the wiki repo; DEFAULT below is the fallback if it is unreachable.
+
+function default_tag_vocabulary(): array
+{
+    return [
+        'eu'             => ['kind' => 'region',  'aliases' => ['eu', 'european union', 'europe', 'european']],
+        'ireland'        => ['kind' => 'country', 'parent' => 'eu', 'aliases' => ['ireland', 'irish', 'republic of ireland', 'eire']],
+        'france'         => ['kind' => 'country', 'parent' => 'eu', 'aliases' => ['france', 'french']],
+        'uk'             => ['kind' => 'country', 'aliases' => ['uk', 'united kingdom', 'britain', 'british', 'great britain', 'england', 'scotland', 'wales']],
+        'us'             => ['kind' => 'country', 'aliases' => ['usa', 'united states', 'u.s.', 'u.s.a.', 'america', 'american', 'americans'], 'case_sensitive_aliases' => ['US']],
+        'india'          => ['kind' => 'country', 'aliases' => ['india', 'indian']],
+        'china'          => ['kind' => 'country', 'aliases' => ['china', 'chinese']],
+        'cool-companies' => ['kind' => 'topic',   'aliases' => ['cool companies', 'cool company', 'climate startups', 'startups', 'start-ups', 'startup', 'start-up']],
+        'individual-actions' => ['kind' => 'topic', 'aliases' => ['what can i do', 'what should i do', 'what can we do', 'how can i reduce', 'how can i cut', 'how can i lower', 'how can i help', 'how do i reduce', 'things i can do', 'ways to reduce', 'individual action', 'individual actions', 'personal action', 'personal actions', 'simple actions', 'tips', 'tip']],
+        'company-evaluations' => ['kind' => 'topic', 'aliases' => ['company evaluation', 'company evaluations', 'evaluate a company', 'evaluating a company', 'evaluating companies', 'is this company', 'is the company', 'which companies', 'brand', 'brands', 'corporate', 'corporation']],
+    ];
+}
+
+/** slug => entry, loaded once per request. */
+function tag_vocab(): array
+{
+    static $vocab = null;
+    if ($vocab !== null) return $vocab;
+    $vocab = default_tag_vocabulary();
+    $raw = raw_get(WIKI_RAW_BASE . 'tags-vocabulary.json');
+    if ($raw !== null) {
+        $d = json_decode($raw, true);
+        if (is_array($d) && !empty($d['tags']) && is_array($d['tags'])) {
+            $vocab = [];
+            foreach ($d['tags'] as $slug => $entry) {
+                if (!is_string($slug) || !is_array($entry)) continue;
+                $vocab[strtolower($slug)] = $entry;
+            }
+        }
+    }
+    return $vocab;
+}
+
+/** Map a slug or alias (with or without #) to its canonical slug, or null if unknown. */
+function canonical_tag(string $name): ?string
+{
+    $n = strtolower(ltrim(trim($name), '#'));
+    foreach (tag_vocab() as $slug => $e) {
+        if ($n === $slug) return $slug;
+        foreach (($e['aliases'] ?? []) as $a) {
+            if ($n === strtolower((string)$a)) return $slug;
+        }
+    }
+    return null;
+}
+
+/** Parent chain of a tag, nearest first. */
+function tag_ancestors(string $slug): array
+{
+    $vocab = tag_vocab();
+    $out = [];
+    $guard = 0;
+    while (!empty($vocab[$slug]['parent']) && $guard++ < 8) {
+        $slug = strtolower((string)$vocab[$slug]['parent']);
+        $out[] = $slug;
+    }
+    return $out;
+}
+
+/** True if a block tagged $block_tag is relevant to a question about $q_tag. */
+function tag_relates(string $block_tag, string $q_tag): bool
+{
+    return $block_tag === $q_tag
+        || in_array($block_tag, tag_ancestors($q_tag), true)    // EU-wide paragraph, France question
+        || in_array($q_tag, tag_ancestors($block_tag), true);   // France paragraph, EU question
+}
+
+/** Tags named in the question: ['geo' => [...], 'topic' => [...]] (canonical slugs). */
+function detect_question_tags(string $question): array
+{
+    $q   = ' ' . strtolower($question) . ' ';
+    $res = ['geo' => [], 'topic' => []];
+    foreach (tag_vocab() as $slug => $e) {
+        $hit = false;
+        foreach (($e['aliases'] ?? []) as $a) {
+            $a = strtolower((string)$a);
+            if ($a === '') continue;
+            if (!preg_match('/(?<![a-z0-9])' . preg_quote($a, '/') . '(?![a-z0-9])/', $q)) continue;
+            // "Northern Ireland" is not the Republic
+            if ($a === 'ireland' && preg_match('/northern\s+ireland/', $q) && !preg_match('/(?<!northern )(?<![a-z])ireland/', $q)) continue;
+            $hit = true; break;
+        }
+        if (!$hit) {
+            foreach (($e['case_sensitive_aliases'] ?? []) as $a) {
+                if (preg_match('/(?<![A-Za-z0-9])' . preg_quote((string)$a, '/') . '(?![A-Za-z0-9])/', $question)) { $hit = true; break; }
+            }
+        }
+        if ($hit) {
+            $kind = ($e['kind'] ?? 'country') === 'topic' ? 'topic' : 'geo';
+            $res[$kind][] = $slug;
+        }
+    }
+    return $res;
+}
+
+/** "ireland, #france" => canonical slugs (unknown names kept lowercase). */
+function parse_tag_list(string $list): array
+{
+    $out = [];
+    foreach (preg_split('/[,\s]+/', strtolower(trim($list))) as $c) {
+        $c = ltrim($c, '#');
+        if ($c === '') continue;
+        $out[] = canonical_tag($c) ?? $c;
+    }
+    return array_values(array_unique($out));
+}
+
+/**
+ * Strip tag markers from a wiki page and, if the question names tags and the page has
+ * blocks tagged for them, keep only those blocks. Returns [text, filtered].
+ * $page_tags are the page's frontmatter tags; a topic tag at page level (cool-companies on a
+ * page about cool companies) satisfies a topic in the question for every block.
+ */
+function filter_page_for_tags(string $content, array $q_geo, array $q_topic, array $page_tags, string $category = ''): array
+{
+    $lines = preg_split('/\R/', $content);
+    if (isset($lines[0]) && trim($lines[0]) === '---') {            // drop YAML front matter
+        for ($i = 1; $i < count($lines); $i++) {
+            if (trim($lines[$i]) === '---') { $lines = array_slice($lines, $i + 1); break; }
+        }
+    }
+
+    // ── pass 1: split into items ──
+    $items = [];  // t: h | p | hr | tag | rs | re
+    $block = [];
+    $flush = function () use (&$block, &$items) {
+        if (!$block) return;
+        $last = array_pop($block);
+        $tags = [];
+        // trailing #hashtags on the last line (known tags only)
+        while (preg_match('/(?:^|\s)#([A-Za-z0-9][\w\-]*)\s*$/u', $last, $m) && canonical_tag($m[1]) !== null) {
+            $tags[] = canonical_tag($m[1]);
+            $last   = preg_replace('/\s*#' . preg_quote($m[1], '/') . '\s*$/u', '', $last);
+        }
+        if (trim($last) !== '') $block[] = $last;
+        $text = trim(implode("\n", $block));
+        $block = [];
+        if ($text !== '') $items[] = ['t' => 'p', 'text' => $text, 'tags' => array_values(array_unique($tags))];
+        elseif ($tags)    $items[] = ['t' => 'tag', 'tags' => array_values(array_unique($tags))];
+    };
+
+    foreach ($lines as $line) {
+        $t = trim($line);
+        if (preg_match('/^<!--\s*(?:tag|country)-start\s*:\s*(.+?)\s*-->$/i', $t, $m)) { $flush(); $items[] = ['t' => 'rs', 'tags' => parse_tag_list($m[1])]; continue; }
+        if (preg_match('/^<!--\s*(?:tag|country)-end\s*-->$/i', $t))                    { $flush(); $items[] = ['t' => 're']; continue; }
+        if (preg_match('/^<!--\s*(?:tag|country)\s*:\s*(.+?)\s*-->$/i', $t, $m))        { $flush(); $items[] = ['t' => 'tag', 'tags' => parse_tag_list($m[1])]; continue; }
+        if ($t === '')                                                                    { $flush(); continue; }
+        if (preg_match('/^(#{1,6})\s+(.*)$/', $t, $hm))                                   { $flush(); $items[] = ['t' => 'h', 'level' => strlen($hm[1]), 'text' => trim($hm[2])]; continue; }
+        if (preg_match('/^(?:-{3,}|\*{3,}|_{3,})$/', $t))                                 { $flush(); $items[] = ['t' => 'hr']; continue; }
+        // a line made only of known #tags
+        if (preg_match('/^(?:#[A-Za-z0-9][\w\-]*\s*)+$/u', $t)) {
+            preg_match_all('/#([A-Za-z0-9][\w\-]*)/u', $t, $tm);
+            $known = array_map('canonical_tag', $tm[1]);
+            if (!in_array(null, $known, true)) { $flush(); $items[] = ['t' => 'tag', 'tags' => array_values(array_unique($known))]; continue; }
+        }
+        $block[] = $line;
+    }
+    $flush();
+
+    // ── pass 2: work out each block's effective tags ──
+    $range = []; $pending = []; $stack = []; $secs = []; $sinceHeading = false;
+    foreach ($items as $i => &$it) {
+        switch ($it['t']) {
+            case 'h':
+                while ($stack && $secs[end($stack)]['level'] >= $it['level']) array_pop($stack);
+                $inherited = [];
+                foreach ($stack as $si) $inherited = array_merge($inherited, $secs[$si]['tags']);
+                $secs[$i] = ['level' => $it['level'], 'tags' => []];
+                $stack[]  = $i;
+                $it['inherited'] = array_merge($inherited, $range);
+                $sinceHeading = true;
+                break;
+            case 'tag':
+                if ($sinceHeading && $stack) $secs[end($stack)]['tags'] = array_merge($secs[end($stack)]['tags'], $it['tags']);
+                else                         $pending = array_merge($pending, $it['tags']);
+                break;
+            case 'p':
+                $sinceHeading = false;
+                $eff = array_merge($it['tags'], $pending, $range);
+                foreach ($stack as $si) $eff = array_merge($eff, $secs[$si]['tags']);
+                $it['eff'] = array_values(array_unique($eff));
+                $pending = [];
+                break;
+            case 'hr': $stack = []; $sinceHeading = false; break;
+            case 'rs': $range = $it['tags']; break;
+            case 're': $range = []; break;
+        }
+    }
+    unset($it);
+    foreach ($items as $i => &$it) {
+        if ($it['t'] === 'h') $it['eff'] = array_values(array_unique(array_merge($it['inherited'], $secs[$i]['tags'])));
+    }
+    unset($it);
+
+    // ── plain rendering (markers removed) ──
+    $render = function (array $it): string {
+        return $it['t'] === 'h' ? str_repeat('#', $it['level']) . ' ' . $it['text'] : ($it['t'] === 'hr' ? '---' : $it['text']);
+    };
+    $plain = function () use ($items, $render): string {
+        $o = [];
+        foreach ($items as $it) if (in_array($it['t'], ['h', 'p', 'hr'], true)) $o[] = $render($it);
+        return trim(implode("\n\n", $o));
+    };
+
+    $q_all = array_merge($q_geo, $q_topic);
+    if (!$q_all) return [$plain(), false];
+
+    // The category outranks everything else: a page in ireland-hub is about Ireland as a whole,
+    // so an Ireland question gets the whole page whatever paragraph tags it carries. The same
+    // holds when the hub is broader than the place asked about (eu-hub, France question).
+    // A hub narrower than the question (ireland-hub, EU question) still filters.
+    if (preg_match('/^(.+)-hub$/', strtolower($category), $hm) && ($hub = canonical_tag($hm[1])) !== null) {
+        foreach ($q_geo as $q) {
+            if ($q === $hub || in_array($hub, tag_ancestors($q), true)) return [$plain(), false];
+        }
+    }
+
+    $page_tags = array_map(fn($t) => canonical_tag((string)$t) ?? strtolower(ltrim((string)$t, '#')), $page_tags);
+    $matches = function (array $eff) use ($q_geo, $q_topic, $q_all, $page_tags): bool {
+        if (!$eff) return false;
+        $hit = false;
+        foreach ($eff as $e) foreach ($q_all as $q) if (tag_relates($e, $q)) { $hit = true; break 2; }
+        if (!$hit) return false;
+        if ($q_geo) {
+            $geo_ok = false;
+            foreach ($eff as $e) foreach ($q_geo as $q) if (tag_relates($e, $q)) { $geo_ok = true; break 2; }
+            if (!$geo_ok) return false;
+        }
+        foreach ($q_topic as $q) {
+            if (in_array($q, $page_tags, true)) continue;
+            $ok = false;
+            foreach ($eff as $e) if (tag_relates($e, $q)) { $ok = true; break; }
+            if (!$ok) return false;
+        }
+        return true;
+    };
+
+    // Filter only if some block is tagged for the asked place itself (or something under it,
+    // like a member state for an EU question). A page whose only tags are BROADER (an EU
+    // paragraph on an Irish page, asked about Ireland) would otherwise be cut down to that
+    // one paragraph, so it is sent whole.
+    $specific = false;
+    foreach ($items as $it) {
+        foreach (($it['eff'] ?? []) as $e) {
+            foreach ($q_all as $q) {
+                if ($e === $q || in_array($q, tag_ancestors($e), true)) { $specific = true; break 3; }
+            }
+        }
+    }
+    if (!$specific) return [$plain(), false];
+
+    $matched = [];
+    foreach ($items as $i => $it) {
+        if (in_array($it['t'], ['h', 'p'], true) && $matches($it['eff'] ?? [])) $matched[$i] = true;
+    }
+    if (!$matched) return [$plain(), false];
+
+    // ── matching blocks plus title and context headings ──
+    $out = []; $emitted = []; $lastHeading = null; $titleDone = false;
+    foreach ($items as $i => $it) {
+        if ($it['t'] === 'h') {
+            if (!$titleDone && $it['level'] === 1) { $out[] = $render($it); $emitted[$i] = true; $titleDone = true; $lastHeading = null; continue; }
+            $lastHeading = $i;
+        }
+        if (!isset($matched[$i])) continue;
+        if ($it['t'] === 'p' && $lastHeading !== null && !isset($emitted[$lastHeading])) {
+            $out[] = $render($items[$lastHeading]); $emitted[$lastHeading] = true;
+        }
+        if (!isset($emitted[$i])) { $out[] = $render($it); $emitted[$i] = true; }
+    }
+    return [trim(implode("\n\n", $out)), true];
+}
 
 // ── STEP 2: SCORE PAGES AGAINST THE QUESTION ──────────────────────────────
 
@@ -497,12 +808,53 @@ function citation_supported(string $answer, string $page_content): bool
 
 // Primary: ask Haiku which pages are relevant. Handles synonyms, geography,
 // and multi-source synthesis questions much better than the keyword scorer.
-$top_slugs = llm_retrieve_pages($question, $page_map, MAX_PAGES_TO_FETCH);
+// A short or "tell me more" style follow-up carries no topic of its own, so search the wiki with
+// the previous question as well. This also keeps the country ("Ireland") alive across turns.
+$retrieval_question = $question;
+if (count($conversation) > 1 && (str_word_count($question) <= 8 || preg_match('/\b(more|else|another|elaborate|expand|that|this|they|it)\b/i', $question))) {
+    for ($i = count($conversation) - 2; $i >= 0; $i--) {
+        if ($conversation[$i]['role'] === 'user') {
+            $retrieval_question = mb_substr($conversation[$i]['content'] . ' ' . $question, 0, 700);
+            break;
+        }
+    }
+}
 
-// Fallback: keyword scoring, in case the retriever call fails or returns nothing.
-if (empty($top_slugs)) {
-    $scores    = score_pages($question, $page_map);
-    $top_slugs = array_slice(array_keys($scores), 0, MAX_PAGES_TO_FETCH);
+$q_tags = detect_question_tags($retrieval_question);   // places/topics named in the question
+$q_all_tags = array_merge($q_tags['geo'], $q_tags['topic']);
+
+$llm_slugs = llm_retrieve_pages($retrieval_question, $page_map, MAX_PAGES_TO_FETCH);
+
+// Deterministic matches: keyword score, plus a boost for pages whose frontmatter tags include
+// a place or topic named in the question. The AI picker can miss obvious pages, so these always
+// share the list with its picks.
+$scores = score_pages($retrieval_question, $page_map);
+if ($q_all_tags) {
+    foreach ($page_map as $slug => $info) {
+        foreach (($info['tags'] ?? []) as $t) {
+            $ct = canonical_tag((string)$t);
+            if ($ct !== null && in_array($ct, $q_all_tags, true)) { $scores[$slug] = ($scores[$slug] ?? 0) + 4; break; }
+        }
+    }
+    arsort($scores);
+}
+$kw_slugs = array_keys($scores);
+
+// Order matters: pages share one character budget in this order. The three strongest keyword/tag
+// matches go first, then the AI picks, then the remaining keyword matches.
+$top_slugs = [];
+$add = function (array $list, int $limit) use (&$top_slugs) {
+    foreach ($list as $slug) {
+        if (count($top_slugs) >= $limit) return;
+        if (!in_array($slug, $top_slugs, true)) $top_slugs[] = $slug;
+    }
+};
+if (empty($llm_slugs)) {
+    $add($kw_slugs, MAX_PAGES_TO_FETCH);                 // picker failed: keywords only
+} else {
+    $add(array_slice($kw_slugs, 0, 3), 3);
+    $add($llm_slugs, MAX_PAGES_TO_FETCH - 1);
+    $add($kw_slugs, MAX_PAGES_TO_FETCH);
 }
 
 $fetched_pages = [];
@@ -514,10 +866,19 @@ foreach ($top_slugs as $slug) {
     if ($chars_used >= MAX_WIKI_CHARS) break;
 
     $info    = $page_map[$slug];
-    $raw_url = WIKI_RAW_BASE . $info['filename'];
+    $raw_url = wiki_raw_url($info['filename']);
     $content = raw_get($raw_url);
 
-    if ($content === null) continue;
+    if ($content === null || trim($content) === '') {
+        error_log('[api-proxy] could not fetch wiki page ' . $slug . ' (' . $raw_url . ')');
+        continue;
+    }
+
+    // Strip tag markers; if the question names a country, region or topic, keep only the
+    // blocks tagged for it (when the page has any).
+    $orig_len = mb_strlen($content);
+    [$content, $was_filtered] = filter_page_for_tags($content, $q_tags['geo'], $q_tags['topic'], $info['tags'] ?? [], $info['category'] ?? '');
+    $filter_log[$slug] = ['filtered' => $was_filtered, 'chars' => mb_strlen($content), 'of' => $orig_len];
 
     $remaining = MAX_WIKI_CHARS - $chars_used;
     $snippet   = mb_substr($content, 0, $remaining);
@@ -568,6 +929,10 @@ You are Envie, the companion in Environmentle, a daily climate habit app. Envie 
 - Short plain sentences, contractions welcome, no jargon, no corporate tone, no filler such as "Great question". If a technical term is needed, say what it means in a few plain words the first time.
 - You are a visitor to Ireland seeing ordinary things with fresh eyes, the weather, the bog, the sea. Use that lightly, never as a gimmick.
 - A little Irish now and then ("Dia duit", "maith thú", "grand"), never explained or translated, at most once in an answer and not in every answer.
+- The ONE LINE and the first sentence must answer the question asked. Never open with a remark about Ireland, the weather or being a visitor, and never with filler that could precede any answer.
+- Keep the Irish phrase out unless it fits the moment, and never put it on a line of its own.
+- Write clean prose: single spaces, no stray line breaks mid-sentence, no leading "---".
+- Do not describe a term vaguely to fit the voice. If the wiki defines a term, use that definition.
 - The voice never changes a fact. Numbers, names, dates and sources stay exactly as the WIKI CONTEXT or your training knowledge gives them. Never invent or soften a figure to fit the voice.
 
 # MANDATORY OUTPUT FORMAT, NEVER DEVIATE
@@ -580,9 +945,11 @@ Choose "From our knowledge base:" if you answered entirely from the WIKI CONTEXT
 Choose "From AI knowledge:" if the WIKI CONTEXT was empty or contained nothing useful, and you answered entirely from training data.
 Choose "From our knowledge base and AI:" if you used the wiki for part of the answer AND supplemented with training knowledge for facts the wiki did not cover (e.g. a specific statistic, date, or data point missing from the wiki pages).
 
+Before choosing a prefix, check every fact, figure, name and date in your answer against the WIKI CONTEXT. If each one is there, the answer is "From our knowledge base:" and you MUST NOT write SOURCE_AI. Envie's voice, reactions, opinions, rephrasing, explaining a term in plain words and general framing are NOT training knowledge and never make an answer mixed. Only an extra fact that you could not find in the wiki makes it mixed. When the wiki has several pages on the topic and covers the question, do not pad the answer with outside facts.
+
 Every single answer MUST end with these markers (in this order), each on its own line:
   SOURCE_WIKI: slug1, slug2, slug3    (comma-separated slugs of ALL wiki pages you drew from, omit if SOURCE_AI only)
-  SOURCE_AI                           (include this line whenever you used training data, even partially)
+  SOURCE_AI                           (include this line ONLY if the answer states a fact, figure, name or date that is not in the WIKI CONTEXT)
 
 Immediately after the prefix line, on its own line, write:
   ONE LINE: <one plain sentence in Envie's voice, 20 words at most, no markdown, giving the single most useful takeaway>
@@ -660,7 +1027,7 @@ if ($last_idx >= 0 && $api_messages[$last_idx]['role'] === 'user') {
 //                                  no-wiki-match, follow-ups, and "tell me more" requests.
 
 $is_followup  = count($conversation) > 1;
-$use_wiki_model = (!empty($fetched_pages) && !$is_followup);
+$use_wiki_model = (MISTRAL_WIKI_ANSWERS && !empty($fetched_pages) && !$is_followup);
 
 if ($use_wiki_model) {
     // ── Wiki path: Mistral Small 4 on Infomaniak (OpenAI-compatible) ────────
@@ -692,60 +1059,113 @@ if ($use_wiki_model) {
     $curl_error   = curl_error($ch);
     curl_close($ch);
 
-    if ($raw_response === false || $raw_response === '') {
-        http_response_code(502);
-        echo json_encode(['error' => 'cURL error ' . $curl_errno . ': ' . $curl_error]);
-        exit;
+    $answer_text = '';
+    if ($raw_response !== false && $raw_response !== '') {
+        $resp_data   = json_decode($raw_response, true);
+        $answer_text = $resp_data['choices'][0]['message']['content'] ?? '';
+        if (!is_string($answer_text)) $answer_text = '';
     }
 
-    $resp_data = json_decode($raw_response, true);
-    $answer_text = $resp_data['choices'][0]['message']['content'] ?? '';
-    if (!is_string($answer_text) || $answer_text === '') {
-        $err_msg = $resp_data['error']['message'] ?? 'I got a strange answer back. Try again in a moment.';
-        http_response_code(502);
-        echo json_encode(['error' => $err_msg]);
-        exit;
-    }
-} else {
-    // ── Fallback path: Claude Opus on Anthropic ─────────────────────────────
-    $request_body = json_encode([
-        'model'      => ANTHROPIC_MODEL_FALLBACK,
-        'max_tokens' => 1024,
-        'system'     => $system_prompt,
-        'messages'   => $api_messages,
-    ]);
+    // Reject empty or degenerate answers (markers only, no real text) and fall
+    // through to Claude with the same wiki context.
+    $body_only = preg_replace('/^\s*(From (our knowledge base and AI|our knowledge base|AI knowledge)\s*:?|ONE LINE\s*:.*|SOURCE_WIKI\s*:.*|SOURCE_AI)\s*$/mi', '', $answer_text);
+    $body_only = trim(preg_replace('/\s+/', ' ', $body_only));
+    // Mistral is only trusted for answers grounded in the wiki. If it says the wiki
+    // had nothing useful and answered from its own knowledge, hand over to Claude.
+    $mistral_went_ai = (bool) preg_match('/^\s*From AI knowledge\b/i', $answer_text);
 
-    $ch = curl_init('https://api.anthropic.com/v1/messages');
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $request_body,
-        CURLOPT_TIMEOUT        => 30,
-        CURLOPT_USERAGENT      => 'TheUptake-ClimateCompanion/1.0',
-        CURLOPT_HTTPHEADER     => [
-            'Content-Type: application/json',
-            'x-api-key: ' . ANTHROPIC_API_KEY,
-            'anthropic-version: ' . ANTHROPIC_VERSION,
-        ],
-        CURLOPT_SSL_VERIFYPEER => true,
-    ]);
-    $raw_response = curl_exec($ch);
-    $curl_errno   = curl_errno($ch);
-    $curl_error   = curl_error($ch);
-    curl_close($ch);
-
-    if ($raw_response === false || $raw_response === '') {
-        http_response_code(502);
-        echo json_encode(['error' => 'cURL error ' . $curl_errno . ': ' . $curl_error]);
-        exit;
+    // It must also cite at least one real wiki page whose content shows up in the
+    // answer. Otherwise the answer is not demonstrably grounded and Claude takes over.
+    $mistral_grounded = false;
+    if (preg_match('/^[ \t*_`]*SOURCE_WIKI[ \t*_`]*:[ \t]*(.+)$/mi', $answer_text, $mm)) {
+        foreach (preg_split('/[\s,]+/', strtolower(trim($mm[1]))) as $cited) {
+            $cited = trim($cited, ', ');
+            if ($cited === '' || !isset($page_map[$cited])) continue;
+            $pc = $fetched_content_by_slug[$cited] ?? '';
+            if ($pc !== '' && citation_supported($body_only, $pc)) { $mistral_grounded = true; break; }
+        }
     }
 
-    $claude_data = json_decode($raw_response, true);
-    $answer_text = $claude_data['content'][0]['text'] ?? '';
-    if (!is_string($answer_text) || $answer_text === '') {
-        $err_msg = $claude_data['error']['message'] ?? 'I got a strange answer back. Try again in a moment.';
+    if ($mistral_went_ai || !$mistral_grounded || mb_strlen($body_only) < 80) {
+        error_log('[api-proxy] Mistral wiki path unusable (' . ($mistral_went_ai ? 'went AI-only' : (!$mistral_grounded ? 'no verified wiki citation' : mb_strlen($body_only) . ' chars')) . '), falling back to Claude. curl=' . $curl_errno . ' ' . $curl_error . ' raw=' . substr((string)$raw_response, 0, 300));
+        $use_wiki_model = false;
+        $answer_text    = '';
+    }
+}
+if (!$use_wiki_model) {
+    // ── Claude path (Haiku for first-turn wiki answers, Opus otherwise) ─────────────────────────────
+    $fallback_model_used = ANTHROPIC_MODEL_FALLBACK;
+    $answer_text = '';
+    $last_error  = 'I got a strange answer back. Try again in a moment.';
+    // First turn with wiki pages found: Haiku writes it (cheap, wiki does the heavy
+    // lifting). Everything else: Opus. Each path retries up the chain on failure.
+    $haiku_path  = (!empty($fetched_pages) && !$is_followup);
+    $model_chain = $haiku_path
+        ? [ANTHROPIC_MODEL_WIKI, ANTHROPIC_MODEL_FALLBACK, ANTHROPIC_MODEL_BACKUP]
+        : [ANTHROPIC_MODEL_FALLBACK, ANTHROPIC_MODEL_BACKUP];
+    foreach ($model_chain as $try_model) {
+        $req_extra = [];
+        if ($try_model === ANTHROPIC_MODEL_WIKI) {
+            if (HAIKU_THINKING === 'off')          $req_extra['thinking']      = ['type' => 'disabled'];
+            elseif (HAIKU_THINKING !== 'medium')   $req_extra['output_config'] = ['effort' => HAIKU_THINKING];
+        }
+        $request_body = json_encode($req_extra + [
+            'model'      => $try_model,
+            // Haiku 5.5 and Opus 5.5 think by default and thinking counts toward max_tokens,
+            // so leave room for it (the visible answer is only a few hundred tokens).
+            'max_tokens' => 4096,
+            'system'     => $system_prompt,
+            'messages'   => $api_messages,
+        ]);
+
+        $ch = curl_init('https://api.anthropic.com/v1/messages');
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $request_body,
+            CURLOPT_TIMEOUT        => 30,
+            CURLOPT_USERAGENT      => 'TheUptake-ClimateCompanion/1.0',
+            CURLOPT_HTTPHEADER     => [
+                'Content-Type: application/json',
+                'x-api-key: ' . ANTHROPIC_API_KEY,
+                'anthropic-version: ' . ANTHROPIC_VERSION,
+            ],
+            CURLOPT_SSL_VERIFYPEER => true,
+        ]);
+        $raw_response = curl_exec($ch);
+        $curl_errno   = curl_errno($ch);
+        $curl_error   = curl_error($ch);
+        curl_close($ch);
+
+        if ($raw_response === false || $raw_response === '') {
+            $last_error = 'cURL error ' . $curl_errno . ': ' . $curl_error;
+            error_log('[api-proxy] ' . $try_model . ' ' . $last_error);
+            continue;
+        }
+
+        $claude_data = json_decode($raw_response, true);
+        // A reply can begin with thinking blocks, so pick the text blocks by type.
+        $text = '';
+        foreach (($claude_data['content'] ?? []) as $block) {
+            if (($block['type'] ?? '') === 'text' && is_string($block['text'] ?? null)) $text .= $block['text'];
+        }
+        $text = trim($text);
+        if (($claude_data['stop_reason'] ?? '') === 'refusal') {
+            error_log('[api-proxy] ' . $try_model . ' refused the request');
+            $text = '';
+        }
+        if ($text !== '') {
+            $answer_text         = $text;
+            $fallback_model_used = $try_model;
+            break;
+        }
+        $last_error = $claude_data['error']['message'] ?? $last_error;
+        error_log('[api-proxy] ' . $try_model . ' failed: ' . $last_error);
+    }
+
+    if ($answer_text === '') {
         http_response_code(502);
-        echo json_encode(['error' => $err_msg]);
+        echo json_encode(['error' => $last_error]);
         exit;
     }
 }
@@ -781,9 +1201,10 @@ if (preg_match('/^\s*ONE LINE\s*:\s*(.+?)\s*$/mi', $raw_answer, $ol)) {
 $raw_answer = trim(preg_replace('/\nLINKS\s*:\s*.+$/m', '', $raw_answer));
 
 // Parse SOURCE_WIKI marker — now supports comma-separated slugs.
-if (preg_match('/\nSOURCE_WIKI\s*:\s*(.+)$/m', $raw_answer, $m)) {
-    $source     = 'wiki';
-    $raw_answer = trim(preg_replace('/\nSOURCE_WIKI\s*:\s*.+$/m', '', $raw_answer));
+if (preg_match('/^[ \t*_`]*SOURCE_WIKI[ \t*_`]*:[ \t]*(.+)$/mi', $raw_answer, $m)) {
+    // Do not downgrade a hybrid prefix: SOURCE_WIKI is present on mixed answers too.
+    if ($source !== 'hybrid') $source = 'wiki';
+    $raw_answer = trim(preg_replace('/^[ \t*_`]*SOURCE_WIKI[ \t*_`]*:[ \t]*.+$/mi', '', $raw_answer));
     $slug_list  = preg_split('/[\s,]+/', strtolower(trim($m[1])));
     foreach ($slug_list as $used_slug) {
         $used_slug = trim($used_slug, ', ');
@@ -791,8 +1212,10 @@ if (preg_match('/\nSOURCE_WIKI\s*:\s*(.+)$/m', $raw_answer, $m)) {
         if (isset($page_map[$used_slug])) {
             // Cited but content never actually shows up in the answer — likely a
             // page that was in context but wasn't really drawn from. Don't cite it.
+            // A citation counts only if the page text was really sent and shows up in the answer.
+            // (An empty or missing page can never support a citation.)
             $page_content = $fetched_content_by_slug[$used_slug] ?? '';
-            if ($page_content !== '' && !citation_supported($raw_answer, $page_content)) {
+            if ($page_content === '' || !citation_supported($raw_answer, $page_content)) {
                 continue;
             }
             $sources[] = [
@@ -805,17 +1228,26 @@ if (preg_match('/\nSOURCE_WIKI\s*:\s*(.+)$/m', $raw_answer, $m)) {
 }
 
 // Strip the SOURCE_AI marker if present
-$raw_answer = trim(preg_replace('/\nSOURCE_AI\s*$/m', '', $raw_answer));
+// Tolerates a trailing colon, markdown emphasis or stray spacing around the marker.
+$marker_ai_re = '/^[ \t*_`]*SOURCE_AI[ \t*_`]*:?[ \t*_`]*$/mi';
+$had_ai_marker = (bool) preg_match($marker_ai_re, $raw_answer);
+$raw_answer = trim(preg_replace($marker_ai_re, '', $raw_answer));
 
 // FALLBACK: if Claude dropped markers, use server-side signal
 if ($source === null) {
     // If SOURCE_WIKI and SOURCE_AI both appeared, treat as hybrid
     $has_wiki = !empty($sources);
-    $has_ai   = (bool) preg_match('/\nSOURCE_AI\s*$/m', $raw_answer);
+    $has_ai   = $had_ai_marker;
     if ($has_wiki && $has_ai)      $source = 'hybrid';
     elseif ($has_wiki)             $source = 'wiki';
     elseif (!empty($fetched_pages)) $source = 'wiki';
     else                           $source = 'ai';
+}
+
+// The model flags any use of training data with SOURCE_AI. If it cited wiki pages
+// and also flagged AI, the answer is mixed whatever prefix it opened with.
+if ($source === 'wiki' && !empty($sources) && $had_ai_marker) {
+    $source = 'hybrid';
 }
 
 // If wiki was claimed but no slugs actually resolved, we can't verify which (if any)
@@ -840,6 +1272,10 @@ if ($one_line === '') {
     $one_line = mb_substr($plain, 0, 180);
 }
 
+// House rule: no em dashes in copy. The prompt forbids them, this catches slips.
+$raw_answer = preg_replace('/\s*\x{2014}\s*/u', ', ', $raw_answer);
+$one_line   = preg_replace('/\s*\x{2014}\s*/u', ', ', $one_line);
+
 // ── STEP 7: FURTHER READING ────────────────────────────────────────────────
 // Disabled for now. Future plan: articles will have a dedicated ## Further Reading
 // section with curated external links. The build script will extract those into
@@ -856,8 +1292,10 @@ echo json_encode([
     'sources'       => $sources,
     'further_links' => $further_links,
     'debug'         => [
-        'model'      => $use_wiki_model ? INFOMANIAK_MODEL_WIKI : ANTHROPIC_MODEL_FALLBACK,
+        'model'      => $use_wiki_model ? INFOMANIAK_MODEL_WIKI : $fallback_model_used,
         'is_followup'=> $is_followup,
         'wiki_pages' => array_column($fetched_pages, 'slug'),
+        'tags'       => $q_tags,
+        'filter'     => $filter_log,
     ],
 ], JSON_UNESCAPED_UNICODE);

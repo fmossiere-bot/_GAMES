@@ -4,8 +4,8 @@ spellings in user-facing files and content data. Run: python3 check-voice.py
 Exit code 1 when something needs a look."""
 import re, sys, glob, json, csv, pathlib
 
-SOURCE = ['index.html', 'home.js', 'engine.js', 'tour.js', 'app.js', 'sw.js', 'manifest.json',
-          'environmentle-quiz-game.html', 'environmentle-sort-it-out.html', 'environmentle-water-challenge.html']
+SOURCE = ['index.html', 'home.js', 'engine.js', 'tour.js', 'app.js', 'day-guard.js', 'sw.js', 'manifest.json',
+          'environmentle-quiz-game.html', 'environmentle-sort-it-out.html', 'environmentle-water-challenge.html', 'environmentle-bin-day.html']
 DATA = ['actions.json', 'partners.json', 'challenges.json', 'water-cards.json'] + sorted(glob.glob('courses/*.json'))
 CSV = ['cards.csv']
 

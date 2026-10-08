@@ -1,0 +1,70 @@
+{
+  "_note": "The games library index, the twin of stories.json. The Games tab reads it, so a game is described once. Adding a game means an entry here plus its environmentle-<id>.html, GAME_URLS in index.html, and reconcileGames() in engine.js so the day cap counts it. 'playedKey' is the localStorage prefix the game writes its last-played date to. 'art' is a file in _images/games. 'type' is the filter label. 'detail' is the middle of the card's meta line, so it reads 'Type, detail, N min'.",
+  "games": [
+    {
+      "id": "bins",
+      "key": "bins",
+      "name": "Bin day",
+      "type": "Recycling",
+      "detail": "20 items",
+      "art": "_images/games/sort.svg",
+      "icon": "recycle",
+      "tone": "sky",
+      "desc": "I did the weekly shop and now it's all empty. Twenty things come down the belt. Get each one into the right bin before it reaches me.",
+      "minutes": 2,
+      "playedKey": "bd_last_played_",
+      "added": "2026-09-18"
+    },
+    {
+      "id": "quiz",
+      "key": "quiz:random",
+      "mode": "random",
+      "name": "Random quiz",
+      "type": "Quiz",
+      "detail": "3 questions",
+      "art": "_images/games/quiz.svg",
+      "icon": "dices",
+      "tone": "aqua",
+      "desc": "A random quiz from our library of daily challenges. Three questions, real data.",
+      "minutes": 2,
+      "playedKey": "quiz_last_played_",
+      "added": "2026-03-01"
+    },
+    {
+      "id": "sort",
+      "key": "sort",
+      "name": "Sort it out",
+      "type": "Carbon",
+      "detail": "6 cards",
+      "art": "_images/games/carbon.svg",
+      "icon": "arrow-down-up",
+      "tone": "amber",
+      "desc": "6 everyday items. Drag them into order by carbon footprint, lowest to highest. 3 tries.",
+      "minutes": 3,
+      "playedKey": "sio_last_played_",
+      "added": "2026-03-01"
+    },
+    {
+      "id": "water",
+      "key": "water",
+      "name": "Water challenge",
+      "type": "Water",
+      "detail": "5 rounds",
+      "art": "_images/games/water.svg",
+      "icon": "droplet",
+      "tone": "sky",
+      "desc": "Higher or lower, water edition. Guess which everyday thing takes more water to make. Five rounds, one wrong answer ends the run.",
+      "minutes": 3,
+      "playedKey": "wc_last_played_",
+      "added": "2026-03-01"
+    }
+  ],
+  "soon": [
+    {
+      "name": "Greenwasher",
+      "type": "Brands",
+      "detail": "Spot the fake claim",
+      "art": "_images/games/greenwasher.svg"
+    }
+  ]
+}

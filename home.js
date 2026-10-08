@@ -13,8 +13,8 @@
   const esc  = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const fmt  = (n) => (n || 0).toLocaleString();
 
-  const TYPE_ICON = { water: 'droplet', food: 'utensils', energy: 'zap', transport: 'car', circularity: 'recycle', nature: 'sprout', community: 'message-circle', mindset: 'lightbulb', credit: 'sprout' };
-  const TYPE_TONE = { water: 'aqua', food: 'sky', energy: 'amber', transport: 'aqua', circularity: 'amber', nature: 'sky', community: 'rose', mindset: 'moss', credit: 'sky' };
+  const TYPE_ICON = { water: 'droplet', food: 'utensils', energy: 'zap', transport: 'car', circularity: 'recycle', nature: 'sprout', community: 'message-circle', mindset: 'lightbulb', brands: 'shield', credit: 'sprout' };
+  const TYPE_TONE = { water: 'aqua', food: 'sky', energy: 'amber', transport: 'aqua', circularity: 'amber', nature: 'sky', community: 'rose', mindset: 'moss', brands: 'aqua', credit: 'sky' };
 
   // ── HOME ────────────────────────────────────────────────
   async function renderHome() {
@@ -121,7 +121,7 @@
     ];
     const leadKey = d.lead === 'credit' ? 'action' : d.lead;
     // A done tile names what was done, not the next suggestion
-    const GAME_NAMES = { quiz: 'Quiz', sort: 'Sort it out', water: 'Water challenge' };
+    const GAME_NAMES = { quiz: 'Quiz', sort: 'Sort it out', water: 'Water challenge', bins: 'Bin day' };
     const doneName = {
       game:   st.gamesDoneToday.map((g) => GAME_NAMES[g]).join(', '),
       story:  (ALL_STORIES.find((x) => x.id === st.completedStories[st.completedStories.length - 1]) || {}).title || 'Story read',
@@ -137,7 +137,10 @@
       const badge = done ? '<span class="way-badge done">Done today</span>' : lead ? '<span class="way-badge">Suggested</span>' : '';
       const meta = done ? EA.icon('check', { size: 12 }) + ' Done' : locked ? 'Tomorrow' : w.meta;
       return `<button type="button" class="${cls}" data-way="${w.key}">${badge}<span class="tile sm ${w.tone === 'white' ? '' : w.tone}">${EA.icon(w.icon, { size: 20 })}</span><p class="way-label">${w.label}</p><p class="way-name">${esc(w.name)}</p><p class="way-meta">${meta}</p></button>`;
-    }).join('') + `<p class="ways-hint">${d.dayDone ? 'Two a day is the cap. Games and Stories stay open, and I\'ll have new picks tomorrow.' : 'I picked these three for today. Or choose your own from the tabs below.'}</p>`;
+    }).join('') + `<p class="ways-hint">${d.dayDone ? 'Two a day is the cap. Stories you\'ve read stay open, and I\'ll have new picks tomorrow.' : 'I picked these three for today. Or choose your own from the tabs below.'}</p>`
+      + `<button type="button" class="ways-browse" id="ways-browse">Browse all actions ${EA.icon('arrow-right', { size: 14 })}</button>`;
+    const wb = document.getElementById('ways-browse');
+    if (wb) wb.onclick = () => openActions();
     el.querySelectorAll('.way').forEach((b) => {
       const w = ways.find((x) => x.key === b.dataset.way);
       b.onclick = () => { if (b.classList.contains('locked')) { showToast('That\'s two for today', 'One a day is the rhythm. I\'ll keep this one for tomorrow.', 'flag'); return; } w.go(); };
@@ -197,7 +200,7 @@
           <envie-mascot pose="celebrate" hat="hat" aria-hidden="true"></envie-mascot>
           <div class="lead-card done-card">
             <div class="lead-top"><span class="pill sky">Streak kept</span></div>
-            <p class="lead-title">${st.doneCount >= 3 ? 'Game, story and action. The full set today.' : 'Two today. That\'s the rhythm.'}</p>
+            <p class="lead-title">${st.done.game && st.done.story && st.done.action ? 'Game, story and action. The full set today.' : 'Two today. That\'s the rhythm.'}</p>
             <p class="lead-desc">I'll keep the rest for tomorrow. If something's on your mind, come and ask me.</p>
             <div class="lead-actions">${shareButton('day', 'Share today', 'cta sky')}<button type="button" class="cta ghost sm" onclick="switchTab('companion')">Companion</button></div>
           </div>
@@ -321,7 +324,7 @@
     if (bubble) {
       let head, sub;
       if (left <= 0) { head = 'That\'s your week sorted.'; sub = `${Engine.ACTIONS_PER_WEEK} pledged this week, that\'s the cap. Have a browse for ideas, and pledge again from Monday.`; }
-      else if (st.actionsWeek.length) { head = 'One more this week, if you like.'; sub = 'Small and specific beats big and vague. Pick something you\'d actually do.'; }
+      else if (st.actionsWeek.length) { head = left === 1 ? 'One more this week, if you like.' : 'Another one, if you like.'; sub = 'Small and specific beats big and vague. Pick something you\'d actually do.'; }
       else { head = 'Pick one you can actually do.'; sub = 'These come from what you\'ve been playing and reading. Pledge one and it counts as today\'s challenge.'; }
       bubble.innerHTML = `<p class="bh">${head}</p><p class="bs">${sub}</p>` + EA.TAIL;
     }
@@ -387,7 +390,10 @@
       || ((await Engine.loadActions()).actions || []).find((x) => x.id === id);
     if (!a) return;
     const r = Engine.pledge(nk, a);
-    if (!r.ok) { renderActions(); return; }
+    if (!r.ok) {
+      if (r.why === 'day') showToast('Two done today', 'I\'ll keep that one for you until tomorrow.', 'clock');
+      renderActions(); return;
+    }
     syncPlayerToFirestore(nk);
     showToast('Pledged. +' + r.points + ' pts', r.streak >= 2 ? r.streak + '-day streak' : 'Streak started', 'flag');
     renderActions();
@@ -401,7 +407,7 @@
   let _sheetId = null;
   async function findAction(id) {
     const data = await Engine.loadActions();
-    return (data.actions || []).find((x) => x.id === id) || null;
+    return (data.actions || []).find((x) => x.id === id || x.title === id) || null;
   }
   function sourceLine(a) {
     const src = a.source || {};
@@ -431,7 +437,7 @@
       sheet.querySelector('.sheet-scrim').onclick = closeActionSheet;
     }
     const envie = pledged ? 'You\'ve already pledged this one.'
-      : left <= 0 ? 'Your two for this week are in. Come back Monday for this one.'
+      : left <= 0 ? `Your ${Engine.ACTIONS_PER_WEEK} for this week are in. Come back Monday for this one.`
       : a.level === 'medium' ? 'A bit more effort than most. Worth it if it fits your week.'
       : 'Small, specific, done in a day. That\'s the kind that sticks.';
     sheet.querySelector('.sheet-panel').innerHTML = `
@@ -454,7 +460,17 @@
         ${pledged ? '' : `<button type="button" class="cta sky" id="sheet-pledge" ${left > 0 ? '' : 'disabled'}>Pledge it ${EA.icon('arrow-right', { size: 17 })}</button>`}
         <button type="button" class="cta ghost" id="sheet-skip">${pledged ? 'Close' : 'Not this one'}</button>
       </div>
-      ${pledged ? '' : '<button type="button" class="sheet-alt" id="sheet-alt">Do a game or story instead</button>'}`;
+      ${pledged ? `<div class="sheet-note">
+        <label for="sheet-note-text">Your note</label>
+        <textarea id="sheet-note-text" maxlength="${Engine.NOTE_MAX}" rows="3" placeholder="How did it go? What did you notice?">${esc(((st.history.find((h) => (h.id || h.title) === a.id)) || {}).note || '')}</textarea>
+        <div class="sheet-note-row"><span class="sheet-note-hint">Only you see this. It stays on this device.</span><button type="button" class="cta sky sm" id="sheet-note-save">Save note</button></div>
+      </div>` : '<button type="button" class="sheet-alt" id="sheet-alt">Do a game or story instead</button>'}`;
+    const ns = document.getElementById('sheet-note-save');
+    if (ns) ns.onclick = () => {
+      Engine.setActionNote(nk, a.id, document.getElementById('sheet-note-text').value);
+      renderActionHistory(nk);
+      showToast('Note saved', 'Kept with this action on your profile.', 'flag');
+    };
     const p = document.getElementById('sheet-pledge');
     if (p) p.onclick = async () => { await pledgeAction(a.id); closeActionSheet(); renderHome(); };
     document.getElementById('sheet-skip').onclick = () => { if (pledged) closeActionSheet(); else skipAction(a.id); };
@@ -639,13 +655,15 @@
       return;
     }
     list.innerHTML = history.slice().reverse().map((a) => `
-      <div class="actions-history-item">
+      <div class="actions-history-item ${a.type === 'credit' ? '' : 'tap'}" ${a.type === 'credit' ? '' : `data-open="${esc(a.id || a.title)}"`}>
         <div class="actions-history-check">${EA.icon(a.type === 'credit' ? 'sprout' : 'check', { size: 14 })}</div>
         <div class="actions-history-content">
           <p class="actions-history-title">${esc(a.title)}</p>
           <p class="actions-history-date">${formatRelativeDate(a.date)}${a.type === 'credit' ? ' · impact credit' : a.points ? ' · +' + a.points + ' pts' : ''}</p>
+          ${a.note ? `<p class="actions-history-note">${esc(a.note)}</p>` : (a.type === 'credit' ? '' : '<p class="actions-history-add">Add a note</p>')}
         </div>
       </div>`).join('');
+    list.querySelectorAll('[data-open]').forEach((el) => el.onclick = () => openActionSheet(el.dataset.open));
   }
 
   // ── share: native sheet on phones, clipboard elsewhere ──

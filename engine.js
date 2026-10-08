@@ -20,7 +20,7 @@
   const CREDIT_STEP        = 1500;  // points per impact credit: about 12 days of one challenge a day
   const FIRST_MILESTONE    = 500;   // first badge before the first credit
   const LEVEL_STEP         = 500;   // a level every 500 pts: three levels per credit
-  const ACTIONS_PER_WEEK   = 2;     // hard cap on pledges per week
+  const ACTIONS_PER_WEEK   = 3;     // hard cap on pledges per week (they are small, so three)
   const CHALLENGES_PER_DAY = 2;     // one is the rhythm, two is the cap
   const SUGGEST_FROM_DOW   = 4;     // Thursday: action suggestions start
   const SUGGEST_AFTER_DAYS = 2;     // ...or once 2 challenge days are done this week
@@ -83,11 +83,11 @@
   }
 
   // ── activity log: one entry per challenge completed ─────
-  function logActivity(nk, type, extra) {
+  function logActivity(nk, type, extra, meta) {
     const log = get(K.activity(nk), []);
     const today = todayStr();
     if (log.some((e) => e.date === today && e.type === type && (!extra || e.ref === extra))) return;
-    log.push(Object.assign({ date: today, type }, extra ? { ref: extra } : {}));
+    log.push(Object.assign({ date: today, type }, extra ? { ref: extra } : {}, meta || {}));
     set(K.activity(nk), log.slice(-ACTIVITY_CAP));
   }
 
@@ -99,6 +99,7 @@
       quiz:  localStorage.getItem('quiz_last_played_' + nk),
       sort:  localStorage.getItem('sio_last_played_'  + nk),
       water: localStorage.getItem('wc_last_played_'   + nk),
+      bins:  localStorage.getItem('bd_last_played_'   + nk),
     };
     Object.keys(played).forEach((g) => { if (played[g] === today) logActivity(nk, 'game', g); });
     return played;
@@ -154,7 +155,12 @@
       story:  storyDone,
       action: actionsToday.length > 0,
     };
-    const doneCount = Object.values(done).filter(Boolean).length;
+    // The day cap counts plays, not kinds: every game finished today, every story read for the
+    // first time today and every action pledged today is one. Two games is two. Re-reading a
+    // story is free, so it never uses a slot.
+    const storiesFirstToday = log.filter((e) => e.date === today && e.type === 'story' && e.first).length;
+    const plays = { games: gamesDoneToday.length, stories: storiesFirstToday, actions: actionsToday.length };
+    const doneCount = plays.games + plays.stories + plays.actions;
 
     const skips = get(K.skips(nk), []);
     return {
@@ -164,7 +170,7 @@
       skipCounts: skips.reduce((m, e) => { m[e.id] = (m[e.id] || 0) + 1; return m; }, {}),
       isWeekend: dow === 0 || dow === 6,
       played, gamesDoneToday,
-      done, doneCount, anyDone: doneCount > 0,
+      done, plays, doneCount, anyDone: doneCount > 0 || storyDone,
       actionsToday, actionsWeek,
       actionsLeftThisWeek: Math.max(0, ACTIONS_PER_WEEK - actionsWeek.length),
       weekDaysActive: weekDays.size,
@@ -207,13 +213,13 @@
   // What the player has been learning about lately, as action types.
   // Games and stories map to the action types they touch on.
   const STORY_TYPES = {
-    'climate-and-finance':  ['community', 'mindset'],
+    'climate-and-finance':  ['community', 'mindset', 'brands'],
     'data-centres-ireland': ['energy', 'mindset'],
     'climate-wins-2025':    ['mindset', 'community'],
-    'ben-and-jerrys':       ['food', 'community'],
+    'ben-and-jerrys':       ['food', 'community', 'brands'],
     'ireland-forestry':     ['nature'],
   };
-  const GAME_TYPES = { sort: ['transport', 'food', 'circularity'], water: ['water', 'food'], quiz: [] };
+  const GAME_TYPES = { sort: ['transport', 'food', 'circularity', 'brands'], water: ['water', 'food'], bins: ['circularity', 'food', 'brands'], quiz: [] };
 
   function affinities(nk, st, challenges) {
     const score = {};
@@ -258,18 +264,18 @@
   // Which game to hand the player: today's dated quiz if it is still open,
   // otherwise the free game they have not touched for longest (and not
   // played today). Null when every game is done for the day.
-  const GAME_NAMES = { quiz: 'Random quiz', sort: 'Sort it out', water: 'Water challenge' };
+  const GAME_NAMES = { quiz: 'Random quiz', sort: 'Sort it out', water: 'Water challenge', bins: 'Bin day' };
   function suggestGame(nk, st, dailyGame) {
     if (dailyGame && st.played.quiz !== st.today) {
       return { type: 'quiz', mode: 'daily', name: dailyGame.title_line1 + ' ' + dailyGame.title_line2, meta: dailyGame.category_badge + ' · 3 questions', pts: '150 pts max', daily: true };
     }
     const recent = get(K.recent(nk), []);
     const lastTs = (g) => { const r = recent.find((e) => (e.key || '').split(':')[0] === g); return r ? r.ts || 0 : 0; };
-    const open = ['water', 'sort', 'quiz'].filter((g) => st.played[g] !== st.today);
+    const open = ['water', 'sort', 'bins', 'quiz'].filter((g) => st.played[g] !== st.today);
     if (!open.length) return null;
     open.sort((a, b) => lastTs(a) - lastTs(b));
     const g = open[0];
-    const meta = { quiz: 'Quiz · 3 questions', sort: 'Carbon · 6 cards', water: 'Higher or lower · 5 rounds' }[g];
+    const meta = { quiz: 'Quiz · 3 questions', sort: 'Carbon · 6 cards', water: 'Higher or lower · 5 rounds', bins: 'Recycling · 20 items' }[g];
     const pts  = '150 pts max';
     return { type: g, mode: g === 'quiz' ? 'random' : null, name: GAME_NAMES[g], meta, pts, daily: false };
   }
@@ -281,7 +287,7 @@
     const st = ctx.state;
     const dailyGame = ctx.dailyChallenge;            // today's dated challenge or null
     const gameAvailable = !!dailyGame && !st.done.game;
-    const anyGameLeft = ['quiz', 'sort', 'water'].some((g) => st.played[g] !== st.today);
+    const anyGameLeft = ['quiz', 'sort', 'water', 'bins'].some((g) => st.played[g] !== st.today);
     const game = suggestGame(nk, st, dailyGame);
     const unreadStory = ctx.stories.find((s) => !st.completedStories.includes(s.id)) || null;
 
@@ -323,6 +329,7 @@
   // ── writes: pledge an action, spend a credit, read a story ──
   function pledge(nk, action) {
     const st = state(nk);
+    if (st.doneCount >= CHALLENGES_PER_DAY) return { ok: false, why: 'day' };   // an action is one of the two a day
     if (st.actionsLeftThisWeek <= 0) return { ok: false, why: 'cap' };
     if (st.history.some((h) => (h.id || h.title) === (action.id || action.title))) return { ok: false, why: 'dup' };
     const hist = st.history.concat([{ id: action.id, title: action.title, date: todayStr(), type: action.type, points: action.points }]);
@@ -331,6 +338,18 @@
     const streak = stampStreak(nk);
     logActivity(nk, 'action', action.id);
     return { ok: true, streak, points: action.points || 0 };
+  }
+
+  // A short private note on a pledged action ("how it went"). Kept on the history entry.
+  const NOTE_MAX = 280;
+  function setActionNote(nk, id, note) {
+    const hist = get(K.history(nk), []);
+    const e = hist.find((h) => (h.id || h.title) === id);
+    if (!e) return false;
+    const n = String(note || '').trim().slice(0, NOTE_MAX);
+    if (n) e.note = n; else delete e.note;
+    set(K.history(nk), hist);
+    return true;
   }
 
   const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -367,10 +386,11 @@
   // Two challenges a day is the cap
   function dayDone(nk) { return state(nk).doneCount >= CHALLENGES_PER_DAY; }
 
-  function recordStory(nk, id) {
+  // isFirst: the first time this player finishes this story. Only first reads count towards the day cap.
+  function recordStory(nk, id, isFirst) {
     localStorage.setItem(K.story(nk), todayStr());
     const streak = stampStreak(nk);
-    logActivity(nk, 'story', id);
+    logActivity(nk, 'story', id, isFirst ? { first: true } : null);
     return streak;
   }
 
@@ -422,7 +442,7 @@
     todayStr, weekStart, weekEnd, inThisWeek,
     state, credits, level, decide, rankActions, suggestGame, dayDone,
     loadActions, loadPartners,
-    pledge, skip, spendCredit, recordStory, stampStreak, logActivity,
+    pledge, setActionNote, NOTE_MAX, skip, spendCredit, recordStory, stampStreak, logActivity,
     getEmail, validEmail,
     syncFields, mergeRemote,
     types: () => (_actions && _actions.meta && _actions.meta.types) || {},
