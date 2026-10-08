@@ -28,8 +28,8 @@
       "type": "stat",
       "theme": "orange",
       "stat": "99%",
-      "caption": "And we need more batteries every year. They got 99% cheaper in 30 years. A battery that cost &euro;100 back then costs about &euro;1 now.",
-      "bold": "costs about &euro;1 now",
+      "caption": "And we need more batteries every year. In 30 years they got 99% cheaper, and sales keep doubling every two to three years.",
+      "bold": "99% cheaper",
       "source": "RMI, X-Change: Batteries",
       "envie": "Faster than anyone predicted."
     },
@@ -45,8 +45,8 @@
       "type": "stat",
       "theme": "green",
       "stat": "1,000x",
-      "caption": "For every bucket of lithium in the ground, there are more than 1,000 buckets of sodium. In the sea, more than 60,000.",
-      "bold": "more than 1,000 buckets of sodium",
+      "caption": "Sodium is over 1,000 times more common than lithium in the ground. In the sea, it is 60,000 times more common.",
+      "bold": "60,000 times",
       "envie": "From up there, Earth is mostly sea. Plenty to go round."
     },
     {
@@ -75,7 +75,7 @@
       "tag": "One weak spot",
       "text": "So is lithium finished? Not at all. Sodium is heavier for the same energy.",
       "bold": "heavier",
-      "footer": "An SUV on sodium alone goes about 350 km, Dublin to Cork with some to spare. On lithium, 400 to 600 km. Grand for city cars, scooters and buses."
+      "footer": "An SUV on sodium alone goes up to about 350 km. On lithium, 400 to 600 km. Grand for city cars, scooters and buses."
     },
     {
       "type": "photo",
@@ -139,7 +139,7 @@
       "tag": "And Ireland?",
       "text": "Plenty of home batteries here hang on a cold, damp outside wall. Sodium doesn't mind.",
       "bold": "Sodium doesn't mind",
-      "footer": "They keep working down to -20&deg;C, colder than the coldest night Ireland has ever recorded. Finally, the Irish weather gets a win."
+      "footer": "They keep working down to -20&deg;C without wasting power heating themselves. Finally, the Irish weather gets a win."
     },
     {
       "type": "photo",
