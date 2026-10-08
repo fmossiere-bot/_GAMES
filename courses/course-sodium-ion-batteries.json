@@ -22,14 +22,14 @@
       "tag": "Lithium-ion",
       "text": "Almost every battery you own runs on lithium. Your phone, your laptop, most electric cars.",
       "bold": "lithium",
-      "footer": "Lithium is brilliant. It is also rare, and its price can jump from $20,000 to $70,000 a tonne."
+      "footer": "Lithium is brilliant. It is also rare, and its price can jump from about &euro;17,500 to &euro;60,000 a tonne."
     },
     {
       "type": "stat",
       "theme": "orange",
       "stat": "99%",
-      "caption": "And we need more batteries every year. In 30 years they got 99% cheaper, and sales keep doubling every two to three years.",
-      "bold": "99% cheaper",
+      "caption": "And we need more batteries every year. They got 99% cheaper in 30 years. A battery that cost &euro;100 back then costs about &euro;1 now.",
+      "bold": "costs about &euro;1 now",
       "source": "RMI, X-Change: Batteries",
       "envie": "Faster than anyone predicted."
     },
@@ -45,8 +45,8 @@
       "type": "stat",
       "theme": "green",
       "stat": "1,000x",
-      "caption": "Sodium is over 1,000 times more common than lithium in the ground. In the sea, it is 60,000 times more common.",
-      "bold": "60,000 times",
+      "caption": "For every bucket of lithium in the ground, there are more than 1,000 buckets of sodium. In the sea, more than 60,000.",
+      "bold": "more than 1,000 buckets of sodium",
       "envie": "From up there, Earth is mostly sea. Plenty to go round."
     },
     {
@@ -55,16 +55,16 @@
       "title": "Same job, different ingredients",
       "badLabel": "Lithium-ion",
       "bad": [
-        "Rare, mined in a few countries",
-        "About $20,000 a tonne of raw material",
-        "Often needs cobalt and nickel",
+        "A rare metal",
+        "About &euro;17,500 a tonne of raw material",
+        "Lighter, so cars go further",
         "Struggles in the cold"
       ],
       "goodLabel": "Sodium-ion",
       "good": [
-        "Found almost everywhere, even in seawater",
-        "About $500 a tonne of raw material",
-        "No cobalt or nickel in the cleanest versions",
+        "As common as salt",
+        "About &euro;440 a tonne of raw material",
+        "Heavier, so a shorter range",
         "Keeps about 90% of its power at -40&deg;C"
       ]
     },
@@ -75,7 +75,7 @@
       "tag": "One weak spot",
       "text": "So is lithium finished? Not at all. Sodium is heavier for the same energy.",
       "bold": "heavier",
-      "footer": "An SUV on sodium alone goes up to about 350 km. On lithium, 400 to 600 km. Grand for city cars, scooters and buses."
+      "footer": "An SUV on sodium alone goes about 350 km, Dublin to Cork with some to spare. On lithium, 400 to 600 km. Grand for city cars, scooters and buses."
     },
     {
       "type": "photo",
@@ -98,23 +98,30 @@
     {
       "type": "stat",
       "theme": "blue",
-      "stat": "15 Gt",
-      "caption": "Batteries that match wind and sun to when we use power could cut almost 15 billion tonnes of CO2 a year.",
-      "bold": "15 billion tonnes of CO2 a year",
-      "source": "RMI, X-Change: Batteries",
+      "stat": "280x",
+      "caption": "Batteries that match wind and sun to when we use power could cut almost 15 billion tonnes of CO2 a year. That is about 280 times what all of Ireland emits in a year.",
+      "bold": "280 times what all of Ireland emits",
+      "source": "RMI, X-Change: Batteries. Ireland: EPA, 2024",
       "envie": "I had to read that number twice."
     },
     {
-      "type": "text",
-      "theme": "dark",
-      "text": "It is not only about cost. It is also about who gets hurt along the way.",
-      "bold": "who gets hurt along the way",
-      "bullets": [
-        "Cobalt: about 75% comes from Congo, where child labour in the mines is well documented.",
-        "Water: lithium from brine uses millions of litres per tonne in dry South American valleys.",
-        "Shipping: sodium cells can travel fully empty, at 0 volts, so there is no fire risk at sea."
+      "type": "compare",
+      "theme": "green",
+      "title": "Kinder to people and planet",
+      "badLabel": "The hidden cost of lithium-ion",
+      "bad": [
+        "Cobalt, about 75% from Congo, where child labour in the mines is well documented",
+        "Millions of litres of water per tonne, taken from dry South American valleys",
+        "Shipped part charged, so a fire risk at sea",
+        "Dug up in a handful of countries"
       ],
-      "envie": "Sodium dodges most of that."
+      "goodLabel": "What sodium-ion changes",
+      "good": [
+        "No cobalt or nickel in the cleanest versions",
+        "Made from salt and soda ash, far simpler to process",
+        "Ships fully empty, at 0 volts, so no fire risk at sea",
+        "Found almost everywhere, even in seawater"
+      ]
     },
     {
       "type": "stat",
@@ -122,7 +129,7 @@
       "stat": "15x",
       "caption": "And it is not a lab idea any more. Factories making sodium batteries for the grid are set to grow 15 times, from 10 GWh in 2025 to 150 GWh by 2030.",
       "bold": "not a lab idea any more",
-      "footer": "CATL, the biggest battery maker in the world, planned its first deliveries for this September. Over 95% of the new factories are in China, though.",
+      "footer": "By 2030 that is enough each year for a home battery in every house in Ireland, eight times over. Over 95% of the new factories are in China, though.",
       "envie": "Europe, are you watching?"
     },
     {
@@ -132,7 +139,7 @@
       "tag": "And Ireland?",
       "text": "Plenty of home batteries here hang on a cold, damp outside wall. Sodium doesn't mind.",
       "bold": "Sodium doesn't mind",
-      "footer": "They keep working down to -20&deg;C without wasting power heating themselves. Finally, the Irish weather gets a win."
+      "footer": "They keep working down to -20&deg;C, colder than the coldest night Ireland has ever recorded. Finally, the Irish weather gets a win."
     },
     {
       "type": "photo",
