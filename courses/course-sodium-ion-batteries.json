@@ -135,12 +135,13 @@
       "footer": "They keep working down to -20&deg;C without wasting power heating themselves. Finally, the Irish weather gets a win."
     },
     {
-      "type": "text",
-      "theme": "blue",
-      "text": "Ireland is an island, so every big battery arrives by ship. One that can travel empty is simpler and safer to bring in.",
+      "type": "photo",
+      "image": "shipping-containers.jpg",
+      "align": "center",
+      "tag": "An island thing",
+      "text": "Every big battery reaches Ireland by ship. One that can travel empty is safer.",
       "bold": "travel empty",
-      "footer": "Researchers in Limerick are building their own sodium battery, in a project called TRIDENT. And the first sodium home batteries have just reached the Irish market.",
-      "envie": "Fair play to them."
+      "footer": "Researchers in Limerick are building their own sodium battery, in a project called TRIDENT. And the first sodium home batteries have just reached the Irish market."
     },
     {
       "type": "text",
