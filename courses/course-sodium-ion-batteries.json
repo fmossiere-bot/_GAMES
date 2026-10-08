@@ -8,7 +8,7 @@
   "slides": [
     {
       "type": "photo",
-      "image": "sodium-salt-battery.jpg",
+      "image": "sodium-ion-cell.jpg",
       "align": "center",
       "tag": "Energy &amp; consumption",
       "text": "What if the next big battery was made from salt?",
@@ -16,12 +16,13 @@
       "footer": "I nearly laughed when I first read that. Then I kept reading."
     },
     {
-      "type": "text",
-      "theme": "dark",
+      "type": "photo",
+      "image": "battery-pack-orange.jpg",
+      "align": "center",
+      "tag": "Lithium-ion",
       "text": "Almost every battery you own runs on lithium. Your phone, your laptop, most electric cars.",
       "bold": "lithium",
-      "footer": "Lithium is brilliant. It is also rare, dug up in a few countries, and its price can jump from $20,000 to $70,000 a tonne.",
-      "envie": "I never once wondered what was inside my phone."
+      "footer": "Lithium is brilliant. It is also rare, and its price can jump from $20,000 to $70,000 a tonne."
     },
     {
       "type": "stat",
@@ -68,12 +69,13 @@
       ]
     },
     {
-      "type": "text",
-      "theme": "dark",
-      "text": "So is lithium finished? Not at all. Sodium has one weak spot. It is heavier for the same amount of energy.",
+      "type": "photo",
+      "image": "ev-charging-sign.jpg",
+      "align": "center",
+      "tag": "One weak spot",
+      "text": "So is lithium finished? Not at all. Sodium is heavier for the same energy.",
       "bold": "heavier",
-      "footer": "An SUV on sodium alone goes up to about 350 km. On lithium, 400 to 600 km. Grand for city cars, scooters and buses. Less so for long trips.",
-      "envie": "Nobody is perfect. Not even salt."
+      "footer": "An SUV on sodium alone goes up to about 350 km. On lithium, 400 to 600 km. Grand for city cars, scooters and buses."
     },
     {
       "type": "photo",
@@ -120,7 +122,7 @@
       "stat": "15x",
       "caption": "And it is not a lab idea any more. Factories making sodium batteries for the grid are set to grow 15 times, from 10 GWh in 2025 to 150 GWh by 2030.",
       "bold": "not a lab idea any more",
-      "footer": "CATL, the biggest battery maker in the world, started deliveries this September. Over 95% of the new factories are in China, though.",
+      "footer": "CATL, the biggest battery maker in the world, planned its first deliveries for this September. Over 95% of the new factories are in China, though.",
       "envie": "Europe, are you watching?"
     },
     {
@@ -137,7 +139,7 @@
       "theme": "blue",
       "text": "Ireland is an island, so every big battery arrives by ship. One that can travel empty is simpler and safer to bring in.",
       "bold": "travel empty",
-      "footer": "Irish researchers are already testing sodium batteries with home solar, in a project called TRIDENT. And the first sodium home batteries are on sale here.",
+      "footer": "Researchers in Limerick are building their own sodium battery, in a project called TRIDENT. And the first sodium home batteries have just reached the Irish market.",
       "envie": "Fair play to them."
     },
     {
